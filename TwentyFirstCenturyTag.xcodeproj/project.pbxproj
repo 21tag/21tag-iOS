@@ -1,0 +1,283 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D9D2FA0B13AEC81600048670 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D2FA0A13AEC81600048670 /* UIKit.framework */; };
+		D9D2FA0D13AEC81600048670 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D2FA0C13AEC81600048670 /* Foundation.framework */; };
+		D9D2FA0F13AEC81600048670 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D2FA0E13AEC81600048670 /* CoreGraphics.framework */; };
+		D9D2FA1513AEC81600048670 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9D2FA1313AEC81600048670 /* InfoPlist.strings */; };
+		D9D2FA1813AEC81600048670 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D2FA1713AEC81600048670 /* main.m */; };
+		D9D2FA1B13AEC81600048670 /* TwentyFirstCenturyTagAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D2FA1A13AEC81600048670 /* TwentyFirstCenturyTagAppDelegate.m */; };
+		D9D2FA1E13AEC81600048670 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9D2FA1C13AEC81600048670 /* MainWindow.xib */; };
+		D9D2FA2113AEC81700048670 /* TwentyFirstCenturyTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D2FA2013AEC81700048670 /* TwentyFirstCenturyTagViewController.m */; };
+		D9D2FA2413AEC81700048670 /* TwentyFirstCenturyTagViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9D2FA2213AEC81700048670 /* TwentyFirstCenturyTagViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D9D2FA0613AEC81600048670 /* TwentyFirstCenturyTag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwentyFirstCenturyTag.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9D2FA0A13AEC81600048670 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D9D2FA0C13AEC81600048670 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D9D2FA0E13AEC81600048670 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D9D2FA1213AEC81600048670 /* TwentyFirstCenturyTag-Info.plist */ = {isa = PBXFileReference; path = "TwentyFirstCenturyTag-Info.plist"; sourceTree = "<group>"; };
+		D9D2FA1413AEC81600048670 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D9D2FA1613AEC81600048670 /* TwentyFirstCenturyTag-Prefix.pch */ = {isa = PBXFileReference; path = "TwentyFirstCenturyTag-Prefix.pch"; sourceTree = "<group>"; };
+		D9D2FA1713AEC81600048670 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D9D2FA1913AEC81600048670 /* TwentyFirstCenturyTagAppDelegate.h */ = {isa = PBXFileReference; path = TwentyFirstCenturyTagAppDelegate.h; sourceTree = "<group>"; };
+		D9D2FA1A13AEC81600048670 /* TwentyFirstCenturyTagAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwentyFirstCenturyTagAppDelegate.m; sourceTree = "<group>"; };
+		D9D2FA1D13AEC81600048670 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		D9D2FA1F13AEC81700048670 /* TwentyFirstCenturyTagViewController.h */ = {isa = PBXFileReference; path = TwentyFirstCenturyTagViewController.h; sourceTree = "<group>"; };
+		D9D2FA2013AEC81700048670 /* TwentyFirstCenturyTagViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwentyFirstCenturyTagViewController.m; sourceTree = "<group>"; };
+		D9D2FA2313AEC81700048670 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TwentyFirstCenturyTagViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9D2FA0313AEC81600048670 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9D2FA0B13AEC81600048670 /* UIKit.framework in Frameworks */,
+				D9D2FA0D13AEC81600048670 /* Foundation.framework in Frameworks */,
+				D9D2FA0F13AEC81600048670 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D9D2F9FB13AEC81600048670 = {
+			isa = PBXGroup;
+			children = (
+				D9D2FA1013AEC81600048670 /* TwentyFirstCenturyTag */,
+				D9D2FA0913AEC81600048670 /* Frameworks */,
+				D9D2FA0713AEC81600048670 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D9D2FA0713AEC81600048670 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9D2FA0613AEC81600048670 /* TwentyFirstCenturyTag.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9D2FA0913AEC81600048670 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9D2FA0A13AEC81600048670 /* UIKit.framework */,
+				D9D2FA0C13AEC81600048670 /* Foundation.framework */,
+				D9D2FA0E13AEC81600048670 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D9D2FA1013AEC81600048670 /* TwentyFirstCenturyTag */ = {
+			isa = PBXGroup;
+			children = (
+				D9D2FA1913AEC81600048670 /* TwentyFirstCenturyTagAppDelegate.h */,
+				D9D2FA1A13AEC81600048670 /* TwentyFirstCenturyTagAppDelegate.m */,
+				D9D2FA1C13AEC81600048670 /* MainWindow.xib */,
+				D9D2FA1F13AEC81700048670 /* TwentyFirstCenturyTagViewController.h */,
+				D9D2FA2013AEC81700048670 /* TwentyFirstCenturyTagViewController.m */,
+				D9D2FA2213AEC81700048670 /* TwentyFirstCenturyTagViewController.xib */,
+				D9D2FA1113AEC81600048670 /* Supporting Files */,
+			);
+			path = TwentyFirstCenturyTag;
+			sourceTree = "<group>";
+		};
+		D9D2FA1113AEC81600048670 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D9D2FA1213AEC81600048670 /* TwentyFirstCenturyTag-Info.plist */,
+				D9D2FA1313AEC81600048670 /* InfoPlist.strings */,
+				D9D2FA1613AEC81600048670 /* TwentyFirstCenturyTag-Prefix.pch */,
+				D9D2FA1713AEC81600048670 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9D2FA0513AEC81600048670 /* TwentyFirstCenturyTag */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9D2FA2713AEC81700048670 /* Build configuration list for PBXNativeTarget "TwentyFirstCenturyTag" */;
+			buildPhases = (
+				D9D2FA0213AEC81600048670 /* Sources */,
+				D9D2FA0313AEC81600048670 /* Frameworks */,
+				D9D2FA0413AEC81600048670 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TwentyFirstCenturyTag;
+			productName = TwentyFirstCenturyTag;
+			productReference = D9D2FA0613AEC81600048670 /* TwentyFirstCenturyTag.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9D2F9FD13AEC81600048670 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = D9D2FA0013AEC81600048670 /* Build configuration list for PBXProject "TwentyFirstCenturyTag" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D9D2F9FB13AEC81600048670;
+			productRefGroup = D9D2FA0713AEC81600048670 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9D2FA0513AEC81600048670 /* TwentyFirstCenturyTag */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D9D2FA0413AEC81600048670 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9D2FA1513AEC81600048670 /* InfoPlist.strings in Resources */,
+				D9D2FA1E13AEC81600048670 /* MainWindow.xib in Resources */,
+				D9D2FA2413AEC81700048670 /* TwentyFirstCenturyTagViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9D2FA0213AEC81600048670 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9D2FA1813AEC81600048670 /* main.m in Sources */,
+				D9D2FA1B13AEC81600048670 /* TwentyFirstCenturyTagAppDelegate.m in Sources */,
+				D9D2FA2113AEC81700048670 /* TwentyFirstCenturyTagViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D9D2FA1313AEC81600048670 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9D2FA1413AEC81600048670 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D9D2FA1C13AEC81600048670 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9D2FA1D13AEC81600048670 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		D9D2FA2213AEC81700048670 /* TwentyFirstCenturyTagViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9D2FA2313AEC81700048670 /* en */,
+			);
+			name = TwentyFirstCenturyTagViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D9D2FA2513AEC81700048670 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D9D2FA2613AEC81700048670 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		D9D2FA2813AEC81700048670 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Prefix.pch";
+				INFOPLIST_FILE = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D9D2FA2913AEC81700048670 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Prefix.pch";
+				INFOPLIST_FILE = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9D2FA0013AEC81600048670 /* Build configuration list for PBXProject "TwentyFirstCenturyTag" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9D2FA2513AEC81700048670 /* Debug */,
+				D9D2FA2613AEC81700048670 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9D2FA2713AEC81700048670 /* Build configuration list for PBXNativeTarget "TwentyFirstCenturyTag" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9D2FA2813AEC81700048670 /* Debug */,
+				D9D2FA2913AEC81700048670 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D9D2F9FD13AEC81600048670 /* Project object */;
+}
