@@ -54,4 +54,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)checkLocationPressed:(id)sender {
+}
 @end

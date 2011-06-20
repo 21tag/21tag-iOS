@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Facebook.h"
 
-
-@interface DashboardViewController : UIViewController {
+@interface DashboardViewController : UIViewController <FBRequestDelegate> {
     
+    UILabel *nameLabel;
+    Facebook *facebook;
 }
+@property (nonatomic, retain) IBOutlet UILabel *nameLabel;
+@property (nonatomic, retain) Facebook *facebook;
 
 @end

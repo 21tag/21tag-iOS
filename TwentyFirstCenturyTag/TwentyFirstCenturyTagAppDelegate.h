@@ -7,15 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Facebook.h"
 
 @class TwentyFirstCenturyTagViewController;
 
 @interface TwentyFirstCenturyTagAppDelegate : NSObject <UIApplicationDelegate> {
 
+    Facebook *facebook;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @property (nonatomic, retain) IBOutlet TwentyFirstCenturyTagViewController *viewController;
+@property (nonatomic, retain) UINavigationController *navigationController;
+@property (nonatomic, retain) Facebook *facebook;
 
 @end

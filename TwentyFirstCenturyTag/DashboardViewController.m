@@ -10,6 +10,8 @@
 
 
 @implementation DashboardViewController
+@synthesize nameLabel;
+@synthesize facebook;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -20,8 +22,25 @@
     return self;
 }
 
+- (void)request:(FBRequest *)request didLoad:(id)result {
+    if ([result isKindOfClass:[NSArray class]]) {
+        result = [result objectAtIndex:0];
+    }
+
+    [self.nameLabel setText:[result objectForKey:@"name"]];
+};
+
+/**
+ * Called when an error prevents the Facebook API request from completing
+ * successfully.
+ */
+- (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
+    [self.nameLabel setText:[error localizedDescription]];
+};
+
 - (void)dealloc
 {
+    [nameLabel release];
     [super dealloc];
 }
 
@@ -39,10 +58,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [facebook requestWithGraphPath:@"me" andDelegate:self];
+
 }
 
 - (void)viewDidUnload
 {
+    [self setNameLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

@@ -7,10 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Facebook.h"
 
-
-@interface LoginScreenViewController : UIViewController {
+@interface LoginScreenViewController : UIViewController <FBSessionDelegate> {
     
+    UIScrollView *scrollView;
+    UIPageControl *pageControl;
+    BOOL pageControlIsChangingPage;
+    
+    Facebook *facebook;
 }
+@property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
+- (IBAction)loginPressed:(id)sender;
+@property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
+- (IBAction)pageChanged:(id)sender;
+@property (nonatomic, retain) Facebook *facebook;
 
 @end

@@ -12,5 +12,6 @@
 @interface LocationErrorViewController : UIViewController {
     
 }
+- (IBAction)checkLocationPressed:(id)sender;
 
 @end

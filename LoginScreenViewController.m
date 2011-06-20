@@ -7,9 +7,12 @@
 //
 
 #import "LoginScreenViewController.h"
-
+#import "DashboardViewController.h"
 
 @implementation LoginScreenViewController
+@synthesize pageControl;
+@synthesize scrollView;
+@synthesize facebook;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -22,6 +25,8 @@
 
 - (void)dealloc
 {
+    [scrollView release];
+    [pageControl release];
     [super dealloc];
 }
 
@@ -39,19 +44,70 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    UIImage *background = [UIImage imageNamed:@"login_screen.jpg"];
+    UIImageView *backgroundView = [[UIImageView alloc] initWithImage:background];
+    
+    scrollView.clipsToBounds = YES;
+	scrollView.scrollEnabled = YES;
+	scrollView.pagingEnabled = YES;
+
+    scrollView.contentSize = CGSizeMake(960, 379);
+    
+    [scrollView addSubview:backgroundView];
+    self.navigationController.navigationBarHidden = YES;
+    
+    self.facebook.sessionDelegate = self;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)_scrollView
+{
+    if (pageControlIsChangingPage)
+        return;
+    
+    CGFloat pageWidth = _scrollView.frame.size.width;
+    int page = floor((_scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    pageControl.currentPage = page;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)_scrollView 
+{
+    pageControlIsChangingPage = NO;
+}
+
+
+// Facebook login delegate methods
+
+- (void)fbDidLogin {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+    DashboardViewController *dashController = [[DashboardViewController alloc] init];
+    dashController.facebook = self.facebook;
+    [self.navigationController pushViewController: dashController animated:YES];
 }
 
 - (void)viewDidUnload
 {
+    [self setScrollView:nil];
+    [self setPageControl:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+
+- (IBAction)loginPressed:(id)sender 
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [facebook authorize:nil delegate:self];
 }
 
+- (IBAction)pageChanged:(id)sender {
+    CGRect frame = scrollView.frame;
+    frame.origin.x = frame.size.width * pageControl.currentPage;
+    frame.origin.y = 0;
+    [scrollView scrollRectToVisible:frame animated:YES];
+}
 @end

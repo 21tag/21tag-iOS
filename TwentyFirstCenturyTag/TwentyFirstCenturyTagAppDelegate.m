@@ -9,6 +9,8 @@
 #import "TwentyFirstCenturyTagAppDelegate.h"
 
 #import "TwentyFirstCenturyTagViewController.h"
+#import "LoginScreenViewController.h"
+#import "DashboardViewController.h"
 
 @implementation TwentyFirstCenturyTagAppDelegate
 
@@ -16,14 +18,48 @@
 @synthesize window=_window;
 
 @synthesize viewController=_viewController;
+@synthesize navigationController;
+@synthesize facebook;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
-     
-    self.window.rootViewController = self.viewController;
+{    
+    facebook = [[Facebook alloc] initWithAppId:@"195601977154851"];
+    UIViewController *rootController = [[UIViewController alloc] init];
+    
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+        && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+        facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }
+    if (![facebook isSessionValid]) 
+    {
+        // If not a valid session, ask to login to facebook
+        LoginScreenViewController *loginController = [[LoginScreenViewController alloc] init];
+        loginController.facebook = self.facebook;
+        rootController = loginController;
+    }
+    else
+    {
+        // Else take user to Dashboard
+        DashboardViewController *dashboardController = [[DashboardViewController alloc] init];
+        dashboardController.facebook = self.facebook;
+        rootController = dashboardController;
+    }
+
+    
+    
+    navigationController = [[UINavigationController alloc] initWithRootViewController:rootController]; 
+    self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    
+    return [facebook handleOpenURL:url]; 
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
