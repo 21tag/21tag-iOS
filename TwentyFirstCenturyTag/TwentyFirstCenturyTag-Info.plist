@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.chrisballinger.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.TwentyFirstCenturyTag.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -27,7 +27,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb195601977154851</string>
+				<string>fb226166034068006</string>
 			</array>
 		</dict>
 	</array>

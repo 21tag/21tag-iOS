@@ -23,7 +23,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
-    facebook = [[Facebook alloc] initWithAppId:@"195601977154851"];
+    facebook = [[Facebook alloc] initWithAppId:@"226166034068006"];
     UIViewController *rootController = [[UIViewController alloc] init];
     
     
@@ -51,6 +51,7 @@
     
     
     navigationController = [[UINavigationController alloc] initWithRootViewController:rootController]; 
+    navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.015686274509804f green:0.615686274509804f blue:0.749019607843137 alpha:1.0];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
 

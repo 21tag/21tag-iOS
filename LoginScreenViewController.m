@@ -86,8 +86,10 @@
     
     DashboardViewController *dashController = [[DashboardViewController alloc] init];
     dashController.facebook = self.facebook;
-    [self.navigationController pushViewController: dashController animated:YES];
+    NSArray *viewControllerList = [NSArray arrayWithObject:dashController];
+    [self.navigationController setViewControllers:viewControllerList animated:YES];
 }
+
 
 - (void)viewDidUnload
 {
