@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Facebook.h"
+#import "LocationController.h"
 
-@interface ChooseNetworkViewController : UIViewController <UIActionSheetDelegate> {
+@interface ChooseNetworkViewController : UIViewController <UIActionSheetDelegate, LocationControllerDelegate> {
     Facebook *facebook;
+    LocationController *locationController;
 }
 
 @property (nonatomic, retain) Facebook *facebook;

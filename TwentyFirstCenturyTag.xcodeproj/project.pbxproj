@@ -37,6 +37,7 @@
 		D97A5C2313B1264F00D3FFFA /* checkin_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D97A5C1F13B1264F00D3FFFA /* checkin_button.png */; };
 		D97A5C2413B1264F00D3FFFA /* checkin_button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D97A5C2013B1264F00D3FFFA /* checkin_button_pressed@2x.png */; };
 		D97A5C2513B1264F00D3FFFA /* checkin_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D97A5C2113B1264F00D3FFFA /* checkin_button@2x.png */; };
+		D97A5C2813B1359000D3FFFA /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97A5C2713B1359000D3FFFA /* FacebookController.m */; };
 		D9BB8B7913AFD01B001A7A28 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = D9BB8B5E13AFD01B001A7A28 /* Facebook.m */; };
 		D9BB8B7A13AFD01B001A7A28 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D9BB8B6113AFD01B001A7A28 /* FBDialog.bundle */; };
 		D9BB8B7B13AFD01B001A7A28 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D9BB8B6313AFD01B001A7A28 /* FBDialog.m */; };
@@ -131,6 +132,8 @@
 		D97A5C1F13B1264F00D3FFFA /* checkin_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkin_button.png; sourceTree = "<group>"; };
 		D97A5C2013B1264F00D3FFFA /* checkin_button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkin_button_pressed@2x.png"; sourceTree = "<group>"; };
 		D97A5C2113B1264F00D3FFFA /* checkin_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkin_button@2x.png"; sourceTree = "<group>"; };
+		D97A5C2613B1358F00D3FFFA /* FacebookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookController.h; sourceTree = "<group>"; };
+		D97A5C2713B1359000D3FFFA /* FacebookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookController.m; sourceTree = "<group>"; };
 		D9BB8B5A13AFD01B001A7A28 /* facebook-ios-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "facebook-ios-sdk.xcodeproj"; sourceTree = "<group>"; };
 		D9BB8B5D13AFD01B001A7A28 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		D9BB8B5E13AFD01B001A7A28 /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
@@ -357,6 +360,8 @@
 				D9BB8BAE13AFF045001A7A28 /* DashboardViewController.m */,
 				D9BB8BB213AFFAAF001A7A28 /* LocationErrorViewController.h */,
 				D9BB8BB313AFFAB0001A7A28 /* LocationErrorViewController.m */,
+				D97A5C2613B1358F00D3FFFA /* FacebookController.h */,
+				D97A5C2713B1359000D3FFFA /* FacebookController.m */,
 				D9BB8B8813AFD71D001A7A28 /* LocationController.h */,
 				D9BB8B8913AFD71D001A7A28 /* LocationController.m */,
 				D9D2FA1F13AEC81700048670 /* TwentyFirstCenturyTagViewController.h */,
@@ -557,6 +562,7 @@
 				D9BB8BC213B00729001A7A28 /* ChooseNetworkViewController.m in Sources */,
 				D9C9BB9613B044AB008A7B90 /* GameRequestViewController.m in Sources */,
 				D97A5C1813B120F900D3FFFA /* JoinTeamViewController.m in Sources */,
+				D97A5C2813B1359000D3FFFA /* FacebookController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

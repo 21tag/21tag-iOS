@@ -11,6 +11,7 @@
 #import "TwentyFirstCenturyTagViewController.h"
 #import "LoginScreenViewController.h"
 #import "ChooseNetworkViewController.h"
+#import "FacebookController.h"
 
 @implementation UINavigationBar (CustomImage)
 - (void)drawRect:(CGRect)rect {
@@ -31,7 +32,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
-    facebook = [[Facebook alloc] initWithAppId:@"226166034068006"];
+    FacebookController *facebookController = [FacebookController sharedInstance];
+    facebook = facebookController.facebook;
     UIViewController *rootController = [[UIViewController alloc] init];
     
     
@@ -45,14 +47,12 @@
     {
         // If not a valid session, ask to login to facebook
         LoginScreenViewController *loginController = [[LoginScreenViewController alloc] init];
-        loginController.facebook = self.facebook;
         rootController = loginController;
     }
     else
     {
         // Else take user to Dashboard
         ChooseNetworkViewController *chooseNetworkController = [[ChooseNetworkViewController alloc] init];
-        chooseNetworkController.facebook = self.facebook;
         rootController = chooseNetworkController;
     }
 
@@ -81,7 +81,6 @@
     [defaults synchronize];
     
     ChooseNetworkViewController *chooseNetworkController = [[ChooseNetworkViewController alloc] init];
-    chooseNetworkController.facebook = self.facebook;
     NSArray *viewControllerList = [NSArray arrayWithObject:chooseNetworkController];
     [self.navigationController setViewControllers:viewControllerList animated:YES];
 }
@@ -89,7 +88,6 @@
 - (void)fbDidLogout
 {
     LoginScreenViewController *loginController = [[LoginScreenViewController alloc] init];
-    loginController.facebook = self.facebook;
     
     NSArray *viewControllerList = [NSArray arrayWithObject:loginController];
     [self.navigationController setViewControllers:viewControllerList animated:YES];

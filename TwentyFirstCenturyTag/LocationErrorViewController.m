@@ -7,7 +7,8 @@
 //
 
 #import "LocationErrorViewController.h"
-
+#import "JoinTeamViewController.h"
+#import "DashboardViewController.h"
 
 @implementation LocationErrorViewController
 
@@ -33,6 +34,20 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)locationUpdate:(CLLocation *)location
+{
+    JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
+    DashboardViewController *dashboardController = [[DashboardViewController alloc] init];
+    NSArray *controllerArray = [NSArray arrayWithObjects:dashboardController, joinTeamController, nil];
+    [locationController.locationManager stopUpdatingLocation];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setViewControllers:controllerArray animated:YES];
+}
+
+- (void)locationError:(NSError *)error
+{
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -40,6 +55,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+    locationController = [LocationController sharedInstance];
+    locationController.delegate = self;
 }
 
 - (void)viewDidUnload
@@ -49,12 +66,8 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (IBAction)checkLocationPressed:(id)sender 
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (IBAction)checkLocationPressed:(id)sender {
+    [locationController.locationManager startUpdatingLocation];
 }
 @end

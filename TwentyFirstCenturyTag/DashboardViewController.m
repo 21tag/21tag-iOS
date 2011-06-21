@@ -7,7 +7,7 @@
 //
 
 #import "DashboardViewController.h"
-
+#import "FacebookController.h"
 
 @implementation DashboardViewController
 @synthesize nameLabel;
@@ -58,6 +58,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    FacebookController *facebookController = [FacebookController sharedInstance];
+    facebook = facebookController.facebook;
     
     [facebook requestWithGraphPath:@"me" andDelegate:self];
 
@@ -76,6 +78,8 @@
     
     self.navigationItem.rightBarButtonItem = checkinButton;
     self.title = @"21st Century Tag";
+    
+
 }
 
 - (void)checkinPressed

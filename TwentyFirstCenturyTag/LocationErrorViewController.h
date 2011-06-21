@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LocationController.h"
 
-
-@interface LocationErrorViewController : UIViewController {
-    
+@interface LocationErrorViewController : UIViewController <LocationControllerDelegate> {
+    LocationController *locationController;
 }
 - (IBAction)checkLocationPressed:(id)sender;
 

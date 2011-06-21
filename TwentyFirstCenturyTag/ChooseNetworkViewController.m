@@ -9,6 +9,10 @@
 #import "ChooseNetworkViewController.h"
 #import "TwentyFirstCenturyTagAppDelegate.h"
 #import "GameRequestViewController.h"
+#import "LocationErrorViewController.h"
+#import "JoinTeamViewController.h"
+#import "DashboardViewController.h"
+#import "FacebookController.h"
 
 @implementation ChooseNetworkViewController
 
@@ -57,6 +61,8 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
 
+    FacebookController *facebookController = [FacebookController sharedInstance];
+    facebook = facebookController.facebook;
 }
 
 - (void)facebookPressed
@@ -75,6 +81,24 @@
     }
 }
 
+- (void)locationUpdate:(CLLocation *)location
+{
+    JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
+    DashboardViewController *dashboardController = [[DashboardViewController alloc] init];
+    NSArray *controllerArray = [NSArray arrayWithObjects:dashboardController, joinTeamController, nil];
+    [locationController.locationManager stopUpdatingLocation];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setViewControllers:controllerArray animated:YES];
+}
+
+- (void)locationError:(NSError *)error
+{
+    LocationErrorViewController *locationErrorController = [[LocationErrorViewController alloc] init];
+    [locationController.locationManager stopUpdatingLocation];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController pushViewController:locationErrorController animated:YES];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
@@ -88,7 +112,11 @@
 }
 
 
-- (IBAction)harvardPressed:(id)sender {
+- (IBAction)harvardPressed:(id)sender 
+{
+    locationController = [LocationController sharedInstance];
+    [locationController.locationManager startUpdatingLocation];
+    locationController.delegate = self;
 }
 
 - (IBAction)campusRequestPressed:(id)sender 

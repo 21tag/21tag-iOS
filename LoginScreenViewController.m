@@ -9,6 +9,7 @@
 #import "LoginScreenViewController.h"
 #import "DashboardViewController.h"
 #import "TwentyFirstCenturyTagAppDelegate.h"
+#import "FacebookController.h"
 
 @implementation LoginScreenViewController
 @synthesize pageControl;
@@ -59,6 +60,9 @@
     [scrollView addSubview:backgroundView];    
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+    
+    FacebookController *facebookController = [FacebookController sharedInstance];
+    facebook = facebookController.facebook;
 }
 
 - (void)viewWillAppear:(BOOL)animated
