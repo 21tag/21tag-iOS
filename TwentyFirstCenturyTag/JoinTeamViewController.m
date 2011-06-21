@@ -1,17 +1,15 @@
 //
-//  DashboardViewController.m
+//  JoinTeamViewController.m
 //  TwentyFirstCenturyTag
 //
-//  Created by Christopher Ballinger on 6/20/11.
+//  Created by Christopher Ballinger on 6/21/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "DashboardViewController.h"
+#import "JoinTeamViewController.h"
 
 
-@implementation DashboardViewController
-@synthesize nameLabel;
-@synthesize facebook;
+@implementation JoinTeamViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -22,25 +20,8 @@
     return self;
 }
 
-- (void)request:(FBRequest *)request didLoad:(id)result {
-    if ([result isKindOfClass:[NSArray class]]) {
-        result = [result objectAtIndex:0];
-    }
-
-    [self.nameLabel setText:[result objectForKey:@"name"]];
-};
-
-/**
- * Called when an error prevents the Facebook API request from completing
- * successfully.
- */
-- (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
-    [self.nameLabel setText:[error localizedDescription]];
-};
-
 - (void)dealloc
 {
-    [nameLabel release];
     [super dealloc];
 }
 
@@ -58,34 +39,33 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.title = @"Join a Team";
     
-    [facebook requestWithGraphPath:@"me" andDelegate:self];
-
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *buttonImage = [UIImage imageNamed:@"checkin_button.png"];
-    UIImage *buttonImagePressed = [UIImage imageNamed:@"checkin_button_pressed.png"];
+    UIImage *buttonImage = [UIImage imageNamed:@"cancel_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"cancel_button_pressed.png"];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
     CGRect buttonFrame = [button frame];
     buttonFrame.size.width = buttonImage.size.width;
     buttonFrame.size.height = buttonImage.size.height;
     [button setFrame:buttonFrame];
-    [button addTarget:self action:@selector(checkinPressed) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(cancelPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
-    self.navigationItem.rightBarButtonItem = checkinButton;
-    self.title = @"21st Century Tag";
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
 }
 
-- (void)checkinPressed
+- (void)cancelPressed
 {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidUnload
 {
-    [self setNameLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

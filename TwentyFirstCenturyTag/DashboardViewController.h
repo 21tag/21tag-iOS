@@ -17,4 +17,6 @@
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) Facebook *facebook;
 
+- (void)checkinPressed;
+
 @end
