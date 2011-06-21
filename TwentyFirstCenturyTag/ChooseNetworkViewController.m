@@ -7,9 +7,12 @@
 //
 
 #import "ChooseNetworkViewController.h"
-
+#import "TwentyFirstCenturyTagAppDelegate.h"
+#import "GameRequestViewController.h"
 
 @implementation ChooseNetworkViewController
+
+@synthesize facebook;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,8 +41,43 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     self.title = @"Choose Network";
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *buttonImage = [UIImage imageNamed:@"facebook_minibutton.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    CGRect buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(facebookPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem* facebookButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = facebookButton;
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+
+}
+
+- (void)facebookPressed
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:nil];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.destructiveButtonIndex == buttonIndex)
+    {
+        TwentyFirstCenturyTagAppDelegate *delegate = (TwentyFirstCenturyTagAppDelegate*)[[UIApplication sharedApplication] delegate];
+        [facebook logout:delegate];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)viewDidUnload
@@ -49,16 +87,13 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 
 - (IBAction)harvardPressed:(id)sender {
 }
 
-- (IBAction)campusRequestPressed:(id)sender {
+- (IBAction)campusRequestPressed:(id)sender 
+{
+    GameRequestViewController *gameRequestController = [[GameRequestViewController alloc] init];
+    [self presentModalViewController:gameRequestController animated:YES];
 }
 @end

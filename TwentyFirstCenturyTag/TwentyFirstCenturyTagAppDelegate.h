@@ -11,7 +11,7 @@
 
 @class TwentyFirstCenturyTagViewController;
 
-@interface TwentyFirstCenturyTagAppDelegate : NSObject <UIApplicationDelegate> {
+@interface TwentyFirstCenturyTagAppDelegate : NSObject <UIApplicationDelegate, FBSessionDelegate> {
 
     Facebook *facebook;
 }

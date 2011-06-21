@@ -10,7 +10,7 @@
 
 #import "TwentyFirstCenturyTagViewController.h"
 #import "LoginScreenViewController.h"
-#import "DashboardViewController.h"
+#import "ChooseNetworkViewController.h"
 
 @implementation TwentyFirstCenturyTagAppDelegate
 
@@ -43,12 +43,13 @@
     else
     {
         // Else take user to Dashboard
-        DashboardViewController *dashboardController = [[DashboardViewController alloc] init];
-        dashboardController.facebook = self.facebook;
-        rootController = dashboardController;
+        ChooseNetworkViewController *chooseNetworkController = [[ChooseNetworkViewController alloc] init];
+        chooseNetworkController.facebook = self.facebook;
+        rootController = chooseNetworkController;
     }
 
-    
+    self.facebook.sessionDelegate = self;
+
     
     navigationController = [[UINavigationController alloc] initWithRootViewController:rootController]; 
     navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.015686274509804f green:0.615686274509804f blue:0.749019607843137 alpha:1.0];
@@ -61,6 +62,34 @@
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     
     return [facebook handleOpenURL:url]; 
+}
+
+// Facebook login delegate methods
+
+- (void)fbDidLogin {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+    ChooseNetworkViewController *chooseNetworkController = [[ChooseNetworkViewController alloc] init];
+    chooseNetworkController.facebook = self.facebook;
+    NSArray *viewControllerList = [NSArray arrayWithObject:chooseNetworkController];
+    [self.navigationController setViewControllers:viewControllerList animated:YES];
+}
+
+- (void)fbDidLogout
+{
+    LoginScreenViewController *loginController = [[LoginScreenViewController alloc] init];
+    loginController.facebook = self.facebook;
+    
+    NSArray *viewControllerList = [NSArray arrayWithObject:loginController];
+    [self.navigationController setViewControllers:viewControllerList animated:YES];
+}
+
+- (void)fbDidNotLogin:(BOOL)cancelled
+{
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

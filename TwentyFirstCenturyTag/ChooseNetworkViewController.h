@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Facebook.h"
 
-@interface ChooseNetworkViewController : UIViewController {
+@interface ChooseNetworkViewController : UIViewController <UIActionSheetDelegate> {
     Facebook *facebook;
 }
 
@@ -17,6 +17,6 @@
 
 - (IBAction)harvardPressed:(id)sender;
 - (IBAction)campusRequestPressed:(id)sender;
-
+- (void)facebookPressed;
 
 @end

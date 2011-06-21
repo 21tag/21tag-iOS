@@ -8,6 +8,7 @@
 
 #import "LoginScreenViewController.h"
 #import "DashboardViewController.h"
+#import "TwentyFirstCenturyTagAppDelegate.h"
 
 @implementation LoginScreenViewController
 @synthesize pageControl;
@@ -51,13 +52,23 @@
     scrollView.clipsToBounds = YES;
 	scrollView.scrollEnabled = YES;
 	scrollView.pagingEnabled = YES;
+    self.navigationController.toolbarHidden = YES;
 
     scrollView.contentSize = CGSizeMake(960, 379);
     
-    [scrollView addSubview:backgroundView];
-    self.navigationController.navigationBarHidden = YES;
+    [scrollView addSubview:backgroundView];    
     
-    self.facebook.sessionDelegate = self;
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)_scrollView
@@ -76,21 +87,6 @@
 }
 
 
-// Facebook login delegate methods
-
-- (void)fbDidLogin {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
-    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    
-    DashboardViewController *dashController = [[DashboardViewController alloc] init];
-    dashController.facebook = self.facebook;
-    NSArray *viewControllerList = [NSArray arrayWithObject:dashController];
-    [self.navigationController setViewControllers:viewControllerList animated:YES];
-}
-
-
 - (void)viewDidUnload
 {
     [self setScrollView:nil];
@@ -103,7 +99,10 @@
 
 - (IBAction)loginPressed:(id)sender 
 {
-    [facebook authorize:nil delegate:self];
+    TwentyFirstCenturyTagAppDelegate *delegate = (TwentyFirstCenturyTagAppDelegate*)[[UIApplication sharedApplication] delegate];
+
+    self.navigationController.navigationBarHidden = NO;
+    [facebook authorize:nil delegate:delegate];
 }
 
 - (IBAction)pageChanged:(id)sender {

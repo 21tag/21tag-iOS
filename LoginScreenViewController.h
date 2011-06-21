@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Facebook.h"
 
-@interface LoginScreenViewController : UIViewController <FBSessionDelegate> {
+@interface LoginScreenViewController : UIViewController {
     
     UIScrollView *scrollView;
     UIPageControl *pageControl;

@@ -34,6 +34,14 @@
 		D9C9BB4113B02354008A7B90 /* campus_request_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */; };
 		D9C9BB4213B02354008A7B90 /* on_harvard_campus_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */; };
 		D9C9BB4313B02354008A7B90 /* on_harvard_campus_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3F13B02354008A7B90 /* on_harvard_campus_button@2x.png */; };
+		D9C9BB7113B02D1C008A7B90 /* harvard_campus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB6D13B02D1C008A7B90 /* harvard_campus@2x.png */; };
+		D9C9BB7213B02D1C008A7B90 /* harvard_campus.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB6E13B02D1C008A7B90 /* harvard_campus.png */; };
+		D9C9BB7313B02D1C008A7B90 /* grey_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB6F13B02D1C008A7B90 /* grey_background@2x.png */; };
+		D9C9BB7413B02D1C008A7B90 /* grey_background.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB7013B02D1C008A7B90 /* grey_background.png */; };
+		D9C9BB7713B03533008A7B90 /* facebook_minibutton.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB7513B03533008A7B90 /* facebook_minibutton.png */; };
+		D9C9BB7813B03533008A7B90 /* facebook_minibutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB7613B03533008A7B90 /* facebook_minibutton@2x.png */; };
+		D9C9BB9613B044AB008A7B90 /* GameRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9C9BB9413B044AB008A7B90 /* GameRequestViewController.m */; };
+		D9C9BB9713B044AB008A7B90 /* GameRequestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB9513B044AB008A7B90 /* GameRequestViewController.xib */; };
 		D9D2FA0B13AEC81600048670 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D2FA0A13AEC81600048670 /* UIKit.framework */; };
 		D9D2FA0D13AEC81600048670 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D2FA0C13AEC81600048670 /* Foundation.framework */; };
 		D9D2FA0F13AEC81600048670 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D2FA0E13AEC81600048670 /* CoreGraphics.framework */; };
@@ -107,6 +115,15 @@
 		D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "campus_request_button@2x.png"; sourceTree = "<group>"; };
 		D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on_harvard_campus_button.png; sourceTree = "<group>"; };
 		D9C9BB3F13B02354008A7B90 /* on_harvard_campus_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "on_harvard_campus_button@2x.png"; sourceTree = "<group>"; };
+		D9C9BB6D13B02D1C008A7B90 /* harvard_campus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "harvard_campus@2x.png"; sourceTree = "<group>"; };
+		D9C9BB6E13B02D1C008A7B90 /* harvard_campus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = harvard_campus.png; sourceTree = "<group>"; };
+		D9C9BB6F13B02D1C008A7B90 /* grey_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey_background@2x.png"; sourceTree = "<group>"; };
+		D9C9BB7013B02D1C008A7B90 /* grey_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey_background.png; sourceTree = "<group>"; };
+		D9C9BB7513B03533008A7B90 /* facebook_minibutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_minibutton.png; sourceTree = "<group>"; };
+		D9C9BB7613B03533008A7B90 /* facebook_minibutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_minibutton@2x.png"; sourceTree = "<group>"; };
+		D9C9BB9313B044AB008A7B90 /* GameRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRequestViewController.h; sourceTree = "<group>"; };
+		D9C9BB9413B044AB008A7B90 /* GameRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRequestViewController.m; sourceTree = "<group>"; };
+		D9C9BB9513B044AB008A7B90 /* GameRequestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameRequestViewController.xib; sourceTree = "<group>"; };
 		D9D2FA0613AEC81600048670 /* TwentyFirstCenturyTag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwentyFirstCenturyTag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9D2FA0A13AEC81600048670 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D9D2FA0C13AEC81600048670 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -205,6 +222,8 @@
 				D9BB8BBA13AFFCC6001A7A28 /* check_location_button@2x.png */,
 				D9D2FA3213AECEF400048670 /* facebook_login_button@2x.png */,
 				D9D2FA3313AECEF400048670 /* facebook_login_button.png */,
+				D9C9BB7513B03533008A7B90 /* facebook_minibutton.png */,
+				D9C9BB7613B03533008A7B90 /* facebook_minibutton@2x.png */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -243,6 +262,8 @@
 			children = (
 				D9D2FA2A13AECA3C00048670 /* LoginScreenViewController.h */,
 				D9D2FA2B13AECA3C00048670 /* LoginScreenViewController.m */,
+				D9C9BB9313B044AB008A7B90 /* GameRequestViewController.h */,
+				D9C9BB9413B044AB008A7B90 /* GameRequestViewController.m */,
 				D9BB8BBF13B00728001A7A28 /* ChooseNetworkViewController.h */,
 				D9BB8BC013B00728001A7A28 /* ChooseNetworkViewController.m */,
 				D9D2FA1913AEC81600048670 /* TwentyFirstCenturyTagAppDelegate.h */,
@@ -276,10 +297,15 @@
 			isa = PBXGroup;
 			children = (
 				D9C9BB4413B0235E008A7B90 /* Buttons */,
+				D9C9BB6D13B02D1C008A7B90 /* harvard_campus@2x.png */,
+				D9C9BB6E13B02D1C008A7B90 /* harvard_campus.png */,
+				D9C9BB6F13B02D1C008A7B90 /* grey_background@2x.png */,
+				D9C9BB7013B02D1C008A7B90 /* grey_background.png */,
 				D9BB8BB713AFFCC6001A7A28 /* location_error@2x.png */,
 				D9BB8BB813AFFCC6001A7A28 /* location_error.png */,
 				D9D2FA3013AECEF400048670 /* login_screen@2x.jpg */,
 				D9D2FA3113AECEF400048670 /* login_screen.jpg */,
+				D9C9BB9513B044AB008A7B90 /* GameRequestViewController.xib */,
 				D9BB8BC113B00729001A7A28 /* ChooseNetworkViewController.xib */,
 				D9BB8BB413AFFAB0001A7A28 /* LocationErrorViewController.xib */,
 				D9BB8BAF13AFF046001A7A28 /* DashboardViewController.xib */,
@@ -373,6 +399,13 @@
 				D9C9BB4113B02354008A7B90 /* campus_request_button@2x.png in Resources */,
 				D9C9BB4213B02354008A7B90 /* on_harvard_campus_button.png in Resources */,
 				D9C9BB4313B02354008A7B90 /* on_harvard_campus_button@2x.png in Resources */,
+				D9C9BB7113B02D1C008A7B90 /* harvard_campus@2x.png in Resources */,
+				D9C9BB7213B02D1C008A7B90 /* harvard_campus.png in Resources */,
+				D9C9BB7313B02D1C008A7B90 /* grey_background@2x.png in Resources */,
+				D9C9BB7413B02D1C008A7B90 /* grey_background.png in Resources */,
+				D9C9BB7713B03533008A7B90 /* facebook_minibutton.png in Resources */,
+				D9C9BB7813B03533008A7B90 /* facebook_minibutton@2x.png in Resources */,
+				D9C9BB9713B044AB008A7B90 /* GameRequestViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +434,7 @@
 				D9BB8BB013AFF046001A7A28 /* DashboardViewController.m in Sources */,
 				D9BB8BB513AFFAB1001A7A28 /* LocationErrorViewController.m in Sources */,
 				D9BB8BC213B00729001A7A28 /* ChooseNetworkViewController.m in Sources */,
+				D9C9BB9613B044AB008A7B90 /* GameRequestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

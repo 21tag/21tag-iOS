@@ -1,15 +1,17 @@
 //
-//  LocationErrorViewController.m
+//  GameRequestViewController.m
 //  TwentyFirstCenturyTag
 //
 //  Created by Christopher Ballinger on 6/20/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "LocationErrorViewController.h"
+#import "GameRequestViewController.h"
 
 
-@implementation LocationErrorViewController
+@implementation GameRequestViewController
+@synthesize leftButton;
+@synthesize navigationBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -22,6 +24,8 @@
 
 - (void)dealloc
 {
+    [leftButton release];
+    [navigationBar release];
     [super dealloc];
 }
 
@@ -39,11 +43,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
 }
 
 - (void)viewDidUnload
 {
+    [self setLeftButton:nil];
+    [self setNavigationBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -55,6 +60,8 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)checkLocationPressed:(id)sender {
+- (IBAction)leftButtonPressed:(id)sender 
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 @end
