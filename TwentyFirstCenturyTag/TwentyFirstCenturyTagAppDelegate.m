@@ -12,6 +12,13 @@
 #import "LoginScreenViewController.h"
 #import "ChooseNetworkViewController.h"
 
+@implementation UINavigationBar (CustomImage)
+- (void)drawRect:(CGRect)rect {
+    UIImage *image = [UIImage imageNamed: @"navigation_bar_background.png"];
+    [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+}
+@end
+
 @implementation TwentyFirstCenturyTagAppDelegate
 
 
@@ -20,6 +27,7 @@
 @synthesize viewController=_viewController;
 @synthesize navigationController;
 @synthesize facebook;
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    

@@ -11,12 +11,26 @@
 
 @interface GameRequestViewController : UIViewController {
     
-    UIBarButtonItem *leftButton;
+    UIBarButtonItem *cancelButton;
+    UIBarButtonItem *doneButton;
     UINavigationBar *navigationBar;
+    UITextField *schoolTextField;
+    UITextField *locationTextField;
+    UITextField *emailTextField;
+    UIScrollView *scrollView;
+    CGPoint scrollViewOriginalState;
+    BOOL isScrolledUp;
+    UINavigationItem *navigationItem;
 }
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *leftButton;
+@property (nonatomic, retain) IBOutlet UINavigationItem *navigationItem;
+
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
 - (IBAction)leftButtonPressed:(id)sender;
+@property (nonatomic, retain) IBOutlet UITextField *schoolTextField;
+@property (nonatomic, retain) IBOutlet UITextField *locationTextField;
+@property (nonatomic, retain) IBOutlet UITextField *emailTextField;
+- (IBAction)sendRequestPressed:(id)sender;
+@property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 
 
 @end

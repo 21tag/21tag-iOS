@@ -8,9 +8,18 @@
 
 #import "GameRequestViewController.h"
 
+@interface GameRequestViewController()
+
+- (void)setupButtons;
+
+@end
 
 @implementation GameRequestViewController
-@synthesize leftButton;
+@synthesize scrollView;
+@synthesize schoolTextField;
+@synthesize locationTextField;
+@synthesize emailTextField;
+@synthesize navigationItem;
 @synthesize navigationBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -24,8 +33,12 @@
 
 - (void)dealloc
 {
-    [leftButton release];
     [navigationBar release];
+    [schoolTextField release];
+    [locationTextField release];
+    [emailTextField release];
+    [scrollView release];
+    [navigationItem release];
     [super dealloc];
 }
 
@@ -43,25 +56,97 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    scrollView.clipsToBounds = YES;
+	scrollView.scrollEnabled = NO;
+	scrollView.pagingEnabled = YES;
+    
+    scrollView.contentSize = CGSizeMake(640, 416);
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+    scrollViewOriginalState = scrollView.contentOffset;
+    isScrolledUp = NO;
+    
+    [self setupButtons];
+    
+    self.navigationItem.leftBarButtonItem = cancelButton;
+}
+
+- (void)setupButtons
+{
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *buttonImage = [UIImage imageNamed:@"cancel_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"cancel_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    CGRect buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(leftButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    cancelButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonImage = [UIImage imageNamed:@"done_button.png"];
+    buttonImagePressed = [UIImage imageNamed:@"done_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(leftButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
 }
 
 - (void)viewDidUnload
 {
-    [self setLeftButton:nil];
     [self setNavigationBar:nil];
+    [self setSchoolTextField:nil];
+    [self setLocationTextField:nil];
+    [self setEmailTextField:nil];
+    [self setScrollView:nil];
+    [self setNavigationItem:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (IBAction)leftButtonPressed:(id)sender 
 {
     [self dismissModalViewControllerAnimated:YES];
 }
+- (IBAction)sendRequestPressed:(id)sender 
+{
+    self.navigationBar.topItem.title = @"Thanks!";
+    CGRect frame = scrollView.frame;
+    frame.origin.x = frame.size.width;
+    frame.origin.y = 0;
+    [scrollView scrollRectToVisible:frame animated:YES];
+    self.navigationItem.leftBarButtonItem = doneButton;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if(!isScrolledUp)
+    {
+        isScrolledUp = YES;
+        CGPoint pt;
+        //CGRect rc = [textField bounds];
+        //rc = [textField convertRect:rc toView:scrollView];
+        //pt = rc.origin;
+        pt.x = 0.0f;
+        pt.y = 127.0f;
+        //NSLog(@"%f, %f",pt.x,pt.y);
+        [scrollView setContentOffset:pt animated:YES];
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [scrollView setContentOffset:scrollViewOriginalState animated:YES];
+    isScrolledUp = NO;
+    [textField resignFirstResponder];
+    return YES;
+}
+
 @end
