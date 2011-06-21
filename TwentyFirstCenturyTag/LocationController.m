@@ -52,7 +52,7 @@ static LocationController* sharedCLDelegate = nil;
 + (LocationController*)sharedInstance {
     @synchronized(self) {
         if (sharedCLDelegate == nil) {
-            [[self alloc] init];
+            sharedCLDelegate = [[self alloc] init];
         }
     }
     return sharedCLDelegate;

@@ -42,6 +42,8 @@
     [locationController.locationManager stopUpdatingLocation];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController setViewControllers:controllerArray animated:YES];
+    [joinTeamController release];
+    [dashboardController release];
 }
 
 - (void)locationError:(NSError *)error

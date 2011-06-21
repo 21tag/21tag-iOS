@@ -89,6 +89,8 @@
     [locationController.locationManager stopUpdatingLocation];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController setViewControllers:controllerArray animated:YES];
+    [joinTeamController release];
+    [dashboardController release];
 }
 
 - (void)locationError:(NSError *)error
@@ -97,6 +99,7 @@
     [locationController.locationManager stopUpdatingLocation];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.navigationController pushViewController:locationErrorController animated:YES];
+    [locationErrorController release];
 }
 
 - (void)viewWillAppear:(BOOL)animated

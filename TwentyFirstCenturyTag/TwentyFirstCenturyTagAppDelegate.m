@@ -34,8 +34,7 @@
 {    
     FacebookController *facebookController = [FacebookController sharedInstance];
     facebook = facebookController.facebook;
-    UIViewController *rootController = [[UIViewController alloc] init];
-    
+    UIViewController *rootController;    
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"FBAccessTokenKey"] 
@@ -63,6 +62,7 @@
     navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.015686274509804f green:0.615686274509804f blue:0.749019607843137 alpha:1.0];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+    [rootController release];
 
     return YES;
 }
@@ -83,6 +83,7 @@
     ChooseNetworkViewController *chooseNetworkController = [[ChooseNetworkViewController alloc] init];
     NSArray *viewControllerList = [NSArray arrayWithObject:chooseNetworkController];
     [self.navigationController setViewControllers:viewControllerList animated:YES];
+    [chooseNetworkController release];
 }
 
 - (void)fbDidLogout
@@ -91,6 +92,7 @@
     
     NSArray *viewControllerList = [NSArray arrayWithObject:loginController];
     [self.navigationController setViewControllers:viewControllerList animated:YES];
+    [loginController release];
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled
@@ -141,6 +143,7 @@
 {
     [_window release];
     [_viewController release];
+    [facebook release];
     [super dealloc];
 }
 
