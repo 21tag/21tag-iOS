@@ -9,9 +9,13 @@
 #import "DashboardViewController.h"
 #import "FacebookController.h"
 
+#define kCellIdentifier @"Cell"
+
 @implementation DashboardViewController
 @synthesize nameLabel;
 @synthesize facebook;
+@synthesize navigationTableView;
+@synthesize contentList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -22,6 +26,7 @@
     return self;
 }
 
+// Facebook request result
 - (void)request:(FBRequest *)request didLoad:(id)result {
     if ([result isKindOfClass:[NSArray class]]) {
         result = [result objectAtIndex:0];
@@ -38,9 +43,42 @@
     [self.nameLabel setText:[error localizedDescription]];
 };
 
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return [contentList count];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return [[contentList objectAtIndex:section] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return nil;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+	if (cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kCellIdentifier] autorelease];
+	}
+	
+	// get the view controller's info dictionary based on the indexPath's row
+	NSArray *section = [contentList objectAtIndex:indexPath.section];
+	cell.textLabel.text = [section objectAtIndex:indexPath.row];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    
+	return cell;
+}
+
 - (void)dealloc
 {
+    [contentList release];
     [nameLabel release];
+    [navigationTableView release];
     [super dealloc];
 }
 
@@ -79,6 +117,20 @@
     self.navigationItem.rightBarButtonItem = checkinButton;
     self.title = @"21st Century Tag";
     
+    contentList = [[NSMutableArray alloc] init];
+    NSArray *checkedInLocation = [NSArray arrayWithObject:@"Some Place"];
+    
+    [contentList addObject:checkedInLocation];
+    
+    NSArray *navigationOptions = [NSArray arrayWithObjects:@"Map and Activity", @"Your Vault", @"Your Team", @"Game Standings", nil];
+    [contentList addObject:navigationOptions];
+    
+    NSArray *profileOption = [NSArray arrayWithObject:@"Facebook"];
+    [contentList addObject:profileOption];
+    
+    navigationTableView.backgroundColor = [UIColor clearColor];
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
 
 }
 
@@ -90,6 +142,7 @@
 - (void)viewDidUnload
 {
     [self setNameLabel:nil];
+    [self setNavigationTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

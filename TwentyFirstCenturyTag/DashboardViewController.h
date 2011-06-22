@@ -9,11 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "Facebook.h"
 
-@interface DashboardViewController : UIViewController <FBRequestDelegate> {
+@interface DashboardViewController : UIViewController <FBRequestDelegate, UITableViewDelegate, UITableViewDataSource> {
     
+    NSMutableArray *contentList;
     UILabel *nameLabel;
     Facebook *facebook;
+    BOOL isCheckedIn;
+    UITableView *navigationTableView;
 }
+@property (nonatomic, retain) IBOutlet UITableView *navigationTableView;
+@property (nonatomic, retain) NSMutableArray *contentList;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) Facebook *facebook;
 
