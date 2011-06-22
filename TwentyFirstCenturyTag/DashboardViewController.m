@@ -9,6 +9,7 @@
 #import "DashboardViewController.h"
 #import "FacebookController.h"
 #import "TeamInfoViewController.h"
+#import "MapViewController.h"
 
 #define kCellIdentifier @"Cell"
 
@@ -152,7 +153,9 @@
     {
         if(indexPath.row == 0) // Map and Activity
         {
-            
+            MapViewController *mapController = [[MapViewController alloc] init];
+            [self.navigationController pushViewController:mapController animated:YES];
+            [mapController release];
         }
         else if(indexPath.row == 1) // Your Vault
         {
