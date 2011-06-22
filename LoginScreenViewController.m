@@ -57,7 +57,8 @@
 
     scrollView.contentSize = CGSizeMake(960, 379);
     
-    [scrollView addSubview:backgroundView];    
+    [scrollView addSubview:backgroundView];  
+    [backgroundView release];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
     

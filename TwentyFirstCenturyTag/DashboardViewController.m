@@ -8,6 +8,7 @@
 
 #import "DashboardViewController.h"
 #import "FacebookController.h"
+#import "TeamInfoViewController.h"
 
 #define kCellIdentifier @"Cell"
 
@@ -137,6 +138,41 @@
 - (void)checkinPressed
 {
     
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0) // Selected top item
+    {
+        
+    }
+    else if(indexPath.section == 1)
+    {
+        if(indexPath.row == 0) // Map and Activity
+        {
+            
+        }
+        else if(indexPath.row == 1) // Your Vault
+        {
+            
+        }
+        else if(indexPath.row == 2) // Your Team
+        {
+            TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
+            [self.navigationController pushViewController:teamInfoController animated:YES];
+            [teamInfoController release];
+        }
+        else    // Game Standings
+        {
+            
+        }
+    }
+    else    // Your Profile
+    {
+        
+    }
 }
 
 - (void)viewDidUnload

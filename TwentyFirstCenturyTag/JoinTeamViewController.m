@@ -108,6 +108,19 @@
 	cell.textLabel.text = [contentList objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
+    int count = [contentList count];
+    if(indexPath.row == count-2)
+    {
+        cell.imageView.image = [UIImage imageNamed:@"new_team_table_icon.png"];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];      
+        cell.textLabel.textColor = [UIColor lightGrayColor];
+    }
+    else if(indexPath.row == count-1)
+    {
+        cell.imageView.image = [UIImage imageNamed:@"search_icon.png"];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];      
+        cell.textLabel.textColor = [UIColor lightGrayColor];
+    }
     
 	return cell;
 }
