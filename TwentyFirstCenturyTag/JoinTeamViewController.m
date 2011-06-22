@@ -7,9 +7,14 @@
 //
 
 #import "JoinTeamViewController.h"
+#import "NewTeamViewController.h"
 
+#define kCellIdentifier @"Cell"
 
 @implementation JoinTeamViewController
+
+@synthesize contentList;
+@synthesize navigationTableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -22,6 +27,7 @@
 
 - (void)dealloc
 {
+    [navigationTableView release];
     [super dealloc];
 }
 
@@ -57,6 +63,12 @@
     self.navigationItem.leftBarButtonItem = cancelButton;
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+    
+    navigationTableView.backgroundColor = [UIColor clearColor];
+    navigationTableView.separatorColor = [UIColor lightGrayColor];
+    
+    contentList = [NSMutableArray arrayWithObjects:@"Kickin' Wing", @"Dark Wing Ducks", @"Create a new team", @"Search all teams", nil];
+    [contentList retain];
 }
 
 - (void)cancelPressed
@@ -64,8 +76,59 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return [contentList count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSUInteger count = [contentList count];
+    if(indexPath.row == count-1 || indexPath.row == count-2)
+        return 50.0f;
+    else
+        return 80.0f;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+	if (cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kCellIdentifier] autorelease];
+	}
+	
+	// get the view controller's info dictionary based on the indexPath's row
+	cell.textLabel.text = [contentList objectAtIndex:indexPath.row];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    
+	return cell;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if(indexPath.row == [contentList count] - 2)
+    {
+        NewTeamViewController *newTeamController = [[NewTeamViewController alloc] init];
+        [self presentModalViewController:newTeamController animated:YES];
+        [newTeamController release];
+    }
+}
+
+
 - (void)viewDidUnload
 {
+    [self setNavigationTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
