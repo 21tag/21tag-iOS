@@ -121,6 +121,10 @@
 		D9D2FA3513AECEF400048670 /* login_screen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D9D2FA3113AECEF400048670 /* login_screen.jpg */; };
 		D9D2FA3613AECEF400048670 /* facebook_login_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9D2FA3213AECEF400048670 /* facebook_login_button@2x.png */; };
 		D9D2FA3713AECEF400048670 /* facebook_login_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9D2FA3313AECEF400048670 /* facebook_login_button.png */; };
+		D9F5FA8613B2FB4300222A16 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5FA8413B2FB4300222A16 /* ProfileViewController.m */; };
+		D9F5FA8713B2FB4300222A16 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9F5FA8513B2FB4300222A16 /* ProfileViewController.xib */; };
+		D9F5FA8B13B2FE1500222A16 /* NetworkRankingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5FA8913B2FE1400222A16 /* NetworkRankingsViewController.m */; };
+		D9F5FA8C13B2FE1500222A16 /* NetworkRankingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9F5FA8A13B2FE1500222A16 /* NetworkRankingsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -278,6 +282,12 @@
 		D9D2FA3113AECEF400048670 /* login_screen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login_screen.jpg; sourceTree = "<group>"; };
 		D9D2FA3213AECEF400048670 /* facebook_login_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_login_button@2x.png"; sourceTree = "<group>"; };
 		D9D2FA3313AECEF400048670 /* facebook_login_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_login_button.png; sourceTree = "<group>"; };
+		D9F5FA8313B2FB4300222A16 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		D9F5FA8413B2FB4300222A16 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		D9F5FA8513B2FB4300222A16 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		D9F5FA8813B2FE1300222A16 /* NetworkRankingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkRankingsViewController.h; sourceTree = "<group>"; };
+		D9F5FA8913B2FE1400222A16 /* NetworkRankingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkRankingsViewController.m; sourceTree = "<group>"; };
+		D9F5FA8A13B2FE1500222A16 /* NetworkRankingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetworkRankingsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -498,6 +508,10 @@
 				D9BB8B8913AFD71D001A7A28 /* LocationController.m */,
 				D9D2FA1F13AEC81700048670 /* TwentyFirstCenturyTagViewController.h */,
 				D9D2FA2013AEC81700048670 /* TwentyFirstCenturyTagViewController.m */,
+				D9F5FA8313B2FB4300222A16 /* ProfileViewController.h */,
+				D9F5FA8413B2FB4300222A16 /* ProfileViewController.m */,
+				D9F5FA8813B2FE1300222A16 /* NetworkRankingsViewController.h */,
+				D9F5FA8913B2FE1400222A16 /* NetworkRankingsViewController.m */,
 				D9D2FA2F13AECEDB00048670 /* Resources */,
 				D9D2FA1113AEC81600048670 /* Supporting Files */,
 			);
@@ -520,6 +534,8 @@
 			children = (
 				D9C9BB4413B0235E008A7B90 /* Buttons */,
 				D9174F5213B15E5B00600189 /* Images */,
+				D9F5FA8A13B2FE1500222A16 /* NetworkRankingsViewController.xib */,
+				D9F5FA8513B2FB4300222A16 /* ProfileViewController.xib */,
 				D9B8990A13B2A32300A632AD /* MapViewController.xib */,
 				D9B898E813B27DC500A632AD /* TeamInfoViewController.xib */,
 				D9B898A513B19CDA00A632AD /* NewTeamViewController.xib */,
@@ -683,6 +699,8 @@
 				D9B8991013B2A49F00A632AD /* map_toolbar@2x.png in Resources */,
 				D9B8991313B2A5C400A632AD /* location_button.png in Resources */,
 				D9B8991413B2A5C400A632AD /* location_button@2x.png in Resources */,
+				D9F5FA8713B2FB4300222A16 /* ProfileViewController.xib in Resources */,
+				D9F5FA8C13B2FE1500222A16 /* NetworkRankingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -717,6 +735,8 @@
 				D9B898A613B19CDA00A632AD /* NewTeamViewController.m in Sources */,
 				D9B898E913B27DC500A632AD /* TeamInfoViewController.m in Sources */,
 				D9B8990B13B2A32300A632AD /* MapViewController.m in Sources */,
+				D9F5FA8613B2FB4300222A16 /* ProfileViewController.m in Sources */,
+				D9F5FA8B13B2FE1500222A16 /* NetworkRankingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

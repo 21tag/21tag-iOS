@@ -10,6 +10,7 @@
 #import "FacebookController.h"
 #import "TeamInfoViewController.h"
 #import "MapViewController.h"
+#import "ProfileViewController.h"
 
 #define kCellIdentifier @"Cell"
 
@@ -174,8 +175,11 @@
     }
     else    // Your Profile
     {
-        
+        ProfileViewController *profileController = [[ProfileViewController alloc] init];
+        [self.navigationController pushViewController:profileController animated:YES];
+        [profileController release];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)viewDidUnload
