@@ -130,12 +130,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if(indexPath.row == [contentList count] - 2)
+    if(indexPath.row == [contentList count] - 2) // New Team
     {
         NewTeamViewController *newTeamController = [[NewTeamViewController alloc] init];
         [self presentModalViewController:newTeamController animated:YES];
         [newTeamController release];
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

@@ -11,6 +11,11 @@
 
 @interface ProfileViewController : UIViewController {
     
+    UIImageView *profileImageView;
+    UILabel *nameLabel;
 }
+@property (nonatomic, retain) IBOutlet UIImageView *profileImageView;
+@property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 
+-(void)dashPressed;
 @end

@@ -16,6 +16,7 @@
     Facebook *facebook;
     BOOL isCheckedIn;
     UITableView *navigationTableView;
+    UIImage *avatarImage;
 }
 @property (nonatomic, retain) IBOutlet UITableView *navigationTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;

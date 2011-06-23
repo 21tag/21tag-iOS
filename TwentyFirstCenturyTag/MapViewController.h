@@ -21,4 +21,7 @@
 @property (nonatomic, retain)
 LocationController *locationController;
 
+-(void)dashPressed;
+- (IBAction)allPlacesPressed:(id)sender;
+
 @end

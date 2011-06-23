@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import "AllPlacesViewController.h"
 
 @implementation MapViewController
 @synthesize currentMapView;
@@ -41,6 +42,24 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *buttonImage = [UIImage imageNamed:@"dash_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"dash_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    CGRect buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(dashPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *dashButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    self.navigationItem.leftBarButtonItem = dashButton;
+
+    
+    
+    
     CLLocationCoordinate2D location;
     location.latitude = 37.250556;
     location.longitude = -96.358333;
@@ -64,15 +83,10 @@
 - (void)locationUpdate:(CLLocation*)location
 {
     CLLocationCoordinate2D currentLocation = location.coordinate;
- 
-    NSLog(@"c: %f, %f",currentLocation.latitude, currentLocation.longitude);
     
     MKCoordinateSpan span;
     span.latitudeDelta = .01;
     span.longitudeDelta = .01;
-    
-    NSLog(@"s: %f, %f",span.latitudeDelta, span.longitudeDelta);
-
     
     MKCoordinateRegion region;
     region.span = span;
@@ -91,6 +105,18 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [locationController.locationManager stopUpdatingLocation];
+}
+
+-(void)dashPressed
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)allPlacesPressed:(id)sender 
+{
+    AllPlacesViewController *allPlacesController = [[AllPlacesViewController alloc] init];
+    [self.navigationController pushViewController:allPlacesController animated:YES];
+    [allPlacesController release];
 }
 
 - (void)viewDidUnload

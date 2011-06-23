@@ -11,6 +11,7 @@
 #import "TeamInfoViewController.h"
 #import "MapViewController.h"
 #import "ProfileViewController.h"
+#import "ASIHTTPRequest.h"
 
 #define kCellIdentifier @"Cell"
 
@@ -35,8 +36,28 @@
         result = [result objectAtIndex:0];
     }
 
-    [self.nameLabel setText:[result objectForKey:@"name"]];
+    NSArray *name = [NSArray arrayWithObject:[result objectForKey:@"name"]];
+    [contentList replaceObjectAtIndex:2 withObject:name];
+    
+    NSString *facebookID = [result objectForKey:@"id"];
+    NSString *avatarURLString = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square",facebookID];
+    NSURL *avatarURL = [NSURL URLWithString:avatarURLString];
+    ASIHTTPRequest *pictureRequest = [ASIHTTPRequest requestWithURL:avatarURL];
+    [pictureRequest setDelegate:self];
+    [pictureRequest startAsynchronous];
 };
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    avatarImage = [[UIImage imageWithData:[request responseData]] retain];
+    [navigationTableView reloadData];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    NSLog(@"%@",error);
+}
 
 /**
  * Called when an error prevents the Facebook API request from completing
@@ -73,6 +94,8 @@
 	cell.textLabel.text = [section objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
+    if(indexPath.section == 2)
+        cell.imageView.image = avatarImage;
     
 	return cell;
 }
@@ -82,6 +105,7 @@
     [contentList release];
     [nameLabel release];
     [navigationTableView release];
+    [avatarImage release];
     [super dealloc];
 }
 
@@ -128,7 +152,7 @@
     NSArray *navigationOptions = [NSArray arrayWithObjects:@"Map and Activity", @"Your Vault", @"Your Team", @"Game Standings", nil];
     [contentList addObject:navigationOptions];
     
-    NSArray *profileOption = [NSArray arrayWithObject:@"Facebook"];
+    NSArray *profileOption = [NSArray arrayWithObject:@"Profile"];
     [contentList addObject:profileOption];
     
     navigationTableView.backgroundColor = [UIColor clearColor];
@@ -177,6 +201,8 @@
     {
         ProfileViewController *profileController = [[ProfileViewController alloc] init];
         [self.navigationController pushViewController:profileController animated:YES];
+        profileController.profileImageView.image = avatarImage;
+        profileController.nameLabel.text = [[contentList objectAtIndex:2] objectAtIndex:0];
         [profileController release];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
