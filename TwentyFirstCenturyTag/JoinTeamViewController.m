@@ -8,6 +8,7 @@
 
 #import "JoinTeamViewController.h"
 #import "NewTeamViewController.h"
+#import "TeamInfoViewController.h"
 
 #define kCellIdentifier @"Cell"
 
@@ -121,6 +122,10 @@
         cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];      
         cell.textLabel.textColor = [UIColor lightGrayColor];
     }
+    else
+    {
+        cell.imageView.image = [UIImage imageNamed:@"team_icon_placeholder.png"];
+    }
     
 	return cell;
 }
@@ -135,6 +140,13 @@
         NewTeamViewController *newTeamController = [[NewTeamViewController alloc] init];
         [self presentModalViewController:newTeamController animated:YES];
         [newTeamController release];
+    }
+    else
+    {
+        TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
+        teamInfoController.isJoiningTeam = YES;
+        [self.navigationController pushViewController:teamInfoController animated:YES];
+        [teamInfoController release];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

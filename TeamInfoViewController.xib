@@ -129,6 +129,10 @@
 						<reference key="NSNextKeyView" ref="839773366"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">team_icon_placeholder.png</string>
+						</object>
 					</object>
 					<object class="IBUILabel" id="839773366">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -499,6 +503,7 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>locations_owned_deselected.png</string>
 				<string>team_divider.png</string>
+				<string>team_icon_placeholder.png</string>
 				<string>team_members_selected.png</string>
 				<string>team_points_deselected.png</string>
 			</object>
@@ -506,6 +511,7 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{100, 76}</string>
 				<string>{320, 34}</string>
+				<string>{50, 50}</string>
 				<string>{102, 76}</string>
 				<string>{101, 76}</string>
 			</object>

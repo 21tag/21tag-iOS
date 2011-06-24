@@ -189,6 +189,7 @@
         else if(indexPath.row == 2) // Your Team
         {
             TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
+            teamInfoController.isJoiningTeam = NO;
             [self.navigationController pushViewController:teamInfoController animated:YES];
             [teamInfoController release];
         }

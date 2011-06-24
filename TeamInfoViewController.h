@@ -26,10 +26,15 @@
 @property (nonatomic, retain) IBOutlet UIButton *locationsOwnedButton;
 @property (nonatomic, retain) IBOutlet UIButton *teamPointsButton;
 @property (nonatomic, retain) IBOutlet UILabel *tableHeaderLabel;
+
+@property BOOL isJoiningTeam;
+
 - (IBAction)teamMembersPressed:(id)sender;
 - (IBAction)locationsOwnedPressed:(id)sender;
 - (IBAction)teamPointsPressed:(id)sender;
 
 - (void)backPressed;
+- (void)joinPressed;
+- (void)checkinPressed;
 
 @end

@@ -7,7 +7,11 @@
 //
 
 #import "TeamInfoViewController.h"
+#import "DashboardViewController.h"
 
+@interface TeamInfoViewController()
+    -(void)setupButtons;
+@end
 
 @implementation TeamInfoViewController
 @synthesize teamImage;
@@ -17,6 +21,7 @@
 @synthesize locationsOwnedButton;
 @synthesize teamPointsButton;
 @synthesize tableHeaderLabel;
+@synthesize isJoiningTeam;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,6 +44,95 @@
     [super dealloc];
 }
 
+-(void)setupButtons
+{
+    if(isJoiningTeam)
+    {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
+        UIImage *buttonImagePressed = [UIImage imageNamed:@"back_button_pressed.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+        CGRect buttonFrame = [button frame];
+        buttonFrame.size.width = buttonImage.size.width;
+        buttonFrame.size.height = buttonImage.size.height;
+        [button setFrame:buttonFrame];
+        [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.leftBarButtonItem = backButton;
+        
+        [backButton release];
+        
+        button = [UIButton buttonWithType:UIButtonTypeCustom];
+        buttonImage = [UIImage imageNamed:@"join_button.png"];
+        buttonImagePressed = [UIImage imageNamed:@"join_button_pressed.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+        buttonFrame = [button frame];
+        buttonFrame.size.width = buttonImage.size.width;
+        buttonFrame.size.height = buttonImage.size.height;
+        [button setFrame:buttonFrame];
+        [button addTarget:self action:@selector(joinPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.rightBarButtonItem = joinButton;
+        
+        [joinButton release];
+    }
+    else
+    {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *buttonImage = [UIImage imageNamed:@"dash_button.png"];
+        UIImage *buttonImagePressed = [UIImage imageNamed:@"dash_button_pressed.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+        CGRect buttonFrame = [button frame];
+        buttonFrame.size.width = buttonImage.size.width;
+        buttonFrame.size.height = buttonImage.size.height;
+        [button setFrame:buttonFrame];
+        [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.leftBarButtonItem = backButton;
+        
+        [backButton release];
+        
+        button = [UIButton buttonWithType:UIButtonTypeCustom];
+        buttonImage = [UIImage imageNamed:@"checkin_button.png"];
+        buttonImagePressed = [UIImage imageNamed:@"checkin_button_pressed.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+        buttonFrame = [button frame];
+        buttonFrame.size.width = buttonImage.size.width;
+        buttonFrame.size.height = buttonImage.size.height;
+        [button setFrame:buttonFrame];
+        [button addTarget:self action:@selector(checkinPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.rightBarButtonItem = checkinButton;
+        
+        [checkinButton release];
+    }
+}
+
+-(void)joinPressed
+{
+    DashboardViewController *dashController = [[DashboardViewController alloc] init];
+    NSArray *dashboard = [NSArray arrayWithObject:dashController];
+    [self.navigationController setViewControllers:dashboard animated:YES];
+    [dashController release];
+}
+
+-(void)checkinPressed
+{
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -53,24 +147,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"Team Info";
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
-    UIImage *buttonImagePressed = [UIImage imageNamed:@"back_button_pressed.png"];
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
-    CGRect buttonFrame = [button frame];
-    buttonFrame.size.width = buttonImage.size.width;
-    buttonFrame.size.height = buttonImage.size.height;
-    [button setFrame:buttonFrame];
-    [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
+    if(isJoiningTeam)
+        self.title = @"Team Info";
+    else
+        self.title = @"Your Team";
 
-    [backButton release];
+    [self setupButtons];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
     
