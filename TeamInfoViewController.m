@@ -21,6 +21,9 @@
 @synthesize locationsOwnedButton;
 @synthesize teamPointsButton;
 @synthesize tableHeaderLabel;
+@synthesize teamMembersLabel;
+@synthesize locationsOwnedLabel;
+@synthesize teamPointsLabel;
 @synthesize isJoiningTeam;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -41,6 +44,9 @@
     [locationsOwnedButton release];
     [teamPointsButton release];
     [tableHeaderLabel release];
+    [teamMembersLabel release];
+    [locationsOwnedLabel release];
+    [teamPointsLabel release];
     [super dealloc];
 }
 
@@ -173,6 +179,9 @@
     [self setLocationsOwnedButton:nil];
     [self setTeamPointsButton:nil];
     [self setTableHeaderLabel:nil];
+    [self setTeamMembersLabel:nil];
+    [self setLocationsOwnedLabel:nil];
+    [self setTeamPointsLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

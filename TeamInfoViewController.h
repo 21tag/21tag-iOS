@@ -18,6 +18,9 @@
     UIButton *locationsOwnedButton;
     UIButton *teamPointsButton;
     UILabel *tableHeaderLabel;
+    UILabel *teamMembersLabel;
+    UILabel *locationsOwnedLabel;
+    UILabel *teamPointsLabel;
 }
 @property (nonatomic, retain) IBOutlet UIImageView *teamImage;
 @property (nonatomic, retain) IBOutlet UILabel *teamNameLabel;
@@ -26,6 +29,9 @@
 @property (nonatomic, retain) IBOutlet UIButton *locationsOwnedButton;
 @property (nonatomic, retain) IBOutlet UIButton *teamPointsButton;
 @property (nonatomic, retain) IBOutlet UILabel *tableHeaderLabel;
+@property (nonatomic, retain) IBOutlet UILabel *teamMembersLabel;
+@property (nonatomic, retain) IBOutlet UILabel *locationsOwnedLabel;
+@property (nonatomic, retain) IBOutlet UILabel *teamPointsLabel;
 
 @property BOOL isJoiningTeam;
 

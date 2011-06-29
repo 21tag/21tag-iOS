@@ -58,6 +58,7 @@
     self.navigationItem.leftBarButtonItem = dashButton;
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
 
+    self.title = @"Profile";
 }
 
 - (void)viewDidUnload
