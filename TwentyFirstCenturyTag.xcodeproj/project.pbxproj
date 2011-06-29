@@ -80,6 +80,10 @@
 		D99D0B9B13BB9A9100D27E58 /* place_details_info_box.png in Resources */ = {isa = PBXBuildFile; fileRef = D99D0B9913BB9A9100D27E58 /* place_details_info_box.png */; };
 		D99D0B9C13BB9A9100D27E58 /* place_details_info_box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D99D0B9A13BB9A9100D27E58 /* place_details_info_box@2x.png */; };
 		D99D0BB913BBA89400D27E58 /* PlaceAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = D99D0BB813BBA89300D27E58 /* PlaceAnnotation.m */; };
+		D99D0BBC13BBB35300D27E58 /* search_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D99D0BBA13BBB35300D27E58 /* search_button.png */; };
+		D99D0BBD13BBB35300D27E58 /* search_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D99D0BBB13BBB35300D27E58 /* search_button@2x.png */; };
+		D99D0BC113BBB44B00D27E58 /* SearchPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D99D0BBF13BBB44600D27E58 /* SearchPlacesViewController.m */; };
+		D99D0BC213BBB44B00D27E58 /* SearchPlacesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D99D0BC013BBB44A00D27E58 /* SearchPlacesViewController.xib */; };
 		D9B898A613B19CDA00A632AD /* NewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B898A413B19CDA00A632AD /* NewTeamViewController.m */; };
 		D9B898A713B19CDA00A632AD /* NewTeamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9B898A513B19CDA00A632AD /* NewTeamViewController.xib */; };
 		D9B898AA13B19E0E00A632AD /* new_team_form.png in Resources */ = {isa = PBXBuildFile; fileRef = D9B898A813B19E0E00A632AD /* new_team_form.png */; };
@@ -273,6 +277,11 @@
 		D99D0B9A13BB9A9100D27E58 /* place_details_info_box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "place_details_info_box@2x.png"; sourceTree = "<group>"; };
 		D99D0BB713BBA89300D27E58 /* PlaceAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceAnnotation.h; sourceTree = "<group>"; };
 		D99D0BB813BBA89300D27E58 /* PlaceAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceAnnotation.m; sourceTree = "<group>"; };
+		D99D0BBA13BBB35300D27E58 /* search_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_button.png; sourceTree = "<group>"; };
+		D99D0BBB13BBB35300D27E58 /* search_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_button@2x.png"; sourceTree = "<group>"; };
+		D99D0BBE13BBB44600D27E58 /* SearchPlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPlacesViewController.h; sourceTree = "<group>"; };
+		D99D0BBF13BBB44600D27E58 /* SearchPlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPlacesViewController.m; sourceTree = "<group>"; };
+		D99D0BC013BBB44A00D27E58 /* SearchPlacesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPlacesViewController.xib; sourceTree = "<group>"; };
 		D9B898A313B19CDA00A632AD /* NewTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTeamViewController.h; sourceTree = "<group>"; };
 		D9B898A413B19CDA00A632AD /* NewTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTeamViewController.m; sourceTree = "<group>"; };
 		D9B898A513B19CDA00A632AD /* NewTeamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewTeamViewController.xib; sourceTree = "<group>"; };
@@ -557,6 +566,8 @@
 		D9C9BB4413B0235E008A7B90 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				D99D0BBA13BBB35300D27E58 /* search_button.png */,
+				D99D0BBB13BBB35300D27E58 /* search_button@2x.png */,
 				D99D0B9113BB973000D27E58 /* check_in_here_button.png */,
 				D99D0B9213BB973000D27E58 /* check_in_here_button@2x.png */,
 				D987AF8613B509D600855AC5 /* join_button_pressed.png */,
@@ -679,6 +690,8 @@
 				D9BB8BAE13AFF045001A7A28 /* DashboardViewController.m */,
 				D987AF2D13B3C22C00855AC5 /* AllPlacesViewController.h */,
 				D987AF2E13B3C22C00855AC5 /* AllPlacesViewController.m */,
+				D99D0BBE13BBB44600D27E58 /* SearchPlacesViewController.h */,
+				D99D0BBF13BBB44600D27E58 /* SearchPlacesViewController.m */,
 				D9BB8BB213AFFAAF001A7A28 /* LocationErrorViewController.h */,
 				D9BB8BB313AFFAB0001A7A28 /* LocationErrorViewController.m */,
 				D97A5C2613B1358F00D3FFFA /* FacebookController.h */,
@@ -713,6 +726,7 @@
 			children = (
 				D9C9BB4413B0235E008A7B90 /* Buttons */,
 				D9174F5213B15E5B00600189 /* Images */,
+				D99D0BC013BBB44A00D27E58 /* SearchPlacesViewController.xib */,
 				D99D0B8E13BB953C00D27E58 /* PlaceDetailsViewController.xib */,
 				D987AF9013B520A200855AC5 /* RankingsViewController.xib */,
 				D987AF2F13B3C22C00855AC5 /* AllPlacesViewController.xib */,
@@ -908,6 +922,9 @@
 				D99D0B9813BB993000D27E58 /* recent_activity_separator@2x.png in Resources */,
 				D99D0B9B13BB9A9100D27E58 /* place_details_info_box.png in Resources */,
 				D99D0B9C13BB9A9100D27E58 /* place_details_info_box@2x.png in Resources */,
+				D99D0BBC13BBB35300D27E58 /* search_button.png in Resources */,
+				D99D0BBD13BBB35300D27E58 /* search_button@2x.png in Resources */,
+				D99D0BC213BBB44B00D27E58 /* SearchPlacesViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -957,6 +974,7 @@
 				D987AF9113B521D800855AC5 /* RankingsViewController.m in Sources */,
 				D99D0B8F13BB953C00D27E58 /* PlaceDetailsViewController.m in Sources */,
 				D99D0BB913BBA89400D27E58 /* PlaceAnnotation.m in Sources */,
+				D99D0BC113BBB44B00D27E58 /* SearchPlacesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

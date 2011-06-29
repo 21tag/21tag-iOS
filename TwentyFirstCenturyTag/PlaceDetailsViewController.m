@@ -90,9 +90,6 @@
     
     self.navigationItem.rightBarButtonItem = checkinButton;
     
-    CGSize size = CGSizeMake(320.0f, 800.0f);
-    [detailsScrollView setContentSize:size];
-    
     [checkinButton release];
 }
 
@@ -114,6 +111,9 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
     
     [self setupButtons];
+    
+    CGSize size = CGSizeMake(320.0f, 800.0f);
+    [detailsScrollView setContentSize:size];
 
 }
 

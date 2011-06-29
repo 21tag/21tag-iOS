@@ -7,6 +7,7 @@
 //
 
 #import "AllPlacesViewController.h"
+#import "SearchPlacesViewController.h"
 #define kCellIdentifier @"Cell"
 
 @implementation AllPlacesViewController
@@ -79,6 +80,20 @@
     
     self.title = @"All Places";
     
+        
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+    
+    contentList = [[NSMutableArray alloc] init];
+    NSArray *nearbyPlacesList = [NSArray arrayWithObjects:@"Widener Library", @"Houghton Library", @"Loeb House",nil];
+    NSArray *recentPlacesList = nearbyPlacesList;
+    [contentList addObject:nearbyPlacesList];
+    [contentList addObject:recentPlacesList];
+    
+    [self setupButtons];
+}
+
+-(void)setupButtons
+{
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *buttonImage = [UIImage imageNamed:@"map_button.png"];
     UIImage *buttonImagePressed = [UIImage imageNamed:@"map_button_pressed.png"];
@@ -93,14 +108,31 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     self.navigationItem.leftBarButtonItem = backButton;
+
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonImage = [UIImage imageNamed:@"search_button.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(searchPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
-    contentList = [[NSMutableArray alloc] init];
-    NSArray *nearbyPlacesList = [NSArray arrayWithObjects:@"Widener Library", @"Houghton Library", @"Loeb House",nil];
-    NSArray *recentPlacesList = nearbyPlacesList;
-    [contentList addObject:nearbyPlacesList];
-    [contentList addObject:recentPlacesList];
+    self.navigationItem.rightBarButtonItem = searchButton;
+
+    [backButton release];
+    [searchButton release];
+}
+
+-(void)searchPressed
+{
+    SearchPlacesViewController *searchPlacesController = [[SearchPlacesViewController alloc] init];
+    searchPlacesController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:searchPlacesController animated:YES];
+
+    [searchPlacesController release];
 }
 
 - (void)viewDidUnload

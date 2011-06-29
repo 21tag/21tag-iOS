@@ -17,5 +17,8 @@
 @property (nonatomic, retain) IBOutlet UITableView *placesTableView;
 
 -(void)backPressed;
+-(void)setupButtons;
+
+-(void)searchPressed;
 
 @end
