@@ -23,5 +23,6 @@ LocationController *locationController;
 
 -(void)dashPressed;
 - (IBAction)allPlacesPressed:(id)sender;
+- (IBAction) annotationViewClick:(id) sender;
 
 @end

@@ -36,4 +36,8 @@
 
 @property (nonatomic, retain)     NSMutableArray *contentList;
 
+-(void) setupButtons;
+-(void) mapPressed;
+-(void) checkinPressed;
+
 @end

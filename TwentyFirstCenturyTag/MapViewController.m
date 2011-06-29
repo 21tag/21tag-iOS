@@ -8,6 +8,8 @@
 
 #import "MapViewController.h"
 #import "AllPlacesViewController.h"
+#import "PlaceDetailsViewController.h"
+#import "PlaceAnnotation.h"
 
 @implementation MapViewController
 @synthesize currentMapView;
@@ -57,7 +59,7 @@
     
     self.navigationItem.leftBarButtonItem = dashButton;
 
-    
+    self.title = @"Map and Activity";
     
     
     CLLocationCoordinate2D location;
@@ -78,6 +80,10 @@
 
     locationController = [LocationController sharedInstance];
     locationController.delegate = self;
+    
+    PlaceAnnotation *someAnnotation = [[[PlaceAnnotation alloc] initWithLatitude:37.786521 longitude:-122.397850 ] autorelease];
+    
+    [currentMapView addAnnotation:someAnnotation];
 }
 
 - (void)locationUpdate:(CLLocation*)location
@@ -137,4 +143,23 @@
 {
     [locationController.locationManager startUpdatingLocation];
 }
+
+- (MKAnnotationView *) mapView:(MKMapView *) mapView viewForAnnotation:(id ) annotation {
+	MKPinAnnotationView *customAnnotationView=[[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil] autorelease];
+	//UIImage *pinImage = [UIImage imageNamed:@"ReplacementPinImage.png"];
+	//[customAnnotationView setImage:pinImage];
+    customAnnotationView.canShowCallout = YES;
+	UIImageView *leftIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"team_icon_placeholder.png"]];
+	customAnnotationView.leftCalloutAccessoryView = leftIconView;
+	UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	[rightButton addTarget:self action:@selector(annotationViewClick:) forControlEvents:UIControlEventTouchUpInside];
+	customAnnotationView.rightCalloutAccessoryView = rightButton;
+    return customAnnotationView;
+}
+- (IBAction) annotationViewClick:(id) sender {
+    PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
+    [self.navigationController pushViewController:placeDetailsController animated:YES];
+    [placeDetailsController release];
+}
+
 @end

@@ -56,6 +56,46 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+-(void)setupButtons
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *buttonImage = [UIImage imageNamed:@"map_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"map_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    CGRect buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(mapPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    self.navigationItem.leftBarButtonItem = mapButton;
+    
+    [mapButton release];
+    
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonImage = [UIImage imageNamed:@"checkin_button.png"];
+    buttonImagePressed = [UIImage imageNamed:@"checkin_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(checkinPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    self.navigationItem.rightBarButtonItem = checkinButton;
+    
+    CGSize size = CGSizeMake(320.0f, 800.0f);
+    [detailsScrollView setContentSize:size];
+    
+    [checkinButton release];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -72,7 +112,19 @@
     
     detailsTableView.backgroundColor = [UIColor clearColor];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+    
+    [self setupButtons];
 
+}
+
+-(void)checkinPressed
+{
+    
+}
+
+-(void)mapPressed
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidUnload
@@ -120,8 +172,8 @@
 	// get the view controller's info dictionary based on the indexPath's row
     NSDictionary *cellDictionary = [contentList objectAtIndex:indexPath.row];
 	cell.textLabel.text = [cellDictionary objectForKey:@"description"];
-    cell.detailTextLabel.text = [cellDictionary objectForKey:@"date"];
-    cell.detailTextLabel.textColor = [UIColor lightTextColor];
+    cell.detailTextLabel.text = [[cellDictionary objectForKey:@"date"] description];
+    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     
 	return cell;
 }

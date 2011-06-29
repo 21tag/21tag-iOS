@@ -141,6 +141,10 @@
         [self presentModalViewController:newTeamController animated:YES];
         [newTeamController release];
     }
+    else if(indexPath.row == [contentList count] - 1) // Search
+    {
+        
+    }
     else
     {
         TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
