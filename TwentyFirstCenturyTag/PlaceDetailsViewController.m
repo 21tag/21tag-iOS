@@ -11,6 +11,7 @@
 #define kCellIdentifier @"Cell"
 
 @implementation PlaceDetailsViewController
+@synthesize activityIndicator;
 @synthesize detailsScrollView;
 @synthesize detailsImageView;
 @synthesize placeNameLabel;
@@ -45,6 +46,7 @@
     [owningTeamPointsLabel release];
     [detailsTableView release];
     [contentList release];
+    [activityIndicator release];
     [super dealloc];
 }
 
@@ -115,6 +117,7 @@
     CGSize size = CGSizeMake(320.0f, 800.0f);
     [detailsScrollView setContentSize:size];
 
+    [activityIndicator startAnimating];
 }
 
 -(void)checkinPressed
@@ -140,6 +143,7 @@
     [self setOwningTeamPointsLabel:nil];
     [self setDetailsTableView:nil];
     [self setContentList:nil];
+    [self setActivityIndicator:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

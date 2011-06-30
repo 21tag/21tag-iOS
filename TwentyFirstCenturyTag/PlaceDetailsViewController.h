@@ -22,7 +22,9 @@
     UILabel *owningTeamPointsLabel;
     UITableView *detailsTableView;
     NSMutableArray *contentList;
+    UIActivityIndicatorView *activityIndicator;
 }
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UIScrollView *detailsScrollView;
 @property (nonatomic, retain) IBOutlet UIImageView *detailsImageView;
 @property (nonatomic, retain) IBOutlet UILabel *placeNameLabel;
