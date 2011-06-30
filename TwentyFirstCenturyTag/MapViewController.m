@@ -153,6 +153,7 @@
 	//UIImage *pinImage = [UIImage imageNamed:@"ReplacementPinImage.png"];
 	//[customAnnotationView setImage:pinImage];
     customAnnotationView.canShowCallout = YES;
+    customAnnotationView.animatesDrop = YES;
 	UIImageView *leftIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"team_icon_placeholder.png"]];
 	customAnnotationView.leftCalloutAccessoryView = leftIconView;
 	UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
