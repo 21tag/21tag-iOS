@@ -12,6 +12,7 @@
 #import "MapViewController.h"
 #import "ProfileViewController.h"
 #import "ASIHTTPRequest.h"
+#import "PlaceDetailsViewController.h"
 
 #define kCellIdentifier @"Cell"
 
@@ -172,7 +173,13 @@
 {
     if(indexPath.section == 0) // Selected top item
     {
-        
+        PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
+        MapViewController *mapController = [[MapViewController alloc] init];
+
+        NSArray *controllers = [NSArray arrayWithObjects:self, mapController, placeDetailsController,nil];
+        [self.navigationController setViewControllers:controllers animated:YES];
+        [placeDetailsController release];
+        [mapController release];
     }
     else if(indexPath.section == 1)
     {

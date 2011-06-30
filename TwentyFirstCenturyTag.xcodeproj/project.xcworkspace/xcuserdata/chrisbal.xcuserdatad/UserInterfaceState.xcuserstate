@@ -215,7 +215,7 @@
 		<string>IDEWorkspaceTabControllerDesignAreaSplitView</string>
 		<string>IDEShowUtilities</string>
 		<string>AssistantEditorsLayout</string>
-		<string>MapViewController.m</string>
+		<string>DashboardViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -420,7 +420,7 @@
 				<integer>41</integer>
 			</dict>
 		</dict>
-		<string>MapViewController.m</string>
+		<string>DashboardViewController.m</string>
 		<dict>
 			<key>$classes</key>
 			<array>
@@ -481,7 +481,7 @@
 				<integer>50</integer>
 			</dict>
 			<key>NS.string</key>
-			<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.m</string>
+			<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/DashboardViewController.m</string>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -688,7 +688,7 @@
 			</array>
 		</dict>
 		<string>navigableItem_name</string>
-		<string>MapViewController.h</string>
+		<string>DashboardViewController.h</string>
 		<dict>
 			<key>$classes</key>
 			<array>
@@ -746,7 +746,7 @@
 				<integer>50</integer>
 			</dict>
 			<key>NS.string</key>
-			<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.h</string>
+			<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/DashboardViewController.h</string>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -1952,7 +1952,7 @@
 				</dict>
 			</array>
 		</dict>
-		<string>MapViewController.h</string>
+		<string>DashboardViewController.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -2023,12 +2023,12 @@
 		<string>PrimaryDocumentVisibleCharacterRange</string>
 		<string>HideAllIssues</string>
 		<string>PrimaryDocumentSelectedCharacterRange</string>
-		<real>331153718.63977402</real>
-		<string>{0, 708}</string>
+		<real>331154043.925331</real>
+		<string>{0, 786}</string>
 		<false/>
-		<string>{701, 0}</string>
-		<string>@interface MapViewController</string>
-		<string>MapViewController.h</string>
+		<string>{511, 0}</string>
+		<string>@interface DashboardViewController</string>
+		<string>DashboardViewController.h</string>
 		<string>Xcode.IDEKit.EditorDocument.SourceCode</string>
 		<dict>
 			<key>$class</key>
@@ -2047,7 +2047,7 @@
 				<integer>199</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.h</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/DashboardViewController.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -2315,10 +2315,10 @@
 				</dict>
 			</array>
 		</dict>
-		<real>331153718.639548</real>
-		<string>{3522, 1826}</string>
-		<string>{4593, 0}</string>
-		<string>-mapView:viewForAnnotation:</string>
+		<real>331154043.92518401</real>
+		<string>{5360, 1537}</string>
+		<string>{5951, 0}</string>
+		<string>-tableView:didSelectRowAtIndexPath:</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -2336,7 +2336,7 @@
 				<integer>218</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.m</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/DashboardViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -13666,19 +13666,19 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>976</integer>
+					<integer>187</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>977</integer>
+					<integer>188</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>978</integer>
+					<integer>189</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>979</integer>
+					<integer>190</integer>
 				</dict>
 			</array>
 			<key>NS.objects</key>
@@ -13701,9 +13701,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>330632902.86890298</real>
-		<string>{5577, 1530}</string>
-		<string>{6204, 0}</string>
+		<real>331154043.92407697</real>
+		<string>{5360, 1537}</string>
+		<string>{5951, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -14084,7 +14084,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>331152484.13975799</real>
+		<real>331153845.38269001</real>
 		<string>{0, 1481}</string>
 		<string>{1474, 0}</string>
 		<dict>
@@ -14844,7 +14844,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>331153718.63685203</real>
+		<real>331153841.08025903</real>
 		<string>{3522, 1826}</string>
 		<string>{4593, 0}</string>
 		<dict>
@@ -26562,7 +26562,7 @@
 				<integer>1987</integer>
 			</dict>
 			<key>NS.time</key>
-			<real>331153713.636343</real>
+			<real>331154040.70733702</real>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -26573,7 +26573,7 @@
 			<key>$classname</key>
 			<string>NSDate</string>
 		</dict>
-		<string>Today at 3:08 PM</string>
+		<string>Today at 3:14 PM</string>
 		<integer>106</integer>
 		<dict>
 			<key>$class</key>
@@ -26619,11 +26619,11 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>2001</integer>
+					<integer>2002</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>2003</integer>
+					<integer>2004</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -26656,7 +26656,7 @@
 				<integer>1993</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.m</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/DashboardViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -26674,7 +26674,7 @@
 				<integer>1995</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.h</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/DashboardViewController.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -26725,6 +26725,42 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
+				<integer>2001</integer>
+			</dict>
+		</dict>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.m</string>
+		<dict>
+			<key>$class</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>148</integer>
+			</dict>
+			<key>NS.base</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>0</integer>
+			</dict>
+			<key>NS.relative</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>2003</integer>
+			</dict>
+		</dict>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.h</string>
+		<dict>
+			<key>$class</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>148</integer>
+			</dict>
+			<key>NS.base</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>0</integer>
+			</dict>
+			<key>NS.relative</key>
+			<dict>
+				<key>CF$UID</key>
 				<integer>641</integer>
 			</dict>
 		</dict>
@@ -26742,7 +26778,7 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>2002</integer>
+				<integer>2006</integer>
 			</dict>
 		</dict>
 		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/SearchPlacesViewController.xib</string>
@@ -26760,7 +26796,7 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>2004</integer>
+				<integer>2008</integer>
 			</dict>
 		</dict>
 		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/SearchPlacesViewController.h</string>
@@ -26778,46 +26814,10 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>2006</integer>
-			</dict>
-		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/AllPlacesViewController.h</string>
-		<dict>
-			<key>$class</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>148</integer>
-			</dict>
-			<key>NS.base</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>0</integer>
-			</dict>
-			<key>NS.relative</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>2008</integer>
-			</dict>
-		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/AllPlacesViewController.xib</string>
-		<dict>
-			<key>$class</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>148</integer>
-			</dict>
-			<key>NS.base</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>0</integer>
-			</dict>
-			<key>NS.relative</key>
-			<dict>
-				<key>CF$UID</key>
 				<integer>2010</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/AllPlacesViewController.m</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/AllPlacesViewController.h</string>
 	</array>
 	<key>$top</key>
 	<dict>
