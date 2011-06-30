@@ -14,6 +14,7 @@
 @end
 
 @implementation TeamInfoViewController
+@synthesize activityIndicator;
 @synthesize teamImage;
 @synthesize teamNameLabel;
 @synthesize teamSloganLabel;
@@ -47,6 +48,7 @@
     [teamMembersLabel release];
     [locationsOwnedLabel release];
     [teamPointsLabel release];
+    [activityIndicator release];
     [super dealloc];
 }
 
@@ -162,7 +164,7 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
     
-
+    [activityIndicator startAnimating];
 }
 
 - (void)backPressed
@@ -182,6 +184,7 @@
     [self setTeamMembersLabel:nil];
     [self setLocationsOwnedLabel:nil];
     [self setTeamPointsLabel:nil];
+    [self setActivityIndicator:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
