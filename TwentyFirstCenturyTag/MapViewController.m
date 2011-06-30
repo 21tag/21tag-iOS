@@ -145,6 +145,10 @@
 }
 
 - (MKAnnotationView *) mapView:(MKMapView *) mapView viewForAnnotation:(id ) annotation {
+    if (annotation == mapView.userLocation) { 
+        return nil; 
+    } 
+    
 	MKPinAnnotationView *customAnnotationView=[[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil] autorelease];
 	//UIImage *pinImage = [UIImage imageNamed:@"ReplacementPinImage.png"];
 	//[customAnnotationView setImage:pinImage];
