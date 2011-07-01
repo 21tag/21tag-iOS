@@ -7,6 +7,7 @@
 //
 
 #import "NewTeamViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface NewTeamViewController()
 -(void) setupButtons;
@@ -141,6 +142,9 @@
     
     image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     teamImageView.image = image;
+    teamImageView.layer.masksToBounds = YES;
+    teamImageView.layer.cornerRadius = 4.0;
+    [teamImageView setNeedsDisplay];
     [self dismissModalViewControllerAnimated:YES];
 }
 

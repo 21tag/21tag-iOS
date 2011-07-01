@@ -14,6 +14,8 @@
 #import "ASIHTTPRequest.h"
 #import "PlaceDetailsViewController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #define kCellIdentifier @"Cell"
 
 @implementation DashboardViewController
@@ -95,8 +97,31 @@
 	cell.textLabel.text = [section objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    if(indexPath.section == 2)
+    if(indexPath.section == 1)
+    {
+        if(indexPath.row == 0) // Map and activity
+        {
+            cell.imageView.image = [UIImage imageNamed:@"map_marker.png"];
+        }
+        else if(indexPath.row == 1) // Your vault
+        {
+            
+        }
+        else if(indexPath.row == 2) // Your team
+        {
+            cell.imageView.image = [UIImage imageNamed:@"team.png"];
+        }
+        else    // Game Standings
+        {
+            cell.imageView.image = [UIImage imageNamed:@"trophy.png"];
+        }
+    }
+    if(indexPath.section == 2) // avatar
+    {
         cell.imageView.image = avatarImage;
+        cell.imageView.layer.masksToBounds = YES;
+        cell.imageView.layer.cornerRadius = 5.0;
+    }
     
 	return cell;
 }
