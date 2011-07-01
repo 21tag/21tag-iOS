@@ -101,19 +101,21 @@
     {
         if(indexPath.row == 0) // Map and activity
         {
-            cell.imageView.image = [UIImage imageNamed:@"map_marker.png"];
+            cell.imageView.image = [UIImage imageNamed:@"map_icon.png"];
+            cell.imageView.layer.masksToBounds = YES;
+            cell.imageView.layer.cornerRadius = 5.0;
         }
         else if(indexPath.row == 1) // Your vault
         {
-            
+            cell.imageView.image = [UIImage imageNamed:@"safe_icon.png"];
         }
         else if(indexPath.row == 2) // Your team
         {
-            cell.imageView.image = [UIImage imageNamed:@"team.png"];
+            cell.imageView.image = [UIImage imageNamed:@"team_icon.png"];
         }
         else    // Game Standings
         {
-            cell.imageView.image = [UIImage imageNamed:@"trophy.png"];
+            cell.imageView.image = [UIImage imageNamed:@"list_icon.png"];
         }
     }
     if(indexPath.section == 2) // avatar
