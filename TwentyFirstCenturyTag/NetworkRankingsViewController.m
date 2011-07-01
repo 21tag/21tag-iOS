@@ -39,6 +39,23 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"back_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    CGRect buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(backButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+
+    self.navigationItem.leftBarButtonItem = backButton;
+    
+    
+    self.title = @"Network Rankings";
 }
 
 - (void)viewDidUnload
@@ -48,10 +65,9 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+-(void)backButtonPressed
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

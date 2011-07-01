@@ -78,8 +78,6 @@
 		D987AF8B13B509EE00855AC5 /* join_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D987AF8713B509DC00855AC5 /* join_button.png */; };
 		D987AF8C13B509EE00855AC5 /* join_button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D987AF8813B509E100855AC5 /* join_button_pressed@2x.png */; };
 		D987AF8D13B509EE00855AC5 /* join_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D987AF8913B509E600855AC5 /* join_button@2x.png */; };
-		D987AF9113B521D800855AC5 /* RankingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF8F13B5208100855AC5 /* RankingsViewController.m */; };
-		D987AF9213B521DB00855AC5 /* RankingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D987AF9013B520A200855AC5 /* RankingsViewController.xib */; };
 		D99D0B8F13BB953C00D27E58 /* PlaceDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D99D0B8D13BB953C00D27E58 /* PlaceDetailsViewController.m */; };
 		D99D0B9013BB953C00D27E58 /* PlaceDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D99D0B8E13BB953C00D27E58 /* PlaceDetailsViewController.xib */; };
 		D99D0B9313BB973000D27E58 /* check_in_here_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D99D0B9113BB973000D27E58 /* check_in_here_button.png */; };
@@ -281,9 +279,6 @@
 		D987AF8713B509DC00855AC5 /* join_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = join_button.png; sourceTree = "<group>"; };
 		D987AF8813B509E100855AC5 /* join_button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "join_button_pressed@2x.png"; sourceTree = "<group>"; };
 		D987AF8913B509E600855AC5 /* join_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "join_button@2x.png"; sourceTree = "<group>"; };
-		D987AF8E13B5207900855AC5 /* RankingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingsViewController.h; sourceTree = "<group>"; };
-		D987AF8F13B5208100855AC5 /* RankingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingsViewController.m; sourceTree = "<group>"; };
-		D987AF9013B520A200855AC5 /* RankingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingsViewController.xib; sourceTree = "<group>"; };
 		D99D0B8C13BB953C00D27E58 /* PlaceDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailsViewController.h; sourceTree = "<group>"; };
 		D99D0B8D13BB953C00D27E58 /* PlaceDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailsViewController.m; sourceTree = "<group>"; };
 		D99D0B8E13BB953C00D27E58 /* PlaceDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceDetailsViewController.xib; sourceTree = "<group>"; };
@@ -704,8 +699,6 @@
 				D99D0B8D13BB953C00D27E58 /* PlaceDetailsViewController.m */,
 				D9B898E613B27DC500A632AD /* TeamInfoViewController.h */,
 				D9B898E713B27DC500A632AD /* TeamInfoViewController.m */,
-				D987AF8E13B5207900855AC5 /* RankingsViewController.h */,
-				D987AF8F13B5208100855AC5 /* RankingsViewController.m */,
 				D9B8990813B2A32200A632AD /* MapViewController.h */,
 				D9B8990913B2A32200A632AD /* MapViewController.m */,
 				D99D0BB713BBA89300D27E58 /* PlaceAnnotation.h */,
@@ -764,7 +757,6 @@
 				D9174F5213B15E5B00600189 /* Images */,
 				D99D0BC013BBB44A00D27E58 /* SearchPlacesViewController.xib */,
 				D99D0B8E13BB953C00D27E58 /* PlaceDetailsViewController.xib */,
-				D987AF9013B520A200855AC5 /* RankingsViewController.xib */,
 				D987AF2F13B3C22C00855AC5 /* AllPlacesViewController.xib */,
 				D9F5FA8A13B2FE1500222A16 /* NetworkRankingsViewController.xib */,
 				D9F5FA8513B2FB4300222A16 /* ProfileViewController.xib */,
@@ -950,7 +942,6 @@
 				D987AF8B13B509EE00855AC5 /* join_button.png in Resources */,
 				D987AF8C13B509EE00855AC5 /* join_button_pressed@2x.png in Resources */,
 				D987AF8D13B509EE00855AC5 /* join_button@2x.png in Resources */,
-				D987AF9213B521DB00855AC5 /* RankingsViewController.xib in Resources */,
 				D99D0B9013BB953C00D27E58 /* PlaceDetailsViewController.xib in Resources */,
 				D99D0B9313BB973000D27E58 /* check_in_here_button.png in Resources */,
 				D99D0B9413BB973000D27E58 /* check_in_here_button@2x.png in Resources */,
@@ -1015,7 +1006,6 @@
 				D987AF6413B3DAE000855AC5 /* ASIInputStream.m in Sources */,
 				D987AF6513B3DAE000855AC5 /* ASINetworkQueue.m in Sources */,
 				D987AF6613B3DAE000855AC5 /* Reachability.m in Sources */,
-				D987AF9113B521D800855AC5 /* RankingsViewController.m in Sources */,
 				D99D0B8F13BB953C00D27E58 /* PlaceDetailsViewController.m in Sources */,
 				D99D0BB913BBA89400D27E58 /* PlaceAnnotation.m in Sources */,
 				D99D0BC113BBB44B00D27E58 /* SearchPlacesViewController.m in Sources */,

@@ -13,6 +13,7 @@
 #import "ProfileViewController.h"
 #import "ASIHTTPRequest.h"
 #import "PlaceDetailsViewController.h"
+#import "NetworkRankingsViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -218,7 +219,9 @@
         }
         else if(indexPath.row == 1) // Your Vault
         {
-            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Coming Soon" message:@"This feature is still under development. Check back later!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            [alert show];
+            [alert release];
         }
         else if(indexPath.row == 2) // Your Team
         {
@@ -229,7 +232,9 @@
         }
         else    // Game Standings
         {
-            
+            NetworkRankingsViewController *networkRankingsController = [[NetworkRankingsViewController alloc] init];
+            [self.navigationController pushViewController:networkRankingsController animated:YES];
+            [networkRankingsController release];
         }
     }
     else    // Your Profile
