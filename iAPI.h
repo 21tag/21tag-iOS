@@ -14,6 +14,7 @@
 
 @protocol iAPI <NSObject>
 @required
+-(id) initWithData: (NSData*) jsonData;
 -(void) parseJSON: (NSData*) jsonData;
 -(NSData*) toJSON;
 -(NSString*) getAPIType;

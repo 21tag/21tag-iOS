@@ -24,6 +24,15 @@
     return self;
 }
 
+-(id)initWithData:(NSData*) jsonData
+{
+    self = [self init];
+    
+    [self parseJSON:jsonData];
+    
+    return self;
+}
+
 // iAPI methods
 -(void) parseJSON: (NSData*) jsonData
 {
@@ -56,6 +65,6 @@
 {
     myId = i;
 }
-
+//end API methods
 
 @end
