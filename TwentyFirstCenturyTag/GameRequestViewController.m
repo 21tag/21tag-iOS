@@ -7,6 +7,7 @@
 //
 
 #import "GameRequestViewController.h"
+#import "ASIFormDataRequest.h"
 
 @interface GameRequestViewController()
 
@@ -19,6 +20,7 @@
 @synthesize schoolTextField;
 @synthesize locationTextField;
 @synthesize emailTextField;
+@synthesize activityIndicator;
 @synthesize navigationItem;
 @synthesize navigationBar;
 
@@ -39,6 +41,7 @@
     [emailTextField release];
     [scrollView release];
     [navigationItem release];
+    [activityIndicator release];
     [super dealloc];
 }
 
@@ -108,6 +111,7 @@
     [self setEmailTextField:nil];
     [self setScrollView:nil];
     [self setNavigationItem:nil];
+    [self setActivityIndicator:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -119,12 +123,27 @@
 }
 - (IBAction)sendRequestPressed:(id)sender 
 {
-    self.navigationBar.topItem.title = @"Thanks!";
-    CGRect frame = scrollView.frame;
-    frame.origin.x = frame.size.width;
-    frame.origin.y = 0;
-    [scrollView scrollRectToVisible:frame animated:YES];
-    self.navigationItem.leftBarButtonItem = doneButton;
+    //			httpGet(HOST+"/ragsignup?app=true&campus="+URLEncoder.encode(campus, "UTF-8")+"&email="+email);
+    if([schoolTextField.text isEqualToString:@""] || [locationTextField.text isEqualToString:@""])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"More Information" message:@"Please fill in the school and location fields and try again." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+        [alert release];
+    }
+    else
+    {
+        [activityIndicator startAnimating];
+        NSURL *url = [NSURL URLWithString:@"http://21tag.com:8689/tagsignup"];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        
+        NSString *campus = [NSString stringWithFormat:@"%@, %@",schoolTextField.text,locationTextField.text];
+        
+        [request setPostValue:@"true" forKey:@"app"];
+        [request setPostValue:campus forKey:@"campus"];
+        [request setPostValue:emailTextField.text forKey:@"email"];
+        [request setDelegate:self];
+        [request startAsynchronous];
+    }
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -147,6 +166,28 @@
     isScrolledUp = NO;
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    [activityIndicator stopAnimating];
+    self.navigationBar.topItem.title = @"Thanks!";
+    CGRect frame = scrollView.frame;
+    frame.origin.x = frame.size.width;
+    frame.origin.y = 0;
+    [scrollView scrollRectToVisible:frame animated:YES];
+    self.navigationItem.leftBarButtonItem = doneButton;
+
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    [activityIndicator stopAnimating];
+    NSError *error = [request error];
+    NSLog(@"%@",error);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
+    [alert release];
 }
 
 @end

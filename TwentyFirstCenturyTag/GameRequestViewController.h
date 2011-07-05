@@ -21,7 +21,9 @@
     CGPoint scrollViewOriginalState;
     BOOL isScrolledUp;
     UINavigationItem *navigationItem;
+    UIActivityIndicatorView *activityIndicator;
 }
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UINavigationItem *navigationItem;
 
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
