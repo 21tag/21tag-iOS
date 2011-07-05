@@ -8,29 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "APIObj.h"
-
-/*
-				
- 
- public String firstname;
- public String lastname;
- public String photo;
- public String gender;
- public String phone;
- public String email;
- public String fid;
- public String password;
- public String fb_authcode;
- public String team;
- public String teamname;
- public String currentVenueId;
- public String currentVenueName;	
- public long currentVenueTime;
- public long currentVenueLastTime;
- public HashMap<String, Long> points;
- public HashMap<String, Venue> venuedata;
- public ArrayList<String> history;
- */
+#import "Venue.h"
 
 @interface User : APIObj {
 //private
@@ -98,5 +76,18 @@
 @property (nonatomic, retain) NSArray *history;
 
 -(void)addHistory:(NSString*) hist;
+
+-(void)addVenueData:(Venue*) v;
+-(void)clearVenue;
+-(BOOL)setVenue:(Venue*) v;
+
+-(long)deltaTime;
+-(NSArray*)getVenueIds;
+-(BOOL)addPointsToAll:(long) delta;
+-(void)addPointsToVenue:(Venue*)v delta:(long)delta;
+-(void)addPoints:(NSString*) the_id delta:(long)delta;
+-(void)setPoints:(NSString*) the_id point:(long)point;
+-(long)getPointsFromVenue:(Venue*) v;
+-(long)getPointsFromID:(NSString*) the_id;
 
 @end
