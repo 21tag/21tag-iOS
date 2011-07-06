@@ -180,6 +180,7 @@
 		D9F588D013C38FBB00FA88BD /* ErrorResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F588CF13C38FBA00FA88BD /* ErrorResp.m */; };
 		D9F588D913C3A07300FA88BD /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F588D813C3A07300FA88BD /* User.m */; };
 		D9F588DC13C3D52B00FA88BD /* Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F588DB13C3D52B00FA88BD /* Venue.m */; };
+		D9F588DF13C3DCB400FA88BD /* VenuesResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F588DE13C3DCB400FA88BD /* VenuesResp.m */; };
 		D9F5FA8613B2FB4300222A16 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5FA8413B2FB4300222A16 /* ProfileViewController.m */; };
 		D9F5FA8713B2FB4300222A16 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9F5FA8513B2FB4300222A16 /* ProfileViewController.xib */; };
 		D9F5FA8B13B2FE1500222A16 /* NetworkRankingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5FA8913B2FE1400222A16 /* NetworkRankingsViewController.m */; };
@@ -425,6 +426,8 @@
 		D9F588D813C3A07300FA88BD /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		D9F588DA13C3D52B00FA88BD /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Venue.h; sourceTree = "<group>"; };
 		D9F588DB13C3D52B00FA88BD /* Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Venue.m; sourceTree = "<group>"; };
+		D9F588DD13C3DCB300FA88BD /* VenuesResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenuesResp.h; sourceTree = "<group>"; };
+		D9F588DE13C3DCB400FA88BD /* VenuesResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenuesResp.m; sourceTree = "<group>"; };
 		D9F5FA8313B2FB4300222A16 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		D9F5FA8413B2FB4300222A16 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		D9F5FA8513B2FB4300222A16 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -817,6 +820,8 @@
 				D9F588D813C3A07300FA88BD /* User.m */,
 				D9F588DA13C3D52B00FA88BD /* Venue.h */,
 				D9F588DB13C3D52B00FA88BD /* Venue.m */,
+				D9F588DD13C3DCB300FA88BD /* VenuesResp.h */,
+				D9F588DE13C3DCB400FA88BD /* VenuesResp.m */,
 				D9F588B913C3810B00FA88BD /* iAPI.h */,
 			);
 			name = API;
@@ -1062,6 +1067,7 @@
 				D9F588D013C38FBB00FA88BD /* ErrorResp.m in Sources */,
 				D9F588D913C3A07300FA88BD /* User.m in Sources */,
 				D9F588DC13C3D52B00FA88BD /* Venue.m in Sources */,
+				D9F588DF13C3DCB400FA88BD /* VenuesResp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
