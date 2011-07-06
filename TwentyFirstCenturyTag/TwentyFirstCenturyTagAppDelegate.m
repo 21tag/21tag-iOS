@@ -12,6 +12,7 @@
 #import "LoginScreenViewController.h"
 #import "ChooseNetworkViewController.h"
 #import "FacebookController.h"
+#import "DashboardViewController.h"
 
 @implementation UINavigationBar (CustomImage)
 - (void)drawRect:(CGRect)rect {
@@ -50,9 +51,17 @@
     }
     else
     {
-        // Else take user to Dashboard
-        ChooseNetworkViewController *chooseNetworkController = [[ChooseNetworkViewController alloc] init];
-        rootController = chooseNetworkController;
+        // If no network, choose network
+        if(![defaults objectForKey:@"network"])
+        {
+            ChooseNetworkViewController *chooseNetworkController = [[ChooseNetworkViewController alloc] init];
+            rootController = chooseNetworkController;
+        }
+        else //otherwise take user to dashboard
+        {
+            DashboardViewController *dashController = [[DashboardViewController alloc] init];
+            rootController = dashController;
+        }
     }
 
     self.facebook.sessionDelegate = self;
@@ -80,10 +89,23 @@
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
     [defaults synchronize];
     
-    ChooseNetworkViewController *chooseNetworkController = [[ChooseNetworkViewController alloc] init];
-    NSArray *viewControllerList = [NSArray arrayWithObject:chooseNetworkController];
-    [self.navigationController setViewControllers:viewControllerList animated:YES];
-    [chooseNetworkController release];
+    
+    NSString* team = [defaults objectForKey:@"network"];
+    if(!team) // if not a member of a network, choose a network
+    {
+        ChooseNetworkViewController *chooseNetworkController = [[ChooseNetworkViewController alloc] init];
+        NSArray *viewControllerList = [NSArray arrayWithObject:chooseNetworkController];
+        [self.navigationController setViewControllers:viewControllerList animated:YES];
+        [chooseNetworkController release];
+    }
+    else
+    {
+        DashboardViewController *dashController = [[DashboardViewController alloc] init];
+        NSArray *viewControllerList = [NSArray arrayWithObject:dashController];
+        [self.navigationController setViewControllers:viewControllerList animated:YES];
+        [dashController release];
+
+    }
 }
 
 - (void)fbDidLogout

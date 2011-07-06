@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "APIObj.h"
 
 
 @interface APIUtil : NSObject {
@@ -17,6 +18,8 @@
     NSString *msgHostName;
     int msgPort;
     NSString *msgHost;
+    
+    id *delegate;
 }
 
 @property (nonatomic, retain) NSString *hostName;

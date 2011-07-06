@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
+#import "Venue.h"
 
 @interface PlaceAnnotation : NSObject <MKAnnotation>{
-    
 }
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;

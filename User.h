@@ -75,7 +75,7 @@
 @property (nonatomic, retain) NSDictionary *venuedata;
 @property (nonatomic, retain) NSArray *history;
 
--(void)addHistory:(NSString*) hist;
+/*-(void)addHistory:(NSString*) hist;
 
 -(void)addVenueData:(Venue*) v;
 -(void)clearVenue;
@@ -88,6 +88,6 @@
 -(void)addPoints:(NSString*) the_id delta:(long)delta;
 -(void)setPoints:(NSString*) the_id point:(long)point;
 -(long)getPointsFromVenue:(Venue*) v;
--(long)getPointsFromID:(NSString*) the_id;
+-(long)getPointsFromID:(NSString*) the_id;*/
 
 @end

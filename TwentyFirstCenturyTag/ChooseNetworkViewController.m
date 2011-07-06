@@ -117,6 +117,10 @@
 
 - (IBAction)harvardPressed:(id)sender 
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"harvard" forKey:@"network"];
+    [defaults synchronize];
+    
     locationController = [LocationController sharedInstance];
     [locationController.locationManager startUpdatingLocation];
     locationController.delegate = self;

@@ -10,7 +10,14 @@
 #import "APIObj.h"
 
 @interface VenuesResp : APIObj {
+    NSString *APITYPE;
+    NSString *GROUPS;
+    NSString *VENUES;
     
+    NSArray *venues;
 }
+
+@property (nonatomic, retain) NSString *APITYPE;
+@property (nonatomic, retain) NSArray *venues;
 
 @end

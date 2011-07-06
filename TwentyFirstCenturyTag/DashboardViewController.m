@@ -48,13 +48,17 @@
     NSURL *avatarURL = [NSURL URLWithString:avatarURLString];
     ASIHTTPRequest *pictureRequest = [ASIHTTPRequest requestWithURL:avatarURL];
     [pictureRequest setDelegate:self];
+    [pictureRequest setTag:0];
     [pictureRequest startAsynchronous];
 };
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    avatarImage = [[UIImage imageWithData:[request responseData]] retain];
-    [navigationTableView reloadData];
+    if(request.tag == 0)
+    {
+        avatarImage = [[UIImage imageWithData:[request responseData]] retain];
+        [navigationTableView reloadData];
+    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
