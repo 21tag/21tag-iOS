@@ -12,8 +12,10 @@
 #import "MapViewController.h"
 #import "ProfileViewController.h"
 #import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
 #import "PlaceDetailsViewController.h"
 #import "NetworkRankingsViewController.h"
+#import "APIUtil.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -39,11 +41,31 @@
     if ([result isKindOfClass:[NSArray class]]) {
         result = [result objectAtIndex:0];
     }
+    
+    /*
+     String extra = "fbauthcode="+TagPreferences.AUTHCODE+
+     "&nohtml=true&email="+email+
+     "&firstname="+fname+
+     (fid != null ? "&fid="+fid : "") +
+     (lname != null ? "&lastname="+lname : "");
+     return handleResponse(httpGet(HOST+"/adduser?"+extra), new User());*/
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    
+    NSString *facebookID = [result objectForKey:@"id"];
+    facebookRequestResults = [(NSDictionary*) result retain];
+
+    // try to log in
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/login",[APIUtil host]]];    
+    ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+    [formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
+    [formRequest setDelegate:self];
+    [formRequest setTag:1];
+    [formRequest startAsynchronous];
 
     NSArray *name = [NSArray arrayWithObject:[result objectForKey:@"name"]];
     [contentList replaceObjectAtIndex:2 withObject:name];
     
-    NSString *facebookID = [result objectForKey:@"id"];
     NSString *avatarURLString = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square",facebookID];
     NSURL *avatarURL = [NSURL URLWithString:avatarURLString];
     ASIHTTPRequest *pictureRequest = [ASIHTTPRequest requestWithURL:avatarURL];
@@ -58,6 +80,47 @@
     {
         avatarImage = [[UIImage imageWithData:[request responseData]] retain];
         [navigationTableView reloadData];
+    }
+    else if(request.tag == 1) 
+    {
+        int statusCode = [request responseStatusCode];
+
+        NSLog(@"%d: %@",statusCode, [request responseString]);
+        
+        if(statusCode == 403 || statusCode == 404)
+        {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSDictionary *result = facebookRequestResults;
+            NSString *facebookID = [result objectForKey:@"id"];
+            NSString *email = [result objectForKey:@"email"];
+            NSString *first_name = [result objectForKey:@"first_name"];
+            NSString *last_name = [result objectForKey:@"last_name"];
+            
+            NSLog(@"%@",facebookID);
+            
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/adduser",[APIUtil host]]];
+            
+            ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+            [formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
+            [formRequest addPostValue:@"true" forKey:@"nohtml"];
+            [formRequest addPostValue:email forKey:@"email"];
+            [formRequest addPostValue:first_name forKey:@"firstname"];
+            [formRequest addPostValue:facebookID forKey:@"fid"];
+            [formRequest addPostValue:last_name forKey:@"lastname"];
+            [formRequest setDelegate:self];
+            [formRequest setTag:2];
+            [formRequest startAsynchronous];
+        }
+        else
+        {
+            NSLog(@"account already exists");
+        }
+        
+
+    }
+    else if(request.tag == 2) // create new account response
+    {
+        NSLog(@"new account: %@",[request responseString]);
     }
 }
 

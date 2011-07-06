@@ -106,8 +106,10 @@
 {
     TwentyFirstCenturyTagAppDelegate *delegate = (TwentyFirstCenturyTagAppDelegate*)[[UIApplication sharedApplication] delegate];
 
+    NSArray* permissions =  [NSArray arrayWithObject:@"email"];    
+
     //self.navigationController.navigationBarHidden = NO;
-    [facebook authorize:nil delegate:delegate];
+    [facebook authorize:permissions delegate:delegate];
 }
 
 - (IBAction)pageChanged:(id)sender {

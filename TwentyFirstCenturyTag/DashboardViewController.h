@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Facebook.h"
+#import "User.h"
 
 @interface DashboardViewController : UIViewController <FBRequestDelegate, UITableViewDelegate, UITableViewDataSource> {
     
@@ -17,6 +18,9 @@
     BOOL isCheckedIn;
     UITableView *navigationTableView;
     UIImage *avatarImage;
+    
+    NSDictionary *facebookRequestResults;
+    User *user;
 }
 @property (nonatomic, retain) IBOutlet UITableView *navigationTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;

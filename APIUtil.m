@@ -8,32 +8,11 @@
 
 #import "APIUtil.h"
 
-
 @implementation APIUtil
 
-@synthesize hostName;
-@synthesize port;
-@synthesize host;
-
-@synthesize msgHostName;
-@synthesize msgPort;
-@synthesize msgHost;
-
-
--(id)init
++(NSString*)host
 {
-    self = [super init];
-    if(self)
-    {
-        hostName = @"http://21tag.com";
-        port = 8689;
-        host = [NSString stringWithFormat:@"%@:%d",hostName,port];
-        
-        msgHostName = @"http://21tag.com";
-        msgPort = 8689;
-        msgHost = [NSString stringWithFormat:@"%@:%d",msgHostName,msgPort];
-    }
-    return self;
+    return @"http://21tag.com:8689";
 }
 
 @end
