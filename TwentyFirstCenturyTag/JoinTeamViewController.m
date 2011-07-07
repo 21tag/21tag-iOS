@@ -70,6 +70,7 @@
     
     contentList = [NSMutableArray arrayWithObjects:@"Kickin' Wing", @"Dark Wing Ducks", @"Create a new team", @"Search all teams", nil];
     [contentList retain];
+    
 }
 
 - (void)cancelPressed

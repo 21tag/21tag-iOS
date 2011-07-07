@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @interface JoinTeamViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSMutableArray *contentList;
     UITableView *navigationTableView;

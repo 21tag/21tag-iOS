@@ -41,37 +41,53 @@
     if ([result isKindOfClass:[NSArray class]]) {
         result = [result objectAtIndex:0];
     }
-    
-    /*
-     String extra = "fbauthcode="+TagPreferences.AUTHCODE+
-     "&nohtml=true&email="+email+
-     "&firstname="+fname+
-     (fid != null ? "&fid="+fid : "") +
-     (lname != null ? "&lastname="+lname : "");
-     return handleResponse(httpGet(HOST+"/adduser?"+extra), new User());*/
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    
-    NSString *facebookID = [result objectForKey:@"id"];
-    facebookRequestResults = [(NSDictionary*) result retain];
 
-    // try to log in
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/login",[APIUtil host]]];    
-    ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
-    [formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
-    [formRequest setDelegate:self];
-    [formRequest setTag:1];
-    [formRequest startAsynchronous];
+    if(isRequestingFriendsList)
+    {
+        NSArray *data = [result objectForKey:@"data"];
+        NSMutableString *friendIDs = [[NSMutableString alloc] init];
+        NSDictionary *friend;
+        
+        for(int i = 0; i < [data count]; i++)
+        {
+            if(i != 0) [friendIDs appendString:@","];
+            friend = [data objectAtIndex:i];
+            [friendIDs appendString:[friend objectForKey:@"id"]];
+        }
+        [defaults setObject:friendIDs forKey:@"friends"];
+        [defaults synchronize];
+        [friendIDs release];
+        isRequestingFriendsList = NO;
+    }
+    else
+    {
+        
+        NSString *facebookID = [result objectForKey:@"id"];
+        facebookRequestResults = [(NSDictionary*) result retain];
 
-    NSArray *name = [NSArray arrayWithObject:[result objectForKey:@"name"]];
-    [contentList replaceObjectAtIndex:2 withObject:name];
-    
-    NSString *avatarURLString = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square",facebookID];
-    NSURL *avatarURL = [NSURL URLWithString:avatarURLString];
-    ASIHTTPRequest *pictureRequest = [ASIHTTPRequest requestWithURL:avatarURL];
-    [pictureRequest setDelegate:self];
-    [pictureRequest setTag:0];
-    [pictureRequest startAsynchronous];
+        // try to log in
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/login",[APIUtil host]]];    
+        ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+        [formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
+        [formRequest setDelegate:self];
+        [formRequest setTag:1];
+        [formRequest startAsynchronous];
+
+        NSArray *name = [NSArray arrayWithObject:[result objectForKey:@"name"]];
+        [contentList replaceObjectAtIndex:2 withObject:name];
+        
+        NSString *avatarURLString = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square",facebookID];
+        NSURL *avatarURL = [NSURL URLWithString:avatarURLString];
+        ASIHTTPRequest *pictureRequest = [ASIHTTPRequest requestWithURL:avatarURL];
+        [pictureRequest setDelegate:self];
+        [pictureRequest setTag:0];
+        [pictureRequest startAsynchronous];
+        
+        [facebook requestWithGraphPath:@"me/friends" andDelegate:self];
+        isRequestingFriendsList = YES;
+    }
+
 };
 
 - (void)requestFinished:(ASIHTTPRequest *)request
@@ -113,7 +129,7 @@
         }
         else
         {
-            NSLog(@"account already exists");
+            NSLog(@"logged in");
         }
         
 
@@ -128,6 +144,9 @@
 {
     NSError *error = [request error];
     NSLog(@"%@",error);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
 }
 
 /**
@@ -135,7 +154,9 @@
  * successfully.
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
-    [self.nameLabel setText:[error localizedDescription]];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
 };
 
 #pragma mark - Table view data source
