@@ -10,6 +10,10 @@
 		D925BEC513BD59A200B515DE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D925BEC413BD59A200B515DE /* QuartzCore.framework */; };
 		D925BECE13BD62AE00B515DE /* team_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D925BEC813BD62AE00B515DE /* team_icon.png */; };
 		D925BED113BD62AE00B515DE /* team_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D925BECB13BD62AE00B515DE /* team_icon@2x.png */; };
+		D9514E3C13C54962005A652D /* no_found_teams.png in Resources */ = {isa = PBXBuildFile; fileRef = D9514E3A13C54962005A652D /* no_found_teams.png */; };
+		D9514E3D13C54962005A652D /* no_found_teams@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9514E3B13C54962005A652D /* no_found_teams@2x.png */; };
+		D9514E4013C54E4E005A652D /* loading_teams.png in Resources */ = {isa = PBXBuildFile; fileRef = D9514E3E13C54E4E005A652D /* loading_teams.png */; };
+		D9514E4113C54E4E005A652D /* loading_teams@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9514E3F13C54E4E005A652D /* loading_teams@2x.png */; };
 		D97A5BD513B106A100D3FFFA /* campus_request_form.png in Resources */ = {isa = PBXBuildFile; fileRef = D97A5BD313B106A100D3FFFA /* campus_request_form.png */; };
 		D97A5BD613B106A100D3FFFA /* campus_request_form@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D97A5BD413B106A100D3FFFA /* campus_request_form@2x.png */; };
 		D97A5BDD13B107C700D3FFFA /* campus_send_request_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D97A5BDB13B107C700D3FFFA /* campus_send_request_button.png */; };
@@ -201,6 +205,10 @@
 		D925BEC413BD59A200B515DE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D925BEC813BD62AE00B515DE /* team_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = team_icon.png; sourceTree = "<group>"; };
 		D925BECB13BD62AE00B515DE /* team_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "team_icon@2x.png"; sourceTree = "<group>"; };
+		D9514E3A13C54962005A652D /* no_found_teams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_found_teams.png; sourceTree = "<group>"; };
+		D9514E3B13C54962005A652D /* no_found_teams@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_found_teams@2x.png"; sourceTree = "<group>"; };
+		D9514E3E13C54E4E005A652D /* loading_teams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_teams.png; sourceTree = "<group>"; };
+		D9514E3F13C54E4E005A652D /* loading_teams@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading_teams@2x.png"; sourceTree = "<group>"; };
 		D97A5BD313B106A100D3FFFA /* campus_request_form.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = campus_request_form.png; sourceTree = "<group>"; };
 		D97A5BD413B106A100D3FFFA /* campus_request_form@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "campus_request_form@2x.png"; sourceTree = "<group>"; };
 		D97A5BDB13B107C700D3FFFA /* campus_send_request_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = campus_send_request_button.png; sourceTree = "<group>"; };
@@ -461,6 +469,10 @@
 			isa = PBXGroup;
 			children = (
 				D925BED213BD62B300B515DE /* Dashboard */,
+				D9514E3E13C54E4E005A652D /* loading_teams.png */,
+				D9514E3F13C54E4E005A652D /* loading_teams@2x.png */,
+				D9514E3A13C54962005A652D /* no_found_teams.png */,
+				D9514E3B13C54962005A652D /* no_found_teams@2x.png */,
 				D99D0B9913BB9A9100D27E58 /* place_details_info_box.png */,
 				D99D0B9A13BB9A9100D27E58 /* place_details_info_box@2x.png */,
 				D99D0B9513BB993000D27E58 /* recent_activity_separator.png */,
@@ -1012,6 +1024,10 @@
 				D9810EAE13BE4BA200F3CBC0 /* map_icon.png in Resources */,
 				D9810EAF13BE4BA200F3CBC0 /* map_icon@2x.png in Resources */,
 				D9F588A413C379CC00FA88BD /* FBDialog.bundle in Resources */,
+				D9514E3C13C54962005A652D /* no_found_teams.png in Resources */,
+				D9514E3D13C54962005A652D /* no_found_teams@2x.png in Resources */,
+				D9514E4013C54E4E005A652D /* loading_teams.png in Resources */,
+				D9514E4113C54E4E005A652D /* loading_teams@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,10 +10,16 @@
 #import "NewTeamViewController.h"
 #import "TeamInfoViewController.h"
 
+#import "ASIFormDataRequest.h"
+#import "JSONKit.h"
+#import "APIUtil.h"
+
 #define kCellIdentifier @"Cell"
 
 @implementation JoinTeamViewController
 
+@synthesize statusImageView;
+@synthesize activityIndicator;
 @synthesize contentList;
 @synthesize navigationTableView;
 
@@ -29,6 +35,8 @@
 - (void)dealloc
 {
     [navigationTableView release];
+    [activityIndicator release];
+    [statusImageView release];
     [super dealloc];
 }
 
@@ -71,6 +79,45 @@
     contentList = [NSMutableArray arrayWithObjects:@"Kickin' Wing", @"Dark Wing Ducks", @"Create a new team", @"Search all teams", nil];
     [contentList retain];
     
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    if([defaults objectForKey:@"friends"])
+        [self searchFriendsList];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(searchFriendsList)
+     name:@"FriendsUpdatedNotification"
+     object:nil ];
+    
+    [activityIndicator startAnimating];
+}
+
+- (void)searchFriendsList
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getteamsbyfbids",[APIUtil host]]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:[defaults objectForKey:@"friends"] forKey:@"fbids"];
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"%@",[request responseString]);
+    
+    statusImageView.image = [UIImage imageNamed:@"no_found_teams.png"];
+    [statusImageView setNeedsDisplay];
+    [activityIndicator stopAnimating];
+}
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
+    [activityIndicator stopAnimating];
 }
 
 - (void)cancelPressed
@@ -130,7 +177,6 @@
     
 	return cell;
 }
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -161,6 +207,8 @@
 - (void)viewDidUnload
 {
     [self setNavigationTableView:nil];
+    [self setActivityIndicator:nil];
+    [self setStatusImageView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

@@ -16,6 +16,7 @@
 #import "PlaceDetailsViewController.h"
 #import "NetworkRankingsViewController.h"
 #import "APIUtil.h"
+#import "JoinTeamViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -59,6 +60,9 @@
         [defaults synchronize];
         [friendIDs release];
         isRequestingFriendsList = NO;
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"FriendsUpdatedNotification"
+         object:nil ];
     }
     else
     {
@@ -275,6 +279,15 @@
     navigationTableView.backgroundColor = [UIColor clearColor];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if(![defaults objectForKey:@"team"])
+    {
+        JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
+        [self.navigationController pushViewController:joinTeamController animated:NO];
+        [joinTeamController release];
+    }
 
 }
 
