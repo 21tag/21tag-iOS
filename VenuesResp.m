@@ -8,6 +8,7 @@
 
 #import "VenuesResp.h"
 #import "Venue.h"
+#import "JSONKit.h"
 
 @implementation VenuesResp
 
@@ -35,14 +36,21 @@
     
     return self;
 }
-/*-(void) parseJSON: (NSData*) jsonData
+-(void) parseJSON: (NSData*) jsonData
 {
     [super parseJSON:jsonData];
     JSONDecoder *jsonKitDecoder = [JSONDecoder decoder];
-    NSDictionary *fields = [jsonKitDecoder objectWithData:jsonData];
-    NSArray 
+    NSDictionary *response = [jsonKitDecoder objectWithData:jsonData];
+    NSArray *rawVenues = [response objectForKey:@"venues"];
+    venues = [[NSMutableArray alloc] initWithCapacity:[rawVenues count]];
+    
+    for(int i = 0; i < [rawVenues count]; i++)
+    {
+        [venues addObject:[[Venue alloc] initWithDictionary:[rawVenues objectAtIndex:i]]];
+    }
+    
 }
--(NSData*) toJSON;
+/*-(NSData*) toJSON;
 {
     NSArray *objects = [NSArray arrayWithObjects:myId, _id, name, address, crossstreet, city, state, zip, [NSNumber numberWithDouble: geolat], [NSNumber numberWithDouble: geolong], [NSNumber numberWithBool: tag_playable], tag_ownerid, nil];
     NSArray *keys = [NSArray arrayWithObjects:ID, _ID, NAME, ADDRESS, CROSSSTREET, CITY, STATE, ZIP, GEOLAT, GEOLONG, TAGPLAYABLE, TAGOWNER, nil];

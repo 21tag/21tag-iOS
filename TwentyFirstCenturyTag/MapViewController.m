@@ -10,6 +10,9 @@
 #import "AllPlacesViewController.h"
 #import "PlaceDetailsViewController.h"
 #import "PlaceAnnotation.h"
+#import "ASIFormDataRequest.h"
+#import "APIUtil.h"
+#import "VenuesResp.h"
 
 @implementation MapViewController
 @synthesize currentMapView;
@@ -81,14 +84,21 @@
     locationController = [LocationController sharedInstance];
     locationController.delegate = self;
     
-    PlaceAnnotation *someAnnotation = [[[PlaceAnnotation alloc] initWithLatitude:37.786521 longitude:-122.397850 ] autorelease];
+    //PlaceAnnotation *someAnnotation = [[[PlaceAnnotation alloc] initWithLatitude:37.786521 longitude:-122.397850 ] autorelease];
     
-    [currentMapView addAnnotation:someAnnotation];
+    //[currentMapView addAnnotation:someAnnotation];
 }
 
 - (void)locationUpdate:(CLLocation*)location
 {
-    CLLocationCoordinate2D currentLocation = location.coordinate;
+    //currentLocation = location;
+
+    
+    //42.377663,-71.116691 cambridge, ma
+    CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:42.377663 longitude:-71.116691];
+    currentLocation = fakeLocation;
+    
+    CLLocationCoordinate2D currentLocationCoordinate = currentLocation.coordinate;
     
     MKCoordinateSpan span;
     span.latitudeDelta = .01;
@@ -96,13 +106,53 @@
     
     MKCoordinateRegion region;
     region.span = span;
-    region.center = currentLocation;
+    region.center = currentLocationCoordinate;
         
     [currentMapView setRegion:region animated:YES];
     
     [currentMapView regionThatFits:region];
 
+    if(!retreivedVenues)
+        [self getVenues];
 }
+
+-(void)getVenues
+{
+    //		return handleResponse(httpGet(HOST+"/getpois?lat="+lat+"&lon="+lng+"&num="+limit), new VenuesResp());
+
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpois",[APIUtil host]]];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    [request setPostValue:[NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude] forKey:@"lat"];
+    [request setPostValue:[NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude] forKey:@"lon"];
+    [request setPostValue:@"50" forKey:@"num"];
+    [request setDelegate:self];
+    [request startAsynchronous];
+    
+    retreivedVenues = YES;
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"venues:\n%@",[request responseString]);
+    
+    VenuesResp *response = [[VenuesResp alloc] initWithData:[request responseData]];
+    NSArray *venues = response.venues;
+    for(int i = 0; i < [venues count]; i++)
+    {
+        PlaceAnnotation *annotation = [[[PlaceAnnotation alloc] initWithVenue:[venues objectAtIndex:i]] autorelease];
+        [currentMapView addAnnotation:annotation];
+    }
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    NSLog(@"%@",error);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
+}
+
 - (void)locationError:(NSError *)error
 {
     

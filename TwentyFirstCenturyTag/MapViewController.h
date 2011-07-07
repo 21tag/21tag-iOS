@@ -15,6 +15,11 @@
     
     MKMapView *currentMapView;
     LocationController *locationController;
+    
+    BOOL retreivedVenues;
+    CLLocation *currentLocation;
+    
+    //NSMutableArray *mapAnnotations;
 }
 - (IBAction)locationButtonPressed:(id)sender;
 @property (nonatomic, retain) IBOutlet MKMapView *currentMapView;
@@ -24,5 +29,7 @@ LocationController *locationController;
 -(void)dashPressed;
 - (IBAction)allPlacesPressed:(id)sender;
 - (IBAction) annotationViewClick:(id) sender;
+
+-(void)getVenues;
 
 @end

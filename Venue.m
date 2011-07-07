@@ -51,21 +51,34 @@
     
     return self;
 }
+
+-(id)initWithDictionary:(NSDictionary*) dictionary
+{
+    self = [self init];
+    [self parseDictionary:dictionary];
+    return self;
+}
+
+-(void) parseDictionary:(NSDictionary *)fields
+{
+    name = [[fields objectForKey:NAME] retain];
+    address = [[fields objectForKey:ADDRESS] retain];
+    crossstreet = [[fields objectForKey:CROSSSTREET] retain];
+    city = [[fields objectForKey:CITY] retain];
+    state = [[fields objectForKey:STATE] retain];
+    zip = [[fields objectForKey:ZIP] retain];
+    geolat = [[fields objectForKey:GEOLAT] doubleValue];
+    geolong = [[fields objectForKey:GEOLONG] doubleValue];
+    tag_playable = [[fields objectForKey:TAGPLAYABLE] boolValue];
+    tag_ownerid = [[fields objectForKey:TAGOWNER] retain];
+}
+
 -(void) parseJSON: (NSData*) jsonData
 {
     [super parseJSON:jsonData];
     JSONDecoder *jsonKitDecoder = [JSONDecoder decoder];
     NSDictionary *fields = [jsonKitDecoder objectWithData:jsonData];
-    name = [fields objectForKey:NAME];
-    address = [fields objectForKey:ADDRESS];
-    crossstreet = [fields objectForKey:CROSSSTREET];
-    city = [fields objectForKey:CITY];
-    state = [fields objectForKey:STATE];
-    zip = [fields objectForKey:ZIP];
-    geolat = [[fields objectForKey:GEOLAT] doubleValue];
-    geolong = [[fields objectForKey:GEOLONG] doubleValue];
-    tag_playable = [[fields objectForKey:TAGPLAYABLE] boolValue];
-    tag_ownerid = [fields objectForKey:TAGOWNER];
+    [self parseDictionary:fields];
 }
 -(NSData*) toJSON;
 {

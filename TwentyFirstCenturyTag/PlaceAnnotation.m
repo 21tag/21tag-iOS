@@ -13,19 +13,51 @@
 
 @synthesize latitude;
 @synthesize longitude;
-- (id) initWithLatitude:(CLLocationDegrees) lat longitude:(CLLocationDegrees) lng {
+/*- (id) initWithLatitude:(CLLocationDegrees) lat longitude:(CLLocationDegrees) lng {
 	latitude = lat;
 	longitude = lng;
 	return self;
+}*/
+
+- (id) initWithVenue:(Venue*) newVenue
+{
+    venue = newVenue;
+    [venue retain];
+    //latitude = newVenue.geolat;
+    //longitude = newVenue.geolong;
+    return self;
 }
+
+-(void)setLatitude:(CLLocationDegrees)latitude
+{
+}
+-(void)setLongitude:(CLLocationDegrees)longitude
+{
+}
+
+-(CLLocationDegrees)latitude
+{
+    return [venue getLocation].coordinate.latitude;
+}
+
+-(CLLocationDegrees)longitude
+{
+    return [venue getLocation].coordinate.longitude;
+}
+
 - (CLLocationCoordinate2D) coordinate {
-	CLLocationCoordinate2D coord = {self.latitude, self.longitude};
-	return coord;
+	//CLLocationCoordinate2D coord = {self.latitude, self.longitude};
+	//return coord;
+    return [venue getLocation].coordinate;
 }
 - (NSString *) title {
-    return @"Club Passim";
+    //NSLog(@"%@", venue.name);
+
+    return venue.name;
 }
 - (NSString *) subtitle {
-    return @"Check-in Here";
+    //NSLog(@"%@",venue.address);
+
+    return venue.address;
 }
 @end

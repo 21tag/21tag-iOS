@@ -14,10 +14,10 @@
     NSString *GROUPS;
     NSString *VENUES;
     
-    NSArray *venues;
+    NSMutableArray *venues;
 }
 
 @property (nonatomic, retain) NSString *APITYPE;
-@property (nonatomic, retain) NSArray *venues;
+@property (nonatomic, retain) NSMutableArray *venues;
 
 @end

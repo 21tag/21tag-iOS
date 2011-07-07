@@ -48,5 +48,7 @@
 @property (nonatomic, retain) NSString *tag_ownerid;
 
 -(CLLocation*) getLocation;
+-(id)initWithDictionary:(NSDictionary*) dictionary;
+-(void)parseDictionary:(NSDictionary*)fields;
 
 @end

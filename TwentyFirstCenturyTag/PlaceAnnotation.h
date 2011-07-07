@@ -11,7 +11,9 @@
 #import <MapKit/MapKit.h>
 #import "Venue.h"
 
-@interface PlaceAnnotation : NSObject <MKAnnotation>{
+@interface PlaceAnnotation : NSObject <MKAnnotation>
+{
+    Venue *venue;
 }
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
@@ -20,5 +22,8 @@
 
 - (NSString *) title;
 - (NSString *) subtitle;
+
+- (id) initWithVenue:(Venue*) newVenue;
+
 
 @end
