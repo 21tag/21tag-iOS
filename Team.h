@@ -10,7 +10,17 @@
 #import "APIObj.h"
 
 @interface Team : APIObj {
+  	NSString *NAME;
+	NSString *LEADER;
+	NSString *USERS;
+	NSString *VENUES;
+	NSString *HISTORY;
     
+    NSString *name;
+    NSString *leader;
+    NSSet *users;
+    NSSet *venues;
+    NSArray *history;
 }
 
 @end

@@ -11,4 +11,19 @@
 
 @implementation Team
 
+-(id)init
+{
+    self = [super init];
+    if(self)
+    {
+        APITYPE			= @"Team";
+        NAME			= @"name";
+        LEADER			= @"leader";
+        USERS			= @"users";
+        VENUES			= @"venues";
+        HISTORY			= @"history";    
+    }
+    return self;
+}
+
 @end

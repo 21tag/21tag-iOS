@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "APIObj.h"
+#import "Team.h"
+#import "User.h"
+#import "Venue.h"
 
 @interface TeamsResp : APIObj {
 	NSString *TEAMS;

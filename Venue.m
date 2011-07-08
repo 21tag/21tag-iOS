@@ -65,10 +65,7 @@
     NSDictionary *fields = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
     return [fields JSONData];
 }
--(NSString*) getAPIType
-{
-    return APITYPE;
-}
+
 //end iAPI methods
 
 -(CLLocation*)getLocation

@@ -29,4 +29,11 @@
     return self;
 }
 
+//iAPI methods
+-(void) parseDictionary:(NSDictionary *)fields
+{
+    
+}
+
+
 @end
