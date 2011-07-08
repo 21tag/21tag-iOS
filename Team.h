@@ -23,4 +23,10 @@
     NSArray *history;
 }
 
+@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSString *leader;
+@property (nonatomic, retain) NSSet *users;
+@property (nonatomic, retain) NSSet *venues;
+@property (nonatomic, retain) NSArray *history;
+
 @end

@@ -3,13 +3,19 @@
 //  TwentyFirstCenturyTag
 //
 //  Created by Christopher Ballinger on 7/7/11.
-//  Copyright 2011 . All rights reserved.
+//  Copyright 2011. All rights reserved.
 //
 
 #import "Team.h"
 
 
 @implementation Team
+
+@synthesize name;
+@synthesize leader;
+@synthesize users;
+@synthesize venues;
+@synthesize history;
 
 -(id)init
 {
@@ -24,6 +30,12 @@
         HISTORY			= @"history";    
     }
     return self;
+}
+
+//iAPI methods
+-(void) parseDictionary:(NSDictionary *)fields
+{
+    name = [[fields objectForKey:NAME] retain];
 }
 
 @end
