@@ -9,6 +9,7 @@
 #import "JoinTeamViewController.h"
 #import "NewTeamViewController.h"
 #import "TeamInfoViewController.h"
+#import "SearchAllTeamsViewController.h"
 
 #import "ASIFormDataRequest.h"
 #import "JSONKit.h"
@@ -190,7 +191,9 @@
     }
     else if(indexPath.row == [contentList count] - 1) // Search
     {
-        
+        SearchAllTeamsViewController *searchTeamsController = [[SearchAllTeamsViewController alloc] init];
+        [self.navigationController pushViewController:searchTeamsController animated:YES];
+        [searchTeamsController release];
     }
     else
     {

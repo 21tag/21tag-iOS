@@ -167,6 +167,8 @@
 		D9D2FA3513AECEF400048670 /* login_screen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D9D2FA3113AECEF400048670 /* login_screen.jpg */; };
 		D9D2FA3613AECEF400048670 /* facebook_login_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9D2FA3213AECEF400048670 /* facebook_login_button@2x.png */; };
 		D9D2FA3713AECEF400048670 /* facebook_login_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9D2FA3313AECEF400048670 /* facebook_login_button.png */; };
+		D9E56E3A13C6793E00EC6123 /* SearchAllTeamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E56E3813C6793E00EC6123 /* SearchAllTeamsViewController.m */; };
+		D9E56E3B13C6793E00EC6123 /* SearchAllTeamsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9E56E3913C6793E00EC6123 /* SearchAllTeamsViewController.xib */; };
 		D9F5888113C3798000FA88BD /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5886013C3798000FA88BD /* JSONKit.m */; };
 		D9F588A313C379CC00FA88BD /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5888813C379CB00FA88BD /* Facebook.m */; };
 		D9F588A413C379CC00FA88BD /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D9F5888B13C379CB00FA88BD /* FBDialog.bundle */; };
@@ -396,6 +398,9 @@
 		D9D2FA3113AECEF400048670 /* login_screen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login_screen.jpg; sourceTree = "<group>"; };
 		D9D2FA3213AECEF400048670 /* facebook_login_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_login_button@2x.png"; sourceTree = "<group>"; };
 		D9D2FA3313AECEF400048670 /* facebook_login_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_login_button.png; sourceTree = "<group>"; };
+		D9E56E3713C6793E00EC6123 /* SearchAllTeamsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAllTeamsViewController.h; sourceTree = "<group>"; };
+		D9E56E3813C6793E00EC6123 /* SearchAllTeamsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAllTeamsViewController.m; sourceTree = "<group>"; };
+		D9E56E3913C6793E00EC6123 /* SearchAllTeamsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchAllTeamsViewController.xib; sourceTree = "<group>"; };
 		D9F5885F13C3798000FA88BD /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		D9F5886013C3798000FA88BD /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		D9F5888413C379CB00FA88BD /* facebook-ios-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "facebook-ios-sdk.xcodeproj"; sourceTree = "<group>"; };
@@ -698,6 +703,8 @@
 				D9BB8BC013B00728001A7A28 /* ChooseNetworkViewController.m */,
 				D97A5C1513B120F900D3FFFA /* JoinTeamViewController.h */,
 				D97A5C1613B120F900D3FFFA /* JoinTeamViewController.m */,
+				D9E56E3713C6793E00EC6123 /* SearchAllTeamsViewController.h */,
+				D9E56E3813C6793E00EC6123 /* SearchAllTeamsViewController.m */,
 				D9B898A313B19CDA00A632AD /* NewTeamViewController.h */,
 				D9B898A413B19CDA00A632AD /* NewTeamViewController.m */,
 				D9D2FA1913AEC81600048670 /* TwentyFirstCenturyTagAppDelegate.h */,
@@ -743,6 +750,7 @@
 				D9C9BB4413B0235E008A7B90 /* Buttons */,
 				D9174F5213B15E5B00600189 /* Images */,
 				D99D0BC013BBB44A00D27E58 /* SearchPlacesViewController.xib */,
+				D9E56E3913C6793E00EC6123 /* SearchAllTeamsViewController.xib */,
 				D99D0B8E13BB953C00D27E58 /* PlaceDetailsViewController.xib */,
 				D987AF2F13B3C22C00855AC5 /* AllPlacesViewController.xib */,
 				D9F5FA8A13B2FE1500222A16 /* NetworkRankingsViewController.xib */,
@@ -1028,6 +1036,7 @@
 				D9514E3D13C54962005A652D /* no_found_teams@2x.png in Resources */,
 				D9514E4013C54E4E005A652D /* loading_teams.png in Resources */,
 				D9514E4113C54E4E005A652D /* loading_teams@2x.png in Resources */,
+				D9E56E3B13C6793E00EC6123 /* SearchAllTeamsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1084,6 +1093,7 @@
 				D9F588D913C3A07300FA88BD /* User.m in Sources */,
 				D9F588DC13C3D52B00FA88BD /* Venue.m in Sources */,
 				D9F588DF13C3DCB400FA88BD /* VenuesResp.m in Sources */,
+				D9E56E3A13C6793E00EC6123 /* SearchAllTeamsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

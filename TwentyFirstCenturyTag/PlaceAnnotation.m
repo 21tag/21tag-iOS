@@ -37,12 +37,12 @@
 
 -(CLLocationDegrees)latitude
 {
-    return [venue getLocation].coordinate.latitude;
+    return venue.geolat;
 }
 
 -(CLLocationDegrees)longitude
 {
-    return [venue getLocation].coordinate.longitude;
+    return venue.geolong;
 }
 
 - (CLLocationCoordinate2D) coordinate {
