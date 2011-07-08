@@ -36,6 +36,12 @@
 -(void) parseDictionary:(NSDictionary *)fields
 {
     name = [[fields objectForKey:NAME] retain];
+    leader = [[fields objectForKey:LEADER] retain];
+    
+    users = [NSSet setWithArray:[fields objectForKey:USERS]];
+    venues = [NSSet setWithArray:[fields objectForKey:VENUES]];
+    
+    history = [[fields objectForKey:HISTORY] retain];
 }
 
 @end

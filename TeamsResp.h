@@ -28,6 +28,9 @@
     NSSet *points;
 }
 
-
+@property (nonatomic, retain) NSArray *teams;
+@property (nonatomic, retain) NSArray *users;
+@property (nonatomic, retain) NSArray *venues;
+@property (nonatomic, retain) NSSet *points;
 
 @end

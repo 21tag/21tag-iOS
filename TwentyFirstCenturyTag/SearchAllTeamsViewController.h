@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TeamsResp.h"
 
 @interface SearchAllTeamsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate> {
     UITableView *mainTableView;
@@ -18,6 +18,7 @@
     UIActivityIndicatorView *activityIndicator;
     
     BOOL isLoadingTeams;
+    TeamsResp *teamsResponse;
 }
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 

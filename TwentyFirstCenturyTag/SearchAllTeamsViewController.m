@@ -10,6 +10,7 @@
 #import "APIUtil.h"
 #import "ASIHTTPRequest.h"
 #import "JSONKit.h"
+#import "TeamsResp.h"
 
 @implementation SearchAllTeamsViewController
 
@@ -32,7 +33,20 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
+    teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
     
+    NSLog(@"%@",[request responseString]);
+    
+    NSArray *teams = teamsResponse.teams;
+    [contentsList removeAllObjects];
+    for(int i = 0; i < [teams count]; i++)
+    {
+        [contentsList addObject:((Team*)[teams objectAtIndex:i]).name];
+    }
+    [mainTableView reloadData];
+    
+    isLoadingTeams = NO;
+    [activityIndicator stopAnimating];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request

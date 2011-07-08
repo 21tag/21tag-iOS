@@ -11,6 +11,11 @@
 
 @implementation TeamsResp
 
+@synthesize teams;
+@synthesize users;
+@synthesize venues;
+@synthesize points;
+
 -(id)init
 {
     self = [super init];
@@ -32,7 +37,43 @@
 //iAPI methods
 -(void) parseDictionary:(NSDictionary *)fields
 {
+    NSArray *teamFieldsArray = [fields objectForKey:TEAMS];
+    if(teamFieldsArray)
+    {
+        NSMutableArray *teamsArray = [[NSMutableArray alloc] initWithCapacity:[teamFieldsArray count]];
+        for(int i = 0; i < [teamFieldsArray count]; i++)
+        {
+            Team *team = [[Team alloc] initWithDictionary:[teamFieldsArray objectAtIndex:i]];
+            [teamsArray addObject:team];
+        }
+        teams = teamsArray;
+    }
     
+    NSArray *userFieldsArray = [fields objectForKey:USERS];
+    if(userFieldsArray)
+    {
+        NSMutableArray *usersArray = [[NSMutableArray alloc] initWithCapacity:[userFieldsArray count]];
+        for(int i = 0; i < [userFieldsArray count]; i++)
+        {
+            User *user = [[User alloc] initWithDictionary:[userFieldsArray objectAtIndex:i]];
+            [usersArray addObject:user];
+        }
+        users = usersArray;
+    }
+    
+    NSArray *venueFieldsArray = [fields objectForKey:VENUES];
+    if(venueFieldsArray)
+    {
+        NSMutableArray *venuesArray = [[NSMutableArray alloc] initWithCapacity:[venueFieldsArray count]];
+        for(int i = 0; i < [venueFieldsArray count]; i++)
+        {
+            Venue *venue = [[Venue alloc] initWithDictionary:[venueFieldsArray objectAtIndex:i]];
+            [venuesArray addObject:venue];
+        }
+        venues = venuesArray;
+    }
+    
+    points = [NSSet setWithArray:[fields objectForKey:POINTS]];
 }
 
 
