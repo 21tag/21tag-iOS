@@ -169,6 +169,8 @@
 		D9D2FA3713AECEF400048670 /* facebook_login_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9D2FA3313AECEF400048670 /* facebook_login_button.png */; };
 		D9E56E3A13C6793E00EC6123 /* SearchAllTeamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E56E3813C6793E00EC6123 /* SearchAllTeamsViewController.m */; };
 		D9E56E3B13C6793E00EC6123 /* SearchAllTeamsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9E56E3913C6793E00EC6123 /* SearchAllTeamsViewController.xib */; };
+		D9E56E3E13C6877500EC6123 /* TeamsResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E56E3D13C6877500EC6123 /* TeamsResp.m */; };
+		D9E56E4113C689D000EC6123 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E56E4013C689D000EC6123 /* Team.m */; };
 		D9F5888113C3798000FA88BD /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5886013C3798000FA88BD /* JSONKit.m */; };
 		D9F588A313C379CC00FA88BD /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5888813C379CB00FA88BD /* Facebook.m */; };
 		D9F588A413C379CC00FA88BD /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D9F5888B13C379CB00FA88BD /* FBDialog.bundle */; };
@@ -401,6 +403,10 @@
 		D9E56E3713C6793E00EC6123 /* SearchAllTeamsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAllTeamsViewController.h; sourceTree = "<group>"; };
 		D9E56E3813C6793E00EC6123 /* SearchAllTeamsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAllTeamsViewController.m; sourceTree = "<group>"; };
 		D9E56E3913C6793E00EC6123 /* SearchAllTeamsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchAllTeamsViewController.xib; sourceTree = "<group>"; };
+		D9E56E3C13C6877400EC6123 /* TeamsResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamsResp.h; sourceTree = "<group>"; };
+		D9E56E3D13C6877500EC6123 /* TeamsResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamsResp.m; sourceTree = "<group>"; };
+		D9E56E3F13C689D000EC6123 /* Team.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Team.h; sourceTree = "<group>"; };
+		D9E56E4013C689D000EC6123 /* Team.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Team.m; sourceTree = "<group>"; };
 		D9F5885F13C3798000FA88BD /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		D9F5886013C3798000FA88BD /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		D9F5888413C379CB00FA88BD /* facebook-ios-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "facebook-ios-sdk.xcodeproj"; sourceTree = "<group>"; };
@@ -834,6 +840,10 @@
 				D9F588B313C37D8900FA88BD /* APIUtil.m */,
 				D9F588B613C380C600FA88BD /* APIObj.h */,
 				D9F588B713C380C600FA88BD /* APIObj.m */,
+				D9E56E3C13C6877400EC6123 /* TeamsResp.h */,
+				D9E56E3D13C6877500EC6123 /* TeamsResp.m */,
+				D9E56E3F13C689D000EC6123 /* Team.h */,
+				D9E56E4013C689D000EC6123 /* Team.m */,
 				D9F588CE13C38FBA00FA88BD /* ErrorResp.h */,
 				D9F588CF13C38FBA00FA88BD /* ErrorResp.m */,
 				D9F588D713C3A07300FA88BD /* User.h */,
@@ -1094,6 +1104,8 @@
 				D9F588DC13C3D52B00FA88BD /* Venue.m in Sources */,
 				D9F588DF13C3DCB400FA88BD /* VenuesResp.m in Sources */,
 				D9E56E3A13C6793E00EC6123 /* SearchAllTeamsViewController.m in Sources */,
+				D9E56E3E13C6877500EC6123 /* TeamsResp.m in Sources */,
+				D9E56E4113C689D000EC6123 /* Team.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

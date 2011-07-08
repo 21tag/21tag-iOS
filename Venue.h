@@ -11,7 +11,6 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface Venue : APIObj {
-    NSString *APITYPE;
     NSString *NAME;
     NSString *ADDRESS;
     NSString *CROSSSTREET;
@@ -48,7 +47,5 @@
 @property (nonatomic, retain) NSString *tag_ownerid;
 
 -(CLLocation*) getLocation;
--(id)initWithDictionary:(NSDictionary*) dictionary;
--(void)parseDictionary:(NSDictionary*)fields;
 
 @end

@@ -12,7 +12,6 @@
 
 @interface User : APIObj {
 //private
-    NSString *APITYPE;
     NSString *USER;
     NSString *FIRSTNAME;
     NSString *LASTNAME;
@@ -56,7 +55,6 @@
     NSMutableArray *history;
 }
 
-@property (nonatomic, retain) NSString *APITYPE;
 @property (nonatomic, retain) NSString *firstname;
 @property (nonatomic, retain) NSString *lastname;
 @property (nonatomic, retain) NSString *photo;

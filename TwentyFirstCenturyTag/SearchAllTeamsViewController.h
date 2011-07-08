@@ -15,7 +15,11 @@
     NSMutableArray *contentsList;
     NSMutableArray *searchResults;
     NSString *savedSearchTerm;
+    UIActivityIndicatorView *activityIndicator;
+    
+    BOOL isLoadingTeams;
 }
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, retain) IBOutlet UITableView *mainTableView;
 @property (nonatomic, retain) NSMutableArray *contentsList;

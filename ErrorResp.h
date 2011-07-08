@@ -10,14 +10,12 @@
 #import "APIObj.h"
 
 @interface ErrorResp : APIObj {
-    NSString *APITYPE;
     NSString *CODE;
     NSString *ERROR;
     NSString *RATELIMITED;
     NSString *UNAUTHORIZED;
 }
 
-@property (nonatomic, retain) NSString *APITYPE;
 @property int code;
 @property (nonatomic, retain) NSString *error;
 @property (nonatomic, retain) NSString *ratelimited;

@@ -43,22 +43,6 @@
 }
 
 //iAPI methods
--(id)initWithData: (NSData*) jsonData
-{
-    self = [self init];
-    
-    [self parseJSON:jsonData];
-    
-    return self;
-}
-
--(id)initWithDictionary:(NSDictionary*) dictionary
-{
-    self = [self init];
-    [self parseDictionary:dictionary];
-    return self;
-}
-
 -(void) parseDictionary:(NSDictionary *)fields
 {
     name = [[fields objectForKey:NAME] retain];
@@ -73,13 +57,7 @@
     tag_ownerid = [[fields objectForKey:TAGOWNER] retain];
 }
 
--(void) parseJSON: (NSData*) jsonData
-{
-    [super parseJSON:jsonData];
-    JSONDecoder *jsonKitDecoder = [JSONDecoder decoder];
-    NSDictionary *fields = [jsonKitDecoder objectWithData:jsonData];
-    [self parseDictionary:fields];
-}
+
 -(NSData*) toJSON;
 {
     NSArray *objects = [NSArray arrayWithObjects:myId, _id, name, address, crossstreet, city, state, zip, [NSNumber numberWithDouble: geolat], [NSNumber numberWithDouble: geolong], [NSNumber numberWithBool: tag_playable], tag_ownerid, nil];

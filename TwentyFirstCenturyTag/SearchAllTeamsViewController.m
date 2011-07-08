@@ -8,11 +8,12 @@
 
 #import "SearchAllTeamsViewController.h"
 #import "APIUtil.h"
-#import "ASIFormDataRequest.h"
+#import "ASIHTTPRequest.h"
 #import "JSONKit.h"
 
 @implementation SearchAllTeamsViewController
 
+@synthesize activityIndicator;
 @synthesize mainTableView;
 @synthesize contentsList;
 @synthesize searchResults;
@@ -25,11 +26,27 @@
     [searchResults release], searchResults = nil;
     [savedSearchTerm release], savedSearchTerm = nil;
 	
+    [activityIndicator release];
     [super dealloc];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    NSLog(@"%@",error);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
 }
 
 - (void)viewDidUnload
 {
+    [self setActivityIndicator:nil];
     [super viewDidUnload];
 	
     // Save the state of the search UI so that it can be restored if the view is re-created.
@@ -62,6 +79,12 @@
     
     contentsList = [NSMutableArray arrayWithObjects:@"Loading...", nil];
     [contentsList retain];
+    isLoadingTeams = YES;
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getteam",[APIUtil host]]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setDelegate:self];
+    [request startAsynchronous];
     
     // Restore search term
     if ([self savedSearchTerm])

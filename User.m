@@ -13,7 +13,6 @@
 
 
 
-@synthesize APITYPE;
 @synthesize firstname;
 @synthesize lastname;
 @synthesize photo;

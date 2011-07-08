@@ -11,6 +11,8 @@
 
 @implementation APIObj
 
+@synthesize APITYPE;
+
 -(id)init
 {
     self = [super init];
@@ -33,18 +35,32 @@
     return self;
 }
 
-// iAPI methods
--(void) parseJSON: (NSData*) jsonData
+-(id)initWithDictionary:(NSDictionary *)dictionary
 {
-    JSONDecoder *jsonKitDecoder = [JSONDecoder decoder];
-    NSDictionary *fields = [jsonKitDecoder objectWithData:jsonData];
+    self = [self init];
+    
+    [self parseDictionary:dictionary];
+
+    return self;
+}
+
+-(void)parseDictionary:(NSDictionary *)fields
+{
     NSString *jsonID = [fields objectForKey:ID];
     NSString *json_ID = [fields objectForKey:_ID];
     if(jsonID)
         myId = jsonID;
     if(json_ID)
         _id = json_ID;
-        
+}
+
+// iAPI methods
+-(void) parseJSON: (NSData*) jsonData
+{
+    JSONDecoder *jsonKitDecoder = [JSONDecoder decoder];
+    NSDictionary *fields = [jsonKitDecoder objectWithData:jsonData];
+
+    [self parseDictionary:fields];
 }
 -(NSData*) toJSON;
 {
@@ -55,7 +71,7 @@
 }
 -(NSString*) getAPIType
 {
-    return nil;
+    return APITYPE;
 }
 -(NSString*) getId
 {

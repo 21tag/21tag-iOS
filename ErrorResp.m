@@ -11,7 +11,6 @@
 
 @implementation ErrorResp
 
-@synthesize APITYPE;
 @synthesize code;
 @synthesize error;
 @synthesize ratelimited;

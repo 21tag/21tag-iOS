@@ -12,7 +12,6 @@
 
 @implementation VenuesResp
 
-@synthesize APITYPE;
 @synthesize venues;
 
 -(id)init
@@ -27,15 +26,6 @@
     return self;
 }
 
-//iAPI methods
--(id)initWithData: (NSData*) jsonData
-{
-    self = [self init];
-    
-    [self parseJSON:jsonData];
-    
-    return self;
-}
 -(void) parseJSON: (NSData*) jsonData
 {
     [super parseJSON:jsonData];
