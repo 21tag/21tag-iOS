@@ -11,6 +11,7 @@
 #import "ASIHTTPRequest.h"
 #import "JSONKit.h"
 #import "TeamsResp.h"
+#import "TeamInfoViewController.h"
 
 @implementation SearchAllTeamsViewController
 
@@ -170,6 +171,7 @@
     }
 	
     [[cell textLabel] setText:contentForThisRow];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
     return cell;
 }
@@ -187,6 +189,22 @@ shouldReloadTableForSearchString:(NSString *)searchString
     [self setSavedSearchTerm:nil];
 	
     [[self mainTableView] reloadData];
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(!isLoadingTeams)
+    {
+        TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
+        teamInfoController.teamName = [contentsList objectAtIndex:indexPath.row];
+        teamInfoController.isJoiningTeam = YES;
+        [self.navigationController pushViewController:teamInfoController animated:YES];
+        [teamInfoController release];
+    }
+       
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

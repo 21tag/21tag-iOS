@@ -8,6 +8,13 @@
 
 #import "TeamInfoViewController.h"
 #import "DashboardViewController.h"
+#import "ASIFormDataRequest.h"
+#import "JSONKit.h"
+#import "APIUtil.h"
+#import "TeamsResp.h"
+
+#define kCellIdentifier @"Cell"
+
 
 @interface TeamInfoViewController()
     -(void)setupButtons;
@@ -26,6 +33,9 @@
 @synthesize locationsOwnedLabel;
 @synthesize teamPointsLabel;
 @synthesize isJoiningTeam;
+@synthesize contentList;
+@synthesize mainTableView;
+@synthesize teamName;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,7 +59,33 @@
     [locationsOwnedLabel release];
     [teamPointsLabel release];
     [activityIndicator release];
+    [mainTableView release];
     [super dealloc];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"team info:\n%@",[request responseString]);
+    
+    TeamsResp *teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
+    NSArray *users = teamsResponse.users;
+    [contentList removeAllObjects];
+    for(id element in users)
+    {
+        User *user = (User*)element;
+        [contentList addObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname]];
+    }
+    [mainTableView reloadData];
+    [activityIndicator stopAnimating];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    NSLog(@"%@",error);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
 }
 
 -(void)setupButtons
@@ -130,10 +166,7 @@
 
 -(void)joinPressed
 {
-    DashboardViewController *dashController = [[DashboardViewController alloc] init];
-    NSArray *dashboard = [NSArray arrayWithObject:dashController];
-    [self.navigationController setViewControllers:dashboard animated:YES];
-    [dashController release];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(void)checkinPressed
@@ -159,12 +192,26 @@
         self.title = @"Team Info";
     else
         self.title = @"Your Team";
+    teamNameLabel.text = teamName;
 
     [self setupButtons];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
     
     [activityIndicator startAnimating];
+    
+    //http://21tag.com:8689/getteam?team=moo&details=true
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getteam",[APIUtil host]]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:teamNameLabel.text forKey:@"team"];
+    [request setPostValue:@"true" forKey:@"details"];
+    [request setDelegate:self];
+    [request startAsynchronous];
+    
+    contentList = [[NSMutableArray alloc] init];
+    mainTableView.allowsSelection = NO;
+    
 }
 
 - (void)backPressed
@@ -185,33 +232,64 @@
     [self setLocationsOwnedLabel:nil];
     [self setTeamPointsLabel:nil];
     [self setActivityIndicator:nil];
+    [self setMainTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (IBAction)teamMembersPressed:(id)sender 
 {
     [teamMembersButton setImage:[UIImage imageNamed:@"team_members_selected.png"] forState: UIControlStateNormal];
     [locationsOwnedButton setImage:[UIImage imageNamed:@"locations_owned_deselected.png"] forState: UIControlStateNormal];
-    [teamPointsButton setImage:[UIImage imageNamed:@"team_points_deselected.png"] forState:UIControlStateNormal];}
+    [teamPointsButton setImage:[UIImage imageNamed:@"team_points_deselected.png"] forState:UIControlStateNormal];
+    if(isJoiningTeam)
+    {
+        tableHeaderLabel.text = @"Team Members";
+    }
+    else
+    {
+        tableHeaderLabel.text = @"Recent Activity";
+    }
+}
 
 - (IBAction)locationsOwnedPressed:(id)sender 
 {
     [teamMembersButton setImage:[UIImage imageNamed:@"team_members_deselected.png"] forState: UIControlStateNormal];
     [locationsOwnedButton setImage:[UIImage imageNamed:@"locations_owned_selected.png"] forState: UIControlStateNormal];
     [teamPointsButton setImage:[UIImage imageNamed:@"team_points_deselected.png"] forState:UIControlStateNormal];
+    tableHeaderLabel.text = @"Owned Locations";
 }
 
 - (IBAction)teamPointsPressed:(id)sender 
 {
     [teamMembersButton setImage:[UIImage imageNamed:@"team_members_deselected.png"] forState: UIControlStateNormal];
     [locationsOwnedButton setImage:[UIImage imageNamed:@"locations_owned_deselected.png"] forState: UIControlStateNormal];
-    [teamPointsButton setImage:[UIImage imageNamed:@"team_points_selected.png"] forState:UIControlStateNormal];}
+    [teamPointsButton setImage:[UIImage imageNamed:@"team_points_selected.png"] forState:UIControlStateNormal];
+    tableHeaderLabel.text = @"Members by Points";
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return [contentList count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+	if (cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kCellIdentifier] autorelease];
+	}
+	
+	// get the view controller's info dictionary based on the indexPath's row
+	cell.textLabel.text = [contentList objectAtIndex:indexPath.row];
+    
+	return cell;
+}
 @end

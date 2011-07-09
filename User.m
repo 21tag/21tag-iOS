@@ -63,38 +63,29 @@
 }
 
 //iAPI methods
--(id)initWithData: (NSData*) jsonData
+-(void) parseDictionary:(NSDictionary *)fields
 {
-    self = [self init];
-    
-    [self parseJSON:jsonData];
-    
-    return self;
-}
--(void) parseJSON: (NSData*) jsonData
-{
-    [super parseJSON:jsonData];
-    JSONDecoder *jsonKitDecoder = [JSONDecoder decoder];
-    NSDictionary *fields = [jsonKitDecoder objectWithData:jsonData];
-    firstname = [fields objectForKey:FIRSTNAME];
-    lastname = [fields objectForKey:LASTNAME];
-    photo = [fields objectForKey:PHOTO];
-    gender = [fields objectForKey:GENDER];
-    phone = [fields objectForKey:PHONE];
-    email = [fields objectForKey:EMAIL];
-    fid = [fields objectForKey:FID];
-    password = [fields objectForKey:PASSWORD];
-    fb_authcode = [fields objectForKey:FBAUTHCODE];
-    currentVenueId = [fields objectForKey:CURRENTVENUEID];
-    currentVenueName = [fields objectForKey:CURRENTVENUENAME];
+    firstname = [[fields objectForKey:FIRSTNAME] retain];
+    lastname = [[fields objectForKey:LASTNAME] retain];
+    photo = [[fields objectForKey:PHOTO] retain];
+    gender = [[fields objectForKey:GENDER] retain];
+    phone = [[fields objectForKey:PHONE] retain];
+    email = [[fields objectForKey:EMAIL] retain];
+    fid = [[fields objectForKey:FID] retain];
+    password = [[fields objectForKey:PASSWORD] retain];
+    fb_authcode = [[fields objectForKey:FBAUTHCODE] retain];
+    currentVenueId = [[fields objectForKey:CURRENTVENUEID] retain];
+    currentVenueName = [[fields objectForKey:CURRENTVENUENAME] retain];
     currentVenueTime = [[fields objectForKey:CURRENTVENUETIME] longValue];
     currentVenueLastTime = [[fields objectForKey:CURRENTVENUELASTTIME] longValue];
-    team = [fields objectForKey:TEAM];
-    teamname = [fields objectForKey:TEAMNAME];
-    points = [fields objectForKey:POINTS];
-    venuedata = [fields objectForKey:VENUEDATA];
-    history = [fields objectForKey:HISTORY];
+    team = [[fields objectForKey:TEAM] retain];
+    teamname = [[fields objectForKey:TEAMNAME] retain];
+    points = [[fields objectForKey:POINTS] retain];
+    venuedata = [[fields objectForKey:VENUEDATA] retain];
+    history = [[fields objectForKey:HISTORY] retain];
+
 }
+
 -(NSData*) toJSON;
 {
     NSArray *objects = [NSArray arrayWithObjects:myId, _id, firstname, lastname, photo, gender, phone, email, fid, password, fb_authcode, team, teamname, currentVenueId, currentVenueName, [NSNumber numberWithLong: currentVenueTime], [NSNumber numberWithLong: currentVenueLastTime], points, venuedata, history, nil];
@@ -102,10 +93,7 @@
     NSDictionary *fields = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
     return [fields JSONData];
 }
--(NSString*) getAPIType
-{
-    return APITYPE;
-}
+
 //end iAPI methods
 
 -(void)addHistory:(NSString *)hist
