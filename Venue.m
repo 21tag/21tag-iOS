@@ -45,6 +45,7 @@
 //iAPI methods
 -(void) parseDictionary:(NSDictionary *)fields
 {
+    [super parseDictionary:fields];
     name = [[fields objectForKey:NAME] retain];
     address = [[fields objectForKey:ADDRESS] retain];
     crossstreet = [[fields objectForKey:CROSSSTREET] retain];

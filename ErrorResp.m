@@ -9,6 +9,7 @@
 #import "ErrorResp.h"
 #import "JSONKit.h"
 
+
 @implementation ErrorResp
 
 @synthesize code;
@@ -57,9 +58,6 @@
     NSDictionary *fields = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
     return [fields JSONData];
 }
--(NSString*) getAPIType
-{
-    return APITYPE;
-}
+
 
 @end

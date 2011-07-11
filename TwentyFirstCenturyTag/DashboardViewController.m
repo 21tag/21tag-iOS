@@ -133,7 +133,12 @@
         }
         else
         {
-            NSLog(@"logged in");
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            User *user = [[User alloc] initWithData:[request responseData]];
+            [defaults setObject:[user getId] forKey:@"user_id"];
+            [defaults synchronize];
+            
+            NSLog(@"logged in: %@", [user getId]);
         }
         
 
@@ -141,6 +146,12 @@
     else if(request.tag == 2) // create new account response
     {
         NSLog(@"new account: %@",[request responseString]);
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        User *user = [[User alloc] initWithData:[request responseData]];
+        [defaults setObject:[user getId] forKey:@"user_id"];
+        [defaults synchronize];
+        
+        NSLog(@"new acct: %@", [user getId]);
     }
 }
 
@@ -282,7 +293,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    if(![defaults objectForKey:@"team"])
+    if(![defaults objectForKey:@"team_name"])
     {
         JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
         [self.navigationController pushViewController:joinTeamController animated:NO];
@@ -326,10 +337,21 @@
         }
         else if(indexPath.row == 2) // Your Team
         {
-            TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
-            teamInfoController.isJoiningTeam = NO;
-            [self.navigationController pushViewController:teamInfoController animated:YES];
-            [teamInfoController release];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if(![defaults objectForKey:@"team_name"])
+            {
+                JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
+                [self.navigationController pushViewController:joinTeamController animated:YES];
+                [joinTeamController release];
+            }
+            else
+            {
+                TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
+                teamInfoController.teamName = [defaults objectForKey:@"team_name"];
+                teamInfoController.isJoiningTeam = NO;
+                [self.navigationController pushViewController:teamInfoController animated:YES];
+                [teamInfoController release];
+            }
         }
         else    // Game Standings
         {

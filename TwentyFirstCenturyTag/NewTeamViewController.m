@@ -7,6 +7,9 @@
 //
 
 #import "NewTeamViewController.h"
+#import "ASIFormDataRequest.h"
+#import "APIUtil.h"
+#import "Team.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface NewTeamViewController()
@@ -41,6 +44,28 @@
     [cancelButton release];
     [saveButton release];
     [super dealloc];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"new team:\n%@",[request responseString]);
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    Team *team = [[Team alloc] initWithData:[request responseData]];
+    
+    [defaults setObject:team.name forKey:@"team_name"];
+    [defaults synchronize];
+    
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    NSLog(@"%@",error);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,7 +146,23 @@
 
 -(void)savePressed
 {
-    [self dismissModalViewControllerAnimated:YES];
+    //return handleResponse(httpGet(HOST+"/createteam?user="+TagPreferences.USER+"&team="+team), new Team());
+    if(![nameTextField.text isEqualToString:@""])
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/createteam",[APIUtil host]]];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+        [request setPostValue:nameTextField.text forKey:@"team"];
+        [request setDelegate:self];
+        [request startAsynchronous];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Team Name Required" message:@"Please enter a team name and try again." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+        [alert release];
+    }
 }
 
 - (IBAction)pickTeamImagePressed:(id)sender 

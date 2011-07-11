@@ -35,6 +35,7 @@
 //iAPI methods
 -(void) parseDictionary:(NSDictionary *)fields
 {
+    [super parseDictionary:fields];
     name = [[fields objectForKey:NAME] retain];
     leader = [[fields objectForKey:LEADER] retain];
     

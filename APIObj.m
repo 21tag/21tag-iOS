@@ -46,12 +46,8 @@
 
 -(void)parseDictionary:(NSDictionary *)fields
 {
-    NSString *jsonID = [fields objectForKey:ID];
-    NSString *json_ID = [fields objectForKey:_ID];
-    if(jsonID)
-        myId = jsonID;
-    if(json_ID)
-        _id = json_ID;
+    myId = [[fields objectForKey:ID] retain];
+    _id = [[fields objectForKey:_ID] retain];
 }
 
 // iAPI methods

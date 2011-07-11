@@ -37,6 +37,7 @@
 //iAPI methods
 -(void) parseDictionary:(NSDictionary *)fields
 {
+    [super parseDictionary:fields];
     NSArray *teamFieldsArray = [fields objectForKey:TEAMS];
     if(teamFieldsArray)
     {

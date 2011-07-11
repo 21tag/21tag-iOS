@@ -65,18 +65,32 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    NSLog(@"team info:\n%@",[request responseString]);
-    
-    TeamsResp *teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
-    NSArray *users = teamsResponse.users;
-    [contentList removeAllObjects];
-    for(id element in users)
+    if(request.tag == 1)
     {
-        User *user = (User*)element;
-        [contentList addObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname]];
+       NSLog(@"team info:\n%@",[request responseString]);
+    
+        TeamsResp *teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
+        NSArray *users = teamsResponse.users;
+        [contentList removeAllObjects];
+        for(id element in users)
+        {
+            User *user = (User*)element;
+            [contentList addObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname]];
+        }
+        [mainTableView reloadData];
+        [activityIndicator stopAnimating];
     }
-    [mainTableView reloadData];
-    [activityIndicator stopAnimating];
+    else if(request.tag == 2)
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        Team *team = [[Team alloc] initWithData:[request responseData]];
+        
+        NSLog(@"joined team: %@", [request responseString]);
+        [defaults setObject:team.name forKey:@"team_name"];
+        [defaults synchronize];
+        [activityIndicator stopAnimating];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -166,7 +180,15 @@
 
 -(void)joinPressed
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    //		return handleResponse(httpGet(HOST+"/addtoteam?user="+TagPreferences.USER+"&team="+team), new Team());
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/addtoteam",[APIUtil host]]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:teamNameLabel.text forKey:@"team"];
+    [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+    [request setDelegate:self];
+    [request setTag:2];
+    [request startAsynchronous];    
 }
 
 -(void)checkinPressed
@@ -207,6 +229,7 @@
     [request setPostValue:teamNameLabel.text forKey:@"team"];
     [request setPostValue:@"true" forKey:@"details"];
     [request setDelegate:self];
+    [request setTag:1];
     [request startAsynchronous];
     
     contentList = [[NSMutableArray alloc] init];

@@ -65,6 +65,7 @@
 //iAPI methods
 -(void) parseDictionary:(NSDictionary *)fields
 {
+    [super parseDictionary:fields];
     firstname = [[fields objectForKey:FIRSTNAME] retain];
     lastname = [[fields objectForKey:LASTNAME] retain];
     photo = [[fields objectForKey:PHOTO] retain];
@@ -83,7 +84,6 @@
     points = [[fields objectForKey:POINTS] retain];
     venuedata = [[fields objectForKey:VENUEDATA] retain];
     history = [[fields objectForKey:HISTORY] retain];
-
 }
 
 -(NSData*) toJSON;
