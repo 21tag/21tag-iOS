@@ -77,7 +77,7 @@
     navigationTableView.backgroundColor = [UIColor clearColor];
     navigationTableView.separatorColor = [UIColor lightGrayColor];
     
-    contentList = [NSMutableArray arrayWithObjects:@"Kickin' Wing", @"Dark Wing Ducks", @"Create a new team", @"Search all teams", nil];
+    contentList = [NSMutableArray arrayWithObjects:@"Create a new team", @"Search all teams", nil];
     [contentList retain];
     
 

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LocationController.h"
 #import <MapKit/MapKit.h>
-
+#import "VenuesResp.h"
 
 @interface MapViewController : UIViewController <LocationControllerDelegate> {
     
@@ -20,6 +20,7 @@
     CLLocation *currentLocation;
     
     //NSMutableArray *mapAnnotations;
+    VenuesResp *venuesResponse;
 }
 - (IBAction)locationButtonPressed:(id)sender;
 @property (nonatomic, retain) IBOutlet MKMapView *currentMapView;

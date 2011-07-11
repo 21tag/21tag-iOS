@@ -14,11 +14,14 @@
 @interface PlaceAnnotation : NSObject <MKAnnotation>
 {
     Venue *venue;
+    int tag;
 }
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property CLLocationDegrees latitude;
 @property CLLocationDegrees longitude;
+@property (nonatomic, retain)     Venue *venue;
+@property int tag;
 
 - (NSString *) title;
 - (NSString *) subtitle;

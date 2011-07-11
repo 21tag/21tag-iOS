@@ -13,6 +13,8 @@
 
 @synthesize latitude;
 @synthesize longitude;
+@synthesize venue;
+@synthesize tag;
 /*- (id) initWithLatitude:(CLLocationDegrees) lat longitude:(CLLocationDegrees) lng {
 	latitude = lat;
 	longitude = lng;

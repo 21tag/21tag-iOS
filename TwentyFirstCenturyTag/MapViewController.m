@@ -135,11 +135,12 @@
 {
     NSLog(@"venues:\n%@",[request responseString]);
     
-    VenuesResp *response = [[VenuesResp alloc] initWithData:[request responseData]];
-    NSArray *venues = response.venues;
+    venuesResponse = [[VenuesResp alloc] initWithData:[request responseData]];
+    NSArray *venues = venuesResponse.venues;
     for(int i = 0; i < [venues count]; i++)
     {
         PlaceAnnotation *annotation = [[[PlaceAnnotation alloc] initWithVenue:[venues objectAtIndex:i]] autorelease];
+        annotation.tag = i;
         [currentMapView addAnnotation:annotation];
     }
 }
@@ -203,16 +204,26 @@
 	//UIImage *pinImage = [UIImage imageNamed:@"ReplacementPinImage.png"];
 	//[customAnnotationView setImage:pinImage];
     customAnnotationView.canShowCallout = YES;
-    customAnnotationView.animatesDrop = YES;
-	UIImageView *leftIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"team_icon_placeholder.png"]];
-	customAnnotationView.leftCalloutAccessoryView = leftIconView;
+    customAnnotationView.animatesDrop = NO;
+	//UIImageView *leftIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"team_icon_placeholder.png"]];
+	//customAnnotationView.leftCalloutAccessoryView = leftIconView;
 	UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    PlaceAnnotation *placeAnnotation = (PlaceAnnotation*)annotation;
+    [rightButton setTag:placeAnnotation.tag];
 	[rightButton addTarget:self action:@selector(annotationViewClick:) forControlEvents:UIControlEventTouchUpInside];
 	customAnnotationView.rightCalloutAccessoryView = rightButton;
     return customAnnotationView;
 }
 - (IBAction) annotationViewClick:(id) sender {
+    PlaceAnnotation *ann = [currentMapView.selectedAnnotations objectAtIndex:([currentMapView.selectedAnnotations count]-1)];
+    
+    
+    NSLog(@"Selected:%d", [ann tag]);
+    
+    Venue *venue = [[venuesResponse venues] objectAtIndex:ann.tag];
+    
     PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
+    placeDetailsController.venue = venue;
     [self.navigationController pushViewController:placeDetailsController animated:YES];
     [placeDetailsController release];
 }

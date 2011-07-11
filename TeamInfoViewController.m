@@ -69,7 +69,7 @@
     {
        NSLog(@"team info:\n%@",[request responseString]);
     
-        TeamsResp *teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
+        teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
         NSArray *users = teamsResponse.users;
         [contentList removeAllObjects];
         for(id element in users)
@@ -78,6 +78,27 @@
             [contentList addObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname]];
         }
         [mainTableView reloadData];
+        
+        teamMembersLabel.text = [NSString stringWithFormat:@"%d",[teamsResponse.users count]];
+        int teamPoints = 0;
+        int numVenues = 0;
+        for(int i = 0; i < [teamsResponse.users count]; i++)
+        {
+            User *user = [teamsResponse.users objectAtIndex:i];
+            NSArray *points = user.points;
+            if(points)
+            {
+                for(int j = 0; j < [points count]; j++)
+                {
+                    NSDictionary *point = [user.points objectAtIndex:j];
+                    teamPoints += [[point objectForKey:@"p"] intValue];
+                }
+                numVenues += [points count];
+            }
+        }
+        teamPointsLabel.text = [NSString stringWithFormat:@"%d",teamPoints];
+        locationsOwnedLabel.text = [NSString stringWithFormat:@"%d",numVenues];
+
         [activityIndicator stopAnimating];
     }
     else if(request.tag == 2)

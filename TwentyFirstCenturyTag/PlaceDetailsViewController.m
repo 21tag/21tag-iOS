@@ -7,6 +7,8 @@
 //
 
 #import "PlaceDetailsViewController.h"
+#import "ASIFormDataRequest.h"
+#import "APIUtil.h"
 
 #define kCellIdentifier @"Cell"
 
@@ -23,6 +25,7 @@
 @synthesize owningTeamPointsLabel;
 @synthesize detailsTableView;
 @synthesize contentList;
+@synthesize venue;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,6 +51,24 @@
     [contentList release];
     [activityIndicator release];
     [super dealloc];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"checkin:\n%@",[request responseString]);
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checked In" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    NSLog(@"%@",error);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,7 +107,7 @@
     buttonFrame.size.width = buttonImage.size.width;
     buttonFrame.size.height = buttonImage.size.height;
     [button setFrame:buttonFrame];
-    [button addTarget:self action:@selector(checkinPressed) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(checkinButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
@@ -116,13 +137,26 @@
     
     CGSize size = CGSizeMake(320.0f, 800.0f);
     [detailsScrollView setContentSize:size];
+    
+    placeNameLabel.text = venue.name;
 
     [activityIndicator startAnimating];
 }
 
--(void)checkinPressed
+- (IBAction)checkinButtonPressed:(id)sender 
 {
+    //params.add(new BasicNameValuePair("poi",venueid));
+    //params.add(new BasicNameValuePair("user",TagPreferences.USER));
+    //return handleResponse(httpPost(HOST+"/checkin", params), new SimpleResp());
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:[venue getId] forKey:@"poi"];
+    [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+    [request setDelegate:self];
+    [request startAsynchronous];
+
 }
 
 -(void)mapPressed

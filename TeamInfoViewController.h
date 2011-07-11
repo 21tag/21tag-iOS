@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TeamsResp.h"
 
 @interface TeamInfoViewController : UIViewController {
     
@@ -26,6 +26,8 @@
     NSMutableArray *contentList;
     UITableView *mainTableView;
     NSString *teamName;
+    
+    TeamsResp *teamsResponse;
 }
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UIImageView *teamImage;
