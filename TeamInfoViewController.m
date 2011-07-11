@@ -65,7 +65,7 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    if(request.tag == 1)
+    if(request.tag == 1) // team info
     {
        NSLog(@"team info:\n%@",[request responseString]);
     
@@ -101,7 +101,7 @@
 
         [activityIndicator stopAnimating];
     }
-    else if(request.tag == 2)
+    else if(request.tag == 2) // join team
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         Team *team = [[Team alloc] initWithData:[request responseData]];
@@ -111,6 +111,31 @@
         [defaults synchronize];
         [activityIndicator stopAnimating];
         [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else if(request.tag == 3) // leave team
+    {
+        NSLog(@"leave team: %@", [request responseString] );
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults removeObjectForKey:@"team_name"];
+        [defaults synchronize];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *buttonImage = [UIImage imageNamed:@"join_button.png"];
+        UIImage *buttonImagePressed = [UIImage imageNamed:@"join_button_pressed.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+        CGRect buttonFrame = [button frame];
+        buttonFrame.size.width = buttonImage.size.width;
+        buttonFrame.size.height = buttonImage.size.height;
+        [button setFrame:buttonFrame];
+        [button addTarget:self action:@selector(joinPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.rightBarButtonItem = joinButton;
+        
+        [joinButton release];
+
     }
 }
 
@@ -181,21 +206,21 @@
         [backButton release];
         
         button = [UIButton buttonWithType:UIButtonTypeCustom];
-        buttonImage = [UIImage imageNamed:@"checkin_button.png"];
-        buttonImagePressed = [UIImage imageNamed:@"checkin_button_pressed.png"];
+        buttonImage = [UIImage imageNamed:@"leave_team_button.png"];
+        buttonImagePressed = [UIImage imageNamed:@"leave_team_button_pressed.png"];
         [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
         [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
         buttonFrame = [button frame];
         buttonFrame.size.width = buttonImage.size.width;
         buttonFrame.size.height = buttonImage.size.height;
         [button setFrame:buttonFrame];
-        [button addTarget:self action:@selector(checkinPressed) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(leavePressed) forControlEvents:UIControlEventTouchUpInside];
         
-        UIBarButtonItem *checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        UIBarButtonItem *leaveButton = [[UIBarButtonItem alloc] initWithCustomView:button];
         
-        self.navigationItem.rightBarButtonItem = checkinButton;
+        self.navigationItem.rightBarButtonItem = leaveButton;
         
-        [checkinButton release];
+        [leaveButton release];
     }
 }
 
@@ -212,9 +237,18 @@
     [request startAsynchronous];    
 }
 
--(void)checkinPressed
+-(void)leavePressed
 {
-    
+    //		return handleResponse(httpGet(HOST+"/deletefromteam?user="+TagPreferences.USER+"&team="+team), new Team());
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/deletefromteam",[APIUtil host]]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:teamNameLabel.text forKey:@"team"];
+    [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+    [request setDelegate:self];
+    [request setTag:3];
+    [request startAsynchronous];    
 }
 
 - (void)didReceiveMemoryWarning

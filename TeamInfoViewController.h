@@ -54,6 +54,7 @@
 
 - (void)backPressed;
 - (void)joinPressed;
+- (void)leavePressed;
 - (void)checkinPressed;
 
 @end
