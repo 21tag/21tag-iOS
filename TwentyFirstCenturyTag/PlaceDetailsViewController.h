@@ -44,7 +44,6 @@
 
 -(void) setupButtons;
 -(void) mapPressed;
--(void) checkinPressed;
 - (IBAction)checkinButtonPressed:(id)sender;
 
 @end

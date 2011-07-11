@@ -21,6 +21,8 @@
     
     NSDictionary *facebookRequestResults;
     BOOL isRequestingFriendsList;
+    
+    User *user;
 }
 @property (nonatomic, retain) IBOutlet UITableView *navigationTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;

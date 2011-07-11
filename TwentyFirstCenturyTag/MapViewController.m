@@ -17,6 +17,7 @@
 @implementation MapViewController
 @synthesize currentMapView;
 @synthesize locationController;
+@synthesize user;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -199,10 +200,18 @@
     if (annotation == mapView.userLocation) { 
         return nil; 
     } 
+
     
 	MKPinAnnotationView *customAnnotationView=[[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil] autorelease];
 	//UIImage *pinImage = [UIImage imageNamed:@"ReplacementPinImage.png"];
 	//[customAnnotationView setImage:pinImage];
+    PlaceAnnotation *currentPlaceAnnotation = (PlaceAnnotation*)annotation;
+    //if([user.currentVenueId isEqualToString:[currentPlaceAnnotation.venue getId]])
+    if([user.currentVenueName isEqualToString:currentPlaceAnnotation.venue.name])
+    {
+        customAnnotationView.pinColor = MKPinAnnotationColorGreen;
+    }
+    
     customAnnotationView.canShowCallout = YES;
     customAnnotationView.animatesDrop = NO;
 	//UIImageView *leftIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"team_icon_placeholder.png"]];

@@ -131,14 +131,17 @@
             [formRequest setTag:2];
             [formRequest startAsynchronous];
         }
-        else
+        else // log in response
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            User *user = [[User alloc] initWithData:[request responseData]];
+            user = [[User alloc] initWithData:[request responseData]];
             [defaults setObject:[user getId] forKey:@"user_id"];
             [defaults synchronize];
             
             NSLog(@"logged in: %@", [user getId]);
+            
+            [contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:user.currentVenueName]];
+            [navigationTableView reloadData];
         }
         
 
@@ -147,7 +150,7 @@
     {
         NSLog(@"new account: %@",[request responseString]);
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        User *user = [[User alloc] initWithData:[request responseData]];
+        user = [[User alloc] initWithData:[request responseData]];
         [defaults setObject:[user getId] forKey:@"user_id"];
         [defaults synchronize];
         
@@ -314,6 +317,14 @@
     if(indexPath.section == 0) // Selected top item
     {
         PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
+        //placeDetailsController
+        Venue *currentVenue;
+        for(int i = 0; i < [user.venuedata count]; i++)
+        {
+            if([[((Venue*)[user.venuedata objectAtIndex:i]) getId] isEqualToString:user.currentVenueId])
+                currentVenue = [user.venuedata objectAtIndex:i];
+        }
+        placeDetailsController.venue = currentVenue;
         MapViewController *mapController = [[MapViewController alloc] init];
 
         NSArray *controllers = [NSArray arrayWithObjects:self, mapController, placeDetailsController,nil];
@@ -326,6 +337,7 @@
         if(indexPath.row == 0) // Map and Activity
         {
             MapViewController *mapController = [[MapViewController alloc] init];
+            mapController.user = user;
             [self.navigationController pushViewController:mapController animated:YES];
             [mapController release];
         }

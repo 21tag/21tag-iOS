@@ -10,6 +10,7 @@
 #import "LocationController.h"
 #import <MapKit/MapKit.h>
 #import "VenuesResp.h"
+#import "User.h"
 
 @interface MapViewController : UIViewController <LocationControllerDelegate> {
     
@@ -21,11 +22,13 @@
     
     //NSMutableArray *mapAnnotations;
     VenuesResp *venuesResponse;
+    User *user;
 }
 - (IBAction)locationButtonPressed:(id)sender;
 @property (nonatomic, retain) IBOutlet MKMapView *currentMapView;
 @property (nonatomic, retain)
 LocationController *locationController;
+@property (nonatomic, retain) User *user;
 
 -(void)dashPressed;
 - (IBAction)allPlacesPressed:(id)sender;

@@ -82,7 +82,14 @@
     team = [[fields objectForKey:TEAM] retain];
     teamname = [[fields objectForKey:TEAMNAME] retain];
     points = [[fields objectForKey:POINTS] retain];
-    venuedata = [[fields objectForKey:VENUEDATA] retain];
+    NSArray *rawVenueArray =  [fields objectForKey:VENUEDATA];
+    NSMutableArray *venueArray = [[NSMutableArray alloc] initWithCapacity:[rawVenueArray count]]; 
+    for(int i = 0; i < [rawVenueArray count]; i++)
+    {
+        [venueArray addObject:[[Venue alloc] initWithDictionary:[rawVenueArray objectAtIndex:i]]];
+    }
+    venuedata = venueArray;
+    
     history = [[fields objectForKey:HISTORY] retain];
 }
 

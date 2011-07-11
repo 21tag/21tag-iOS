@@ -141,7 +141,7 @@
     placeNameLabel.text = venue.name;
 
     [activityIndicator startAnimating];
-}
+} 
 
 - (IBAction)checkinButtonPressed:(id)sender 
 {
