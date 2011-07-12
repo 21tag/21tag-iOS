@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Venue.h"
+#import "MapViewController.h"
 
 @interface PlaceDetailsViewController : UIViewController <UITableViewDataSource> {
     
@@ -25,6 +26,7 @@
     UIActivityIndicatorView *activityIndicator;
     
     Venue *venue;
+    MapViewController *mapViewController;
 }
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UIScrollView *detailsScrollView;
@@ -39,8 +41,8 @@
 @property (nonatomic, retain) IBOutlet UITableView *detailsTableView;
 
 @property (nonatomic, retain)     NSMutableArray *contentList;
-
 @property (nonatomic, retain) Venue *venue;
+@property (nonatomic, retain) MapViewController *mapViewController;
 
 -(void) setupButtons;
 -(void) mapPressed;

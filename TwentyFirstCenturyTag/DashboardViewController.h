@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSMutableArray *contentList;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) Facebook *facebook;
+@property (nonatomic, retain) User *user;
 
 - (void)checkinPressed;
 

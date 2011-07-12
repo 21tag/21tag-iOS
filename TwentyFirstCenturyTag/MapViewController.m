@@ -18,6 +18,8 @@
 @synthesize currentMapView;
 @synthesize locationController;
 @synthesize user;
+@synthesize dashboardController;
+@synthesize currentLocation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,6 +42,12 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)setUser:(User *)newUser
+{
+    user = newUser;
+    dashboardController.user = newUser;
 }
 
 #pragma mark - View lifecycle
@@ -94,11 +102,17 @@
 {
     //currentLocation = location;
 
-    
-    //42.377663,-71.116691 cambridge, ma
+    //DEBUG: 42.377663,-71.116691 cambridge, ma
     CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:42.377663 longitude:-71.116691];
     currentLocation = fakeLocation;
     
+    
+    
+    [self centerMapOnLocation:currentLocation];
+}
+
+-(void)centerMapOnLocation:(CLLocation *)location
+{
     CLLocationCoordinate2D currentLocationCoordinate = currentLocation.coordinate;
     
     MKCoordinateSpan span;
@@ -108,11 +122,11 @@
     MKCoordinateRegion region;
     region.span = span;
     region.center = currentLocationCoordinate;
-        
+    
     [currentMapView setRegion:region animated:YES];
     
     [currentMapView regionThatFits:region];
-
+    
     if(!retreivedVenues)
         [self getVenues];
 }
@@ -137,6 +151,12 @@
     NSLog(@"venues:\n%@",[request responseString]);
     
     venuesResponse = [[VenuesResp alloc] initWithData:[request responseData]];
+
+    [self addAnnotations];
+}
+
+- (void)addAnnotations
+{
     NSArray *venues = venuesResponse.venues;
     for(int i = 0; i < [venues count]; i++)
     {
@@ -145,6 +165,13 @@
         [currentMapView addAnnotation:annotation];
     }
 }
+
+- (void)refreshAnnotations
+{
+    [currentMapView removeAnnotations:[currentMapView annotations]];
+    [self addAnnotations];
+}
+
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
@@ -233,6 +260,7 @@
     
     PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
     placeDetailsController.venue = venue;
+    placeDetailsController.mapViewController = self;
     [self.navigationController pushViewController:placeDetailsController animated:YES];
     [placeDetailsController release];
 }

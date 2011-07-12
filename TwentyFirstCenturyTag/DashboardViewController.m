@@ -27,6 +27,7 @@
 @synthesize facebook;
 @synthesize navigationTableView;
 @synthesize contentList;
+@synthesize user;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -321,8 +322,13 @@
         Venue *currentVenue;
         for(int i = 0; i < [user.venuedata count]; i++)
         {
-            if([[((Venue*)[user.venuedata objectAtIndex:i]) getId] isEqualToString:user.currentVenueId])
-                currentVenue = [user.venuedata objectAtIndex:i];
+            NSString *venueID = [((Venue*)[user.venuedata objectAtIndex:i]) getId];
+            NSLog(@"v1: %@\nv2: %@",venueID, user.currentVenueId);
+            if([venueID isEqualToString:user.currentVenueId])
+            {
+                NSLog(@"venues equal");
+                currentVenue = (Venue*)[user.venuedata objectAtIndex:i];
+            }
         }
         placeDetailsController.venue = currentVenue;
         MapViewController *mapController = [[MapViewController alloc] init];
@@ -338,6 +344,7 @@
         {
             MapViewController *mapController = [[MapViewController alloc] init];
             mapController.user = user;
+            mapController.dashboardController = self;
             [self.navigationController pushViewController:mapController animated:YES];
             [mapController release];
         }

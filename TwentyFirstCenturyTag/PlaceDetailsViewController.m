@@ -26,6 +26,7 @@
 @synthesize detailsTableView;
 @synthesize contentList;
 @synthesize venue;
+@synthesize mapViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,11 +56,35 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    NSLog(@"checkin:\n%@",[request responseString]);
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checked In" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    [alert show];
-    [alert release];
+    if(request.tag == 1)
+    {
+        NSLog(@"checkin:\n%@",[request responseString]);
+        
+        
+        //HOST+"/getuser?fbauthcode="+TagPreferences.AUTHCODE+"&user="+userid :
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getuser",[APIUtil host]]];
+        ASIFormDataRequest *userRequest = [ASIFormDataRequest requestWithURL:url];
+        [userRequest setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
+        [userRequest setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+        [userRequest setDelegate:self];
+        [userRequest setTag:2];
+        [userRequest startAsynchronous];
+    }
+    else if(request.tag == 2)
+    {
+        NSLog(@"update user after checkin: %@",[request responseString]);
+        mapViewController.user = [[User alloc] initWithData:[request responseData]];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checked In" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Cool!", nil];
+        [alert show];
+        [alert release];
+        
+        [mapViewController centerMapOnLocation:mapViewController.currentLocation];
+        [mapViewController refreshAnnotations];
+        [mapViewController.dashboardController.contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:mapViewController.user.currentVenueName]];
+        [mapViewController.dashboardController.navigationTableView reloadData];
+
+    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -149,13 +174,30 @@
     //params.add(new BasicNameValuePair("user",TagPreferences.USER));
     //return handleResponse(httpPost(HOST+"/checkin", params), new SimpleResp());
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:[venue getId] forKey:@"poi"];
-    [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
-    [request setDelegate:self];
-    [request startAsynchronous];
+    CLLocation *venueLocation = [[CLLocation alloc] initWithLatitude:venue.geolat longitude:venue.geolong];
+    CLLocationDistance distanceToVenue = [mapViewController.currentLocation distanceFromLocation:venueLocation];
+    //200 feet = 60.96 meters
+    distanceToVenue = 0; // DEBUG value
+    if(distanceToVenue < 60.96)
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:[venue getId] forKey:@"poi"];
+        [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+        [request setDelegate:self];
+        [request setTag:1];
+        [request startAsynchronous];
+    }
+    else
+    {
+        //1 meter = 3.2808399 feet
+        int distanceInFeet = (int)(distanceToVenue * 3.2808399);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Too Far" message:[NSString stringWithFormat:@"You are currently %d feet from this location. You must be within 200 feet to check in. Try getting closer!",distanceInFeet] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+        [alert release];
+    }
+
 
 }
 
