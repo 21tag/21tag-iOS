@@ -142,6 +142,7 @@
 		D9BB8BBE13AFFCC6001A7A28 /* check_location_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9BB8BBA13AFFCC6001A7A28 /* check_location_button@2x.png */; };
 		D9BB8BC213B00729001A7A28 /* ChooseNetworkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9BB8BC013B00728001A7A28 /* ChooseNetworkViewController.m */; };
 		D9BB8BC313B00729001A7A28 /* ChooseNetworkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9BB8BC113B00729001A7A28 /* ChooseNetworkViewController.xib */; };
+		D9BEC23E13CD139B00E21A1A /* POIDetailResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D9BEC23D13CD139B00E21A1A /* POIDetailResp.m */; };
 		D9C9BB4013B02354008A7B90 /* campus_request_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3C13B02354008A7B90 /* campus_request_button.png */; };
 		D9C9BB4113B02354008A7B90 /* campus_request_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */; };
 		D9C9BB4213B02354008A7B90 /* on_harvard_campus_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */; };
@@ -370,6 +371,8 @@
 		D9BB8BBF13B00728001A7A28 /* ChooseNetworkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ChooseNetworkViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D9BB8BC013B00728001A7A28 /* ChooseNetworkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChooseNetworkViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D9BB8BC113B00729001A7A28 /* ChooseNetworkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseNetworkViewController.xib; sourceTree = "<group>"; };
+		D9BEC23C13CD139B00E21A1A /* POIDetailResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIDetailResp.h; sourceTree = "<group>"; };
+		D9BEC23D13CD139B00E21A1A /* POIDetailResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIDetailResp.m; sourceTree = "<group>"; };
 		D9C9BB3C13B02354008A7B90 /* campus_request_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = campus_request_button.png; sourceTree = "<group>"; };
 		D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "campus_request_button@2x.png"; sourceTree = "<group>"; };
 		D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on_harvard_campus_button.png; sourceTree = "<group>"; };
@@ -859,6 +862,8 @@
 				D9F588DD13C3DCB300FA88BD /* VenuesResp.h */,
 				D9F588DE13C3DCB400FA88BD /* VenuesResp.m */,
 				D9F588B913C3810B00FA88BD /* iAPI.h */,
+				D9BEC23C13CD139B00E21A1A /* POIDetailResp.h */,
+				D9BEC23D13CD139B00E21A1A /* POIDetailResp.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1114,6 +1119,7 @@
 				D9E56E3A13C6793E00EC6123 /* SearchAllTeamsViewController.m in Sources */,
 				D9E56E3E13C6877500EC6123 /* TeamsResp.m in Sources */,
 				D9E56E4113C689D000EC6123 /* Team.m in Sources */,
+				D9BEC23E13CD139B00E21A1A /* POIDetailResp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

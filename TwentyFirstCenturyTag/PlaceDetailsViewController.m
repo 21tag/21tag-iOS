@@ -27,6 +27,7 @@
 @synthesize contentList;
 @synthesize venue;
 @synthesize mapViewController;
+@synthesize poiResponse;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -148,6 +149,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"Place Details";
+    venue = poiResponse.poi;
     
     NSMutableDictionary *recentActivityDictionary = [[NSMutableDictionary alloc] initWithCapacity:2];
     [recentActivityDictionary setObject:@"Kickin' Wing sapped a member of The Haverfords" forKey:@"description"];
@@ -164,8 +166,11 @@
     [detailsScrollView setContentSize:size];
     
     placeNameLabel.text = venue.name;
+    owningTeamNameLabel.text = poiResponse.owner.name;
+    
+    //owningTeamNameLabel.text = poiResponse.owner.name;
 
-    [activityIndicator startAnimating];
+    //[activityIndicator startAnimating];
 } 
 
 - (IBAction)checkinButtonPressed:(id)sender 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Venue.h"
 #import "MapViewController.h"
+#import "POIDetailResp.h"
 
 @interface PlaceDetailsViewController : UIViewController <UITableViewDataSource> {
     
@@ -26,6 +27,7 @@
     UIActivityIndicatorView *activityIndicator;
     
     Venue *venue;
+    POIDetailResp *poiResponse;
     MapViewController *mapViewController;
 }
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -43,6 +45,7 @@
 @property (nonatomic, retain)     NSMutableArray *contentList;
 @property (nonatomic, retain) Venue *venue;
 @property (nonatomic, retain) MapViewController *mapViewController;
+@property (nonatomic, retain) POIDetailResp *poiResponse;
 
 -(void) setupButtons;
 -(void) mapPressed;

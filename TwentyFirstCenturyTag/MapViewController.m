@@ -141,6 +141,7 @@
     [request setPostValue:[NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude] forKey:@"lon"];
     [request setPostValue:@"50" forKey:@"num"];
     [request setDelegate:self];
+    [request setTag:1];
     [request startAsynchronous];
     
     retreivedVenues = YES;
@@ -148,11 +149,24 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    NSLog(@"venues:\n%@",[request responseString]);
-    
-    venuesResponse = [[VenuesResp alloc] initWithData:[request responseData]];
+    if(request.tag == 1) // venues response
+    {
+        NSLog(@"venues:\n%@",[request responseString]);
+        
+        venuesResponse = [[VenuesResp alloc] initWithData:[request responseData]];
 
-    [self addAnnotations];
+        [self addAnnotations];
+    }
+    else if(request.tag == 2) // venue details
+    {
+        PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
+        POIDetailResp *poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
+        
+        placeDetailsController.poiResponse = poiResponse;
+        placeDetailsController.mapViewController = self;
+        [self.navigationController pushViewController:placeDetailsController animated:YES];
+        [placeDetailsController release];
+    }
 }
 
 - (void)addAnnotations
@@ -250,7 +264,8 @@
 	customAnnotationView.rightCalloutAccessoryView = rightButton;
     return customAnnotationView;
 }
-- (IBAction) annotationViewClick:(id) sender {
+- (IBAction) annotationViewClick:(id) sender 
+{
     PlaceAnnotation *ann = [currentMapView.selectedAnnotations objectAtIndex:([currentMapView.selectedAnnotations count]-1)];
     
     
@@ -258,11 +273,14 @@
     
     Venue *venue = [[venuesResponse venues] objectAtIndex:ann.tag];
     
-    PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
-    placeDetailsController.venue = venue;
-    placeDetailsController.mapViewController = self;
-    [self.navigationController pushViewController:placeDetailsController animated:YES];
-    [placeDetailsController release];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request addPostValue:[venue getId] forKey:@"poi"];
+    [request setDelegate:self];
+    [request setTag:2];
+    [request startAsynchronous];
+    
+
 }
 
 @end

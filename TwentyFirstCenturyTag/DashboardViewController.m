@@ -17,6 +17,7 @@
 #import "NetworkRankingsViewController.h"
 #import "APIUtil.h"
 #import "JoinTeamViewController.h"
+#import "POIDetailResp.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -156,6 +157,25 @@
         [defaults synchronize];
         
         NSLog(@"new acct: %@", [user getId]);
+    }
+    else if(request.tag == 3) // request venue data
+    {
+        NSLog(@"poi resp: %@",[request responseString]);
+        
+        POIDetailResp *poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
+        
+        PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
+        placeDetailsController.poiResponse = poiResponse;
+        MapViewController *mapController = [[MapViewController alloc] init];
+        placeDetailsController.mapViewController = mapController;
+        mapController.dashboardController = self;
+        mapController.user = user;
+        
+        NSArray *controllers = [NSArray arrayWithObjects:self, mapController, placeDetailsController,nil];
+        [self.navigationController setViewControllers:controllers animated:YES];
+        [placeDetailsController release];
+        [mapController release];
+        
     }
 }
 
@@ -317,26 +337,16 @@
 {
     if(indexPath.section == 0) // Selected top item
     {
-        PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
         //placeDetailsController
-        Venue *currentVenue;
-        for(int i = 0; i < [user.venuedata count]; i++)
-        {
-            NSString *venueID = [((Venue*)[user.venuedata objectAtIndex:i]) getId];
-            NSLog(@"v1: %@\nv2: %@",venueID, user.currentVenueId);
-            if([venueID isEqualToString:user.currentVenueId])
-            {
-                NSLog(@"venues equal");
-                currentVenue = (Venue*)[user.venuedata objectAtIndex:i];
-            }
-        }
-        placeDetailsController.venue = currentVenue;
-        MapViewController *mapController = [[MapViewController alloc] init];
+        //		return handleResponse(httpGet(HOST+"/getpoidetails?"+(poi != null ? "poi="+poi : "") +(ses != null ? (poi != null ? "&" : "") + "ses="+ses : "")), new POIDetailResp());
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request addPostValue:user.currentVenueId forKey:@"poi"];
+        [request setDelegate:self];
+        [request setTag:3];
+        [request startAsynchronous];
+        
 
-        NSArray *controllers = [NSArray arrayWithObjects:self, mapController, placeDetailsController,nil];
-        [self.navigationController setViewControllers:controllers animated:YES];
-        [placeDetailsController release];
-        [mapController release];
     }
     else if(indexPath.section == 1)
     {
