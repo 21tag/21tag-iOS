@@ -109,7 +109,7 @@
 
         NSLog(@"%d: %@",statusCode, [request responseString]);
         
-        if(statusCode == 403 || statusCode == 404)
+        if(statusCode == 403) // create new acct
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSDictionary *result = facebookRequestResults;
@@ -142,8 +142,17 @@
             
             NSLog(@"logged in: %@", [user getId]);
             
-            [contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:user.currentVenueName]];
-            [navigationTableView reloadData];
+            if(user.currentVenueName)
+            {
+                [contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:user.currentVenueName]];
+                [navigationTableView reloadData];
+            }
+            else
+            {
+                [contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:@"Not Checked In"]];
+                [navigationTableView reloadData];
+
+            }
         }
         
 
@@ -151,12 +160,38 @@
     else if(request.tag == 2) // create new account response
     {
         NSLog(@"new account: %@",[request responseString]);
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        user = [[User alloc] initWithData:[request responseData]];
-        [defaults setObject:[user getId] forKey:@"user_id"];
-        [defaults synchronize];
+        if(![[request responseString] isEqualToString:@""]) // create new acct
+        {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            user = [[User alloc] initWithData:[request responseData]];
+            [defaults setObject:[user getId] forKey:@"user_id"];
+            [defaults removeObjectForKey:@"team_name"];
+            [defaults synchronize];
+            
+            NSLog(@"new acct: %@", [user getId]);
+        }
+        else // reset fb auth code
+        {    
         
-        NSLog(@"new acct: %@", [user getId]);
+        //		return handleResponse(httpGet(HOST+"/resetfbauth?uid="+TagPreferences.USER+"&fbid="+fbid+"&fbauthcode="+newFbAuthCode), new User());
+         
+         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+         NSDictionary *result = facebookRequestResults;
+         NSString *facebookID = [result objectForKey:@"id"];
+         //NSString *user_id = [defaults objectForKey:@"user_id"];
+         
+         NSLog(@"resetting fbauth : %@",facebookID);
+         
+         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/resetfbauth",[APIUtil host]]];
+         
+         ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
+         [formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
+         [formRequest addPostValue:facebookID forKey:@"fbid"];
+         //[formRequest addPostValue:user_id forKey:@"uid"];
+         [formRequest setDelegate:self];
+         [formRequest setTag:4];
+         [formRequest startAsynchronous];
+         }
     }
     else if(request.tag == 3) // request venue data
     {
@@ -176,6 +211,39 @@
         [placeDetailsController release];
         [mapController release];
         
+    }
+    else if(request.tag == 4) // reset auth code
+    {
+        if([request responseStatusCode] == 403)
+        {
+            NSLog(@"reset fbauth error: %@", [request responseString]);
+
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"Couldn't log in because resetfbauth doesn't work properly yet. Things will probably crash if you use the app beyond this point." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Bummer", nil];
+            [alert show];
+            [alert release];
+        }
+        else
+        {
+            NSLog(@"reset fbauth complete: %@", [request responseString]);
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            user = [[User alloc] initWithData:[request responseData]];
+            [defaults setObject:[user getId] forKey:@"user_id"];
+            [defaults setObject:user.team forKey:@"team_name"];
+            [defaults synchronize];
+            
+            NSLog(@"logged in: %@", [user getId]);
+            
+            if(user.currentVenueName)
+            {
+                [contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:user.currentVenueName]];
+                [navigationTableView reloadData];
+            }
+            else
+            {
+                [contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:@"Not Checked In"]];
+                [navigationTableView reloadData];
+            }
+        }      
     }
 }
 
@@ -337,15 +405,23 @@
 {
     if(indexPath.section == 0) // Selected top item
     {
-        //placeDetailsController
-        //		return handleResponse(httpGet(HOST+"/getpoidetails?"+(poi != null ? "poi="+poi : "") +(ses != null ? (poi != null ? "&" : "") + "ses="+ses : "")), new POIDetailResp());
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        [request addPostValue:user.currentVenueId forKey:@"poi"];
-        [request setDelegate:self];
-        [request setTag:3];
-        [request startAsynchronous];
-        
+        if(user.currentVenueName)
+        {
+            //placeDetailsController
+            //		return handleResponse(httpGet(HOST+"/getpoidetails?"+(poi != null ? "poi="+poi : "") +(ses != null ? (poi != null ? "&" : "") + "ses="+ses : "")), new POIDetailResp());
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
+            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+            [request addPostValue:user.currentVenueId forKey:@"poi"];
+            [request setDelegate:self];
+            [request setTag:3];
+            [request startAsynchronous];
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Checked In" message:@"You must be checked in first." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            [alert show];
+            [alert release];
+        }
 
     }
     else if(indexPath.section == 1)

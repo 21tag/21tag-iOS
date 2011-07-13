@@ -83,13 +83,13 @@
 
 - (void)locationUpdate:(CLLocation *)location
 {
-    JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
+    //JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
     DashboardViewController *dashboardController = [[DashboardViewController alloc] init];
-    NSArray *controllerArray = [NSArray arrayWithObjects:dashboardController, joinTeamController, nil];
+    NSArray *controllerArray = [NSArray arrayWithObjects:dashboardController, nil];
     [locationController.locationManager stopUpdatingLocation];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController setViewControllers:controllerArray animated:YES];
-    [joinTeamController release];
+    //[joinTeamController release];
     [dashboardController release];
 }
 
