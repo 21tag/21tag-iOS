@@ -107,8 +107,8 @@
     currentLocation = fakeLocation;
     
     
-    
-    [self centerMapOnLocation:currentLocation];
+    if(!retreivedVenues)
+        [self centerMapOnLocation:currentLocation];
 }
 
 -(void)centerMapOnLocation:(CLLocation *)location
