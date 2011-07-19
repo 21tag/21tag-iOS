@@ -103,7 +103,7 @@
     currentLocation = location;
 
     //DEBUG: 42.377663,-71.116691 cambridge, ma
-    CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:42.377663 longitude:-71.116691];
+    CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:42.37672746056762 longitude:-71.11735687794877];
     currentLocation = fakeLocation;
     
     
@@ -214,6 +214,9 @@
 - (IBAction)allPlacesPressed:(id)sender 
 {
     AllPlacesViewController *allPlacesController = [[AllPlacesViewController alloc] init];
+    allPlacesController.venuesResponse = venuesResponse;
+    allPlacesController.mapViewController = self;
+    allPlacesController.currentLocation = currentLocation;
     [self.navigationController pushViewController:allPlacesController animated:YES];
     [allPlacesController release];
 }

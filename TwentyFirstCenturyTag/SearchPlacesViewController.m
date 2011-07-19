@@ -10,8 +10,8 @@
 
 
 @implementation SearchPlacesViewController
-@synthesize navBar;
-@synthesize navItem;
+//@synthesize navBar;
+//@synthesize navItem;
 
 @synthesize mainTableView;
 @synthesize contentsList;
@@ -25,15 +25,15 @@
     [searchResults release], searchResults = nil;
     [savedSearchTerm release], savedSearchTerm = nil;
 	
-    [navBar release];
-    [navItem release];
+//    [navBar release];
+//    [navItem release];
     [super dealloc];
 }
 
 - (void)viewDidUnload
 {
-    [self setNavBar:nil];
-    [self setNavItem:nil];
+//    [self setNavBar:nil];
+//    [self setNavItem:nil];
     [super viewDidUnload];
 	
     // Save the state of the search UI so that it can be restored if the view is re-created.
@@ -48,21 +48,21 @@
 	
     self.title = @"Search Places";
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *buttonImage = [UIImage imageNamed:@"cancel_button.png"];
-    UIImage *buttonImagePressed = [UIImage imageNamed:@"cancel_button_pressed.png"];
+    UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"back_button_pressed.png"];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
     CGRect buttonFrame = [button frame];
     buttonFrame.size.width = buttonImage.size.width;
     buttonFrame.size.height = buttonImage.size.height;
     [button setFrame:buttonFrame];
-    [button addTarget:self action:@selector(cancelPressed) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
-    self.navItem.rightBarButtonItem = cancelButton;
+    self.navigationItem.leftBarButtonItem = backButton;
     
-    [cancelButton release];
+    [backButton release];
     
     contentsList = [NSMutableArray arrayWithObjects:@"One", @"Two", @"Onee", @"Three", nil];
     [contentsList retain];
@@ -74,9 +74,9 @@
     }
 }
 
--(void)cancelPressed
+-(void)backPressed
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)handleSearchForTerm:(NSString *)searchTerm

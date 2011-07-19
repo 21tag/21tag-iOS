@@ -8,10 +8,17 @@
 
 #import "AllPlacesViewController.h"
 #import "SearchPlacesViewController.h"
+#import "PlaceDetailsViewController.h"
+#import "ASIFormDataRequest.h"
+#import "APIUtil.h"
+#import "POIDetailResp.h"
 #define kCellIdentifier @"Cell"
 
 @implementation AllPlacesViewController
 @synthesize placesTableView;
+@synthesize venuesResponse;
+@synthesize mapViewController;
+@synthesize currentLocation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -21,6 +28,46 @@
     }
     return self;
 }
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+
+    POIDetailResp *poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
+    
+    NSMutableDictionary *cellInfo = [[contentList objectAtIndex:1] objectAtIndex:request.tag];
+    
+    Venue *venue = poiResponse.poi;
+    CLLocation *venueLocation = [venue getLocation];
+    CLLocationDistance distanceToVenue = [mapViewController.currentLocation distanceFromLocation:venueLocation];
+    //200 feet = 60.96 meters
+    //1 meter = 3.2808399 feet
+    //int distanceInFeet = (int)(distanceToVenue * 3.2808399);
+    
+    NSString *detailTextLabel;
+    if(poiResponse.owner.name)
+        detailTextLabel = [NSString stringWithFormat:@"%d pts %@",poiResponse.points,poiResponse.owner.name];
+    else
+        detailTextLabel = [NSString stringWithFormat:@"%d pts",poiResponse.points,poiResponse.owner.name];
+        
+    [cellInfo setObject:detailTextLabel forKey:@"detailTextLabel"];
+    [cellInfo setObject:poiResponse forKey:@"poiResponse"];
+    
+    if(distanceToVenue < 60.96)
+    {
+        [[contentList objectAtIndex:0] addObject:cellInfo];
+    }
+    [placesTableView reloadData];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    NSLog(@"%@",error);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
+}
+
 
 #pragma mark - Table view data source
 
@@ -36,7 +83,7 @@
     if (section == 0)
         return @"Nearby Places";
     else
-        return @"Recent Places";
+        return @"All Places";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -44,16 +91,36 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
 	if (cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kCellIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
 	}
 	
 	// get the view controller's info dictionary based on the indexPath's row
 	NSArray *section = [contentList objectAtIndex:indexPath.section];
-	cell.textLabel.text = [section objectAtIndex:indexPath.row];
+    NSDictionary *cellInfo = [section objectAtIndex:indexPath.row];
+	cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
+    cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     
 	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *section = [contentList objectAtIndex:indexPath.section];
+    NSDictionary *cellInfo = [section objectAtIndex:indexPath.row];
+    
+    if([cellInfo objectForKey:@"poiResponse"])
+    {
+        PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];        
+        placeDetailsController.poiResponse = [cellInfo objectForKey:@"poiResponse"];
+        placeDetailsController.mapViewController = mapViewController;
+        [self.navigationController pushViewController:placeDetailsController animated:YES];
+        [placeDetailsController release];
+    }
+    
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)dealloc
@@ -83,11 +150,31 @@
         
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
     
-    contentList = [[NSMutableArray alloc] init];
-    NSArray *nearbyPlacesList = [NSArray arrayWithObjects:@"Widener Library", @"Houghton Library", @"Loeb House",nil];
-    NSArray *recentPlacesList = nearbyPlacesList;
-    [contentList addObject:nearbyPlacesList];
-    [contentList addObject:recentPlacesList];
+    NSMutableArray *allPlacesList = [[NSMutableArray alloc] initWithCapacity:[venuesResponse.venues count]];
+    contentList = [[NSMutableArray alloc] initWithCapacity:2];
+    
+    for(int i = 0; i < [venuesResponse.venues count]; i++)
+    {
+        Venue *venue = ((Venue*)[venuesResponse.venues objectAtIndex:i]);
+
+        NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
+        [cellInfo setObject:venue.name forKey:@"textLabel"];
+        [cellInfo setObject:@"Loading..." forKey:@"detailTextLabel"];
+        [allPlacesList addObject:cellInfo];
+        
+        
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request addPostValue:[venue getId] forKey:@"poi"];
+        [request setDelegate:self];
+        [request setTag:i];
+        [request startAsynchronous];
+    }
+    
+    [contentList addObject:[[NSMutableArray alloc] init]];
+    [contentList addObject:allPlacesList];
+    [placesTableView reloadData];
+    placesTableView.backgroundColor = [UIColor clearColor];
     
     [self setupButtons];
 }
@@ -129,9 +216,9 @@
 -(void)searchPressed
 {
     SearchPlacesViewController *searchPlacesController = [[SearchPlacesViewController alloc] init];
-    searchPlacesController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentModalViewController:searchPlacesController animated:YES];
-
+    //searchPlacesController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    //[self presentModalViewController:searchPlacesController animated:YES];
+    [self.navigationController pushViewController:searchPlacesController animated:YES];
     [searchPlacesController release];
 }
 

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "APIObj.h"
+#import "Venue.h"
 
 @interface VenuesResp : APIObj {
     NSString *GROUPS;

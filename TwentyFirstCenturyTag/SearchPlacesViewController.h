@@ -13,10 +13,11 @@
     UITableView *mainTableView;
 	
     NSMutableArray *contentsList;
+    NSArray *allPlacesDictionaryList;
     NSMutableArray *searchResults;
     NSString *savedSearchTerm;
-    UINavigationBar *navBar;
-    UINavigationItem *navItem;
+//    UINavigationBar *navBar;
+//    UINavigationItem *navItem;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *mainTableView;
@@ -25,9 +26,9 @@
 @property (nonatomic, copy) NSString *savedSearchTerm;
 
 - (void)handleSearchForTerm:(NSString *)searchTerm;
-@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
-@property (nonatomic, retain) IBOutlet UINavigationItem *navItem;
+//@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
+//@property (nonatomic, retain) IBOutlet UINavigationItem *navItem;
 
--(void)cancelPressed;
+-(void)backPressed;
 
 @end

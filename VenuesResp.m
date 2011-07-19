@@ -7,7 +7,6 @@
 //
 
 #import "VenuesResp.h"
-#import "Venue.h"
 #import "JSONKit.h"
 
 @implementation VenuesResp

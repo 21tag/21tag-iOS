@@ -48,7 +48,7 @@
 @property (nonatomic, retain) POIDetailResp *poiResponse;
 
 -(void) setupButtons;
--(void) mapPressed;
+-(void) backPressed;
 - (IBAction)checkinButtonPressed:(id)sender;
 
 @end
