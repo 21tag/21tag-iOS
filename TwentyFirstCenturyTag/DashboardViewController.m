@@ -396,7 +396,11 @@
 
 - (void)checkinPressed
 {
-    
+    MapViewController *mapController = [[MapViewController alloc] init];
+    mapController.user = user;
+    mapController.dashboardController = self;
+    [self.navigationController pushViewController:mapController animated:YES];
+    [mapController release];
 }
 
 #pragma mark - Table view delegate
