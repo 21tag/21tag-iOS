@@ -14,6 +14,7 @@
 #import "ASIFormDataRequest.h"
 #import "JSONKit.h"
 #import "APIUtil.h"
+#import "TeamsByFBIDS.h"
 
 #define kCellIdentifier @"Cell"
 
@@ -77,7 +78,13 @@
     navigationTableView.backgroundColor = [UIColor clearColor];
     navigationTableView.separatorColor = [UIColor lightGrayColor];
     
-    contentList = [NSMutableArray arrayWithObjects:@"Create a new team", @"Search all teams", nil];
+    NSMutableDictionary *createTeam = [[NSMutableDictionary alloc] initWithCapacity:1];
+    [createTeam setObject:@"Create a new team" forKey:@"textLabel"];
+    NSMutableDictionary *searchTeams = [[NSMutableDictionary alloc] initWithCapacity:1];
+    [searchTeams setObject:@"Search all teams" forKey:@"textLabel"];
+
+    contentList = [NSMutableArray arrayWithObjects:createTeam, searchTeams, nil];
+    
     [contentList retain];
     
 
@@ -109,8 +116,48 @@
 {
     NSLog(@"%@",[request responseString]);
     
-    statusImageView.image = [UIImage imageNamed:@"no_found_teams.png"];
-    [statusImageView setNeedsDisplay];
+    TeamsByFBIDS *teamsByFBIDS = [[TeamsByFBIDS alloc] initWithData:[request responseData]];
+    if(teamsByFBIDS.data)
+    {
+        NSMutableArray *emptyList = [[NSMutableArray alloc] initWithCapacity:2];
+        [emptyList addObject:[contentList objectAtIndex:[contentList count]-2]];
+        [emptyList addObject:[contentList objectAtIndex:[contentList count]-1]];
+        contentList = emptyList;
+        
+        NSMutableArray *teamsArray = [[NSMutableArray alloc] initWithCapacity:[teamsByFBIDS.data count]];
+        for(int i = 0; i < [teamsByFBIDS.data count]; i++)
+        {
+            TeamData *teamData = [teamsByFBIDS.data objectAtIndex:i];
+            NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
+            [cellInfo setObject:teamData.name forKey:@"textLabel"];
+            NSString *friends;
+            NSString *members;
+            if(teamData.numFriends > 1)
+                friends = @"friends";
+            else
+                friends = @"friend";
+            if(teamData.numMembers > 1)
+                members = @"members";
+            else
+                members = @"member";
+            [cellInfo setObject:[NSString stringWithFormat:@"%d %@  %d %@",teamData.numFriends,friends,teamData.numMembers,members] forKey:@"detailTextLabel"];
+            [teamsArray addObject:cellInfo];
+        }
+                
+        contentList = [teamsArray arrayByAddingObjectsFromArray:contentList];
+        [contentList retain];
+        
+        statusImageView.image = [UIImage imageNamed:@"found_teams"];
+        [statusImageView setNeedsDisplay];
+        [navigationTableView reloadData];
+    }
+    else
+    {
+        statusImageView.image = [UIImage imageNamed:@"no_found_teams.png"];
+        [statusImageView setNeedsDisplay];
+    }
+    
+
     [activityIndicator stopAnimating];
 }
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -149,16 +196,24 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+    int count = [contentList count];
+    BOOL isActualListContent = indexPath.row != count-1 || indexPath.row != count-2;
+    
 	if (cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kCellIdentifier] autorelease];
+        if(!isActualListContent)
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier] autorelease];
+        else
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
 	}
 	
 	// get the view controller's info dictionary based on the indexPath's row
-	cell.textLabel.text = [contentList objectAtIndex:indexPath.row];
+    NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
+	cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
+    if(isActualListContent)
+        cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    int count = [contentList count];
     if(indexPath.row == count-2)
     {
         cell.imageView.image = [UIImage imageNamed:@"new_team_table_icon.png"];
@@ -174,6 +229,8 @@
     else
     {
         cell.imageView.image = [UIImage imageNamed:@"team_icon_placeholder.png"];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:17.0f];      
+        cell.textLabel.textColor = [UIColor darkTextColor];
     }
     
 	return cell;
@@ -199,6 +256,7 @@
     {
         TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
         teamInfoController.isJoiningTeam = YES;
+        teamInfoController.teamName = [[contentList objectAtIndex:indexPath.row] objectForKey:@"textLabel"];
         [self.navigationController pushViewController:teamInfoController animated:YES];
         [teamInfoController release];
     }

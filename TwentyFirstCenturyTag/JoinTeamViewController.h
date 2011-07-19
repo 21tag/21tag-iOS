@@ -9,15 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @interface JoinTeamViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
-    NSMutableArray *contentList;
+    NSArray *contentList;
     UITableView *navigationTableView;
     UIActivityIndicatorView *activityIndicator;
     UIImageView *statusImageView;
+    
 }
 @property (nonatomic, retain) IBOutlet UIImageView *statusImageView;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic, retain)     NSMutableArray *contentList;
+@property (nonatomic, retain)     NSArray *contentList;
 @property (nonatomic, retain) IBOutlet UITableView *navigationTableView;
 
 - (void)cancelPressed;

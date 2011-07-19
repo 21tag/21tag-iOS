@@ -10,6 +10,8 @@
 		D925BEC513BD59A200B515DE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D925BEC413BD59A200B515DE /* QuartzCore.framework */; };
 		D925BECE13BD62AE00B515DE /* team_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D925BEC813BD62AE00B515DE /* team_icon.png */; };
 		D925BED113BD62AE00B515DE /* team_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D925BECB13BD62AE00B515DE /* team_icon@2x.png */; };
+		D927CE5A13D501E800277E3E /* TeamsByFBIDS.m in Sources */ = {isa = PBXBuildFile; fileRef = D927CE5913D501E800277E3E /* TeamsByFBIDS.m */; };
+		D927CE5D13D503ED00277E3E /* TeamData.m in Sources */ = {isa = PBXBuildFile; fileRef = D927CE5C13D503ED00277E3E /* TeamData.m */; };
 		D9514E3C13C54962005A652D /* no_found_teams.png in Resources */ = {isa = PBXBuildFile; fileRef = D9514E3A13C54962005A652D /* no_found_teams.png */; };
 		D9514E3D13C54962005A652D /* no_found_teams@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9514E3B13C54962005A652D /* no_found_teams@2x.png */; };
 		D9514E4013C54E4E005A652D /* loading_teams.png in Resources */ = {isa = PBXBuildFile; fileRef = D9514E3E13C54E4E005A652D /* loading_teams.png */; };
@@ -212,6 +214,10 @@
 		D925BEC413BD59A200B515DE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D925BEC813BD62AE00B515DE /* team_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = team_icon.png; sourceTree = "<group>"; };
 		D925BECB13BD62AE00B515DE /* team_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "team_icon@2x.png"; sourceTree = "<group>"; };
+		D927CE5813D501E800277E3E /* TeamsByFBIDS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamsByFBIDS.h; sourceTree = "<group>"; };
+		D927CE5913D501E800277E3E /* TeamsByFBIDS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamsByFBIDS.m; sourceTree = "<group>"; };
+		D927CE5B13D503ED00277E3E /* TeamData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamData.h; sourceTree = "<group>"; };
+		D927CE5C13D503ED00277E3E /* TeamData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamData.m; sourceTree = "<group>"; };
 		D9514E3A13C54962005A652D /* no_found_teams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_found_teams.png; sourceTree = "<group>"; };
 		D9514E3B13C54962005A652D /* no_found_teams@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_found_teams@2x.png"; sourceTree = "<group>"; };
 		D9514E3E13C54E4E005A652D /* loading_teams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_teams.png; sourceTree = "<group>"; };
@@ -851,6 +857,8 @@
 				D9F588B713C380C600FA88BD /* APIObj.m */,
 				D9E56E3C13C6877400EC6123 /* TeamsResp.h */,
 				D9E56E3D13C6877500EC6123 /* TeamsResp.m */,
+				D927CE5B13D503ED00277E3E /* TeamData.h */,
+				D927CE5C13D503ED00277E3E /* TeamData.m */,
 				D9E56E3F13C689D000EC6123 /* Team.h */,
 				D9E56E4013C689D000EC6123 /* Team.m */,
 				D9F588CE13C38FBA00FA88BD /* ErrorResp.h */,
@@ -864,6 +872,8 @@
 				D9F588B913C3810B00FA88BD /* iAPI.h */,
 				D9BEC23C13CD139B00E21A1A /* POIDetailResp.h */,
 				D9BEC23D13CD139B00E21A1A /* POIDetailResp.m */,
+				D927CE5813D501E800277E3E /* TeamsByFBIDS.h */,
+				D927CE5913D501E800277E3E /* TeamsByFBIDS.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1120,6 +1130,8 @@
 				D9E56E3E13C6877500EC6123 /* TeamsResp.m in Sources */,
 				D9E56E4113C689D000EC6123 /* Team.m in Sources */,
 				D9BEC23E13CD139B00E21A1A /* POIDetailResp.m in Sources */,
+				D927CE5A13D501E800277E3E /* TeamsByFBIDS.m in Sources */,
+				D927CE5D13D503ED00277E3E /* TeamData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1189,7 +1201,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chris Ballinger";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1198,7 +1210,7 @@
 				INFOPLIST_FILE = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "FEA08B61-5787-4A9B-9C5B-435AE32252D8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1207,7 +1219,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chris Ballinger";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Prefix.pch";
@@ -1215,7 +1227,7 @@
 				INFOPLIST_FILE = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "FEA08B61-5787-4A9B-9C5B-435AE32252D8";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

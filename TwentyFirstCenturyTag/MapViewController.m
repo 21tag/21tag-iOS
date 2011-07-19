@@ -103,8 +103,8 @@
     currentLocation = location;
 
     //DEBUG: 42.377663,-71.116691 cambridge, ma
-    //CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:42.377663 longitude:-71.116691];
-    //currentLocation = fakeLocation;
+    CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:42.377663 longitude:-71.116691];
+    currentLocation = fakeLocation;
     
     
     
