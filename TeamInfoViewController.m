@@ -71,13 +71,72 @@
     
         teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
         NSArray *users = teamsResponse.users;
-        [contentList removeAllObjects];
+        NSMutableArray *pointsList = [[NSMutableArray alloc] initWithCapacity:[users count]];
         for(id element in users)
         {
             User *user = (User*)element;
-            [contentList addObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname]];
+            NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
+            [cellInfo setObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname] forKey:@"textLabel"];
+            int points = 0;
+            for(int i = 0; i < [user.points count]; i++)
+            {
+                NSDictionary *pointDictionary = [user.points objectAtIndex:i];
+                points += [[pointDictionary objectForKey:@"p"] intValue];
+            }
+            [cellInfo setObject:[NSString stringWithFormat:@"%d points",points] forKey:@"detailTextLabel"];
+            [cellInfo setObject:[NSNumber numberWithInt:points] forKey:@"points"];
+            [pointsList addObject:cellInfo];
         }
-        [mainTableView reloadData];
+        rankingsList = pointsList;
+        
+        NSMutableArray *userList = [[NSMutableArray alloc] initWithCapacity:[users count]];
+
+        if(!isJoiningTeam) // team members content
+        {
+            for(id element in users)
+            {
+                User *user = (User*)element;
+                NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
+                [cellInfo setObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname] forKey:@"textLabel"];
+                NSTimeInterval currentVenueTime =  user.currentVenueTime;
+                NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+                
+                NSTimeInterval time = currentTime - currentVenueTime;
+                
+                int hour, minute, second, day;
+                hour = time / 3600;
+                minute = (time - hour * 3600) / 60;
+                second = (time - hour * 3600 - minute * 60);
+                NSString *timeString;
+                if(hour >= 24)
+                {
+                    day = hour / 24;
+                    hour = hour - (day * 24);
+                    timeString = [NSString stringWithFormat:@"%d days %d hours", day, hour];
+                }
+                else
+                    timeString = [NSString stringWithFormat:@"%d hours %d minutes", hour, minute];
+                
+                [cellInfo setObject:[NSString stringWithFormat:@"%@ %@ ago",user.currentVenueName,timeString] forKey:@"detailTextLabel"];
+                [cellInfo setObject:[NSNumber numberWithDouble:time] forKey:@"time"];
+                [userList addObject:cellInfo];
+            }
+            usersList = userList;
+        }
+        else
+        {
+            usersList = pointsList;
+        }
+        
+        NSMutableArray *venueList = [[NSMutableArray alloc] initWithCapacity:[teamsResponse.venues count]];
+        for(Venue *venue in teamsResponse.venues)
+        {
+            NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
+            [cellInfo setObject:venue.name forKey:@"textLabel"];
+            [cellInfo setObject:venue.address forKey:@"detailTextLabel"];
+            [venueList addObject:cellInfo];
+        }
+        locationsList = venueList;
         
         teamMembersLabel.text = [NSString stringWithFormat:@"%d",[teamsResponse.users count]];
         int teamPoints = 0;
@@ -93,12 +152,18 @@
                     NSDictionary *point = [user.points objectAtIndex:j];
                     teamPoints += [[point objectForKey:@"p"] intValue];
                 }
-                numVenues += [points count];
             }
         }
+        numVenues = [((Team*)[teamsResponse.teams objectAtIndex:0]).venues count];
         teamPointsLabel.text = [NSString stringWithFormat:@"%d",teamPoints];
         locationsOwnedLabel.text = [NSString stringWithFormat:@"%d",numVenues];
+        
+        NSSortDescriptor *timeDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES] autorelease];
+        [userList sortUsingDescriptors:[NSArray arrayWithObjects:timeDescriptor,nil]];
+        NSSortDescriptor *pointsDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"points" ascending:NO] autorelease];
+        [pointsList sortUsingDescriptors:[NSArray arrayWithObjects:pointsDescriptor,nil]];
 
+        [self teamMembersPressed:nil];
         [activityIndicator stopAnimating];
     }
     else if(request.tag == 2) // join team
@@ -266,9 +331,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     if(isJoiningTeam)
+    {
         self.title = @"Team Info";
+        tableHeaderLabel.text = @"Team Members";
+
+    }
     else
+    {
         self.title = @"Your Team";
+        tableHeaderLabel.text = @"Recent Activity";
+    }
     teamNameLabel.text = teamName;
 
     [self setupButtons];
@@ -287,7 +359,12 @@
     [request setTag:1];
     [request startAsynchronous];
     
-    contentList = [[NSMutableArray alloc] init];
+    contentList = [[NSArray alloc] init];
+    //usersList = [[NSArray alloc] init];
+    //locationsList = [[NSArray alloc] init];
+    //rankingsList = [[NSArray alloc] init];
+    contentList = usersList;
+    
     mainTableView.allowsSelection = NO;
     
 }
@@ -329,6 +406,8 @@
     {
         tableHeaderLabel.text = @"Recent Activity";
     }
+    contentList = usersList;
+    [mainTableView reloadData];
 }
 
 - (IBAction)locationsOwnedPressed:(id)sender 
@@ -337,6 +416,8 @@
     [locationsOwnedButton setImage:[UIImage imageNamed:@"locations_owned_selected.png"] forState: UIControlStateNormal];
     [teamPointsButton setImage:[UIImage imageNamed:@"team_points_deselected.png"] forState:UIControlStateNormal];
     tableHeaderLabel.text = @"Owned Locations";
+    contentList = locationsList;
+    [mainTableView reloadData];
 }
 
 - (IBAction)teamPointsPressed:(id)sender 
@@ -345,6 +426,8 @@
     [locationsOwnedButton setImage:[UIImage imageNamed:@"locations_owned_deselected.png"] forState: UIControlStateNormal];
     [teamPointsButton setImage:[UIImage imageNamed:@"team_points_selected.png"] forState:UIControlStateNormal];
     tableHeaderLabel.text = @"Members by Points";
+    contentList = rankingsList;
+    [mainTableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -362,11 +445,14 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
 	if (cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kCellIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
 	}
 	
 	// get the view controller's info dictionary based on the indexPath's row
-	cell.textLabel.text = [contentList objectAtIndex:indexPath.row];
+    NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
+	cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
+    cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
+    
     
 	return cell;
 }

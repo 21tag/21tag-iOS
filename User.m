@@ -77,8 +77,8 @@
     fb_authcode = [[fields objectForKey:FBAUTHCODE] retain];
     currentVenueId = [[fields objectForKey:CURRENTVENUEID] retain];
     currentVenueName = [[fields objectForKey:CURRENTVENUENAME] retain];
-    currentVenueTime = [[fields objectForKey:CURRENTVENUETIME] longValue];
-    currentVenueLastTime = [[fields objectForKey:CURRENTVENUELASTTIME] longValue];
+    currentVenueTime = [[fields objectForKey:CURRENTVENUETIME] doubleValue] / 1000;
+    currentVenueLastTime = [[fields objectForKey:CURRENTVENUELASTTIME] doubleValue] / 1000;
     team = [[fields objectForKey:TEAM] retain];
     teamname = [[fields objectForKey:TEAMNAME] retain];
     points = [[fields objectForKey:POINTS] retain];
@@ -109,7 +109,7 @@
         return;
     if(!history)
     {
-        history = [[NSArray alloc] init];
+        history = [[NSMutableArray alloc] init];
     }
     NSString *historyString = [NSString stringWithFormat:@"%d|%@",[[NSDate date] timeIntervalSince1970],hist];
     [history addObject:historyString];

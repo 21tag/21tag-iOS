@@ -23,11 +23,15 @@
     UILabel *teamPointsLabel;
     UIActivityIndicatorView *activityIndicator;
     
-    NSMutableArray *contentList;
+    NSArray *contentList;
     UITableView *mainTableView;
     NSString *teamName;
     
     TeamsResp *teamsResponse;
+    
+    NSArray *usersList;
+    NSArray *locationsList;
+    NSArray *rankingsList;
 }
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UIImageView *teamImage;
@@ -41,7 +45,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *locationsOwnedLabel;
 @property (nonatomic, retain) IBOutlet UILabel *teamPointsLabel;
 
-@property (nonatomic, retain) NSMutableArray *contentList;
+@property (nonatomic, retain) NSArray *contentList;
 @property (nonatomic, retain) IBOutlet UITableView *mainTableView;
 @property (nonatomic, retain) NSString *teamName;
 
