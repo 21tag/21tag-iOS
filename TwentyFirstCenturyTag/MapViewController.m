@@ -90,17 +90,24 @@
     
     [currentMapView regionThatFits:region];
 
-    locationController = [LocationController sharedInstance];
-    locationController.delegate = self;
+    //locationController = [LocationController sharedInstance];
+    //locationController.delegate = self;
     
     //PlaceAnnotation *someAnnotation = [[[PlaceAnnotation alloc] initWithLatitude:37.786521 longitude:-122.397850 ] autorelease];
     
     //[currentMapView addAnnotation:someAnnotation];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(locationUpdate:)
+     name:@"LocationUpdateNotification"
+     object:nil ];
 }
 
 - (void)locationUpdate:(CLLocation*)location
 {
-    currentLocation = location;
+    currentLocation = dashboardController.currentLocation;
+    //dashboardController.currentLocation = location;
 
     //DEBUG: 42.377663,-71.116691 cambridge, ma
     CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:42.37672746056762 longitude:-71.11735687794877];

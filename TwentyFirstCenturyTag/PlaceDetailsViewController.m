@@ -193,6 +193,10 @@
         [request setDelegate:self];
         [request setTag:1];
         [request startAsynchronous];
+        
+        mapViewController.dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:6.0*60 target:mapViewController.dashboardController
+                                                                                             selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
+        mapViewController.dashboardController.currentVenue = poiResponse.poi;
     }
     else
     {
@@ -202,8 +206,8 @@
         [alert show];
         [alert release];
     }
-
-
+    
+    
 }
 
 -(void)backPressed

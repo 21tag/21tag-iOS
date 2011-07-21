@@ -29,6 +29,9 @@
 @synthesize navigationTableView;
 @synthesize contentList;
 @synthesize user;
+@synthesize checkinTimer;
+@synthesize currentVenue;
+@synthesize currentLocation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,6 +40,50 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)locationUpdate:(CLLocation*)location
+{
+    currentLocation = location;    
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"LocationUpdateNotification"
+     object:nil];
+}
+- (void)locationError:(NSError *)error
+{
+    
+}
+
+- (void) checkinUpdate:(NSTimer *) timer
+{
+    CLLocation *venueLocation = [[CLLocation alloc] initWithLatitude:currentVenue.geolat longitude:currentVenue.geolong];
+    CLLocationDistance distanceToVenue = [currentLocation distanceFromLocation:venueLocation];
+    //200 feet = 60.96 meters
+    distanceToVenue = 0; // DEBUG value
+    if(distanceToVenue < 60.96)
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:[currentVenue getId] forKey:@"poi"];
+        [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+        //[request setDelegate:self];
+        //[request setTag:1];
+        [request startAsynchronous];
+        NSLog(@"dashboard checkin");
+        
+    }
+    else
+    {
+        //1 meter = 3.2808399 feet
+        int distanceInFeet = (int)(distanceToVenue * 3.2808399);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Too Far" message:[NSString stringWithFormat:@"You are currently %d feet from %@. You must be within 200 feet to check in. You will be checked out automatically if you don't get closer and check-in again!",distanceInFeet,currentVenue.name] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+        [alert release];
+        [checkinTimer invalidate];
+    }
+
 }
 
 // Facebook request result
@@ -392,6 +439,9 @@
         [joinTeamController release];
     }
 
+    locationController = [LocationController sharedInstance];
+    locationController.delegate = self;
+    [locationController.locationManager startUpdatingLocation];
 }
 
 - (void)checkinPressed

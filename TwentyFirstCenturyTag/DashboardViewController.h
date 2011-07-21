@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Facebook.h"
 #import "User.h"
+#import "LocationController.h"
 
-@interface DashboardViewController : UIViewController <FBRequestDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface DashboardViewController : UIViewController <FBRequestDelegate, UITableViewDelegate, UITableViewDataSource, LocationControllerDelegate> {
     
     NSMutableArray *contentList;
     UILabel *nameLabel;
@@ -23,13 +24,23 @@
     BOOL isRequestingFriendsList;
     
     User *user;
+    Venue *currentVenue;
+    
+    NSTimer *checkinTimer;
+    LocationController *locationController;
+    CLLocation *currentLocation;
 }
 @property (nonatomic, retain) IBOutlet UITableView *navigationTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) Facebook *facebook;
 @property (nonatomic, retain) User *user;
+@property (nonatomic, retain) Venue *currentVenue;
+@property (nonatomic, retain) NSTimer *checkinTimer;
+@property (nonatomic, retain) CLLocation *currentLocation;
 
 - (void)checkinPressed;
+- (void) checkinUpdate:(NSTimer *) timer;
+
 
 @end
