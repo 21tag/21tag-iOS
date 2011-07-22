@@ -522,9 +522,14 @@
     else    // Your Profile
     {
         ProfileViewController *profileController = [[ProfileViewController alloc] init];
+        profileController.user = user;
+        [profileController.user retain];
+        //NSLog(@"profile: %@",user.teamname);
+
         [self.navigationController pushViewController:profileController animated:YES];
         profileController.profileImageView.image = avatarImage;
         profileController.nameLabel.text = [[contentList objectAtIndex:2] objectAtIndex:0];
+
         [profileController release];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

@@ -244,7 +244,11 @@
 
 - (IBAction)locationButtonPressed:(id)sender 
 {
-    [locationController.locationManager startUpdatingLocation];
+    //[locationController.locationManager startUpdatingLocation];
+    
+    [self locationUpdate:nil];
+    [self getVenues];
+    [self centerMapOnLocation:currentLocation];
 }
 
 - (MKAnnotationView *) mapView:(MKMapView *) mapView viewForAnnotation:(id ) annotation {
