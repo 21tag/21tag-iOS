@@ -19,7 +19,7 @@
 @synthesize locationController;
 @synthesize user;
 @synthesize dashboardController;
-@synthesize currentLocation;
+//@synthesize currentLocation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -106,21 +106,21 @@
 
 - (void)locationUpdate:(CLLocation*)location
 {
-    currentLocation = dashboardController.currentLocation;
+    //currentLocation = dashboardController.currentLocation;
     //dashboardController.currentLocation = location;
 
     //DEBUG: 42.377663,-71.116691 cambridge, ma
-    CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:42.37672746056762 longitude:-71.11735687794877];
-    currentLocation = fakeLocation;
+    //CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:42.37672746056762 longitude:-71.11735687794877];
+    //currentLocation = fakeLocation;
     
     
     if(!retreivedVenues)
-        [self centerMapOnLocation:currentLocation];
+        [self centerMapOnLocation:dashboardController.currentLocation];
 }
 
 -(void)centerMapOnLocation:(CLLocation *)location
 {
-    CLLocationCoordinate2D currentLocationCoordinate = currentLocation.coordinate;
+    CLLocationCoordinate2D currentLocationCoordinate = location.coordinate;
     
     MKCoordinateSpan span;
     span.latitudeDelta = .01;
@@ -144,8 +144,8 @@
 
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpois",[APIUtil host]]];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
-    [request setPostValue:[NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude] forKey:@"lat"];
-    [request setPostValue:[NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude] forKey:@"lon"];
+    [request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.latitude] forKey:@"lat"];
+    [request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.longitude] forKey:@"lon"];
     [request setPostValue:@"50" forKey:@"num"];
     [request setDelegate:self];
     [request setTag:1];
@@ -162,7 +162,8 @@
         
         venuesResponse = [[VenuesResp alloc] initWithData:[request responseData]];
 
-        [self addAnnotations];
+        //[self addAnnotations];
+        [self refreshAnnotations];
     }
     else if(request.tag == 2) // venue details
     {
@@ -179,11 +180,13 @@
 - (void)addAnnotations
 {
     NSArray *venues = venuesResponse.venues;
+        NSMutableArray *annotations = [[NSMutableArray alloc] initWithCapacity:[venues count]];
     for(int i = 0; i < [venues count]; i++)
     {
         PlaceAnnotation *annotation = [[[PlaceAnnotation alloc] initWithVenue:[venues objectAtIndex:i]] autorelease];
         annotation.tag = i;
         [currentMapView addAnnotation:annotation];
+        [annotations addObject:annotation];
     }
 }
 
@@ -223,7 +226,7 @@
     AllPlacesViewController *allPlacesController = [[AllPlacesViewController alloc] init];
     allPlacesController.venuesResponse = venuesResponse;
     allPlacesController.mapViewController = self;
-    allPlacesController.currentLocation = currentLocation;
+    allPlacesController.currentLocation = dashboardController.currentLocation;
     [self.navigationController pushViewController:allPlacesController animated:YES];
     [allPlacesController release];
 }
@@ -246,9 +249,10 @@
 {
     //[locationController.locationManager startUpdatingLocation];
     
-    [self locationUpdate:nil];
+    //[self locationUpdate:nil];
     [self getVenues];
-    [self centerMapOnLocation:currentLocation];
+    if(dashboardController.currentLocation)
+        [self centerMapOnLocation:dashboardController.currentLocation];
 }
 
 - (MKAnnotationView *) mapView:(MKMapView *) mapView viewForAnnotation:(id ) annotation {

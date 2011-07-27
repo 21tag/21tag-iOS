@@ -44,7 +44,8 @@
 
 - (void)locationUpdate:(CLLocation*)location
 {
-    currentLocation = location;    
+    currentLocation = location;
+    [currentLocation retain];
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"LocationUpdateNotification"
@@ -60,7 +61,7 @@
     CLLocation *venueLocation = [[CLLocation alloc] initWithLatitude:currentVenue.geolat longitude:currentVenue.geolong];
     CLLocationDistance distanceToVenue = [currentLocation distanceFromLocation:venueLocation];
     //200 feet = 60.96 meters
-    distanceToVenue = 0; // DEBUG value
+    //distanceToVenue = 0; // DEBUG value
     if(distanceToVenue < 60.96)
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

@@ -19,9 +19,9 @@
     LocationController *locationController;
     
     BOOL retreivedVenues;
-    CLLocation *currentLocation;
+    //CLLocation *currentLocation;
     
-    //NSMutableArray *mapAnnotations;
+    //NSArray *mapAnnotations;
     VenuesResp *venuesResponse;
     User *user;
     
@@ -33,7 +33,7 @@
 LocationController *locationController;
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) DashboardViewController *dashboardController;
-@property (nonatomic, retain) CLLocation *currentLocation;
+//@property (nonatomic, retain) CLLocation *currentLocation;
 
 -(void)dashPressed;
 - (IBAction)allPlacesPressed:(id)sender;

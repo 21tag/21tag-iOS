@@ -38,7 +38,7 @@
     
     Venue *venue = poiResponse.poi;
     CLLocation *venueLocation = [venue getLocation];
-    CLLocationDistance distanceToVenue = [mapViewController.currentLocation distanceFromLocation:venueLocation];
+    CLLocationDistance distanceToVenue = [mapViewController.dashboardController.currentLocation distanceFromLocation:venueLocation];
     //200 feet = 60.96 meters
     //1 meter = 3.2808399 feet
     //int distanceInFeet = (int)(distanceToVenue * 3.2808399);

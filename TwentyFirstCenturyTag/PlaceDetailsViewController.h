@@ -10,6 +10,7 @@
 #import "Venue.h"
 #import "MapViewController.h"
 #import "POIDetailResp.h"
+#import "Events.h"
 
 @interface PlaceDetailsViewController : UIViewController <UITableViewDataSource> {
     
@@ -29,6 +30,8 @@
     Venue *venue;
     POIDetailResp *poiResponse;
     MapViewController *mapViewController;
+    
+    Events *eventsResponse;
 }
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UIScrollView *detailsScrollView;

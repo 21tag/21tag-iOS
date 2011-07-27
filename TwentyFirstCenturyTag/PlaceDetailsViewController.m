@@ -80,12 +80,51 @@
         [alert show];
         [alert release];
         
-        [mapViewController centerMapOnLocation:mapViewController.currentLocation];
+        [mapViewController centerMapOnLocation:mapViewController.dashboardController.currentLocation];
         [mapViewController refreshAnnotations];
         [mapViewController.dashboardController.contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:mapViewController.user.currentVenueName]];
         [mapViewController.dashboardController.navigationTableView reloadData];
 
     }
+    else if(request.tag == 3)
+    {
+        NSLog(@"events: %@",[request responseString]);
+        
+        eventsResponse = [[Events alloc] initWithData:[request responseData]];
+        
+        NSMutableArray *eventsList = [[NSMutableArray alloc] initWithCapacity:[eventsResponse.events count]];
+        for(Event *event in eventsResponse.events)
+        {
+            NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
+            [cellInfo setObject:event.msg forKey:@"textLabel"];
+
+            NSTimeInterval currentVenueTime =  event.time;
+            NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+            
+            NSTimeInterval time = currentTime - currentVenueTime;
+            
+            int hour, minute, second, day;
+            hour = time / 3600;
+            minute = (time - hour * 3600) / 60;
+            second = (time - hour * 3600 - minute * 60);
+            NSString *timeString;
+            if(hour >= 24)
+            {
+                day = hour / 24;
+                hour = hour - (day * 24);
+                timeString = [NSString stringWithFormat:@"%d days %d hours", day, hour];
+            }
+            else
+                timeString = [NSString stringWithFormat:@"%d hours %d minutes", hour, minute];
+            
+            [cellInfo setObject:[NSString stringWithFormat:@"%@ ago",timeString] forKey:@"detailTextLabel"];
+            [eventsList addObject:cellInfo];
+
+        }
+        contentList = eventsList;
+        [detailsTableView reloadData];
+    }
+            
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -108,8 +147,8 @@
 -(void)setupButtons
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
-    UIImage *buttonImagePressed = [UIImage imageNamed:@"back_button_pressed.png"];
+    UIImage *buttonImage = [UIImage imageNamed:@"map_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"map_button_pressed.png"];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
     CGRect buttonFrame = [button frame];
@@ -118,11 +157,11 @@
     [button setFrame:buttonFrame];
     [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
-    self.navigationItem.leftBarButtonItem = backButton;
+    self.navigationItem.leftBarButtonItem = mapButton;
     
-    [backButton release];
+    [mapButton release];
     
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonImage = [UIImage imageNamed:@"checkin_button.png"];
@@ -152,8 +191,8 @@
     venue = poiResponse.poi;
     
     NSMutableDictionary *recentActivityDictionary = [[NSMutableDictionary alloc] initWithCapacity:2];
-    [recentActivityDictionary setObject:@"Kickin' Wing sapped a member of The Haverfords" forKey:@"description"];
-    [recentActivityDictionary setObject:[NSDate date] forKey:@"date"];
+    [recentActivityDictionary setObject:@"Loading..." forKey:@"textLabel"];
+    [recentActivityDictionary setObject:[NSDate date] forKey:@"detailTextLabel"];
     
     contentList = [[NSMutableArray alloc] initWithObjects:recentActivityDictionary, recentActivityDictionary, recentActivityDictionary, recentActivityDictionary, recentActivityDictionary, nil];
     
@@ -167,10 +206,19 @@
     
     placeNameLabel.text = venue.name;
     owningTeamNameLabel.text = poiResponse.owner.name;
+    owningTeamPointsLabel.text = [NSString stringWithFormat:@"%ld",poiResponse.points];
     
     //owningTeamNameLabel.text = poiResponse.owner.name;
 
     //[activityIndicator startAnimating];
+    
+    //String user, String team, String venue, long time, int num
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getevents",[APIUtil host]]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:[venue getId] forKey:@"venue"];
+    [request setTag:3];
+    [request setDelegate:self];
+    [request startAsynchronous];
 } 
 
 - (IBAction)checkinButtonPressed:(id)sender 
@@ -180,9 +228,9 @@
     //return handleResponse(httpPost(HOST+"/checkin", params), new SimpleResp());
     
     CLLocation *venueLocation = [[CLLocation alloc] initWithLatitude:venue.geolat longitude:venue.geolong];
-    CLLocationDistance distanceToVenue = [mapViewController.currentLocation distanceFromLocation:venueLocation];
+    CLLocationDistance distanceToVenue = [mapViewController.dashboardController.currentLocation distanceFromLocation:venueLocation];
     //200 feet = 60.96 meters
-    distanceToVenue = 0; // DEBUG value
+    //distanceToVenue = 0; // DEBUG value
     if(distanceToVenue < 60.96)
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -194,8 +242,7 @@
         [request setTag:1];
         [request startAsynchronous];
         
-        mapViewController.dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:6.0*60 target:mapViewController.dashboardController
-                                                                                             selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
+        mapViewController.dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:6.0*60 target:mapViewController.dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
         mapViewController.dashboardController.currentVenue = poiResponse.poi;
     }
     else
@@ -260,8 +307,8 @@
 	
 	// get the view controller's info dictionary based on the indexPath's row
     NSDictionary *cellDictionary = [contentList objectAtIndex:indexPath.row];
-	cell.textLabel.text = [cellDictionary objectForKey:@"description"];
-    cell.detailTextLabel.text = [[cellDictionary objectForKey:@"date"] description];
+	cell.textLabel.text = [cellDictionary objectForKey:@"textLabel"];
+    cell.detailTextLabel.text = [[cellDictionary objectForKey:@"detailTextLabel"] description];
     cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     
 	return cell;
