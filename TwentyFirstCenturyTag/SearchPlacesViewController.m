@@ -7,16 +7,20 @@
 //
 
 #import "SearchPlacesViewController.h"
-
+#import "PlaceDetailsViewController.h"
+#import "POIDetailResp.h"
+#import "ASIFormDataRequest.h"
+#import "APIUtil.h"
 
 @implementation SearchPlacesViewController
-//@synthesize navBar;
-//@synthesize navItem;
+
 
 @synthesize mainTableView;
 @synthesize contentsList;
 @synthesize searchResults;
 @synthesize savedSearchTerm;
+@synthesize venuesResponse;
+@synthesize mapViewController;
 
 - (void)dealloc
 {
@@ -28,6 +32,27 @@
 //    [navBar release];
 //    [navItem release];
     [super dealloc];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    
+    POIDetailResp *poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
+    
+    PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];        
+    placeDetailsController.poiResponse = poiResponse;
+    placeDetailsController.mapViewController = mapViewController;
+    [self.navigationController pushViewController:placeDetailsController animated:YES];
+    [placeDetailsController release];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    NSLog(@"%@",error);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    [alert release];
 }
 
 - (void)viewDidUnload
@@ -64,7 +89,15 @@
     
     [backButton release];
     
-    contentsList = [NSMutableArray arrayWithObjects:@"One", @"Two", @"Onee", @"Three", nil];
+
+    contentsList = [[NSMutableArray alloc] initWithCapacity:[venuesResponse.venues count]];
+    venuesSearchResults = [[NSMutableArray alloc] initWithCapacity:[venuesResponse.venues count]];
+    
+    for(Venue *venue in venuesResponse.venues)
+    {
+        [contentsList addObject:venue.name];
+    }
+    
     [contentsList retain];
     
     // Restore search term
@@ -72,6 +105,8 @@
     {
         [[[self searchDisplayController] searchBar] setText:[self savedSearchTerm]];
     }
+    
+    isSearching = NO;
 }
 
 -(void)backPressed
@@ -91,17 +126,26 @@
     }
 	
     [[self searchResults] removeAllObjects];
+    [venuesSearchResults removeAllObjects];
 	
     if ([[self savedSearchTerm] length] != 0)
     {
+        int i = 0, k = 0;
         for (NSString *currentString in [self contentsList])
         {
             if ([currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location != NSNotFound)
             {
                 [[self searchResults] addObject:currentString];
+                Venue *venue = (Venue*)[venuesResponse.venues objectAtIndex:i];
+                [venuesSearchResults addObject:venue];
+                NSLog(@"%d/%d : %@",k,i,venue.name);
+                k++;
             }
+            i++;
         }
     }
+    
+    isSearching = YES;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
@@ -138,6 +182,8 @@
 	
     [[cell textLabel] setText:contentForThisRow];
 	
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     return cell;
 }
 
@@ -154,6 +200,32 @@ shouldReloadTableForSearchString:(NSString *)searchString
     [self setSavedSearchTerm:nil];
 	
     [[self mainTableView] reloadData];
+    
+    isSearching = NO;
 }
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Venue *venue;
+    if(isSearching)
+        venue = ((Venue*)[venuesSearchResults objectAtIndex:indexPath.row]);
+    else
+        venue = ((Venue*)[venuesResponse.venues objectAtIndex:indexPath.row]);
+    
+    NSLog(@"%@",venue.name);
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request addPostValue:[venue getId] forKey:@"poi"];
+    [request setDelegate:self];
+    [request startAsynchronous];
+    
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+
 
 @end

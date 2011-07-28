@@ -218,6 +218,8 @@
     SearchPlacesViewController *searchPlacesController = [[SearchPlacesViewController alloc] init];
     //searchPlacesController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     //[self presentModalViewController:searchPlacesController animated:YES];
+    searchPlacesController.mapViewController = mapViewController;
+    searchPlacesController.venuesResponse = venuesResponse;
     [self.navigationController pushViewController:searchPlacesController animated:YES];
     [searchPlacesController release];
 }

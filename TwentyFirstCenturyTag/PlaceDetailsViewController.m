@@ -147,8 +147,8 @@
 -(void)setupButtons
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *buttonImage = [UIImage imageNamed:@"map_button.png"];
-    UIImage *buttonImagePressed = [UIImage imageNamed:@"map_button_pressed.png"];
+    UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"back_button_pressed.png"];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
     CGRect buttonFrame = [button frame];
@@ -157,11 +157,11 @@
     [button setFrame:buttonFrame];
     [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
-    self.navigationItem.leftBarButtonItem = mapButton;
+    self.navigationItem.leftBarButtonItem = backButton;
     
-    [mapButton release];
+    [backButton release];
     
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonImage = [UIImage imageNamed:@"checkin_button.png"];

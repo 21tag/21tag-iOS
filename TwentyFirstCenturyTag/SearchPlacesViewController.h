@@ -7,17 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "VenuesResp.h"
+#import "MapViewController.h"
 
 @interface SearchPlacesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate> {
     UITableView *mainTableView;
 	
     NSMutableArray *contentsList;
-    NSArray *allPlacesDictionaryList;
     NSMutableArray *searchResults;
     NSString *savedSearchTerm;
-//    UINavigationBar *navBar;
-//    UINavigationItem *navItem;
+
+    VenuesResp *venuesResponse;
+    
+    BOOL isSearching;
+    
+    MapViewController *mapViewController;
+
+    NSMutableArray *venuesSearchResults;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *mainTableView;
@@ -26,8 +32,10 @@
 @property (nonatomic, copy) NSString *savedSearchTerm;
 
 - (void)handleSearchForTerm:(NSString *)searchTerm;
-//@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
-//@property (nonatomic, retain) IBOutlet UINavigationItem *navItem;
+
+@property (nonatomic, retain)     VenuesResp *venuesResponse;
+@property (nonatomic, retain) MapViewController *mapViewController;
+
 
 -(void)backPressed;
 
