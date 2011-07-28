@@ -19,6 +19,8 @@
     
     BOOL isLoadingTeams;
     TeamsResp *teamsResponse;
+    
+    BOOL isSearching;
 }
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 

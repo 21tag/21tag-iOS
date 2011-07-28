@@ -25865,7 +25865,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>333493966.47506398</real>
+		<real>333574124.36741298</real>
 		<string>{5099, 1847}</string>
 		<string>{6025, 0}</string>
 		<dict>
@@ -26068,19 +26068,19 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1779</integer>
+					<integer>1767</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1780</integer>
+					<integer>1768</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1781</integer>
+					<integer>1769</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1782</integer>
+					<integer>1770</integer>
 				</dict>
 			</array>
 			<key>NS.objects</key>
@@ -26103,9 +26103,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>332803261.73574501</real>
-		<string>{0, 1006}</string>
-		<string>{601, 0}</string>
+		<real>333574324.15659302</real>
+		<string>{0, 1038}</string>
+		<string>{628, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -27306,19 +27306,19 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1779</integer>
+					<integer>1767</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1780</integer>
+					<integer>1768</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1781</integer>
+					<integer>1769</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1782</integer>
+					<integer>1770</integer>
 				</dict>
 			</array>
 			<key>NS.objects</key>
@@ -27341,9 +27341,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>332805370.47265798</real>
-		<string>{222, 1021}</string>
-		<string>{1242, 0}</string>
+		<real>333574406.27141601</real>
+		<string>{4965, 1322}</string>
+		<string>{6286, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -33411,7 +33411,7 @@
 				<integer>2456</integer>
 			</dict>
 			<key>NS.time</key>
-			<real>333492940.35908401</real>
+			<real>333574398.04531199</real>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -33422,7 +33422,7 @@
 			<key>$classname</key>
 			<string>NSDate</string>
 		</dict>
-		<string>Today at 4:55 PM</string>
+		<string>Today at 3:33 PM</string>
 		<integer>234</integer>
 		<dict>
 			<key>$class</key>
@@ -33464,6 +33464,14 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>2469</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>2471</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>1736</integer>
 				</dict>
 				<dict>
@@ -33473,14 +33481,6 @@
 				<dict>
 					<key>CF$UID</key>
 					<integer>1734</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>2469</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>2471</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -33505,7 +33505,7 @@
 				<integer>2462</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/PlaceDetailsViewController.m</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/SearchAllTeamsViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -33523,7 +33523,7 @@
 				<integer>2464</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.m</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/SearchAllTeamsViewController.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -33541,7 +33541,7 @@
 				<integer>2466</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/DashboardViewController.h</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/PlaceDetailsViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -33559,7 +33559,7 @@
 				<integer>2468</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/DashboardViewController.m</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -33577,7 +33577,7 @@
 				<integer>2470</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/main.m</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/DashboardViewController.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -33595,7 +33595,7 @@
 				<integer>2472</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/MapViewController.h</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/DashboardViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -33613,7 +33613,7 @@
 				<integer>2474</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/AllPlacesViewController.m</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/main.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -33699,7 +33699,7 @@
 		<string>IDEActiveWorkspaceTabController</string>
 		<string>IDEWindowToolbarIsVisible</string>
 		<string>IDEWindowTabBarIsVisible</string>
-		<string>{{19, 53}, {1395, 789}}</string>
+		<string>{{19, 44}, {1395, 789}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -33799,7 +33799,7 @@
 		<string>IDEWorkspaceTabControllerDesignAreaSplitView</string>
 		<string>IDEShowUtilities</string>
 		<string>AssistantEditorsLayout</string>
-		<string>PlaceDetailsViewController.m</string>
+		<string>SearchAllTeamsViewController.m</string>
 		<true/>
 		<dict>
 			<key>$class</key>
@@ -34453,7 +34453,7 @@
 				<integer>2556</integer>
 			</dict>
 		</dict>
-		<string>PlaceDetailsViewController.m</string>
+		<string>SearchAllTeamsViewController.m</string>
 		<dict>
 			<key>$classes</key>
 			<array>
@@ -34512,7 +34512,7 @@
 				<integer>26</integer>
 			</dict>
 			<key>NS.string</key>
-			<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/PlaceDetailsViewController.m</string>
+			<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/SearchAllTeamsViewController.m</string>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -34577,10 +34577,10 @@
 				</dict>
 			</array>
 		</dict>
-		<real>333493966.47588098</real>
-		<string>{5099, 1847}</string>
-		<string>{6025, 0}</string>
-		<string>-setupButtons</string>
+		<real>333574406.27211398</real>
+		<string>{4965, 1322}</string>
+		<string>{6286, 0}</string>
+		<string>-tableView:didSelectRowAtIndexPath:</string>
 		<string>Xcode.IDEKit.EditorDocument.SourceCode</string>
 		<dict>
 			<key>$class</key>
@@ -34599,7 +34599,7 @@
 				<integer>2572</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/PlaceDetailsViewController.m</string>
+		<string>file://localhost/Users/chrisbal/twentyfirstcenturytag/TwentyFirstCenturyTag/SearchAllTeamsViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -37296,7 +37296,7 @@
 		<string>IDERecentDocumentFilteringEnabled</string>
 		<string>IDESCMStatusFilteringEnabled</string>
 		<string>IDEExpandedItemsSet</string>
-		<string>{{0, 556}, {339, 669}}</string>
+		<string>{{0, 595}, {339, 669}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>

@@ -106,6 +106,8 @@
     {
         [[[self searchDisplayController] searchBar] setText:[self savedSearchTerm]];
     }
+    
+    isSearching = NO;
 }
 
 -(void)backPressed
@@ -136,6 +138,8 @@
             }
         }
     }
+    
+    isSearching = YES;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
@@ -189,6 +193,8 @@ shouldReloadTableForSearchString:(NSString *)searchString
     [self setSavedSearchTerm:nil];
 	
     [[self mainTableView] reloadData];
+    
+    isSearching = NO;
 }
 
 #pragma mark - Table view delegate
@@ -198,7 +204,12 @@ shouldReloadTableForSearchString:(NSString *)searchString
     if(!isLoadingTeams)
     {
         TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
-        teamInfoController.teamName = [contentsList objectAtIndex:indexPath.row];
+        
+        if(isSearching)
+            teamInfoController.teamName = [searchResults objectAtIndex:indexPath.row];
+        else
+            teamInfoController.teamName = [contentsList objectAtIndex:indexPath.row];
+
         teamInfoController.isJoiningTeam = YES;
         [self.navigationController pushViewController:teamInfoController animated:YES];
         [teamInfoController release];
