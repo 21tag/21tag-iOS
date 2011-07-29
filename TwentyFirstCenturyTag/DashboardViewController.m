@@ -92,6 +92,7 @@
         [alert release];
         [checkinTimer invalidate];
         checkinTime = nil;
+        [navigationTableView reloadData];
     }
     
     if(fiveMinuteCounter == 5)
