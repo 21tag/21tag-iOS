@@ -231,7 +231,7 @@
     CLLocationDistance distanceToVenue = [mapViewController.dashboardController.currentLocation distanceFromLocation:venueLocation];
     //200 feet = 60.96 meters
     //distanceToVenue = 0; // DEBUG value
-    if(distanceToVenue < 60.96)
+    if(distanceToVenue < 60.96 && mapViewController.dashboardController.currentLocation)
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
@@ -242,8 +242,9 @@
         [request setTag:1];
         [request startAsynchronous];
         
-        mapViewController.dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:6.0*60 target:mapViewController.dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
+        mapViewController.dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:mapViewController.dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
         mapViewController.dashboardController.currentVenue = poiResponse.poi;
+        mapViewController.dashboardController.checkinTime = [[NSDate date] retain];
     }
     else
     {

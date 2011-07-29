@@ -32,6 +32,7 @@
 @synthesize checkinTimer;
 @synthesize currentVenue;
 @synthesize currentLocation;
+@synthesize checkinTime;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,6 +57,11 @@
     
 }
 
+-(void)updateDashboard:(NSTimer *)timer
+{
+    [navigationTableView reloadData];
+}
+
 - (void) checkinUpdate:(NSTimer *) timer
 {
     CLLocation *venueLocation = [[CLLocation alloc] initWithLatitude:currentVenue.geolat longitude:currentVenue.geolong];
@@ -64,16 +70,18 @@
     //distanceToVenue = 0; // DEBUG value
     if(distanceToVenue < 60.96)
     {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        [request setPostValue:[currentVenue getId] forKey:@"poi"];
-        [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
-        //[request setDelegate:self];
-        //[request setTag:1];
-        [request startAsynchronous];
-        NSLog(@"dashboard checkin");
-        
+        if(fiveMinuteCounter == 5)
+        {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
+            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+            [request setPostValue:[currentVenue getId] forKey:@"poi"];
+            [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+            //[request setDelegate:self];
+            //[request setTag:1];
+            [request startAsynchronous];
+            NSLog(@"dashboard checkin");
+        }
     }
     else
     {
@@ -83,7 +91,15 @@
         [alert show];
         [alert release];
         [checkinTimer invalidate];
+        checkinTime = nil;
     }
+    
+    if(fiveMinuteCounter == 5)
+        fiveMinuteCounter = 0;
+    else
+        fiveMinuteCounter++;
+
+    //[navigationTableView reloadData];
 
 }
 
@@ -333,7 +349,10 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
 	if (cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier] autorelease];
+        if(indexPath.section == 0)
+            cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
+        else
+            cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier] autorelease];
 	}
 	
 	// get the view controller's info dictionary based on the indexPath's row
@@ -362,11 +381,26 @@
             cell.imageView.image = [UIImage imageNamed:@"list_icon.png"];
         }
     }
-    if(indexPath.section == 2) // avatar
+    else if(indexPath.section == 2) // avatar
     {
         cell.imageView.image = avatarImage;
         cell.imageView.layer.masksToBounds = YES;
         cell.imageView.layer.cornerRadius = 5.0;
+    }
+    else    // check in location
+    {
+        if(checkinTime)
+        {
+            NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenNow:[[NSDate date] timeIntervalSince1970] then:[checkinTime timeIntervalSince1970]];
+            
+            cell.detailTextLabel.text = timeString;
+        }
+        else if(user.currentVenueTime)
+        {
+            NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenNow:[[NSDate date] timeIntervalSince1970] then:user.currentVenueTime];
+            
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"Last checked in: %@ ago",timeString];
+        }
     }
     
 	return cell;
@@ -443,6 +477,11 @@
     locationController = [LocationController sharedInstance];
     locationController.delegate = self;
     [locationController.locationManager startUpdatingLocation];
+    
+    fiveMinuteCounter = 0;
+    
+    dashboardTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateDashboard:) userInfo:nil repeats:YES] retain];
+
 }
 
 - (void)checkinPressed

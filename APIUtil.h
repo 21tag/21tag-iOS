@@ -16,5 +16,7 @@
 }
 
 +(NSString*) host;
++(NSString*)stringWithTimeDifferenceBetweenNow:(NSTimeInterval)now then:(NSTimeInterval)then;
+
 
 @end

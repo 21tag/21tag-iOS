@@ -29,6 +29,9 @@
     NSTimer *checkinTimer;
     LocationController *locationController;
     CLLocation *currentLocation;
+    int fiveMinuteCounter;
+    NSDate *checkinTime;
+    NSTimer *dashboardTimer;
 }
 @property (nonatomic, retain) IBOutlet UITableView *navigationTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;
@@ -38,9 +41,12 @@
 @property (nonatomic, retain) Venue *currentVenue;
 @property (nonatomic, retain) NSTimer *checkinTimer;
 @property (nonatomic, retain) CLLocation *currentLocation;
+@property (nonatomic, retain) NSDate *checkinTime;
+
 
 - (void)checkinPressed;
 - (void) checkinUpdate:(NSTimer *) timer;
+- (void) updateDashboard:(NSTimer *) timer;
 
 
 @end

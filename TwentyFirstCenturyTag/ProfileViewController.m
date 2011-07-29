@@ -65,21 +65,9 @@
             NSTimeInterval currentVenueTime =  teamUser.currentVenueTime;
             NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
             
-            NSTimeInterval time = currentTime - currentVenueTime;
+            NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenNow:currentTime then:currentVenueTime];
             
-            int hour, minute, second, day;
-            hour = time / 3600;
-            minute = (time - hour * 3600) / 60;
-            second = (time - hour * 3600 - minute * 60);
-            NSString *timeString;
-            if(hour >= 24)
-            {
-                day = hour / 24;
-                hour = hour - (day * 24);
-                timeString = [NSString stringWithFormat:@"%d days %d hours", day, hour];
-            }
-            else
-                timeString = [NSString stringWithFormat:@"%d hours %d minutes", hour, minute];
+            NSTimeInterval time = currentTime - currentVenueTime;
             
             [cellInfo setObject:[NSString stringWithFormat:@"%@ %@ ago",teamUser.currentVenueName,timeString] forKey:@"detailTextLabel"];
             [cellInfo setObject:[NSNumber numberWithDouble:time] forKey:@"time"];
