@@ -26,8 +26,9 @@
 @synthesize detailsTableView;
 @synthesize contentList;
 @synthesize venue;
-@synthesize mapViewController;
+@synthesize dashboardController;
 @synthesize poiResponse;
+@synthesize mapViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -75,15 +76,21 @@
     else if(request.tag == 2)
     {
         NSLog(@"update user after checkin: %@",[request responseString]);
-        mapViewController.user = [[User alloc] initWithData:[request responseData]];
+        
+        
+        dashboardController.user = [[User alloc] initWithData:[request responseData]];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checked In" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Cool!", nil];
         [alert show];
         [alert release];
         
-        [mapViewController centerMapOnLocation:mapViewController.dashboardController.currentLocation];
-        [mapViewController refreshAnnotations];
-        [mapViewController.dashboardController.contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:mapViewController.user.currentVenueName]];
-        [mapViewController.dashboardController.navigationTableView reloadData];
+        if(mapViewController)
+        {
+            [mapViewController centerMapOnLocation:dashboardController.currentLocation];
+            [mapViewController refreshAnnotations];
+        }
+        
+        [dashboardController.contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:dashboardController.user.currentVenueName]];
+        [dashboardController.navigationTableView reloadData];
 
     }
     else if(request.tag == 3)
@@ -146,29 +153,51 @@
 
 -(void)setupButtons
 {
+    if(mapViewController)
+    {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *buttonImage = [UIImage imageNamed:@"map_button.png"];
+        UIImage *buttonImagePressed = [UIImage imageNamed:@"map_button_pressed.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+        CGRect buttonFrame = [button frame];
+        buttonFrame.size.width = buttonImage.size.width;
+        buttonFrame.size.height = buttonImage.size.height;
+        [button setFrame:buttonFrame];
+        [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.leftBarButtonItem = mapButton;
+        
+        [mapButton release];
+    }
+    else
+    {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
+        UIImage *buttonImagePressed = [UIImage imageNamed:@"back_button_pressed.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+        CGRect buttonFrame = [button frame];
+        buttonFrame.size.width = buttonImage.size.width;
+        buttonFrame.size.height = buttonImage.size.height;
+        [button setFrame:buttonFrame];
+        [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.leftBarButtonItem = backButton;
+        
+        [backButton release];
+    }
+    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
-    UIImage *buttonImagePressed = [UIImage imageNamed:@"back_button_pressed.png"];
+    UIImage *buttonImage = [UIImage imageNamed:@"checkin_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"checkin_button_pressed.png"];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
     CGRect buttonFrame = [button frame];
-    buttonFrame.size.width = buttonImage.size.width;
-    buttonFrame.size.height = buttonImage.size.height;
-    [button setFrame:buttonFrame];
-    [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
-    
-    [backButton release];
-    
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonImage = [UIImage imageNamed:@"checkin_button.png"];
-    buttonImagePressed = [UIImage imageNamed:@"checkin_button_pressed.png"];
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
-    buttonFrame = [button frame];
     buttonFrame.size.width = buttonImage.size.width;
     buttonFrame.size.height = buttonImage.size.height;
     [button setFrame:buttonFrame];
@@ -228,10 +257,10 @@
     //return handleResponse(httpPost(HOST+"/checkin", params), new SimpleResp());
     
     CLLocation *venueLocation = [[CLLocation alloc] initWithLatitude:venue.geolat longitude:venue.geolong];
-    CLLocationDistance distanceToVenue = [mapViewController.dashboardController.currentLocation distanceFromLocation:venueLocation];
+    CLLocationDistance distanceToVenue = [dashboardController.currentLocation distanceFromLocation:venueLocation];
     //200 feet = 60.96 meters
     //distanceToVenue = 0; // DEBUG value
-    if(distanceToVenue < 60.96 && mapViewController.dashboardController.currentLocation)
+    if(distanceToVenue < 60.96 && dashboardController.currentLocation)
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
@@ -242,9 +271,9 @@
         [request setTag:1];
         [request startAsynchronous];
         
-        mapViewController.dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:mapViewController.dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
-        mapViewController.dashboardController.currentVenue = poiResponse.poi;
-        mapViewController.dashboardController.checkinTime = [[NSDate date] retain];
+        dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
+        dashboardController.currentVenue = poiResponse.poi;
+        dashboardController.checkinTime = [[NSDate date] retain];
     }
     else
     {

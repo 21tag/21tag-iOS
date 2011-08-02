@@ -17,7 +17,7 @@
 @implementation MapViewController
 @synthesize currentMapView;
 @synthesize locationController;
-@synthesize user;
+//@synthesize user;
 @synthesize dashboardController;
 //@synthesize currentLocation;
 
@@ -44,11 +44,11 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)setUser:(User *)newUser
+/*- (void)setUser:(User *)newUser
 {
     user = newUser;
     dashboardController.user = newUser;
-}
+}*/
 
 #pragma mark - View lifecycle
 
@@ -172,6 +172,7 @@
         
         placeDetailsController.poiResponse = poiResponse;
         placeDetailsController.mapViewController = self;
+        placeDetailsController.dashboardController = dashboardController;
         [self.navigationController pushViewController:placeDetailsController animated:YES];
         [placeDetailsController release];
     }
@@ -225,7 +226,7 @@
 {
     AllPlacesViewController *allPlacesController = [[AllPlacesViewController alloc] init];
     allPlacesController.venuesResponse = venuesResponse;
-    allPlacesController.mapViewController = self;
+    allPlacesController.dashboardController = dashboardController;
     allPlacesController.currentLocation = dashboardController.currentLocation;
     [self.navigationController pushViewController:allPlacesController animated:YES];
     [allPlacesController release];
@@ -266,7 +267,7 @@
 	//[customAnnotationView setImage:pinImage];
     PlaceAnnotation *currentPlaceAnnotation = (PlaceAnnotation*)annotation;
     //if([user.currentVenueId isEqualToString:[currentPlaceAnnotation.venue getId]])
-    if([user.currentVenueName isEqualToString:currentPlaceAnnotation.venue.name])
+    if([dashboardController.user.currentVenueName isEqualToString:currentPlaceAnnotation.venue.name])
     {
         customAnnotationView.pinColor = MKPinAnnotationColorGreen;
     }

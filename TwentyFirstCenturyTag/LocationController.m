@@ -81,9 +81,9 @@ static LocationController* sharedCLDelegate = nil;
     return UINT_MAX;  // denotes an object that cannot be released
 }
 
-- (void)release {
+/*- (void)release {
     //do nothing
-}
+}*/
 
 - (id)autorelease {
     return self;

@@ -16,12 +16,12 @@
     NSMutableArray *contentList;
     
     VenuesResp *venuesResponse;
-    MapViewController *mapViewController;
+    DashboardViewController *dashboardController;
     CLLocation *currentLocation;
 }
 @property (nonatomic, retain) IBOutlet UITableView *placesTableView;
 @property (nonatomic, retain)     VenuesResp *venuesResponse;
-@property (nonatomic, retain) MapViewController *mapViewController;
+@property (nonatomic, retain) DashboardViewController *dashboardController;
 @property (nonatomic, retain) CLLocation *currentLocation;
 
 

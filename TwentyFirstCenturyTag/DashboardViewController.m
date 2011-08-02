@@ -51,6 +51,8 @@
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"LocationUpdateNotification"
      object:nil];
+    
+    NSLog(@"location update: %f, %f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
 }
 - (void)locationError:(NSError *)error
 {
@@ -266,16 +268,14 @@
         
         PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
         placeDetailsController.poiResponse = poiResponse;
-        MapViewController *mapController = [[MapViewController alloc] init];
-        placeDetailsController.mapViewController = mapController;
-        mapController.dashboardController = self;
-        mapController.user = user;
+        //MapViewController *mapController = [[MapViewController alloc] init];
+        //placeDetailsController.mapViewController = mapController;
+        //mapController.dashboardController = self;
+        //mapController.user = user;
+        placeDetailsController.dashboardController = self;
         
-        NSArray *controllers = [NSArray arrayWithObjects:self, mapController, placeDetailsController,nil];
-        [self.navigationController setViewControllers:controllers animated:YES];
-        [placeDetailsController release];
-        [mapController release];
-        
+        [self.navigationController pushViewController:placeDetailsController animated:YES];
+        [placeDetailsController release];        
     }
     else if(request.tag == 4) // reset auth code
     {
@@ -488,7 +488,7 @@
 - (void)checkinPressed
 {
     MapViewController *mapController = [[MapViewController alloc] init];
-    mapController.user = user;
+    //mapController.user = user;
     mapController.dashboardController = self;
     [self.navigationController pushViewController:mapController animated:YES];
     [mapController release];
@@ -524,7 +524,7 @@
         if(indexPath.row == 0) // Map and Activity
         {
             MapViewController *mapController = [[MapViewController alloc] init];
-            mapController.user = user;
+            //mapController.user = user;
             mapController.dashboardController = self;
             [self.navigationController pushViewController:mapController animated:YES];
             [mapController release];

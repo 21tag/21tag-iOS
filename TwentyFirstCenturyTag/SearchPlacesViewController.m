@@ -20,7 +20,7 @@
 @synthesize searchResults;
 @synthesize savedSearchTerm;
 @synthesize venuesResponse;
-@synthesize mapViewController;
+@synthesize dashController;
 
 - (void)dealloc
 {
@@ -41,7 +41,7 @@
     
     PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];        
     placeDetailsController.poiResponse = poiResponse;
-    placeDetailsController.mapViewController = mapViewController;
+    placeDetailsController.dashboardController = dashController;
     [self.navigationController pushViewController:placeDetailsController animated:YES];
     [placeDetailsController release];
 }

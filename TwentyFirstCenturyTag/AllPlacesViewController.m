@@ -17,7 +17,7 @@
 @implementation AllPlacesViewController
 @synthesize placesTableView;
 @synthesize venuesResponse;
-@synthesize mapViewController;
+@synthesize dashboardController;
 @synthesize currentLocation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,7 +38,7 @@
     
     Venue *venue = poiResponse.poi;
     CLLocation *venueLocation = [venue getLocation];
-    CLLocationDistance distanceToVenue = [mapViewController.dashboardController.currentLocation distanceFromLocation:venueLocation];
+    CLLocationDistance distanceToVenue = [dashboardController.currentLocation distanceFromLocation:venueLocation];
     //200 feet = 60.96 meters
     //1 meter = 3.2808399 feet
     //int distanceInFeet = (int)(distanceToVenue * 3.2808399);
@@ -114,7 +114,8 @@
     {
         PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];        
         placeDetailsController.poiResponse = [cellInfo objectForKey:@"poiResponse"];
-        placeDetailsController.mapViewController = mapViewController;
+        //placeDetailsController.mapViewController = mapViewController;
+        placeDetailsController.dashboardController = dashboardController;
         [self.navigationController pushViewController:placeDetailsController animated:YES];
         [placeDetailsController release];
     }
@@ -218,8 +219,9 @@
     SearchPlacesViewController *searchPlacesController = [[SearchPlacesViewController alloc] init];
     //searchPlacesController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     //[self presentModalViewController:searchPlacesController animated:YES];
-    searchPlacesController.mapViewController = mapViewController;
+    //searchPlacesController.mapViewController = mapViewController;
     searchPlacesController.venuesResponse = venuesResponse;
+    searchPlacesController.dashController = dashboardController;
     [self.navigationController pushViewController:searchPlacesController animated:YES];
     [searchPlacesController release];
 }

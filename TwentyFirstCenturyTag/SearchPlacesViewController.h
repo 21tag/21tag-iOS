@@ -21,7 +21,8 @@
     
     BOOL isSearching;
     
-    MapViewController *mapViewController;
+    //MapViewController *mapViewController;
+    DashboardViewController *dashController;
 
     NSMutableArray *venuesSearchResults;
 }
@@ -34,7 +35,7 @@
 - (void)handleSearchForTerm:(NSString *)searchTerm;
 
 @property (nonatomic, retain)     VenuesResp *venuesResponse;
-@property (nonatomic, retain) MapViewController *mapViewController;
+@property (nonatomic, retain)     DashboardViewController *dashController;
 
 
 -(void)backPressed;

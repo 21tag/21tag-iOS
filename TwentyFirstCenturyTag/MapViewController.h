@@ -23,7 +23,7 @@
     
     //NSArray *mapAnnotations;
     VenuesResp *venuesResponse;
-    User *user;
+    //User *user;
     
     DashboardViewController *dashboardController;
 }
@@ -31,7 +31,7 @@
 @property (nonatomic, retain) IBOutlet MKMapView *currentMapView;
 @property (nonatomic, retain)
 LocationController *locationController;
-@property (nonatomic, retain) User *user;
+//@property (nonatomic, retain) User *user;
 @property (nonatomic, retain) DashboardViewController *dashboardController;
 //@property (nonatomic, retain) CLLocation *currentLocation;
 

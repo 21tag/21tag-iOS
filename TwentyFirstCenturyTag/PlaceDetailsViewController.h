@@ -30,6 +30,7 @@
     Venue *venue;
     POIDetailResp *poiResponse;
     MapViewController *mapViewController;
+    DashboardViewController *dashboardController;
     
     Events *eventsResponse;
 }
@@ -47,6 +48,7 @@
 
 @property (nonatomic, retain)     NSMutableArray *contentList;
 @property (nonatomic, retain) Venue *venue;
+@property (nonatomic, retain) DashboardViewController *dashboardController;
 @property (nonatomic, retain) MapViewController *mapViewController;
 @property (nonatomic, retain) POIDetailResp *poiResponse;
 
