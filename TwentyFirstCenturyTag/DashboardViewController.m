@@ -549,6 +549,7 @@
                 TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
                 teamInfoController.teamName = [defaults objectForKey:@"team_name"];
                 teamInfoController.isJoiningTeam = NO;
+                teamInfoController.dashboardController = self;
                 [self.navigationController pushViewController:teamInfoController animated:YES];
                 [teamInfoController release];
             }
@@ -569,7 +570,7 @@
 
         [self.navigationController pushViewController:profileController animated:YES];
         profileController.profileImageView.image = avatarImage;
-        profileController.nameLabel.text = [[contentList objectAtIndex:2] objectAtIndex:0];
+        //profileController.nameLabel.text = [[contentList objectAtIndex:2] objectAtIndex:0];
 
         [profileController release];
     }

@@ -118,7 +118,10 @@
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getteam",[APIUtil host]]];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:user.teamname forKey:@"team"];
+    if(user.teamname)
+        [request setPostValue:user.teamname forKey:@"team"];
+    else
+        [request setPostValue:user.team forKey:@"team"];
     [request setPostValue:@"true" forKey:@"details"];
     [request setDelegate:self];
     [request setTag:1];
@@ -139,8 +142,12 @@
         }
     }*/
     
-    teamNameLabel.text = user.teamname;
+    if(user.teamname)
+        teamNameLabel.text = user.teamname;
+    else
+        teamNameLabel.text = user.team;
     //teamInfoLabel.text = [NSString stringWithFormat:@"%d points %d members",teamPoints,[teamsResponse.users count]];
+    nameLabel.text = [NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname];
     
     profileTableView.allowsSelection = NO;
 }

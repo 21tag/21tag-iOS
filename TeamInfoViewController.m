@@ -12,6 +12,9 @@
 #import "JSONKit.h"
 #import "APIUtil.h"
 #import "TeamsResp.h"
+#import "ProfileViewController.h"
+#import "POIDetailResp.h"
+#import "PlaceDetailsViewController.h"
 
 #define kCellIdentifier @"Cell"
 
@@ -36,6 +39,7 @@
 @synthesize contentList;
 @synthesize mainTableView;
 @synthesize teamName;
+@synthesize dashboardController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -85,6 +89,7 @@
             }
             [cellInfo setObject:[NSString stringWithFormat:@"%d points",points] forKey:@"detailTextLabel"];
             [cellInfo setObject:[NSNumber numberWithInt:points] forKey:@"points"];
+            [cellInfo setObject:user forKey:@"user"];
             [pointsList addObject:cellInfo];
         }
         rankingsList = pointsList;
@@ -106,6 +111,7 @@
                 
                 [cellInfo setObject:[NSString stringWithFormat:@"%@ %@ ago",user.currentVenueName,timeString] forKey:@"detailTextLabel"];
                 [cellInfo setObject:[NSNumber numberWithDouble:time] forKey:@"time"];
+                [cellInfo setObject:user forKey:@"user"];
                 [userList addObject:cellInfo];
             }
             usersList = userList;
@@ -121,6 +127,7 @@
             NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
             [cellInfo setObject:venue.name forKey:@"textLabel"];
             [cellInfo setObject:venue.address forKey:@"detailTextLabel"];
+            [cellInfo setObject:venue forKey:@"venue"];
             [venueList addObject:cellInfo];
         }
         locationsList = venueList;
@@ -188,6 +195,23 @@
         
         [joinButton release];
 
+    }
+    else if(request.tag == 4) // location info
+    {
+        NSLog(@"poi resp: %@",[request responseString]);
+        
+        POIDetailResp *poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
+        
+        PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
+        placeDetailsController.poiResponse = poiResponse;
+        //MapViewController *mapController = [[MapViewController alloc] init];
+        //placeDetailsController.mapViewController = mapController;
+        //mapController.dashboardController = self;
+        //mapController.user = user;
+        placeDetailsController.dashboardController = dashboardController;
+        
+        [self.navigationController pushViewController:placeDetailsController animated:YES];
+        [placeDetailsController release];
     }
 }
 
@@ -352,7 +376,7 @@
     //rankingsList = [[NSArray alloc] init];
     contentList = usersList;
     
-    mainTableView.allowsSelection = NO;
+    //mainTableView.allowsSelection = NO;
     
 }
 
@@ -395,6 +419,10 @@
     }
     contentList = usersList;
     [mainTableView reloadData];
+    
+    teamMembersHighlighted = YES;
+    locationsOwnedHighlighted = NO;
+    teamPointsHighlighted = NO;
 }
 
 - (IBAction)locationsOwnedPressed:(id)sender 
@@ -405,6 +433,10 @@
     tableHeaderLabel.text = @"Owned Locations";
     contentList = locationsList;
     [mainTableView reloadData];
+    
+    teamMembersHighlighted = NO;
+    locationsOwnedHighlighted = YES;
+    teamPointsHighlighted = NO;
 }
 
 - (IBAction)teamPointsPressed:(id)sender 
@@ -415,6 +447,10 @@
     tableHeaderLabel.text = @"Members by Points";
     contentList = rankingsList;
     [mainTableView reloadData];
+    
+    teamMembersHighlighted = NO;
+    locationsOwnedHighlighted = NO;
+    teamPointsHighlighted = YES;
 }
 
 #pragma mark - Table view data source
@@ -439,8 +475,37 @@
     NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
 	cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
     cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
-    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
 	return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(teamMembersHighlighted)
+    {
+        ProfileViewController *profileController = [[ProfileViewController alloc] init];
+        User *user = (User*)[[usersList objectAtIndex:indexPath.row] objectForKey:@"user"];
+        profileController.user = user;
+        [profileController.user retain];
+        
+        [self.navigationController pushViewController:profileController animated:YES];
+        profileController.profileImageView.image = [UIImage imageNamed:@"team_icon_placeholder"];
+        
+        [profileController release];
+    }
+    else if(locationsOwnedHighlighted)
+    {
+        Venue *venue = (Venue*)[[locationsList objectAtIndex:indexPath.row] objectForKey:@"venue"];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request addPostValue:[venue getId] forKey:@"poi"];
+        [request setDelegate:self];
+        [request setTag:4];
+        [request startAsynchronous];
+    }
+    
+    [mainTableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 @end

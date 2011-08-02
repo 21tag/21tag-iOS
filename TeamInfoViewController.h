@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DashboardViewController.h"
 #import "TeamsResp.h"
 
-@interface TeamInfoViewController : UIViewController {
+@interface TeamInfoViewController : UIViewController  <UITableViewDataSource, UITableViewDelegate>  {
     
     UIImageView *teamImage;
     UILabel *teamNameLabel;
@@ -32,6 +33,12 @@
     NSArray *usersList;
     NSArray *locationsList;
     NSArray *rankingsList;
+    
+    BOOL teamMembersHighlighted;
+    BOOL locationsOwnedHighlighted;
+    BOOL teamPointsHighlighted;
+    
+    DashboardViewController *dashboardController;
 }
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UIImageView *teamImage;
@@ -48,6 +55,8 @@
 @property (nonatomic, retain) NSArray *contentList;
 @property (nonatomic, retain) IBOutlet UITableView *mainTableView;
 @property (nonatomic, retain) NSString *teamName;
+@property (nonatomic, retain)     DashboardViewController *dashboardController;
+
 
 
 @property BOOL isJoiningTeam;
