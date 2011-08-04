@@ -169,6 +169,11 @@
     {
         avatarImage = [[UIImage imageWithData:[request responseData]] retain];
         [navigationTableView reloadData];
+        
+        profileFinishedLoading = YES;
+        
+        if(locationFinishedLoading && profileFinishedLoading)
+            [HUD hide:YES];
     }
     else if(request.tag == 1) 
     {
@@ -220,6 +225,11 @@
                 [navigationTableView reloadData];
 
             }
+            
+            locationFinishedLoading = YES;
+            
+            if(locationFinishedLoading && profileFinishedLoading)
+                [HUD hide:YES];
         }
         
 
@@ -236,6 +246,11 @@
             [defaults synchronize];
             
             NSLog(@"new acct: %@", [user getId]);
+            
+            locationFinishedLoading = YES;
+            
+            if(locationFinishedLoading && profileFinishedLoading)
+                [HUD hide:YES];
         }
         else // reset fb auth code
         {    
@@ -274,6 +289,8 @@
         //mapController.user = user;
         placeDetailsController.dashboardController = self;
         
+        [HUD hide:YES];
+        
         [self.navigationController pushViewController:placeDetailsController animated:YES];
         [placeDetailsController release];        
     }
@@ -308,6 +325,11 @@
                 [contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:@"Not Checked In"]];
                 [navigationTableView reloadData];
             }
+            
+            locationFinishedLoading = YES;
+            
+            if(locationFinishedLoading && profileFinishedLoading)
+                [HUD hide:YES];
         }      
     }
 }
@@ -482,7 +504,17 @@
     fiveMinuteCounter = 0;
     
     dashboardTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateDashboard:) userInfo:nil repeats:YES] retain];
-
+    
+    profileFinishedLoading = NO;
+    locationFinishedLoading = NO;
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+	[self.view addSubview:HUD];
+	
+    HUD.delegate = self;
+    HUD.labelText = @"Loading";
+	
+    [HUD show:YES];
 }
 
 - (void)checkinPressed
@@ -510,6 +542,15 @@
             [request setDelegate:self];
             [request setTag:3];
             [request startAsynchronous];
+            
+            HUD = [[MBProgressHUD alloc] initWithView:self.view];
+            [self.view addSubview:HUD];
+            
+            HUD.delegate = self;
+            HUD.labelText = @"Loading";
+            
+            [HUD show:YES];
+
         }
         else
         {
@@ -584,6 +625,16 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
 }
 
 @end

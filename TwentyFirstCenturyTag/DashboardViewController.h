@@ -10,8 +10,9 @@
 #import "Facebook.h"
 #import "User.h"
 #import "LocationController.h"
+#import "MBProgressHUD.h"
 
-@interface DashboardViewController : UIViewController <FBRequestDelegate, UITableViewDelegate, UITableViewDataSource, LocationControllerDelegate> {
+@interface DashboardViewController : UIViewController <FBRequestDelegate, UITableViewDelegate, UITableViewDataSource, LocationControllerDelegate, MBProgressHUDDelegate> {
     
     NSMutableArray *contentList;
     UILabel *nameLabel;
@@ -32,6 +33,11 @@
     int fiveMinuteCounter;
     NSDate *checkinTime;
     NSTimer *dashboardTimer;
+    
+    MBProgressHUD *HUD;
+    
+    BOOL profileFinishedLoading;
+    BOOL locationFinishedLoading;
 }
 @property (nonatomic, retain) IBOutlet UITableView *navigationTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;

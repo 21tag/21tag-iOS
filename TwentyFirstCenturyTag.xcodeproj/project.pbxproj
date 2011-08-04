@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D91F65E113EB5D0100727188 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D91F65C813EB5D0100727188 /* MBProgressHUD.m */; };
 		D9211C5813E0A16F0035F861 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = D9211C5713E0A16F0035F861 /* Event.m */; };
 		D9211C5B13E0A3A80035F861 /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = D9211C5A13E0A3A80035F861 /* Events.m */; };
 		D925BEC513BD59A200B515DE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D925BEC413BD59A200B515DE /* QuartzCore.framework */; };
@@ -213,6 +214,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D91F65C713EB5D0100727188 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		D91F65C813EB5D0100727188 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		D9211C5613E0A16F0035F861 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		D9211C5713E0A16F0035F861 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		D9211C5913E0A3A80035F861 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
@@ -535,6 +538,15 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
+		D91F659F13EB5D0100727188 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				D91F65C713EB5D0100727188 /* MBProgressHUD.h */,
+				D91F65C813EB5D0100727188 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		D925BED213BD62B300B515DE /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -675,6 +687,7 @@
 		D9D2F9FB13AEC81600048670 = {
 			isa = PBXGroup;
 			children = (
+				D91F659F13EB5D0100727188 /* MBProgressHUD */,
 				D9F588B513C37FEF00FA88BD /* API */,
 				D9F5888313C379CB00FA88BD /* facebook-ios-sdk */,
 				D9F5882A13C3798000FA88BD /* JSONKit */,
@@ -1147,6 +1160,7 @@
 				D927CE5D13D503ED00277E3E /* TeamData.m in Sources */,
 				D9211C5813E0A16F0035F861 /* Event.m in Sources */,
 				D9211C5B13E0A3A80035F861 /* Events.m in Sources */,
+				D91F65E113EB5D0100727188 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
