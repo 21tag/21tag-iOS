@@ -82,11 +82,14 @@
             NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
             [cellInfo setObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname] forKey:@"textLabel"];
             int points = 0;
-            for(int i = 0; i < [user.points count]; i++)
+            NSArray *userPointsArray = [user.points allKeys];
+            int count = [userPointsArray count];
+            for(int i = 0; i < count; i++)
             {
-                NSDictionary *pointDictionary = [user.points objectAtIndex:i];
-                points += [[pointDictionary objectForKey:@"p"] intValue];
+                points += [[user.points objectForKey:[userPointsArray objectAtIndex:i]] intValue];
+                //NSLog(@"team points %d",points);
             }
+
             [cellInfo setObject:[NSString stringWithFormat:@"%d points",points] forKey:@"detailTextLabel"];
             [cellInfo setObject:[NSNumber numberWithInt:points] forKey:@"points"];
             [cellInfo setObject:user forKey:@"user"];
@@ -138,14 +141,14 @@
         for(int i = 0; i < [teamsResponse.users count]; i++)
         {
             User *user = [teamsResponse.users objectAtIndex:i];
-            NSArray *points = user.points;
-            if(points)
+            
+            NSArray *userPointsArray = [user.points allKeys];
+            int count = [userPointsArray count];
+            for(int i = 0; i < count; i++)
             {
-                for(int j = 0; j < [points count]; j++)
-                {
-                    NSDictionary *point = [user.points objectAtIndex:j];
-                    teamPoints += [[point objectForKey:@"p"] intValue];
-                }
+                int points = [[user.points objectForKey:[userPointsArray objectAtIndex:i]] intValue];
+                teamPoints += points;
+                //NSLog(@"team points %d",points);
             }
         }
         numVenues = [((Team*)[teamsResponse.teams objectAtIndex:0]).venues count];

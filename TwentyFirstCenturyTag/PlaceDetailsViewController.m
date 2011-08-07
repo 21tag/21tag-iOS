@@ -245,9 +245,26 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getevents",[APIUtil host]]];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request setPostValue:[venue getId] forKey:@"venue"];
+    [request setPostValue:@"100" forKey:@"time"];
+    [request setPostValue:@"10" forKey:@"num"];
     [request setTag:3];
     [request setDelegate:self];
     [request startAsynchronous];
+    
+    NSLog(@"get events for venue id: %@",[venue getId]);
+    
+    yourTeamNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"team_name"];
+    
+    if([poiResponse.owner.name isEqualToString:yourTeamNameLabel.text])
+        yourTeamPointsLabel.text = owningTeamPointsLabel.text;
+    else
+    {
+        
+        
+    }
+    
+    User *user = dashboardController.user;
+    yourPointsLabel.text = [[user.points objectForKey:[venue getId]] description];
 } 
 
 - (IBAction)checkinButtonPressed:(id)sender 
@@ -271,7 +288,13 @@
         [request setTag:1];
         [request startAsynchronous];
         
-        dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
+        if(dashboardController.checkinTimer)
+        {
+            [dashboardController.checkinTimer invalidate];
+            dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
+        }
+        else
+            dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
         dashboardController.currentVenue = poiResponse.poi;
         dashboardController.checkinTime = [[NSDate date] retain];
     }

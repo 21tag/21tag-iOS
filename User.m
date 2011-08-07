@@ -81,14 +81,28 @@
     currentVenueLastTime = [[fields objectForKey:CURRENTVENUELASTTIME] doubleValue] / 1000;
     team = [[fields objectForKey:TEAM] retain];
     teamname = [[fields objectForKey:TEAMNAME] retain];
-    points = [[fields objectForKey:POINTS] retain];
+    
+    NSArray *rawPointsArray = [fields objectForKey:POINTS];
+    NSMutableDictionary *pointsDictionary = [[NSMutableDictionary alloc] initWithCapacity:[rawPointsArray count]];
+    for(int i = 0; i < [rawPointsArray count]; i++)
+    {
+        NSDictionary *pointInfo = [rawPointsArray objectAtIndex:i];
+        NSString *venueID = [pointInfo objectForKey:VENUE];
+        NSNumber *pointValue = [pointInfo objectForKey:POINT];
+        //NSLog(@"%@ - %d",venueID,[pointValue intValue]);
+        
+        [pointsDictionary setObject:pointValue forKey:venueID];
+    }
+    points = pointsDictionary;
+    
     NSArray *rawVenueArray =  [fields objectForKey:VENUEDATA];
-    NSMutableArray *venueArray = [[NSMutableArray alloc] initWithCapacity:[rawVenueArray count]]; 
+    NSMutableDictionary *venueDictionary = [[NSMutableDictionary alloc] initWithCapacity:[rawVenueArray count]]; 
     for(int i = 0; i < [rawVenueArray count]; i++)
     {
-        [venueArray addObject:[[Venue alloc] initWithDictionary:[rawVenueArray objectAtIndex:i]]];
+        Venue *venue = [[Venue alloc] initWithDictionary:[rawVenueArray objectAtIndex:i]];
+        [venueDictionary setObject:venue forKey:[venue getId]];
     }
-    venuedata = venueArray;
+    venuedata = venueDictionary;
     
     history = [[fields objectForKey:HISTORY] retain];
 }
