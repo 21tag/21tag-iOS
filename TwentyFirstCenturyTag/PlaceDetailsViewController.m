@@ -245,7 +245,7 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getevents",[APIUtil host]]];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request setPostValue:[venue getId] forKey:@"venue"];
-    [request setPostValue:@"100" forKey:@"time"];
+    [request setPostValue:[NSString stringWithFormat:@"%d",1000 * 60 * 60 * 24 * 3] forKey:@"time"];
     [request setPostValue:@"10" forKey:@"num"];
     [request setTag:3];
     [request setDelegate:self];
