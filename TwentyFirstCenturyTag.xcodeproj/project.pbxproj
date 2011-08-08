@@ -148,6 +148,10 @@
 		D9BB8BC213B00729001A7A28 /* ChooseNetworkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9BB8BC013B00728001A7A28 /* ChooseNetworkViewController.m */; };
 		D9BB8BC313B00729001A7A28 /* ChooseNetworkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9BB8BC113B00729001A7A28 /* ChooseNetworkViewController.xib */; };
 		D9BEC23E13CD139B00E21A1A /* POIDetailResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D9BEC23D13CD139B00E21A1A /* POIDetailResp.m */; };
+		D9C1D8B013EF7C4200266875 /* account_button_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C1D8AC13EF7C3F00266875 /* account_button_pressed.png */; };
+		D9C1D8B213EF7C4200266875 /* account_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C1D8AE13EF7C4100266875 /* account_button.png */; };
+		D9C1D8B513EF7C7F00266875 /* account_button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C1D8B313EF7C7700266875 /* account_button_pressed@2x.png */; };
+		D9C1D8B613EF7C7F00266875 /* account_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C1D8B413EF7C7900266875 /* account_button@2x.png */; };
 		D9C9BB4013B02354008A7B90 /* campus_request_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3C13B02354008A7B90 /* campus_request_button.png */; };
 		D9C9BB4113B02354008A7B90 /* campus_request_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */; };
 		D9C9BB4213B02354008A7B90 /* on_harvard_campus_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */; };
@@ -388,6 +392,10 @@
 		D9BB8BC113B00729001A7A28 /* ChooseNetworkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseNetworkViewController.xib; sourceTree = "<group>"; };
 		D9BEC23C13CD139B00E21A1A /* POIDetailResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIDetailResp.h; sourceTree = "<group>"; };
 		D9BEC23D13CD139B00E21A1A /* POIDetailResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIDetailResp.m; sourceTree = "<group>"; };
+		D9C1D8AC13EF7C3F00266875 /* account_button_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = account_button_pressed.png; sourceTree = "<group>"; };
+		D9C1D8AE13EF7C4100266875 /* account_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = account_button.png; sourceTree = "<group>"; };
+		D9C1D8B313EF7C7700266875 /* account_button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "account_button_pressed@2x.png"; sourceTree = "<group>"; };
+		D9C1D8B413EF7C7900266875 /* account_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "account_button@2x.png"; sourceTree = "<group>"; };
 		D9C9BB3C13B02354008A7B90 /* campus_request_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = campus_request_button.png; sourceTree = "<group>"; };
 		D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "campus_request_button@2x.png"; sourceTree = "<group>"; };
 		D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on_harvard_campus_button.png; sourceTree = "<group>"; };
@@ -623,6 +631,10 @@
 		D9C9BB4413B0235E008A7B90 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				D9C1D8B313EF7C7700266875 /* account_button_pressed@2x.png */,
+				D9C1D8B413EF7C7900266875 /* account_button@2x.png */,
+				D9C1D8AC13EF7C3F00266875 /* account_button_pressed.png */,
+				D9C1D8AE13EF7C4100266875 /* account_button.png */,
 				D956CEA713CB8A1100599951 /* leave_team_button_pressed@2x.png */,
 				D956CEA813CB8A1100599951 /* leave_team_button@2x.png */,
 				D99D0BBA13BBB35300D27E58 /* search_button.png */,
@@ -1096,6 +1108,10 @@
 				D9E56E3B13C6793E00EC6123 /* SearchAllTeamsViewController.xib in Resources */,
 				D956CEA913CB8A1100599951 /* leave_team_button_pressed@2x.png in Resources */,
 				D956CEAA13CB8A1100599951 /* leave_team_button@2x.png in Resources */,
+				D9C1D8B013EF7C4200266875 /* account_button_pressed.png in Resources */,
+				D9C1D8B213EF7C4200266875 /* account_button.png in Resources */,
+				D9C1D8B513EF7C7F00266875 /* account_button_pressed@2x.png in Resources */,
+				D9C1D8B613EF7C7F00266875 /* account_button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

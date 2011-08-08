@@ -103,6 +103,7 @@
         DashboardViewController *dashController = [[DashboardViewController alloc] init];
         NSArray *viewControllerList = [NSArray arrayWithObject:dashController];
         [self.navigationController setViewControllers:viewControllerList animated:YES];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
         [dashController release];
 
     }

@@ -9,16 +9,17 @@
 #import "ProfileViewController.h"
 #import "APIUtil.h"
 #import "ASIFormDataRequest.h"
+#import "TwentyFirstCenturyTagAppDelegate.h"
+#import "FacebookController.h"
 #define kCellIdentifier @"Cell"
+
 
 @implementation ProfileViewController
 @synthesize profileImageView;
 @synthesize nameLabel;
 @synthesize profileTableView;
 @synthesize user;
-@synthesize activityIndicator;
-@synthesize teamNameLabel;
-@synthesize teamInfoLabel;
+@synthesize isYourProfile;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,10 +35,81 @@
     [profileImageView release];
     [nameLabel release];
     [profileTableView release];
-    [activityIndicator release];
-    [teamNameLabel release];
-    [teamInfoLabel release];
     [super dealloc];
+}
+
+-(void)setupButtons
+{
+    if(isYourProfile)
+    {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *buttonImage = [UIImage imageNamed:@"dash_button.png"];
+        UIImage *buttonImagePressed = [UIImage imageNamed:@"dash_button_pressed.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+        CGRect buttonFrame = [button frame];
+        buttonFrame.size.width = buttonImage.size.width;
+        buttonFrame.size.height = buttonImage.size.height;
+        [button setFrame:buttonFrame];
+        [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *dashButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.leftBarButtonItem = dashButton;
+        
+        button = [UIButton buttonWithType:UIButtonTypeCustom];
+        buttonImage = [UIImage imageNamed:@"account_button.png"];
+        buttonImagePressed = [UIImage imageNamed:@"account_button_pressed.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+        buttonFrame = [button frame];
+        buttonFrame.size.width = buttonImage.size.width;
+        buttonFrame.size.height = buttonImage.size.height;
+        [button setFrame:buttonFrame];
+        [button addTarget:self action:@selector(accountPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *accountButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.rightBarButtonItem = accountButton;
+        
+        [accountButton release];
+    }
+    else
+    {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
+        UIImage *buttonImagePressed = [UIImage imageNamed:@"back_button_pressed.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+        CGRect buttonFrame = [button frame];
+        buttonFrame.size.width = buttonImage.size.width;
+        buttonFrame.size.height = buttonImage.size.height;
+        [button setFrame:buttonFrame];
+        [button addTarget:self action:@selector(backPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.leftBarButtonItem = backButton;
+        
+        [backButton release];
+    }
+}
+
+-(void)accountPressed
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:nil];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.destructiveButtonIndex == buttonIndex)
+    {
+        TwentyFirstCenturyTagAppDelegate *delegate = (TwentyFirstCenturyTagAppDelegate*)[[UIApplication sharedApplication] delegate];
+        Facebook *facebook = [FacebookController sharedInstance].facebook;
+        [facebook logout:delegate];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,8 +151,6 @@
         contentList = userList;
         [profileTableView reloadData];
 
-        
-        [activityIndicator stopAnimating];
     }
 }
 
@@ -98,21 +168,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *buttonImage = [UIImage imageNamed:@"dash_button.png"];
-    UIImage *buttonImagePressed = [UIImage imageNamed:@"dash_button_pressed.png"];
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
-    CGRect buttonFrame = [button frame];
-    buttonFrame.size.width = buttonImage.size.width;
-    buttonFrame.size.height = buttonImage.size.height;
-    [button setFrame:buttonFrame];
-    [button addTarget:self action:@selector(dashPressed) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *dashButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    self.navigationItem.leftBarButtonItem = dashButton;
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
+    
+    [self setupButtons];
 
     self.title = @"Profile";
     
@@ -142,14 +200,12 @@
         }
     }*/
     
-    if(user.teamname)
-        teamNameLabel.text = user.teamname;
-    else
-        teamNameLabel.text = user.team;
+
     //teamInfoLabel.text = [NSString stringWithFormat:@"%d points %d members",teamPoints,[teamsResponse.users count]];
     nameLabel.text = [NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname];
     
-    profileTableView.allowsSelection = NO;
+    profileTableView.backgroundColor = [UIColor clearColor];
+    
 }
 
 - (void)viewDidUnload
@@ -157,15 +213,12 @@
     [self setProfileImageView:nil];
     [self setNameLabel:nil];
     [self setProfileTableView:nil];
-    [self setActivityIndicator:nil];
-    [self setTeamNameLabel:nil];
-    [self setTeamInfoLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
--(void)dashPressed
+-(void)backPressed
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -173,11 +226,21 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
+	return 2;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if(section == 0)
+        return @"Team";
+    else
+        return @"Recent Activity";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [contentList count];
+    if(section == 0)
+        return 1;
+    else
+        return [contentList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -188,14 +251,36 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
 	}
 	
-	// get the view controller's info dictionary based on the indexPath's row
-    NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
-	cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
-    cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
+    if(indexPath.section == 0)
+    {
+        if(user.teamname)
+            cell.textLabel.text = user.teamname;
+        else
+            cell.textLabel.text = user.team;
+        
+        if(teamsResponse)
+        {
+            //Team *team = [teamsResponse.teams objectAtIndex:0];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d members",[teamsResponse.users count]];
+        }
+    }
+    else
+    {
+        NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
+        cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
+        cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
+    }
     
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
 	return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [profileTableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 
 
 @end

@@ -609,6 +609,7 @@
         [profileController.user retain];
         //NSLog(@"profile: %@",user.teamname);
 
+        profileController.isYourProfile = YES;
         [self.navigationController pushViewController:profileController animated:YES];
         profileController.profileImageView.image = avatarImage;
         //profileController.nameLabel.text = [[contentList objectAtIndex:2] objectAtIndex:0];
