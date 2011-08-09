@@ -8,21 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "TeamsResp.h"
+#import "MBProgressHUD.h"
 
-@interface SearchAllTeamsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate> {
+@interface SearchAllTeamsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate, MBProgressHUDDelegate> {
     UITableView *mainTableView;
 	
     NSMutableArray *contentsList;
     NSMutableArray *searchResults;
     NSString *savedSearchTerm;
-    UIActivityIndicatorView *activityIndicator;
     
     BOOL isLoadingTeams;
     TeamsResp *teamsResponse;
     
     BOOL isSearching;
+    
+    MBProgressHUD *HUD;
 }
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, retain) IBOutlet UITableView *mainTableView;
 @property (nonatomic, retain) NSMutableArray *contentsList;

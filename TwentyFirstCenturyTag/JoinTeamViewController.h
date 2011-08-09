@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
 
-@interface JoinTeamViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface JoinTeamViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, MBProgressHUDDelegate> {
     NSArray *contentList;
     UITableView *navigationTableView;
-    UIActivityIndicatorView *activityIndicator;
     UIImageView *statusImageView;
     
+    MBProgressHUD *HUD;
 }
 @property (nonatomic, retain) IBOutlet UIImageView *statusImageView;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, retain)     NSArray *contentList;
 @property (nonatomic, retain) IBOutlet UITableView *navigationTableView;

@@ -83,6 +83,8 @@
 
 - (void)locationUpdate:(CLLocation *)location
 {
+    [HUD hide:YES];
+    
     //JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
     DashboardViewController *dashboardController = [[DashboardViewController alloc] init];
     NSArray *controllerArray = [NSArray arrayWithObjects:dashboardController, nil];
@@ -124,11 +126,29 @@
     locationController = [LocationController sharedInstance];
     [locationController.locationManager startUpdatingLocation];
     locationController.delegate = self;
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Loading";
+    
+    [HUD show:YES];
 }
 
 - (IBAction)campusRequestPressed:(id)sender 
 {
     GameRequestViewController *gameRequestController = [[GameRequestViewController alloc] init];
     [self presentModalViewController:gameRequestController animated:YES];
+}
+
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
 }
 @end

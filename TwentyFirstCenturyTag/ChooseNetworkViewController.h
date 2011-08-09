@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Facebook.h"
 #import "LocationController.h"
+#import "MBProgressHUD.h"
 
-@interface ChooseNetworkViewController : UIViewController <UIActionSheetDelegate, LocationControllerDelegate> {
+@interface ChooseNetworkViewController : UIViewController <UIActionSheetDelegate, LocationControllerDelegate, MBProgressHUDDelegate> {
     Facebook *facebook;
     LocationController *locationController;
+    
+    MBProgressHUD *HUD;
 }
 
 @property (nonatomic, retain) Facebook *facebook;

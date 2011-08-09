@@ -20,7 +20,6 @@
 @synthesize schoolTextField;
 @synthesize locationTextField;
 @synthesize emailTextField;
-@synthesize activityIndicator;
 @synthesize navigationItem;
 @synthesize navigationBar;
 
@@ -41,7 +40,6 @@
     [emailTextField release];
     [scrollView release];
     [navigationItem release];
-    [activityIndicator release];
     [super dealloc];
 }
 
@@ -111,7 +109,6 @@
     [self setEmailTextField:nil];
     [self setScrollView:nil];
     [self setNavigationItem:nil];
-    [self setActivityIndicator:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -132,7 +129,14 @@
     }
     else
     {
-        [activityIndicator startAnimating];
+        HUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:HUD];
+        
+        HUD.delegate = self;
+        HUD.labelText = @"Sending";
+        
+        [HUD show:YES];
+
         NSURL *url = [NSURL URLWithString:@"http://21tag.com:8689/tagsignup"];
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
         
@@ -170,7 +174,7 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    [activityIndicator stopAnimating];
+    [HUD hide:YES];
     self.navigationBar.topItem.title = @"Thanks!";
     CGRect frame = scrollView.frame;
     frame.origin.x = frame.size.width;
@@ -182,12 +186,22 @@
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-    [activityIndicator stopAnimating];
+    [HUD hide:YES];
     NSError *error = [request error];
     NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alert show];
     [alert release];
+}
+
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
 }
 
 @end

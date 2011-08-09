@@ -15,7 +15,6 @@
 
 @implementation SearchAllTeamsViewController
 
-@synthesize activityIndicator;
 @synthesize mainTableView;
 @synthesize contentsList;
 @synthesize searchResults;
@@ -28,7 +27,6 @@
     [searchResults release], searchResults = nil;
     [savedSearchTerm release], savedSearchTerm = nil;
 	
-    [activityIndicator release];
     [super dealloc];
 }
 
@@ -47,7 +45,7 @@
     [mainTableView reloadData];
     
     isLoadingTeams = NO;
-    [activityIndicator stopAnimating];
+    [HUD hide:YES];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -61,7 +59,6 @@
 
 - (void)viewDidUnload
 {
-    [self setActivityIndicator:nil];
     [super viewDidUnload];
 	
     // Save the state of the search UI so that it can be restored if the view is re-created.
@@ -108,6 +105,14 @@
     }
     
     isSearching = NO;
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Loading";
+    
+    [HUD show:YES];
 }
 
 -(void)backPressed
@@ -216,6 +221,16 @@ shouldReloadTableForSearchString:(NSString *)searchString
     }
        
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
 }
 
 @end

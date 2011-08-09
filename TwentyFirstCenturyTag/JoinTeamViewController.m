@@ -21,7 +21,6 @@
 @implementation JoinTeamViewController
 
 @synthesize statusImageView;
-@synthesize activityIndicator;
 @synthesize contentList;
 @synthesize navigationTableView;
 
@@ -37,7 +36,6 @@
 - (void)dealloc
 {
     [navigationTableView release];
-    [activityIndicator release];
     [statusImageView release];
     [super dealloc];
 }
@@ -99,7 +97,13 @@
      name:@"FriendsUpdatedNotification"
      object:nil ];
     
-    [activityIndicator startAnimating];
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Loading";
+    
+    [HUD show:YES];
 }
 
 - (void)searchFriendsList
@@ -157,15 +161,14 @@
         [statusImageView setNeedsDisplay];
     }
     
-
-    [activityIndicator stopAnimating];
+    [HUD hide:YES];
 }
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
     [alert release];
-    [activityIndicator stopAnimating];
+    [HUD hide:YES];
 }
 
 - (void)cancelPressed
@@ -268,11 +271,20 @@
 - (void)viewDidUnload
 {
     [self setNavigationTableView:nil];
-    [self setActivityIndicator:nil];
     [self setStatusImageView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
 }
 
 @end

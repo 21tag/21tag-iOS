@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
 
-
-@interface GameRequestViewController : UIViewController {
+@interface GameRequestViewController : UIViewController <MBProgressHUDDelegate> {
     
     UIBarButtonItem *cancelButton;
     UIBarButtonItem *doneButton;
@@ -21,9 +21,8 @@
     CGPoint scrollViewOriginalState;
     BOOL isScrolledUp;
     UINavigationItem *navigationItem;
-    UIActivityIndicatorView *activityIndicator;
+    MBProgressHUD *HUD;
 }
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UINavigationItem *navigationItem;
 
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
