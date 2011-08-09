@@ -24,7 +24,6 @@
 @end
 
 @implementation TeamInfoViewController
-@synthesize activityIndicator;
 @synthesize teamImage;
 @synthesize teamNameLabel;
 @synthesize teamSloganLabel;
@@ -62,7 +61,6 @@
     [teamMembersLabel release];
     [locationsOwnedLabel release];
     [teamPointsLabel release];
-    [activityIndicator release];
     [mainTableView release];
     [super dealloc];
 }
@@ -161,7 +159,6 @@
         [pointsList sortUsingDescriptors:[NSArray arrayWithObjects:pointsDescriptor,nil]];
 
         [self teamMembersPressed:nil];
-        [activityIndicator stopAnimating];
     }
     else if(request.tag == 2) // join team
     {
@@ -171,7 +168,6 @@
         NSLog(@"joined team: %@", [request responseString]);
         [defaults setObject:team.name forKey:@"team_name"];
         [defaults synchronize];
-        [activityIndicator stopAnimating];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else if(request.tag == 3) // leave team
@@ -361,7 +357,6 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
     
-    [activityIndicator startAnimating];
     
     //http://21tag.com:8689/getteam?team=moo&details=true
     
@@ -400,7 +395,6 @@
     [self setTeamMembersLabel:nil];
     [self setLocationsOwnedLabel:nil];
     [self setTeamPointsLabel:nil];
-    [self setActivityIndicator:nil];
     [self setMainTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.

@@ -22,7 +22,6 @@
     UILabel *teamMembersLabel;
     UILabel *locationsOwnedLabel;
     UILabel *teamPointsLabel;
-    UIActivityIndicatorView *activityIndicator;
     
     NSArray *contentList;
     UITableView *mainTableView;
@@ -40,7 +39,6 @@
     
     DashboardViewController *dashboardController;
 }
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UIImageView *teamImage;
 @property (nonatomic, retain) IBOutlet UILabel *teamNameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *teamSloganLabel;

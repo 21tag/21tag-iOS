@@ -25,7 +25,6 @@
     UILabel *owningTeamPointsLabel;
     UITableView *detailsTableView;
     NSMutableArray *contentList;
-    UIActivityIndicatorView *activityIndicator;
     
     Venue *venue;
     POIDetailResp *poiResponse;
@@ -34,7 +33,6 @@
     
     Events *eventsResponse;
 }
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UIScrollView *detailsScrollView;
 @property (nonatomic, retain) IBOutlet UIImageView *detailsImageView;
 @property (nonatomic, retain) IBOutlet UILabel *placeNameLabel;
