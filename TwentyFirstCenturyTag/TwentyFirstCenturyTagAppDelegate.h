@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Facebook.h"
+#import <CoreLocation/CoreLocation.h>
+#import "DashboardViewController.h"
 
 @class TwentyFirstCenturyTagViewController;
 
 @interface TwentyFirstCenturyTagAppDelegate : NSObject <UIApplicationDelegate, FBSessionDelegate> {
 
     Facebook *facebook;
+    DashboardViewController *dashboardController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
@@ -21,5 +24,8 @@
 @property (nonatomic, retain) IBOutlet TwentyFirstCenturyTagViewController *viewController;
 @property (nonatomic, retain) UINavigationController *navigationController;
 @property (nonatomic, retain) Facebook *facebook;
+@property (nonatomic, retain) DashboardViewController *dashboardController;
+
+-(void)didUpdateToLocation:(CLLocation*)location;
 
 @end

@@ -90,8 +90,9 @@
     
     [currentMapView regionThatFits:region];
 
-    //locationController = [LocationController sharedInstance];
-    //locationController.delegate = self;
+    locationController = [LocationController sharedInstance];
+    locationController.delegate = dashboardController;
+    [locationController.locationManager startUpdatingLocation];
     
     //PlaceAnnotation *someAnnotation = [[[PlaceAnnotation alloc] initWithLatitude:37.786521 longitude:-122.397850 ] autorelease];
     
@@ -173,6 +174,7 @@
         placeDetailsController.poiResponse = poiResponse;
         placeDetailsController.mapViewController = self;
         placeDetailsController.dashboardController = dashboardController;
+        [HUD hide:YES];
         [self.navigationController pushViewController:placeDetailsController animated:YES];
         [placeDetailsController release];
     }
@@ -181,7 +183,7 @@
 - (void)addAnnotations
 {
     NSArray *venues = venuesResponse.venues;
-        NSMutableArray *annotations = [[NSMutableArray alloc] initWithCapacity:[venues count]];
+    annotations = [[NSMutableArray alloc] initWithCapacity:[venues count]];
     for(int i = 0; i < [venues count]; i++)
     {
         PlaceAnnotation *annotation = [[[PlaceAnnotation alloc] initWithVenue:[venues objectAtIndex:i]] autorelease];
@@ -193,7 +195,7 @@
 
 - (void)refreshAnnotations
 {
-    [currentMapView removeAnnotations:[currentMapView annotations]];
+    [currentMapView removeAnnotations:annotations];
     [self addAnnotations];
 }
 
@@ -214,7 +216,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [locationController.locationManager stopUpdatingLocation];
+    //[locationController.locationManager stopUpdatingLocation];
 }
 
 -(void)dashPressed
@@ -299,7 +301,23 @@
     [request setTag:2];
     [request startAsynchronous];
     
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Loading";
+    
+    [HUD show:YES];
+}
 
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
 }
 
 @end

@@ -12,7 +12,7 @@
 #import "LocationController.h"
 #import "MBProgressHUD.h"
 
-@interface DashboardViewController : UIViewController <FBRequestDelegate, UITableViewDelegate, UITableViewDataSource, LocationControllerDelegate, MBProgressHUDDelegate> {
+@interface DashboardViewController : UIViewController <FBRequestDelegate, UITableViewDelegate, UITableViewDataSource, LocationControllerDelegate, MBProgressHUDDelegate, UIAlertViewDelegate> {
     
     NSMutableArray *contentList;
     UILabel *nameLabel;

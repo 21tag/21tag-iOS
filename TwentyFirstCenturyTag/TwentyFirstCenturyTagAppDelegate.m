@@ -12,7 +12,7 @@
 #import "LoginScreenViewController.h"
 #import "ChooseNetworkViewController.h"
 #import "FacebookController.h"
-#import "DashboardViewController.h"
+#import "LocationController.h"
 
 @implementation UINavigationBar (CustomImage)
 - (void)drawRect:(CGRect)rect {
@@ -29,10 +29,17 @@
 @synthesize viewController=_viewController;
 @synthesize navigationController;
 @synthesize facebook;
-
+@synthesize dashboardController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
+    UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    
+    if (localNotif) {
+        NSLog(@"Recieved Notification %@",localNotif);
+        
+    }
+    
     FacebookController *facebookController = [FacebookController sharedInstance];
     facebook = facebookController.facebook;
     UIViewController *rootController;    
@@ -61,6 +68,7 @@
         {
             DashboardViewController *dashController = [[DashboardViewController alloc] init];
             rootController = dashController;
+            dashboardController = dashController;
         }
     }
 
@@ -101,6 +109,7 @@
     else
     {
         DashboardViewController *dashController = [[DashboardViewController alloc] init];
+        dashboardController = dashController;
         NSArray *viewControllerList = [NSArray arrayWithObject:dashController];
         [self.navigationController setViewControllers:viewControllerList animated:YES];
         [self.navigationController setNavigationBarHidden:NO animated:YES];
@@ -160,6 +169,21 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+}
+
+-(void)didUpdateToLocation:(CLLocation*)location
+{
+    [dashboardController locationUpdate:location];
+    [dashboardController checkinUpdate:nil];
+    NSLog(@"Background location update");
+}
+
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You're It!" message:notification.alertBody delegate:dashboardController cancelButtonTitle:@"Check-out" otherButtonTitles:@"Check-in", nil];
+    [alert setTag:420];
+    [alert show];
+    [alert release];
 }
 
 - (void)dealloc

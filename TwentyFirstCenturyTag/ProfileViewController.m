@@ -185,6 +185,8 @@
     [request setTag:1];
     [request startAsynchronous];
     
+
+    
     /*int teamPoints = 0;
     for(int i = 0; i < [teamsResponse.users count]; i++)
     {

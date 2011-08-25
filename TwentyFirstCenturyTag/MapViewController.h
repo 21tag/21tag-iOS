@@ -12,8 +12,9 @@
 #import "VenuesResp.h"
 #import "User.h"
 #import "DashboardViewController.h"
+#import "MBProgressHUD.h"
 
-@interface MapViewController : UIViewController <LocationControllerDelegate> {
+@interface MapViewController : UIViewController <LocationControllerDelegate, MBProgressHUDDelegate> {
     
     MKMapView *currentMapView;
     LocationController *locationController;
@@ -26,6 +27,8 @@
     //User *user;
     
     DashboardViewController *dashboardController;
+    NSMutableArray *annotations;
+    MBProgressHUD *HUD;
 }
 - (IBAction)locationButtonPressed:(id)sender;
 @property (nonatomic, retain) IBOutlet MKMapView *currentMapView;

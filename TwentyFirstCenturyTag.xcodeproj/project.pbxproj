@@ -152,6 +152,8 @@
 		D9C1D8B213EF7C4200266875 /* account_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C1D8AE13EF7C4100266875 /* account_button.png */; };
 		D9C1D8B513EF7C7F00266875 /* account_button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C1D8B313EF7C7700266875 /* account_button_pressed@2x.png */; };
 		D9C1D8B613EF7C7F00266875 /* account_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C1D8B413EF7C7900266875 /* account_button@2x.png */; };
+		D9C9405A1406C5290066B752 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C940591406C5280066B752 /* Default.png */; };
+		D9C9405C1406C5390066B752 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9405B1406C5390066B752 /* Default@2x.png */; };
 		D9C9BB4013B02354008A7B90 /* campus_request_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3C13B02354008A7B90 /* campus_request_button.png */; };
 		D9C9BB4113B02354008A7B90 /* campus_request_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */; };
 		D9C9BB4213B02354008A7B90 /* on_harvard_campus_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */; };
@@ -396,6 +398,8 @@
 		D9C1D8AE13EF7C4100266875 /* account_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = account_button.png; sourceTree = "<group>"; };
 		D9C1D8B313EF7C7700266875 /* account_button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "account_button_pressed@2x.png"; sourceTree = "<group>"; };
 		D9C1D8B413EF7C7900266875 /* account_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "account_button@2x.png"; sourceTree = "<group>"; };
+		D9C940591406C5280066B752 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
+		D9C9405B1406C5390066B752 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		D9C9BB3C13B02354008A7B90 /* campus_request_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = campus_request_button.png; sourceTree = "<group>"; };
 		D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "campus_request_button@2x.png"; sourceTree = "<group>"; };
 		D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on_harvard_campus_button.png; sourceTree = "<group>"; };
@@ -509,6 +513,8 @@
 		D9174F5213B15E5B00600189 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D9C9405B1406C5390066B752 /* Default@2x.png */,
+				D9C940591406C5280066B752 /* Default.png */,
 				D925BED213BD62B300B515DE /* Dashboard */,
 				D9514E3E13C54E4E005A652D /* loading_teams.png */,
 				D9514E3F13C54E4E005A652D /* loading_teams@2x.png */,
@@ -1112,6 +1118,8 @@
 				D9C1D8B213EF7C4200266875 /* account_button.png in Resources */,
 				D9C1D8B513EF7C7F00266875 /* account_button_pressed@2x.png in Resources */,
 				D9C1D8B613EF7C7F00266875 /* account_button@2x.png in Resources */,
+				D9C9405A1406C5290066B752 /* Default.png in Resources */,
+				D9C9405C1406C5390066B752 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

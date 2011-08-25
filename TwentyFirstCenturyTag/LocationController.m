@@ -6,6 +6,7 @@
 //
 
 #import "LocationController.h"
+#import "TwentyFirstCenturyTagAppDelegate.h"
 
 static LocationController* sharedCLDelegate = nil;
 
@@ -36,6 +37,9 @@ static LocationController* sharedCLDelegate = nil;
 	if([self.delegate conformsToProtocol:@protocol(LocationControllerDelegate)]) {
 		[self.delegate locationUpdate:newLocation];
 	}
+    
+
+    [(TwentyFirstCenturyTagAppDelegate*)[UIApplication sharedApplication].delegate didUpdateToLocation:location];
 }
 
 - (void)locationManager:(CLLocationManager*)manager

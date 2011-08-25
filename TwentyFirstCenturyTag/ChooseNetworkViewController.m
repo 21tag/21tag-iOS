@@ -86,7 +86,10 @@
     [HUD hide:YES];
     
     //JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
+    TwentyFirstCenturyTagAppDelegate *delegate = (TwentyFirstCenturyTagAppDelegate*)[[UIApplication sharedApplication] delegate];
     DashboardViewController *dashboardController = [[DashboardViewController alloc] init];
+    delegate.dashboardController = dashboardController;
+    
     NSArray *controllerArray = [NSArray arrayWithObjects:dashboardController, nil];
     [locationController.locationManager stopUpdatingLocation];
     [self.navigationController setNavigationBarHidden:NO animated:YES];

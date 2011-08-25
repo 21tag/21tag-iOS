@@ -18,6 +18,7 @@
 #import "APIUtil.h"
 #import "JoinTeamViewController.h"
 #import "POIDetailResp.h"
+#import "TwentyFirstCenturyTagAppDelegate.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -45,15 +46,21 @@
 
 - (void)locationUpdate:(CLLocation*)location
 {
-    currentLocation = location;
-    [currentLocation retain];
+    if(location)
+    {
+        currentLocation = location;
+        [currentLocation retain];
+    }
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"LocationUpdateNotification"
      object:nil];
     
     NSLog(@"location update: %f, %f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
+    
+
 }
+
 - (void)locationError:(NSError *)error
 {
     
@@ -70,6 +77,7 @@
     CLLocationDistance distanceToVenue = [currentLocation distanceFromLocation:venueLocation];
     //200 feet = 60.96 meters
     //distanceToVenue = 0; // DEBUG value
+    NSLog(@"checkinUpdate");
     if(distanceToVenue < 60.96)
     {
         if(fiveMinuteCounter == 5)
@@ -88,13 +96,24 @@
     else
     {
         //1 meter = 3.2808399 feet
-        int distanceInFeet = (int)(distanceToVenue * 3.2808399);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Too Far" message:[NSString stringWithFormat:@"You are currently %d feet from %@. You must be within 200 feet to check in. You will be checked out automatically if you don't get closer and check-in again!",distanceInFeet,currentVenue.name] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        [alert show];
-        [alert release];
-        [checkinTimer invalidate];
-        checkinTime = nil;
-        [navigationTableView reloadData];
+        
+        
+        
+        if(currentVenue.name)
+        {
+            int distanceInFeet = (int)(distanceToVenue * 3.2808399);
+            
+            [checkinTimer invalidate];
+            checkinTime = nil;
+            [navigationTableView reloadData];
+            UILocalNotification * theNotification = [[UILocalNotification alloc] init];
+            theNotification.alertBody = [NSString stringWithFormat:@"You are currently %d feet from %@. You must be within 200 feet to check in. You will be checked out automatically if you don't get closer and check-in again! You have one minute to return to the location and check-in again.",distanceInFeet,currentVenue.name];
+            theNotification.alertAction = @"Check-In";
+            
+            theNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:theNotification];
+        }
     }
     
     if(fiveMinuteCounter == 5)
@@ -104,6 +123,23 @@
 
     //[navigationTableView reloadData];
 
+}
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 420)
+    {
+        if(buttonIndex == 1) // check-in
+        {
+            if(checkinTimer)
+            {
+                [checkinTimer invalidate];
+                checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(checkinUpdate:) userInfo:nil repeats:NO] retain];
+            }
+            else
+                checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(checkinUpdate:) userInfo:nil repeats:NO] retain];
+        }
+    }
 }
 
 // Facebook request result
@@ -613,6 +649,7 @@
         [self.navigationController pushViewController:profileController animated:YES];
         profileController.profileImageView.image = avatarImage;
         //profileController.nameLabel.text = [[contentList objectAtIndex:2] objectAtIndex:0];
+        
 
         [profileController release];
     }
