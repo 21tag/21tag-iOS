@@ -10,7 +10,7 @@
 #import "DashboardViewController.h"
 #import "TeamsResp.h"
 
-@interface TeamInfoViewController : UIViewController  <UITableViewDataSource, UITableViewDelegate>  {
+@interface TeamInfoViewController : UIViewController  <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>  {
     
     UIImageView *teamImage;
     UILabel *teamNameLabel;

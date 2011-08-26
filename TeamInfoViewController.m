@@ -214,6 +214,24 @@
     }
 }
 
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 421)
+    {
+        if(buttonIndex == 1) // Leave team confirmation
+        {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/deletefromteam",[APIUtil host]]];
+            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+            [request setPostValue:teamNameLabel.text forKey:@"team"];
+            [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+            [request setDelegate:self];
+            [request setTag:3];
+            [request startAsynchronous];    
+        }
+    }
+}
+
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
     NSError *error = [request error];
@@ -315,15 +333,10 @@
 -(void)leavePressed
 {
     //		return handleResponse(httpGet(HOST+"/deletefromteam?user="+TagPreferences.USER+"&team="+team), new Team());
-
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/deletefromteam",[APIUtil host]]];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:teamNameLabel.text forKey:@"team"];
-    [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
-    [request setDelegate:self];
-    [request setTag:3];
-    [request startAsynchronous];    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Leave Team?" message:@"Are you sure you want to leave your team? You will lose your points and your teammates will miss you!" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [alert setTag:421];
+    [alert show];
+    [alert release];
 }
 
 - (void)didReceiveMemoryWarning
