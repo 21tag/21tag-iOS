@@ -11,6 +11,7 @@
 #import "ASIFormDataRequest.h"
 #import "TwentyFirstCenturyTagAppDelegate.h"
 #import "FacebookController.h"
+#import "TeamInfoViewController.h"
 #define kCellIdentifier @"Cell"
 
 
@@ -20,6 +21,7 @@
 @synthesize profileTableView;
 @synthesize user;
 @synthesize isYourProfile;
+@synthesize dashboardController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -143,6 +145,7 @@
             
             [cellInfo setObject:[NSString stringWithFormat:@"%@ %@ ago",teamUser.currentVenueName,timeString] forKey:@"detailTextLabel"];
             [cellInfo setObject:[NSNumber numberWithDouble:time] forKey:@"time"];
+            [cellInfo setObject:teamUser forKey:@"user"];
             [userList addObject:cellInfo];
         }
 
@@ -280,6 +283,35 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.section == 0)
+    {
+        TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
+        NSString *teamName;
+        if(user.teamname)
+            teamName = user.teamname;
+        else
+            teamName = user.team;
+        teamInfoController.teamName = teamName;
+        teamInfoController.isJoiningTeam = NO;
+        [self.navigationController pushViewController:teamInfoController animated:YES];
+        [teamInfoController release];
+    }
+    else
+    {
+        NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
+        
+        ProfileViewController *profileController = [[ProfileViewController alloc] init];
+        User *theUser = (User*)[cellInfo objectForKey:@"user"];
+        profileController.user = theUser;
+        [profileController.user retain];
+        
+        [self.navigationController pushViewController:profileController animated:YES];
+        profileController.profileImageView.image = [UIImage imageNamed:@"team_icon_placeholder"];
+        
+        [profileController release];
+        
+    }
+    
     [profileTableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

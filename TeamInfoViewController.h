@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "DashboardViewController.h"
 #import "TeamsResp.h"
+#import "MBProgressHUD.h"
 
-@interface TeamInfoViewController : UIViewController  <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>  {
+@interface TeamInfoViewController : UIViewController  <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate>  {
     
     UIImageView *teamImage;
     UILabel *teamNameLabel;
@@ -38,6 +39,8 @@
     BOOL teamPointsHighlighted;
     
     DashboardViewController *dashboardController;
+    
+    MBProgressHUD *HUD;
 }
 @property (nonatomic, retain) IBOutlet UIImageView *teamImage;
 @property (nonatomic, retain) IBOutlet UILabel *teamNameLabel;

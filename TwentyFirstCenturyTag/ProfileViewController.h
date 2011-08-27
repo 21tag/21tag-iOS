@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DashboardViewController.h"
 #import "User.h"
 #import "TeamsResp.h"
 
@@ -25,6 +26,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) IBOutlet UITableView *profileTableView;
 @property (nonatomic, retain) User *user;
+@property (nonatomic, retain) DashboardViewController *dashboardController;
 @property BOOL isYourProfile;
 
 

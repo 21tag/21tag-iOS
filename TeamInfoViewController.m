@@ -211,7 +211,10 @@
         
         [self.navigationController pushViewController:placeDetailsController animated:YES];
         [placeDetailsController release];
+        
     }
+    if(HUD)
+        [HUD hide:YES];
 }
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -239,6 +242,9 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
     [alert release];
+    
+    if(HUD)
+        [HUD hide:YES];
 }
 
 -(void)setupButtons
@@ -381,6 +387,14 @@
     [request setTag:1];
     [request startAsynchronous];
     
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Loading";
+    
+    [HUD show:YES];
+    
     contentList = [[NSArray alloc] init];
     //usersList = [[NSArray alloc] init];
     //locationsList = [[NSArray alloc] init];
@@ -513,9 +527,39 @@
         [request setDelegate:self];
         [request setTag:4];
         [request startAsynchronous];
+        
+        HUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:HUD];
+        
+        HUD.delegate = self;
+        HUD.labelText = @"Loading";
+        
+        [HUD show:YES];
+    }
+    if(teamPointsHighlighted)
+    {
+        ProfileViewController *profileController = [[ProfileViewController alloc] init];
+        User *user = (User*)[[rankingsList objectAtIndex:indexPath.row] objectForKey:@"user"];
+        profileController.user = user;
+        [profileController.user retain];
+        
+        [self.navigationController pushViewController:profileController animated:YES];
+        profileController.profileImageView.image = [UIImage imageNamed:@"team_icon_placeholder"];
+        
+        [profileController release];
     }
     
     [mainTableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
 }
 
 @end
