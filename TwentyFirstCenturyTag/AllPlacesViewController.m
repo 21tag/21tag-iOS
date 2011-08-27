@@ -185,7 +185,7 @@
     //searchPlacesController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     //[self presentModalViewController:searchPlacesController animated:YES];
     //searchPlacesController.mapViewController = mapViewController;
-    //FIXME: searchPlacesController.venuesResponse = venuesResponse;
+    searchPlacesController.multiPOIresponse = multiPOIresponse;
     searchPlacesController.dashController = dashboardController;
     [self.navigationController pushViewController:searchPlacesController animated:YES];
     [searchPlacesController release];

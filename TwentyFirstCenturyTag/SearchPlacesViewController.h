@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VenuesResp.h"
 #import "MapViewController.h"
+#import "MultiPOIDetailResp.h"
 
 @interface SearchPlacesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate> {
     UITableView *mainTableView;
@@ -17,7 +17,8 @@
     NSMutableArray *searchResults;
     NSString *savedSearchTerm;
 
-    VenuesResp *venuesResponse;
+    //VenuesResp *venuesResponse;
+    MultiPOIDetailResp *multiPOIresponse;
     
     BOOL isSearching;
     
@@ -34,7 +35,7 @@
 
 - (void)handleSearchForTerm:(NSString *)searchTerm;
 
-@property (nonatomic, retain)     VenuesResp *venuesResponse;
+@property (nonatomic, retain)     MultiPOIDetailResp *multiPOIresponse;
 @property (nonatomic, retain)     DashboardViewController *dashController;
 
 

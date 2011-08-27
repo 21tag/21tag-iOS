@@ -9,7 +9,6 @@
 #import "SearchPlacesViewController.h"
 #import "PlaceDetailsViewController.h"
 #import "POIDetailResp.h"
-#import "ASIFormDataRequest.h"
 #import "APIUtil.h"
 
 @implementation SearchPlacesViewController
@@ -19,7 +18,7 @@
 @synthesize contentsList;
 @synthesize searchResults;
 @synthesize savedSearchTerm;
-@synthesize venuesResponse;
+@synthesize multiPOIresponse;
 @synthesize dashController;
 
 - (void)dealloc
@@ -32,27 +31,6 @@
 //    [navBar release];
 //    [navItem release];
     [super dealloc];
-}
-
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
-    
-    POIDetailResp *poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
-    
-    PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];        
-    placeDetailsController.poiResponse = poiResponse;
-    placeDetailsController.dashboardController = dashController;
-    [self.navigationController pushViewController:placeDetailsController animated:YES];
-    [placeDetailsController release];
-}
-
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    NSError *error = [request error];
-    NSLog(@"%@",error);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    [alert show];
-    [alert release];
 }
 
 - (void)viewDidUnload
@@ -90,12 +68,12 @@
     [backButton release];
     
 
-    contentsList = [[NSMutableArray alloc] initWithCapacity:[venuesResponse.venues count]];
-    venuesSearchResults = [[NSMutableArray alloc] initWithCapacity:[venuesResponse.venues count]];
+    contentsList = [[NSMutableArray alloc] initWithCapacity:[multiPOIresponse.pois count]];
+    venuesSearchResults = [[NSMutableArray alloc] initWithCapacity:[multiPOIresponse.pois count]];
     
-    for(Venue *venue in venuesResponse.venues)
+    for(POIDetailResp *poiResp in multiPOIresponse.pois)
     {
-        [contentsList addObject:venue.name];
+        [contentsList addObject:poiResp.poi.name];
     }
     
     [contentsList retain];
@@ -136,9 +114,9 @@
             if ([currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location != NSNotFound)
             {
                 [[self searchResults] addObject:currentString];
-                Venue *venue = (Venue*)[venuesResponse.venues objectAtIndex:i];
-                [venuesSearchResults addObject:venue];
-                NSLog(@"%d/%d : %@",k,i,venue.name);
+                POIDetailResp *poiResp = (POIDetailResp*)[multiPOIresponse.pois objectAtIndex:i];
+                [venuesSearchResults addObject:poiResp];
+                NSLog(@"%d/%d : %@",k,i,poiResp.poi.name);
                 k++;
             }
             i++;
@@ -208,19 +186,19 @@ shouldReloadTableForSearchString:(NSString *)searchString
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Venue *venue;
+    POIDetailResp *poiResp;
     if(isSearching)
-        venue = ((Venue*)[venuesSearchResults objectAtIndex:indexPath.row]);
+        poiResp = ((POIDetailResp*)[venuesSearchResults objectAtIndex:indexPath.row]);
     else
-        venue = ((Venue*)[venuesResponse.venues objectAtIndex:indexPath.row]);
+        poiResp = ((POIDetailResp*)[multiPOIresponse.pois objectAtIndex:indexPath.row]);
     
-    NSLog(@"%@",venue.name);
+    NSLog(@"%@",poiResp.poi.name);
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addPostValue:[venue getId] forKey:@"poi"];
-    [request setDelegate:self];
-    [request startAsynchronous];
+    PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];        
+    placeDetailsController.poiResponse = poiResp;
+    placeDetailsController.dashboardController = dashController;
+    [self.navigationController pushViewController:placeDetailsController animated:YES];
+    [placeDetailsController release];
     
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
