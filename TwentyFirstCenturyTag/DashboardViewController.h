@@ -53,6 +53,7 @@
 - (void)checkinPressed;
 - (void) checkinUpdate:(NSTimer *) timer;
 - (void) updateDashboard:(NSTimer *) timer;
+- (void) viewCurrentVenue;
 
 
 @end

@@ -286,6 +286,8 @@
         [request setTag:1];
         [request startAsynchronous];
         
+        [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"send_distance_notification"];
+        
         if(dashboardController.checkinTimer)
         {
             [dashboardController.checkinTimer invalidate];

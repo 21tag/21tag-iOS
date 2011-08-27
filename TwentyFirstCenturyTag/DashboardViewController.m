@@ -106,13 +106,21 @@
             [checkinTimer invalidate];
             checkinTime = nil;
             [navigationTableView reloadData];
-            UILocalNotification * theNotification = [[UILocalNotification alloc] init];
-            theNotification.alertBody = [NSString stringWithFormat:@"You are currently %d feet from %@. You must be within 200 feet to check in. You will be checked out automatically if you don't get closer and check-in again! You have one minute to return to the location and check-in again.",distanceInFeet,currentVenue.name];
-            theNotification.alertAction = @"Check-In";
             
-            theNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
-            
-            [[UIApplication sharedApplication] scheduleLocalNotification:theNotification];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if([[defaults objectForKey:@"send_distance_notification"] boolValue])
+            {
+                UILocalNotification * theNotification = [[UILocalNotification alloc] init];
+                theNotification.alertBody = [NSString stringWithFormat:@"You are currently %d feet from %@. You must be within 200 feet to check in. You will be checked out automatically if you don't get closer and check-in again! You have one minute to return to the location and check-in again.",distanceInFeet,currentVenue.name];
+                theNotification.alertAction = @"Check-In";
+                
+                theNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+                
+                [[UIApplication sharedApplication] scheduleLocalNotification:theNotification];
+                
+                [defaults setObject:[NSNumber numberWithBool:NO] forKey:@"send_distance_notification"];
+
+            }
         }
     }
     
@@ -131,13 +139,14 @@
     {
         if(buttonIndex == 1) // check-in
         {
-            if(checkinTimer)
+            /*if(checkinTimer)
             {
                 [checkinTimer invalidate];
                 checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(checkinUpdate:) userInfo:nil repeats:NO] retain];
             }
             else
-                checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(checkinUpdate:) userInfo:nil repeats:NO] retain];
+                checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(checkinUpdate:) userInfo:nil repeats:NO] retain];*/
+            [self viewCurrentVenue];
         }
     }
 }
@@ -562,38 +571,44 @@
     [mapController release];
 }
 
+- (void) viewCurrentVenue
+{
+    if(user.currentVenueName)
+    {
+        //placeDetailsController
+        //		return handleResponse(httpGet(HOST+"/getpoidetails?"+(poi != null ? "poi="+poi : "") +(ses != null ? (poi != null ? "&" : "") + "ses="+ses : "")), new POIDetailResp());
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request addPostValue:user.currentVenueId forKey:@"poi"];
+        [request setDelegate:self];
+        [request setTag:3];
+        [request startAsynchronous];
+        
+        HUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:HUD];
+        
+        HUD.delegate = self;
+        HUD.labelText = @"Loading";
+        
+        [HUD show:YES];
+        
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Checked In" message:@"You must be checked in first." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+        [alert release];
+    }
+}
+
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0) // Selected top item
     {
-        if(user.currentVenueName)
-        {
-            //placeDetailsController
-            //		return handleResponse(httpGet(HOST+"/getpoidetails?"+(poi != null ? "poi="+poi : "") +(ses != null ? (poi != null ? "&" : "") + "ses="+ses : "")), new POIDetailResp());
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
-            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-            [request addPostValue:user.currentVenueId forKey:@"poi"];
-            [request setDelegate:self];
-            [request setTag:3];
-            [request startAsynchronous];
-            
-            HUD = [[MBProgressHUD alloc] initWithView:self.view];
-            [self.view addSubview:HUD];
-            
-            HUD.delegate = self;
-            HUD.labelText = @"Loading";
-            
-            [HUD show:YES];
-
-        }
-        else
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Checked In" message:@"You must be checked in first." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert show];
-            [alert release];
-        }
+        [self viewCurrentVenue];
 
     }
     else if(indexPath.section == 1)
