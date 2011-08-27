@@ -9,24 +9,29 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
-#import "Venue.h"
+//#import "Venue.h"
+#import "POIDetailResp.h"
 
 @interface PlaceAnnotation : NSObject <MKAnnotation>
 {
-    Venue *venue;
+//    Venue *venue;
+    POIDetailResp *poiResponse;
     int tag;
 }
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property CLLocationDegrees latitude;
 @property CLLocationDegrees longitude;
-@property (nonatomic, retain)     Venue *venue;
+//@property (nonatomic, retain)     Venue *venue;
+@property (nonatomic, retain) POIDetailResp *poiResponse;
+
 @property int tag;
 
 - (NSString *) title;
 - (NSString *) subtitle;
 
-- (id) initWithVenue:(Venue*) newVenue;
+//- (id) initWithVenue:(Venue*) newVenue;
+-(id) initWithPOIDetailResp:(POIDetailResp*)poi;
 
 
 @end

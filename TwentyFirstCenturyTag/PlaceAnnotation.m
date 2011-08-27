@@ -13,7 +13,8 @@
 
 @synthesize latitude;
 @synthesize longitude;
-@synthesize venue;
+//@synthesize venue;
+@synthesize poiResponse;
 @synthesize tag;
 /*- (id) initWithLatitude:(CLLocationDegrees) lat longitude:(CLLocationDegrees) lng {
 	latitude = lat;
@@ -21,10 +22,10 @@
 	return self;
 }*/
 
-- (id) initWithVenue:(Venue*) newVenue
+-(id) initWithPOIDetailResp:(POIDetailResp*)poi;
 {
-    venue = newVenue;
-    [venue retain];
+    poiResponse = poi;
+    [poiResponse retain];
     //latitude = newVenue.geolat;
     //longitude = newVenue.geolong;
     return self;
@@ -39,27 +40,32 @@
 
 -(CLLocationDegrees)latitude
 {
-    return venue.geolat;
+    return poiResponse.poi.geolat;
 }
 
 -(CLLocationDegrees)longitude
 {
-    return venue.geolong;
+    return poiResponse.poi.geolong;
 }
 
 - (CLLocationCoordinate2D) coordinate {
 	//CLLocationCoordinate2D coord = {self.latitude, self.longitude};
 	//return coord;
-    return [venue getLocation].coordinate;
+    return [poiResponse.poi getLocation].coordinate;
 }
 - (NSString *) title {
     //NSLog(@"%@", venue.name);
 
-    return venue.name;
+    return poiResponse.poi.name;
 }
 - (NSString *) subtitle {
     //NSLog(@"%@",venue.address);
 
-    return venue.address;
+    NSString *subtitle;
+    if(poiResponse.points == 0 && !poiResponse.owner.name)
+         subtitle = @"Up for grabs!";
+    else
+         subtitle = [NSString stringWithFormat:@"%ld pts Team: %@",poiResponse.points, poiResponse.owner.name];
+    return subtitle;
 }
 @end

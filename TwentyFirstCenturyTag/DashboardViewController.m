@@ -78,7 +78,7 @@
     //200 feet = 60.96 meters
     //distanceToVenue = 0; // DEBUG value
     NSLog(@"checkinUpdate");
-    if(distanceToVenue < 60.96)
+    if(distanceToVenue < 91.44)
     {
         if(fiveMinuteCounter == 5)
         {
@@ -111,7 +111,7 @@
             if([[defaults objectForKey:@"send_distance_notification"] boolValue])
             {
                 UILocalNotification * theNotification = [[UILocalNotification alloc] init];
-                theNotification.alertBody = [NSString stringWithFormat:@"You are currently %d feet from %@. You must be within 200 feet to check in. You will be checked out automatically if you don't get closer and check-in again! You have one minute to return to the location and check-in again.",distanceInFeet,currentVenue.name];
+                theNotification.alertBody = [NSString stringWithFormat:@"You are currently %d feet from %@. You must be within 300 feet to check in. You will be checked out automatically if you don't get closer and check-in again! You have one minute to return to the location and check-in again.",distanceInFeet,currentVenue.name];
                 theNotification.alertAction = @"Check-In";
                 
                 theNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];

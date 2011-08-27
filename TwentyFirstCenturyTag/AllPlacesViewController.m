@@ -52,7 +52,7 @@
     [cellInfo setObject:detailTextLabel forKey:@"detailTextLabel"];
     [cellInfo setObject:poiResponse forKey:@"poiResponse"];
     
-    if(distanceToVenue < 60.96)
+    if(distanceToVenue < 91.44)
     {
         [[contentList objectAtIndex:0] addObject:cellInfo];
     }

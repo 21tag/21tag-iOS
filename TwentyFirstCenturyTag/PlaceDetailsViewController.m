@@ -275,7 +275,7 @@
     CLLocationDistance distanceToVenue = [dashboardController.currentLocation distanceFromLocation:venueLocation];
     //200 feet = 60.96 meters
     //distanceToVenue = 0; // DEBUG value
-    if(distanceToVenue < 60.96 && dashboardController.currentLocation)
+    if(distanceToVenue < 91.44 && dashboardController.currentLocation)
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
@@ -302,7 +302,7 @@
     {
         //1 meter = 3.2808399 feet
         int distanceInFeet = (int)(distanceToVenue * 3.2808399);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Too Far" message:[NSString stringWithFormat:@"You are currently %d feet from this location. You must be within 200 feet to check in. Try getting closer!",distanceInFeet] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Too Far" message:[NSString stringWithFormat:@"You are currently %d feet from this location. You must be within 300 feet to check in. Try getting closer!",distanceInFeet] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
         [alert release];
     }

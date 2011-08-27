@@ -143,7 +143,7 @@
 {
     //		return handleResponse(httpGet(HOST+"/getpois?lat="+lat+"&lon="+lng+"&num="+limit), new VenuesResp());
 
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpois",[APIUtil host]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoisdetails",[APIUtil host]]];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     [request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.latitude] forKey:@"lat"];
     [request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.longitude] forKey:@"lon"];
@@ -161,32 +161,22 @@
     {
         NSLog(@"venues:\n%@",[request responseString]);
         
-        venuesResponse = [[VenuesResp alloc] initWithData:[request responseData]];
-
+        //venuesResponse = [[VenuesResp alloc] initWithData:[request responseData]];
+        multiPOIResponse = [[MultiPOIDetailResp alloc] initWithData:[request responseData]];
+        
         //[self addAnnotations];
         [self refreshAnnotations];
-    }
-    else if(request.tag == 2) // venue details
-    {
-        PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
-        POIDetailResp *poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
-        
-        placeDetailsController.poiResponse = poiResponse;
-        placeDetailsController.mapViewController = self;
-        placeDetailsController.dashboardController = dashboardController;
-        [HUD hide:YES];
-        [self.navigationController pushViewController:placeDetailsController animated:YES];
-        [placeDetailsController release];
     }
 }
 
 - (void)addAnnotations
 {
-    NSArray *venues = venuesResponse.venues;
+    NSArray *venues = multiPOIResponse.pois;
+    
     annotations = [[NSMutableArray alloc] initWithCapacity:[venues count]];
     for(int i = 0; i < [venues count]; i++)
     {
-        PlaceAnnotation *annotation = [[[PlaceAnnotation alloc] initWithVenue:[venues objectAtIndex:i]] autorelease];
+        PlaceAnnotation *annotation = [[[PlaceAnnotation alloc] initWithPOIDetailResp:[venues objectAtIndex:i]] autorelease];
         annotation.tag = i;
         [currentMapView addAnnotation:annotation];
         [annotations addObject:annotation];
@@ -227,7 +217,7 @@
 - (IBAction)allPlacesPressed:(id)sender 
 {
     AllPlacesViewController *allPlacesController = [[AllPlacesViewController alloc] init];
-    allPlacesController.venuesResponse = venuesResponse;
+    //FIXME: allPlacesController.venuesResponse = venuesResponse;
     allPlacesController.dashboardController = dashboardController;
     allPlacesController.currentLocation = dashboardController.currentLocation;
     [self.navigationController pushViewController:allPlacesController animated:YES];
@@ -269,7 +259,7 @@
 	//[customAnnotationView setImage:pinImage];
     PlaceAnnotation *currentPlaceAnnotation = (PlaceAnnotation*)annotation;
     //if([user.currentVenueId isEqualToString:[currentPlaceAnnotation.venue getId]])
-    if([dashboardController.user.currentVenueName isEqualToString:currentPlaceAnnotation.venue.name])
+    if([dashboardController.user.currentVenueName isEqualToString:currentPlaceAnnotation.poiResponse.poi.name])
     {
         customAnnotationView.pinColor = MKPinAnnotationColorGreen;
     }
@@ -292,22 +282,13 @@
     
     NSLog(@"Selected:%d", [ann tag]);
     
-    Venue *venue = [[venuesResponse venues] objectAtIndex:ann.tag];
+    PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addPostValue:[venue getId] forKey:@"poi"];
-    [request setDelegate:self];
-    [request setTag:2];
-    [request startAsynchronous];
-    
-    HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:HUD];
-    
-    HUD.delegate = self;
-    HUD.labelText = @"Loading";
-    
-    [HUD show:YES];
+    placeDetailsController.poiResponse = ann.poiResponse;
+    placeDetailsController.mapViewController = self;
+    placeDetailsController.dashboardController = dashboardController;
+    [self.navigationController pushViewController:placeDetailsController animated:YES];
+    [placeDetailsController release];
 }
 
 #pragma mark -

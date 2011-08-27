@@ -15,6 +15,7 @@
 		D925BED113BD62AE00B515DE /* team_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D925BECB13BD62AE00B515DE /* team_icon@2x.png */; };
 		D927CE5A13D501E800277E3E /* TeamsByFBIDS.m in Sources */ = {isa = PBXBuildFile; fileRef = D927CE5913D501E800277E3E /* TeamsByFBIDS.m */; };
 		D927CE5D13D503ED00277E3E /* TeamData.m in Sources */ = {isa = PBXBuildFile; fileRef = D927CE5C13D503ED00277E3E /* TeamData.m */; };
+		D928498314098F0A00B3D8FD /* MultiPOIDetailResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D928498214098F0A00B3D8FD /* MultiPOIDetailResp.m */; };
 		D944750D1406C9F500AE9A34 /* leave_team_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D94475091406C9F500AE9A34 /* leave_team_button.png */; };
 		D944750E1406C9F500AE9A34 /* leave_team_button_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = D944750A1406C9F500AE9A34 /* leave_team_button_pressed.png */; };
 		D944750F1406C9F500AE9A34 /* leave_team_button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D944750B1406C9F500AE9A34 /* leave_team_button_pressed@2x.png */; };
@@ -237,6 +238,8 @@
 		D927CE5913D501E800277E3E /* TeamsByFBIDS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamsByFBIDS.m; sourceTree = "<group>"; };
 		D927CE5B13D503ED00277E3E /* TeamData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamData.h; sourceTree = "<group>"; };
 		D927CE5C13D503ED00277E3E /* TeamData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamData.m; sourceTree = "<group>"; };
+		D928498114098F0A00B3D8FD /* MultiPOIDetailResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiPOIDetailResp.h; sourceTree = "<group>"; };
+		D928498214098F0A00B3D8FD /* MultiPOIDetailResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiPOIDetailResp.m; sourceTree = "<group>"; };
 		D94475091406C9F500AE9A34 /* leave_team_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leave_team_button.png; sourceTree = "<group>"; };
 		D944750A1406C9F500AE9A34 /* leave_team_button_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leave_team_button_pressed.png; sourceTree = "<group>"; };
 		D944750B1406C9F500AE9A34 /* leave_team_button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leave_team_button_pressed@2x.png"; sourceTree = "<group>"; };
@@ -921,6 +924,8 @@
 				D9F588B913C3810B00FA88BD /* iAPI.h */,
 				D9BEC23C13CD139B00E21A1A /* POIDetailResp.h */,
 				D9BEC23D13CD139B00E21A1A /* POIDetailResp.m */,
+				D928498114098F0A00B3D8FD /* MultiPOIDetailResp.h */,
+				D928498214098F0A00B3D8FD /* MultiPOIDetailResp.m */,
 				D927CE5813D501E800277E3E /* TeamsByFBIDS.h */,
 				D927CE5913D501E800277E3E /* TeamsByFBIDS.m */,
 				D9211C5613E0A16F0035F861 /* Event.h */,
@@ -1201,6 +1206,7 @@
 				D9211C5813E0A16F0035F861 /* Event.m in Sources */,
 				D9211C5B13E0A3A80035F861 /* Events.m in Sources */,
 				D91F65E113EB5D0100727188 /* MBProgressHUD.m in Sources */,
+				D928498314098F0A00B3D8FD /* MultiPOIDetailResp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

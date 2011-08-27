@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "LocationController.h"
 #import <MapKit/MapKit.h>
-#import "VenuesResp.h"
+//#import "VenuesResp.h"
+#import "MultiPOIDetailResp.h"
 #import "User.h"
 #import "DashboardViewController.h"
 #import "MBProgressHUD.h"
@@ -23,7 +24,9 @@
     //CLLocation *currentLocation;
     
     //NSArray *mapAnnotations;
-    VenuesResp *venuesResponse;
+    //VenuesResp *venuesResponse;
+    MultiPOIDetailResp *multiPOIResponse;
+    
     //User *user;
     
     DashboardViewController *dashboardController;
