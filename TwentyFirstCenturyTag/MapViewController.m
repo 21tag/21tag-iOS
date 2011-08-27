@@ -217,7 +217,7 @@
 - (IBAction)allPlacesPressed:(id)sender 
 {
     AllPlacesViewController *allPlacesController = [[AllPlacesViewController alloc] init];
-    //FIXME: allPlacesController.venuesResponse = venuesResponse;
+    allPlacesController.multiPOIresponse = multiPOIResponse;
     allPlacesController.dashboardController = dashboardController;
     allPlacesController.currentLocation = dashboardController.currentLocation;
     [self.navigationController pushViewController:allPlacesController animated:YES];

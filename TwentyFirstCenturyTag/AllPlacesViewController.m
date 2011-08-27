@@ -9,14 +9,13 @@
 #import "AllPlacesViewController.h"
 #import "SearchPlacesViewController.h"
 #import "PlaceDetailsViewController.h"
-#import "ASIFormDataRequest.h"
 #import "APIUtil.h"
 #import "POIDetailResp.h"
 #define kCellIdentifier @"Cell"
 
 @implementation AllPlacesViewController
 @synthesize placesTableView;
-@synthesize venuesResponse;
+@synthesize multiPOIresponse;
 @synthesize dashboardController;
 @synthesize currentLocation;
 
@@ -28,46 +27,6 @@
     }
     return self;
 }
-
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
-
-    POIDetailResp *poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
-    
-    NSMutableDictionary *cellInfo = [[contentList objectAtIndex:1] objectAtIndex:request.tag];
-    
-    Venue *venue = poiResponse.poi;
-    CLLocation *venueLocation = [venue getLocation];
-    CLLocationDistance distanceToVenue = [dashboardController.currentLocation distanceFromLocation:venueLocation];
-    //200 feet = 60.96 meters
-    //1 meter = 3.2808399 feet
-    //int distanceInFeet = (int)(distanceToVenue * 3.2808399);
-    
-    NSString *detailTextLabel;
-    if(poiResponse.owner.name)
-        detailTextLabel = [NSString stringWithFormat:@"%d pts %@",poiResponse.points,poiResponse.owner.name];
-    else
-        detailTextLabel = [NSString stringWithFormat:@"%d pts",poiResponse.points,poiResponse.owner.name];
-        
-    [cellInfo setObject:detailTextLabel forKey:@"detailTextLabel"];
-    [cellInfo setObject:poiResponse forKey:@"poiResponse"];
-    
-    if(distanceToVenue < 91.44)
-    {
-        [[contentList objectAtIndex:0] addObject:cellInfo];
-    }
-    [placesTableView reloadData];
-}
-
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    NSError *error = [request error];
-    NSLog(@"%@",error);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    [alert show];
-    [alert release];
-}
-
 
 #pragma mark - Table view data source
 
@@ -151,28 +110,34 @@
         
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
     
-    NSMutableArray *allPlacesList = [[NSMutableArray alloc] initWithCapacity:[venuesResponse.venues count]];
+    NSMutableArray *allPlacesList = [[NSMutableArray alloc] initWithCapacity:[multiPOIresponse.pois count]];
     contentList = [[NSMutableArray alloc] initWithCapacity:2];
+    [contentList addObject:[[NSMutableArray alloc] init]];
+
     
-    for(int i = 0; i < [venuesResponse.venues count]; i++)
+    for(int i = 0; i < [multiPOIresponse.pois count]; i++)
     {
-        Venue *venue = ((Venue*)[venuesResponse.venues objectAtIndex:i]);
+        POIDetailResp *poiResp = ((POIDetailResp*)[multiPOIresponse.pois objectAtIndex:i]);
 
         NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
-        [cellInfo setObject:venue.name forKey:@"textLabel"];
-        [cellInfo setObject:@"Loading..." forKey:@"detailTextLabel"];
+        [cellInfo setObject:poiResp.poi.name forKey:@"textLabel"];
+        NSString *detailTextLabel;
+        if(poiResp.owner.name)
+            detailTextLabel = [NSString stringWithFormat:@"%d pts %@",poiResp.points,poiResp.owner.name];
+        else
+            detailTextLabel = [NSString stringWithFormat:@"%d pts",poiResp.points];
+        
+        [cellInfo setObject:detailTextLabel forKey:@"detailTextLabel"];
+
+        [cellInfo setObject:poiResp forKey:@"poiResponse"];
         [allPlacesList addObject:cellInfo];
         
-        
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        [request addPostValue:[venue getId] forKey:@"poi"];
-        [request setDelegate:self];
-        [request setTag:i];
-        [request startAsynchronous];
+        if([[poiResp.poi getLocation] distanceFromLocation:dashboardController.currentLocation] < 91.44)
+        {
+            [[contentList objectAtIndex:0] addObject:cellInfo];
+        }
     }
     
-    [contentList addObject:[[NSMutableArray alloc] init]];
     [contentList addObject:allPlacesList];
     [placesTableView reloadData];
     placesTableView.backgroundColor = [UIColor clearColor];
@@ -220,7 +185,7 @@
     //searchPlacesController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     //[self presentModalViewController:searchPlacesController animated:YES];
     //searchPlacesController.mapViewController = mapViewController;
-    searchPlacesController.venuesResponse = venuesResponse;
+    //FIXME: searchPlacesController.venuesResponse = venuesResponse;
     searchPlacesController.dashController = dashboardController;
     [self.navigationController pushViewController:searchPlacesController animated:YES];
     [searchPlacesController release];
