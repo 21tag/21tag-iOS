@@ -104,6 +104,8 @@
 		D99D0BBD13BBB35300D27E58 /* search_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D99D0BBB13BBB35300D27E58 /* search_button@2x.png */; };
 		D99D0BC113BBB44B00D27E58 /* SearchPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D99D0BBF13BBB44600D27E58 /* SearchPlacesViewController.m */; };
 		D99D0BC213BBB44B00D27E58 /* SearchPlacesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D99D0BC013BBB44A00D27E58 /* SearchPlacesViewController.xib */; };
+		D9AF6E0414086DE9009F79DE /* 114px---iPhone4-home-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = D9AF6E0314086DE9009F79DE /* 114px---iPhone4-home-screen.png */; };
+		D9AF6E0614086DF2009F79DE /* 57px---iPhone-home-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = D9AF6E0514086DF2009F79DE /* 57px---iPhone-home-screen.png */; };
 		D9B898A613B19CDA00A632AD /* NewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B898A413B19CDA00A632AD /* NewTeamViewController.m */; };
 		D9B898A713B19CDA00A632AD /* NewTeamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9B898A513B19CDA00A632AD /* NewTeamViewController.xib */; };
 		D9B898AA13B19E0E00A632AD /* new_team_form.png in Resources */ = {isa = PBXBuildFile; fileRef = D9B898A813B19E0E00A632AD /* new_team_form.png */; };
@@ -344,6 +346,8 @@
 		D99D0BBE13BBB44600D27E58 /* SearchPlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SearchPlacesViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D99D0BBF13BBB44600D27E58 /* SearchPlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SearchPlacesViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D99D0BC013BBB44A00D27E58 /* SearchPlacesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPlacesViewController.xib; sourceTree = "<group>"; };
+		D9AF6E0314086DE9009F79DE /* 114px---iPhone4-home-screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "114px---iPhone4-home-screen.png"; sourceTree = "<group>"; };
+		D9AF6E0514086DF2009F79DE /* 57px---iPhone-home-screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "57px---iPhone-home-screen.png"; sourceTree = "<group>"; };
 		D9B898A313B19CDA00A632AD /* NewTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NewTeamViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D9B898A413B19CDA00A632AD /* NewTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NewTeamViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D9B898A513B19CDA00A632AD /* NewTeamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewTeamViewController.xib; sourceTree = "<group>"; };
@@ -711,6 +715,8 @@
 		D9D2F9FB13AEC81600048670 = {
 			isa = PBXGroup;
 			children = (
+				D9AF6E0514086DF2009F79DE /* 57px---iPhone-home-screen.png */,
+				D9AF6E0314086DE9009F79DE /* 114px---iPhone4-home-screen.png */,
 				D91F659F13EB5D0100727188 /* MBProgressHUD */,
 				D9F588B513C37FEF00FA88BD /* API */,
 				D9F5888313C379CB00FA88BD /* facebook-ios-sdk */,
@@ -1128,6 +1134,8 @@
 				D944750E1406C9F500AE9A34 /* leave_team_button_pressed.png in Resources */,
 				D944750F1406C9F500AE9A34 /* leave_team_button_pressed@2x.png in Resources */,
 				D94475101406C9F500AE9A34 /* leave_team_button@2x.png in Resources */,
+				D9AF6E0414086DE9009F79DE /* 114px---iPhone4-home-screen.png in Resources */,
+				D9AF6E0614086DF2009F79DE /* 57px---iPhone-home-screen.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
