@@ -51,6 +51,22 @@
     [saveButton release];
     
     navBar.tintColor = [UIColor colorWithRed:0.015686274509804f green:0.615686274509804f blue:0.749019607843137 alpha:1.0];
+    
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *background = [defaults objectForKey:@"use_background_location"];
+    
+    if(background)
+    {
+        if([background boolValue])
+        {
+            [backgroundSwitch setOn:YES];
+        }
+        else
+        {
+            [backgroundSwitch setOn:NO];
+        }
+    }
 }
 
 - (void)viewDidUnload
