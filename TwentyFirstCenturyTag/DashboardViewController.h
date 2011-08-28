@@ -50,7 +50,9 @@
 @property (nonatomic, retain) NSDate *checkinTime;
 
 
+- (void)setupButtons;
 - (void)checkinPressed;
+- (void)settingsPressed;
 - (void) checkinUpdate:(NSTimer *) timer;
 - (void) updateDashboard:(NSTimer *) timer;
 - (void) viewCurrentVenue;

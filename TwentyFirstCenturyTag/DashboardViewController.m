@@ -502,20 +502,8 @@
     
     [facebook requestWithGraphPath:@"me" andDelegate:self];
 
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *buttonImage = [UIImage imageNamed:@"checkin_button.png"];
-    UIImage *buttonImagePressed = [UIImage imageNamed:@"checkin_button_pressed.png"];
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
-    CGRect buttonFrame = [button frame];
-    buttonFrame.size.width = buttonImage.size.width;
-    buttonFrame.size.height = buttonImage.size.height;
-    [button setFrame:buttonFrame];
-    [button addTarget:self action:@selector(checkinPressed) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    self.navigationItem.rightBarButtonItem = checkinButton;
+    [self setupButtons];
+
     self.title = @"21st Century Tag";
     
     contentList = [[NSMutableArray alloc] init];
@@ -562,6 +550,37 @@
     [HUD show:YES];
 }
 
+-(void)setupButtons
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *buttonImage = [UIImage imageNamed:@"checkin_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"checkin_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    CGRect buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(checkinPressed) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];    
+    self.navigationItem.rightBarButtonItem = checkinButton;
+    [button release];
+
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonImage = [UIImage imageNamed:@"settings_button.png"];
+    buttonImagePressed = [UIImage imageNamed:@"settings_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(settingsPressed) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:button];    
+    self.navigationItem.leftBarButtonItem = settingsButton;
+    [button release];
+}
+
 - (void)checkinPressed
 {
     MapViewController *mapController = [[MapViewController alloc] init];
@@ -569,6 +588,11 @@
     mapController.dashboardController = self;
     [self.navigationController pushViewController:mapController animated:YES];
     [mapController release];
+}
+
+- (void)settingsPressed
+{
+    
 }
 
 - (void) viewCurrentVenue
@@ -615,11 +639,7 @@
     {
         if(indexPath.row == 0) // Map and Activity
         {
-            MapViewController *mapController = [[MapViewController alloc] init];
-            //mapController.user = user;
-            mapController.dashboardController = self;
-            [self.navigationController pushViewController:mapController animated:YES];
-            [mapController release];
+            [self checkinPressed];
         }
         else if(indexPath.row == 1) // Your Vault
         {
