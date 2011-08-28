@@ -370,6 +370,7 @@
             {
                 [contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:@"Not Checked In"]];
                 [navigationTableView reloadData];
+                nameLabel.text = @"Not Checked In";
             }
             
             locationFinishedLoading = YES;
@@ -463,12 +464,14 @@
             NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenNow:[[NSDate date] timeIntervalSince1970] then:[checkinTime timeIntervalSince1970]];
             
             cell.detailTextLabel.text = timeString;
+            nameLabel.text = @"Currently Checked In";
         }
         else if(user.currentVenueTime)
         {
             NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenNow:[[NSDate date] timeIntervalSince1970] then:user.currentVenueTime];
             
             cell.detailTextLabel.text = [NSString stringWithFormat:@"Last checked in: %@ ago",timeString];
+            nameLabel.text = @"Not Checked In";
         }
     }
     
@@ -508,7 +511,7 @@
     self.title = @"21st Century Tag";
     
     contentList = [[NSMutableArray alloc] init];
-    NSArray *checkedInLocation = [NSArray arrayWithObject:@"Some Place"];
+    NSArray *checkedInLocation = [NSArray arrayWithObject:@"Loading..."];
     
     [contentList addObject:checkedInLocation];
     
@@ -604,13 +607,6 @@
     {
         //placeDetailsController
         //		return handleResponse(httpGet(HOST+"/getpoidetails?"+(poi != null ? "poi="+poi : "") +(ses != null ? (poi != null ? "&" : "") + "ses="+ses : "")), new POIDetailResp());
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        [request addPostValue:user.currentVenueId forKey:@"poi"];
-        [request setDelegate:self];
-        [request setTag:3];
-        [request startAsynchronous];
-        
         HUD = [[MBProgressHUD alloc] initWithView:self.view];
         [self.view addSubview:HUD];
         
@@ -619,6 +615,12 @@
         
         [HUD show:YES];
         
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request addPostValue:user.currentVenueId forKey:@"poi"];
+        [request setDelegate:self];
+        [request setTag:3];
+        [request startAsynchronous];
     }
     else
     {
