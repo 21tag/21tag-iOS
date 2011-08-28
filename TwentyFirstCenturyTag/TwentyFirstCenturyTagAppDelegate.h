@@ -28,4 +28,6 @@
 
 -(void)didUpdateToLocation:(CLLocation*)location;
 
+-(void)setIfUsingBackgroundLocation;
+
 @end

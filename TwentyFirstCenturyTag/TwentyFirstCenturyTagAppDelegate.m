@@ -146,6 +146,7 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    [self setIfUsingBackgroundLocation];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -169,6 +170,22 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+    [self setIfUsingBackgroundLocation];
+}
+
+-(void)setIfUsingBackgroundLocation
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *background = [defaults objectForKey:@"use_background_location"];
+    
+    if(background)
+    {
+        if(![background boolValue]) // don't update location in background
+        {
+            LocationController *locController = [LocationController sharedInstance];
+            [locController.locationManager stopUpdatingLocation];
+        }
+    }
 }
 
 -(void)didUpdateToLocation:(CLLocation*)location

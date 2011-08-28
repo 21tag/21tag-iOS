@@ -19,6 +19,7 @@
 #import "JoinTeamViewController.h"
 #import "POIDetailResp.h"
 #import "TwentyFirstCenturyTagAppDelegate.h"
+#import "SettingsViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -564,7 +565,7 @@
     [button addTarget:self action:@selector(checkinPressed) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];    
     self.navigationItem.rightBarButtonItem = checkinButton;
-    [button release];
+    [checkinButton release];
 
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonImage = [UIImage imageNamed:@"settings_button.png"];
@@ -578,7 +579,7 @@
     [button addTarget:self action:@selector(settingsPressed) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:button];    
     self.navigationItem.leftBarButtonItem = settingsButton;
-    [button release];
+    [settingsButton release];
 }
 
 - (void)checkinPressed
@@ -592,7 +593,9 @@
 
 - (void)settingsPressed
 {
-    
+    SettingsViewController *settingsController = [[SettingsViewController alloc] init];
+    [self presentModalViewController:settingsController animated:YES];
+    [settingsController release];
 }
 
 - (void) viewCurrentVenue

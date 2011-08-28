@@ -190,6 +190,8 @@
 		D9DD2887140AF4D100D20A33 /* settings_button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DD2883140AF4D100D20A33 /* settings_button_pressed@2x.png */; };
 		D9DD2888140AF4D100D20A33 /* settings_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DD2884140AF4D100D20A33 /* settings_button.png */; };
 		D9DD2889140AF4D100D20A33 /* settings_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DD2885140AF4D100D20A33 /* settings_button@2x.png */; };
+		D9DD288D140AF8B000D20A33 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9DD288B140AF8B000D20A33 /* SettingsViewController.m */; };
+		D9DD288E140AF8B000D20A33 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9DD288C140AF8B000D20A33 /* SettingsViewController.xib */; };
 		D9E56E3A13C6793E00EC6123 /* SearchAllTeamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E56E3813C6793E00EC6123 /* SearchAllTeamsViewController.m */; };
 		D9E56E3B13C6793E00EC6123 /* SearchAllTeamsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9E56E3913C6793E00EC6123 /* SearchAllTeamsViewController.xib */; };
 		D9E56E3E13C6877500EC6123 /* TeamsResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E56E3D13C6877500EC6123 /* TeamsResp.m */; };
@@ -453,6 +455,9 @@
 		D9DD2883140AF4D100D20A33 /* settings_button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings_button_pressed@2x.png"; sourceTree = "<group>"; };
 		D9DD2884140AF4D100D20A33 /* settings_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_button.png; sourceTree = "<group>"; };
 		D9DD2885140AF4D100D20A33 /* settings_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings_button@2x.png"; sourceTree = "<group>"; };
+		D9DD288A140AF8AF00D20A33 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		D9DD288B140AF8B000D20A33 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		D9DD288C140AF8B000D20A33 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		D9E56E3713C6793E00EC6123 /* SearchAllTeamsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SearchAllTeamsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D9E56E3813C6793E00EC6123 /* SearchAllTeamsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SearchAllTeamsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D9E56E3913C6793E00EC6123 /* SearchAllTeamsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchAllTeamsViewController.xib; sourceTree = "<group>"; };
@@ -796,6 +801,8 @@
 				D9D2FA1A13AEC81600048670 /* TwentyFirstCenturyTagAppDelegate.m */,
 				D9BB8BAD13AFF045001A7A28 /* DashboardViewController.h */,
 				D9BB8BAE13AFF045001A7A28 /* DashboardViewController.m */,
+				D9DD288A140AF8AF00D20A33 /* SettingsViewController.h */,
+				D9DD288B140AF8B000D20A33 /* SettingsViewController.m */,
 				D987AF2D13B3C22C00855AC5 /* AllPlacesViewController.h */,
 				D987AF2E13B3C22C00855AC5 /* AllPlacesViewController.m */,
 				D99D0BBE13BBB44600D27E58 /* SearchPlacesViewController.h */,
@@ -835,6 +842,7 @@
 				D9C9BB4413B0235E008A7B90 /* Buttons */,
 				D9174F5213B15E5B00600189 /* Images */,
 				D99D0BC013BBB44A00D27E58 /* SearchPlacesViewController.xib */,
+				D9DD288C140AF8B000D20A33 /* SettingsViewController.xib */,
 				D9E56E3913C6793E00EC6123 /* SearchAllTeamsViewController.xib */,
 				D99D0B8E13BB953C00D27E58 /* PlaceDetailsViewController.xib */,
 				D987AF2F13B3C22C00855AC5 /* AllPlacesViewController.xib */,
@@ -1157,6 +1165,7 @@
 				D9DD2887140AF4D100D20A33 /* settings_button_pressed@2x.png in Resources */,
 				D9DD2888140AF4D100D20A33 /* settings_button.png in Resources */,
 				D9DD2889140AF4D100D20A33 /* settings_button@2x.png in Resources */,
+				D9DD288E140AF8B000D20A33 /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1223,6 +1232,7 @@
 				D9211C5B13E0A3A80035F861 /* Events.m in Sources */,
 				D91F65E113EB5D0100727188 /* MBProgressHUD.m in Sources */,
 				D928498314098F0A00B3D8FD /* MultiPOIDetailResp.m in Sources */,
+				D9DD288D140AF8B000D20A33 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
