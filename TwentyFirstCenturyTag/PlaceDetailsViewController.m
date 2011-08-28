@@ -228,8 +228,11 @@
     
     [self setupButtons];
     
-    CGSize size = CGSizeMake(320.0f, 800.0f);
-    [detailsScrollView setContentSize:size];
+    //CGSize size = CGSizeMake(320.0f, 480.0f);
+    
+    //NSLog(@"\n\n%f,%f %f,%f %f,%f\n\n", detailsTableView.bounds.size.width, detailsTableView.bounds.size.height, detailsTableView.contentOffset.x, detailsTableView.contentOffset.y, detailsTableView.contentSize.height, detailsTableView.contentSize.width);
+    
+    //[detailsScrollView setContentSize:size];
     
     placeNameLabel.text = venue.name;
     owningTeamNameLabel.text = poiResponse.owner.name;
