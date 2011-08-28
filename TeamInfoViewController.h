@@ -11,7 +11,7 @@
 #import "TeamsResp.h"
 #import "MBProgressHUD.h"
 
-@interface TeamInfoViewController : UIViewController  <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate>  {
+@interface TeamInfoViewController : UIViewController  <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, MBProgressHUDDelegate>  {
     
     UIImageView *teamImage;
     UILabel *teamNameLabel;
