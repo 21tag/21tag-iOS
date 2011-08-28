@@ -110,7 +110,10 @@
                 NSTimeInterval time = currentTime - currentVenueTime;
                 NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenNow:currentTime then:currentVenueTime];
                 
-                [cellInfo setObject:[NSString stringWithFormat:@"%@ %@ ago",user.currentVenueName,timeString] forKey:@"detailTextLabel"];
+                if(user.currentVenueName)
+                    [cellInfo setObject:[NSString stringWithFormat:@"%@ %@ ago",user.currentVenueName,timeString] forKey:@"detailTextLabel"];
+                else
+                    [cellInfo setObject:@"Inactive" forKey:@"detailTextLabel"];
                 [cellInfo setObject:[NSNumber numberWithDouble:time] forKey:@"time"];
                 [cellInfo setObject:user forKey:@"user"];
                 [userList addObject:cellInfo];
