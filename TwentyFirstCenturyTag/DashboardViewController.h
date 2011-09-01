@@ -48,6 +48,8 @@
 @property (nonatomic, retain) NSTimer *checkinTimer;
 @property (nonatomic, retain) CLLocation *currentLocation;
 @property (nonatomic, retain) NSDate *checkinTime;
+@property (nonatomic, retain) LocationController *locationController;
+
 
 
 - (void)setupButtons;

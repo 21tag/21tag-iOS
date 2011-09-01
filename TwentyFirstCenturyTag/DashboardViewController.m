@@ -35,6 +35,7 @@
 @synthesize currentVenue;
 @synthesize currentLocation;
 @synthesize checkinTime;
+@synthesize locationController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -122,6 +123,7 @@
                 [defaults setObject:[NSNumber numberWithBool:NO] forKey:@"send_distance_notification"];
 
             }
+            
         }
     }
     
@@ -552,6 +554,11 @@
     HUD.labelText = @"Loading";
 	
     [HUD show:YES];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [locationController.locationManager startUpdatingLocation];
 }
 
 -(void)setupButtons

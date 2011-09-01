@@ -241,6 +241,7 @@
 - (IBAction)locationButtonPressed:(id)sender 
 {
     //[locationController.locationManager startUpdatingLocation];
+    [dashboardController.locationController.locationManager startUpdatingLocation];
     
     //[self locationUpdate:nil];
     [self getVenues];

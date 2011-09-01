@@ -186,6 +186,12 @@
             [locController.locationManager stopUpdatingLocation];
         }
     }
+    
+    if([dashboardController.nameLabel.text isEqualToString:@"Not Checked In"])
+    {
+        LocationController *locController = [LocationController sharedInstance];
+        [locController.locationManager stopUpdatingLocation];
+    }
 }
 
 -(void)didUpdateToLocation:(CLLocation*)location
