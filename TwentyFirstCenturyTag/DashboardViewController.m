@@ -52,16 +52,24 @@
 {
     if(location)
     {
-        currentLocation = location;
-        [currentLocation retain];
+        if(location.horizontalAccuracy <= kCLLocationAccuracyHundredMeters)
+        {
+            NSLog(@"location update: %f, %f %f",location.coordinate.latitude,location.coordinate.longitude, location.horizontalAccuracy);
+            
+            [currentLocation release];
+            currentLocation = location;
+            [currentLocation retain];
+            
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"LocationUpdateNotification"
+             object:nil];
+        }
+        
+
+        
+        //NSLog(@"%f, %f, %f", kCLLocationAccuracyBest, kCLLocationAccuracyNearestTenMeters, kCLLocationAccuracyHundredMeters);
+
     }
-    
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"LocationUpdateNotification"
-     object:nil];
-    
-    //NSLog(@"location update: %f, %f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
-    
 
 }
 
@@ -82,50 +90,54 @@
     //200 feet = 60.96 meters
     //distanceToVenue = 0; // DEBUG value
     //NSLog(@"checkinUpdate");
-    if(distanceToVenue < 91.44)
+    if(currentLocation)
     {
-        if(fiveMinuteCounter == 5)
+        if(distanceToVenue < 91.44)
         {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
-            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-            [request setPostValue:[currentVenue getId] forKey:@"poi"];
-            [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
-            //[request setDelegate:self];
-            //[request setTag:1];
-            [request startAsynchronous];
-            NSLog(@"dashboard checkin");
-        }
-    }
-    else
-    {
-        //1 meter = 3.2808399 feet
-        
-        
-        
-        if(currentVenue.name)
-        {
-            int distanceInFeet = (int)(distanceToVenue * 3.2808399);
-            
-            [self checkout];
-                        
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            if([[defaults objectForKey:@"send_distance_notification"] boolValue])
+            if(fiveMinuteCounter == 5)
             {
-                UILocalNotification * theNotification = [[UILocalNotification alloc] init];
-                theNotification.alertBody = [NSString stringWithFormat:@"You are currently %d feet from %@. You must be within 300 feet to check in. You will be checked out automatically if you don't get closer and check-in again! You have one minute to return to the location and check-in again.",distanceInFeet,currentVenue.name];
-                theNotification.alertAction = @"Check-In";
-                
-                theNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
-                
-                [[UIApplication sharedApplication] scheduleLocalNotification:theNotification];
-                
-                [defaults setObject:[NSNumber numberWithBool:NO] forKey:@"send_distance_notification"];
-
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
+                ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+                [request setPostValue:[currentVenue getId] forKey:@"poi"];
+                [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+                //[request setDelegate:self];
+                //[request setTag:1];
+                [request startAsynchronous];
+                NSLog(@"dashboard checkin");
             }
+        }
+        else
+        {
+            //1 meter = 3.2808399 feet
             
+            
+            
+            if(currentVenue.name)
+            {
+                int distanceInFeet = (int)(distanceToVenue * 3.2808399);
+                
+                [self checkout];
+                
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                if([[defaults objectForKey:@"send_distance_notification"] boolValue])
+                {
+                    UILocalNotification * theNotification = [[UILocalNotification alloc] init];
+                    theNotification.alertBody = [NSString stringWithFormat:@"You are currently %d feet from %@. You must be within 300 feet to check in. You will be checked out automatically if you don't get closer and check-in again! You have one minute to return to the location and check-in again.",distanceInFeet,currentVenue.name];
+                    theNotification.alertAction = @"Check-In";
+                    
+                    theNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+                    
+                    [[UIApplication sharedApplication] scheduleLocalNotification:theNotification];
+                    
+                    [defaults setObject:[NSNumber numberWithBool:NO] forKey:@"send_distance_notification"];
+                    
+                }
+                
+            }
         }
     }
+    
     
     if(fiveMinuteCounter == 5)
         fiveMinuteCounter = 0;
