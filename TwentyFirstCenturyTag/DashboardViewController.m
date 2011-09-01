@@ -36,6 +36,8 @@
 @synthesize currentLocation;
 @synthesize checkinTime;
 @synthesize locationController;
+@synthesize checkinButton;
+@synthesize checkoutButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,7 +60,7 @@
      postNotificationName:@"LocationUpdateNotification"
      object:nil];
     
-    NSLog(@"location update: %f, %f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
+    //NSLog(@"location update: %f, %f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
     
 
 }
@@ -79,7 +81,7 @@
     CLLocationDistance distanceToVenue = [currentLocation distanceFromLocation:venueLocation];
     //200 feet = 60.96 meters
     //distanceToVenue = 0; // DEBUG value
-    NSLog(@"checkinUpdate");
+    //NSLog(@"checkinUpdate");
     if(distanceToVenue < 91.44)
     {
         if(fiveMinuteCounter == 5)
@@ -105,10 +107,8 @@
         {
             int distanceInFeet = (int)(distanceToVenue * 3.2808399);
             
-            [checkinTimer invalidate];
-            checkinTime = nil;
-            [navigationTableView reloadData];
-            
+            [self checkoutPressed];
+                        
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             if([[defaults objectForKey:@"send_distance_notification"] boolValue])
             {
@@ -558,7 +558,23 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    NSLog(@"view will appear");
     [locationController.locationManager startUpdatingLocation];
+    
+    if([nameLabel.text isEqualToString:@"Currently Checked In"])
+    {
+        NSLog(@"set checkout button");
+
+        self.navigationItem.rightBarButtonItem = checkoutButton;
+    }
+    else
+    {
+        NSLog(@"set checkin button");
+
+        self.navigationItem.rightBarButtonItem = checkinButton;
+    }
+    
+    [self.navigationController.navigationBar setNeedsDisplay];
 }
 
 -(void)setupButtons
@@ -573,9 +589,20 @@
     buttonFrame.size.height = buttonImage.size.height;
     [button setFrame:buttonFrame];
     [button addTarget:self action:@selector(checkinPressed) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];    
+    checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];    
     self.navigationItem.rightBarButtonItem = checkinButton;
-    [checkinButton release];
+    
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonImage = [UIImage imageNamed:@"checkout_button.png"];
+    buttonImagePressed = [UIImage imageNamed:@"checkout_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(checkoutPressed) forControlEvents:UIControlEventTouchUpInside];
+    checkoutButton = [[UIBarButtonItem alloc] initWithCustomView:button];    
 
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonImage = [UIImage imageNamed:@"settings_button.png"];
@@ -599,6 +626,26 @@
     mapController.dashboardController = self;
     [self.navigationController pushViewController:mapController animated:YES];
     [mapController release];
+}
+
+-(void)checkoutPressed
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Check Out" otherButtonTitles:nil];
+    [actionSheet showInView:self.view];
+    
+    [actionSheet release];    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.destructiveButtonIndex == buttonIndex)
+    {
+        [checkinTimer invalidate];
+        checkinTime = nil;
+        [navigationTableView reloadData];
+        
+        self.navigationItem.rightBarButtonItem = checkinButton;
+    }
 }
 
 - (void)settingsPressed

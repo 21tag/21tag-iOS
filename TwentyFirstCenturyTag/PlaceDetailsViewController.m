@@ -75,6 +75,7 @@
     {
         NSLog(@"update user after checkin: %@",[request responseString]);
         
+        [HUD hide:YES];
         
         dashboardController.user = [[User alloc] initWithData:[request responseData]];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checked In" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Cool!", nil];
@@ -89,6 +90,21 @@
         
         [dashboardController.contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:dashboardController.user.currentVenueName]];
         [dashboardController.navigationTableView reloadData];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+        [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"send_distance_notification"];
+        
+        if(dashboardController.checkinTimer)
+        {
+            [dashboardController.checkinTimer invalidate];
+            dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
+        }
+        else
+            dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
+        dashboardController.currentVenue = poiResponse.poi;
+        dashboardController.checkinTime = [[NSDate date] retain];
+        dashboardController.nameLabel.text = @"Currently Checked In";
+        dashboardController.navigationItem.rightBarButtonItem = dashboardController.checkoutButton;
 
     }
     else if(request.tag == 3)
@@ -280,6 +296,14 @@
     //distanceToVenue = 0; // DEBUG value
     if(distanceToVenue < 91.44 && dashboardController.currentLocation)
     {
+        HUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:HUD];
+        
+        HUD.delegate = self;
+        HUD.labelText = @"Checking In...";
+        
+        [HUD show:YES];
+        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
@@ -288,18 +312,6 @@
         [request setDelegate:self];
         [request setTag:1];
         [request startAsynchronous];
-        
-        [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"send_distance_notification"];
-        
-        if(dashboardController.checkinTimer)
-        {
-            [dashboardController.checkinTimer invalidate];
-            dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
-        }
-        else
-            dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
-        dashboardController.currentVenue = poiResponse.poi;
-        dashboardController.checkinTime = [[NSDate date] retain];
     }
     else
     {
@@ -367,6 +379,16 @@
     cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     
 	return cell;
+}
+
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
 }
 
 @end

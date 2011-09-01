@@ -198,7 +198,7 @@
 {
     [dashboardController locationUpdate:location];
     [dashboardController checkinUpdate:nil];
-    NSLog(@"Background location update");
+    //NSLog(@"Background location update");
 }
 
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification

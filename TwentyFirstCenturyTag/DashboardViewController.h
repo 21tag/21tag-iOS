@@ -12,7 +12,7 @@
 #import "LocationController.h"
 #import "MBProgressHUD.h"
 
-@interface DashboardViewController : UIViewController <FBRequestDelegate, UITableViewDelegate, UITableViewDataSource, LocationControllerDelegate, MBProgressHUDDelegate, UIAlertViewDelegate> {
+@interface DashboardViewController : UIViewController <FBRequestDelegate, UITableViewDelegate, UITableViewDataSource, LocationControllerDelegate, MBProgressHUDDelegate, UIAlertViewDelegate, UIActionSheetDelegate> {
     
     NSMutableArray *contentList;
     UILabel *nameLabel;
@@ -50,6 +50,9 @@
 @property (nonatomic, retain) NSDate *checkinTime;
 @property (nonatomic, retain) LocationController *locationController;
 
+@property (nonatomic, retain) UIBarButtonItem *checkinButton;
+@property (nonatomic, retain) UIBarButtonItem *checkoutButton;
+
 
 
 - (void)setupButtons;
@@ -58,6 +61,7 @@
 - (void) checkinUpdate:(NSTimer *) timer;
 - (void) updateDashboard:(NSTimer *) timer;
 - (void) viewCurrentVenue;
+- (void)checkoutPressed;
 
 
 @end

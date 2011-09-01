@@ -11,8 +11,9 @@
 #import "MapViewController.h"
 #import "POIDetailResp.h"
 #import "Events.h"
+#import "MBProgressHUD.h"
 
-@interface PlaceDetailsViewController : UIViewController <UITableViewDataSource> {
+@interface PlaceDetailsViewController : UIViewController <UITableViewDataSource, MBProgressHUDDelegate> {
     
     UIScrollView *detailsScrollView;
     UIImageView *detailsImageView;
@@ -32,6 +33,8 @@
     DashboardViewController *dashboardController;
     
     Events *eventsResponse;
+    
+    MBProgressHUD *HUD;
 }
 @property (nonatomic, retain) IBOutlet UIScrollView *detailsScrollView;
 @property (nonatomic, retain) IBOutlet UIImageView *detailsImageView;
