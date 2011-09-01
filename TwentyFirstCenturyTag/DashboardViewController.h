@@ -61,7 +61,8 @@
 - (void) checkinUpdate:(NSTimer *) timer;
 - (void) updateDashboard:(NSTimer *) timer;
 - (void) viewCurrentVenue;
-- (void)checkoutPressed;
+- (void)checkout;
+- (void)checkoutButtonPressed;
 
 
 @end

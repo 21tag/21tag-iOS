@@ -107,7 +107,7 @@
         {
             int distanceInFeet = (int)(distanceToVenue * 3.2808399);
             
-            [self checkoutPressed];
+            [self checkout];
                         
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             if([[defaults objectForKey:@"send_distance_notification"] boolValue])
@@ -390,6 +390,9 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
     [alert release];
+    
+    if(HUD)
+        [HUD hide:YES];
 }
 
 /**
@@ -601,7 +604,7 @@
     buttonFrame.size.width = buttonImage.size.width;
     buttonFrame.size.height = buttonImage.size.height;
     [button setFrame:buttonFrame];
-    [button addTarget:self action:@selector(checkoutPressed) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(checkoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     checkoutButton = [[UIBarButtonItem alloc] initWithCustomView:button];    
 
     button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -628,23 +631,30 @@
     [mapController release];
 }
 
--(void)checkoutPressed
+-(void)checkout
 {
+    [checkinTimer invalidate];
+    checkinTime = nil;
+    [navigationTableView reloadData];
+    
+    self.navigationItem.rightBarButtonItem = checkinButton;
+  
+}
+
+-(void)checkoutButtonPressed
+{
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Check Out" otherButtonTitles:nil];
     [actionSheet showInView:self.view];
     
-    [actionSheet release];    
+    [actionSheet release];  
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(actionSheet.destructiveButtonIndex == buttonIndex)
     {
-        [checkinTimer invalidate];
-        checkinTime = nil;
-        [navigationTableView reloadData];
-        
-        self.navigationItem.rightBarButtonItem = checkinButton;
+        [self checkout];
     }
 }
 
