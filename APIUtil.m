@@ -43,4 +43,14 @@
     return timeString;
 }
 
++(CLLocationDistance)minDistanceMeters
+{
+    return [[self class] minDistanceFeet] * 0.3048;
+}
+
++(int)minDistanceFeet
+{
+    return 400;
+}
+
 @end

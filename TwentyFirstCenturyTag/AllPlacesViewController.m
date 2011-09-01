@@ -132,7 +132,7 @@
         [cellInfo setObject:poiResp forKey:@"poiResponse"];
         [allPlacesList addObject:cellInfo];
         
-        if([[poiResp.poi getLocation] distanceFromLocation:dashboardController.currentLocation] < 91.44)
+        if([[poiResp.poi getLocation] distanceFromLocation:dashboardController.currentLocation] <= [APIUtil minDistanceMeters])
         {
             [[contentList objectAtIndex:0] addObject:cellInfo];
         }

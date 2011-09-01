@@ -17,6 +17,8 @@
 
 +(NSString*) host;
 +(NSString*)stringWithTimeDifferenceBetweenNow:(NSTimeInterval)now then:(NSTimeInterval)then;
++(CLLocationDistance)minDistanceMeters;
++(int)minDistanceFeet;
 
 
 @end

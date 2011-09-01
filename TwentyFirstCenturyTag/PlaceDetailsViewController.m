@@ -296,7 +296,7 @@
     //distanceToVenue = 0; // DEBUG value
     if(dashboardController.currentLocation)
     {
-        if(distanceToVenue < 91.44)
+        if(distanceToVenue <= [APIUtil minDistanceMeters])
         {
             HUD = [[MBProgressHUD alloc] initWithView:self.view];
             [self.view addSubview:HUD];
@@ -319,7 +319,7 @@
         {
             //1 meter = 3.2808399 feet
             int distanceInFeet = (int)(distanceToVenue * 3.2808399);
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Too Far" message:[NSString stringWithFormat:@"You are currently %d feet from this location. You must be within 300 feet to check in. Try getting closer!",distanceInFeet] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Too Far" message:[NSString stringWithFormat:@"You are currently %d feet from this location. You must be within %d feet to check in. Try getting closer!",distanceInFeet, [APIUtil minDistanceFeet]] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             [alert show];
             [alert release];
         }
