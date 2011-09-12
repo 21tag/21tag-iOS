@@ -138,7 +138,7 @@
 
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"";
+    return @"Teams - Top 10";
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -154,10 +154,11 @@
     int points = [[teamData objectForKey:@"points"] intValue];
     
     NSString *textLabel = [NSString stringWithFormat:@"%d. %@",indexPath.row+1,teamName];
-    NSString *detailTextLabel = [NSString stringWithFormat:@"%d points",points];
+    NSString *detailTextLabel = [NSString stringWithFormat:@"     %d points",points];
     
     cell.textLabel.text = textLabel;
     cell.detailTextLabel.text = detailTextLabel;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
