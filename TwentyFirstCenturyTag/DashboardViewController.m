@@ -750,6 +750,7 @@
         else    // Game Standings
         {
             NetworkRankingsViewController *networkRankingsController = [[NetworkRankingsViewController alloc] init];
+            networkRankingsController.dashboardController = self;
             [self.navigationController pushViewController:networkRankingsController animated:YES];
             [networkRankingsController release];
         }

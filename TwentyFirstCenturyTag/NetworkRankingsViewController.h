@@ -7,11 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StandingsResp.h"
+#import "MBProgressHUD.h"
+#import "DashboardViewController.h"
 
-
-@interface NetworkRankingsViewController : UIViewController {
-    
+@interface NetworkRankingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate>
+{
+    StandingsResp *standingsResponse;
+    MBProgressHUD *HUD;
+    NSArray *standingsArray;
 }
+@property (retain, nonatomic) IBOutlet UITableView *standingsTableView;
+@property (nonatomic, retain) DashboardViewController *dashboardController;
 
 -(void)backButtonPressed;
 @end

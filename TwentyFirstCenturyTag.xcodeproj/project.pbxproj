@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D902D32C141EA91500AA3479 /* StandingsResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D902D32B141EA91500AA3479 /* StandingsResp.m */; };
 		D91F65E113EB5D0100727188 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D91F65C813EB5D0100727188 /* MBProgressHUD.m */; };
 		D9211C5813E0A16F0035F861 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = D9211C5713E0A16F0035F861 /* Event.m */; };
 		D9211C5B13E0A3A80035F861 /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = D9211C5A13E0A3A80035F861 /* Events.m */; };
@@ -235,6 +236,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D902D32A141EA91500AA3479 /* StandingsResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandingsResp.h; sourceTree = "<group>"; };
+		D902D32B141EA91500AA3479 /* StandingsResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StandingsResp.m; sourceTree = "<group>"; };
 		D91F65C713EB5D0100727188 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		D91F65C813EB5D0100727188 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		D9211C5613E0A16F0035F861 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
@@ -964,6 +967,8 @@
 				D9211C5713E0A16F0035F861 /* Event.m */,
 				D9211C5913E0A3A80035F861 /* Events.h */,
 				D9211C5A13E0A3A80035F861 /* Events.m */,
+				D902D32A141EA91500AA3479 /* StandingsResp.h */,
+				D902D32B141EA91500AA3479 /* StandingsResp.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1249,6 +1254,7 @@
 				D91F65E113EB5D0100727188 /* MBProgressHUD.m in Sources */,
 				D928498314098F0A00B3D8FD /* MultiPOIDetailResp.m in Sources */,
 				D9DD288D140AF8B000D20A33 /* SettingsViewController.m in Sources */,
+				D902D32C141EA91500AA3479 /* StandingsResp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
