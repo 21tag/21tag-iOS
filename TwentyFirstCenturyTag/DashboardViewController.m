@@ -54,7 +54,7 @@
     {
         if(location.horizontalAccuracy <= kCLLocationAccuracyHundredMeters)
         {
-            NSLog(@"location update: %f, %f %f",location.coordinate.latitude,location.coordinate.longitude, location.horizontalAccuracy);
+            //NSLog(@"location update: %f, %f %f",location.coordinate.latitude,location.coordinate.longitude, location.horizontalAccuracy);
             
             [currentLocation release];
             currentLocation = location;
@@ -123,7 +123,24 @@
                 if([[defaults objectForKey:@"send_distance_notification"] boolValue])
                 {
                     UILocalNotification * theNotification = [[UILocalNotification alloc] init];
-                    theNotification.alertBody = [NSString stringWithFormat:@"You are currently %d feet from %@. You must be within %d to check in. You will be checked out automatically if you don't get closer and check-in again! You have one minute to return to the location and check-in again.",distanceInFeet,currentVenue.name, [APIUtil minDistanceFeet]];
+                    NSDate *currentTime = [NSDate date];
+                    NSDate *lastCheckinTime = [defaults objectForKey:@"checkin_time"];
+
+                    int points = 0;
+
+                    if(lastCheckinTime)
+                    {
+                        NSTimeInterval deltaTime = [currentTime timeIntervalSinceDate:lastCheckinTime];
+                        
+                        
+                        
+                        NSLog(@"checkinTime: %f", deltaTime);
+                        
+                        points = (int) (deltaTime / 60);
+                    }
+                    
+                    
+                    theNotification.alertBody = [NSString stringWithFormat:@"Congratulations, you have earned %d points. Now that you are %d feet from %@ you will be checked out if you do not get back within %d feet and check in this minute.",points,distanceInFeet,currentVenue.name, [APIUtil minDistanceFeet]];
                     theNotification.alertAction = @"Check-In";
                     
                     theNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];

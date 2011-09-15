@@ -93,6 +93,7 @@
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
         [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"send_distance_notification"];
+        [defaults setObject:[NSDate date] forKey:@"checkin_time"];
         
         if(dashboardController.checkinTimer)
         {
@@ -102,7 +103,7 @@
         else
             dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
         dashboardController.currentVenue = poiResponse.poi;
-        dashboardController.checkinTime = [[NSDate date] retain];
+        dashboardController.checkinTime = [NSDate date];
         dashboardController.nameLabel.text = @"Currently Checked In";
         dashboardController.navigationItem.rightBarButtonItem = dashboardController.checkoutButton;
 
