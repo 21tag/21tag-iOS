@@ -104,7 +104,7 @@
                 //[request setDelegate:self];
                 //[request setTag:1];
                 [request startAsynchronous];
-                NSLog(@"dashboard checkin");
+                //NSLog(@"dashboard checkin");
             }
         }
         else
@@ -593,7 +593,7 @@
     NSLog(@"view will appear");
     [locationController.locationManager startUpdatingLocation];
     
-    if([nameLabel.text isEqualToString:@"Currently Checked In"])
+    /*if([nameLabel.text isEqualToString:@"Currently Checked In"])
     {
         NSLog(@"set checkout button");
 
@@ -604,7 +604,7 @@
         NSLog(@"set checkin button");
 
         self.navigationItem.rightBarButtonItem = checkinButton;
-    }
+    }*/
     
     [self.navigationController.navigationBar setNeedsDisplay];
 }

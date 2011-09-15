@@ -13,7 +13,7 @@
 #import "Events.h"
 #import "MBProgressHUD.h"
 
-@interface PlaceDetailsViewController : UIViewController <UITableViewDataSource, MBProgressHUDDelegate> {
+@interface PlaceDetailsViewController : UIViewController <UITableViewDataSource, MBProgressHUDDelegate, UIActionSheetDelegate> {
     
     UIScrollView *detailsScrollView;
     UIImageView *detailsImageView;
@@ -53,8 +53,13 @@
 @property (nonatomic, retain) MapViewController *mapViewController;
 @property (nonatomic, retain) POIDetailResp *poiResponse;
 
+@property (nonatomic, retain) UIBarButtonItem *checkoutButton;
+@property (nonatomic, retain) UIBarButtonItem *checkinButton;
+
+
 -(void) setupButtons;
 -(void) backPressed;
 - (IBAction)checkinButtonPressed:(id)sender;
+-(void)checkoutButtonPressed;
 
 @end

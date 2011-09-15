@@ -28,6 +28,8 @@
 @synthesize dashboardController;
 @synthesize poiResponse;
 @synthesize mapViewController;
+@synthesize checkinButton;
+@synthesize checkoutButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,6 +53,8 @@
     [owningTeamPointsLabel release];
     [detailsTableView release];
     [contentList release];
+    [checkoutButton release];
+    [checkinButton release];
     [super dealloc];
 }
 
@@ -106,6 +110,7 @@
         dashboardController.checkinTime = [NSDate date];
         dashboardController.nameLabel.text = @"Currently Checked In";
         dashboardController.navigationItem.rightBarButtonItem = dashboardController.checkoutButton;
+        self.navigationItem.rightBarButtonItem = checkoutButton;
 
     }
     else if(request.tag == 3)
@@ -147,6 +152,23 @@
         [detailsTableView reloadData];
     }
             
+}
+
+-(void)checkoutButtonPressed
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Check Out" otherButtonTitles:nil];
+    [actionSheet showInView:self.view];
+    [actionSheet release];  
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.destructiveButtonIndex == buttonIndex)
+    {
+        [dashboardController checkout];
+        
+        self.navigationItem.rightBarButtonItem = checkinButton;
+    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -218,11 +240,25 @@
     [button setFrame:buttonFrame];
     [button addTarget:self action:@selector(checkinButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    checkinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
-    self.navigationItem.rightBarButtonItem = checkinButton;
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonImage = [UIImage imageNamed:@"checkout_button.png"];
+    buttonImagePressed = [UIImage imageNamed:@"checkout_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(checkoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    [checkinButton release];
+    checkoutButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+
+    if([dashboardController.nameLabel.text isEqualToString:@"Currently Checked In"])
+        self.navigationItem.rightBarButtonItem = checkoutButton;
+    else
+        self.navigationItem.rightBarButtonItem = checkinButton;    
 }
 
 #pragma mark - View lifecycle
