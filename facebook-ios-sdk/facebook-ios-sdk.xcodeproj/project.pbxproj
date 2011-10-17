@@ -249,6 +249,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = facebook_ios_sdk;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv6 armv7 i386";
 			};
 			name = Debug;
 		};
@@ -264,6 +265,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = facebook_ios_sdk;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv6 armv7 i386";
 			};
 			name = Release;
 		};

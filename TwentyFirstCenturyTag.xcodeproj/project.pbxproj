@@ -25,6 +25,7 @@
 		D9514E3D13C54962005A652D /* no_found_teams@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9514E3B13C54962005A652D /* no_found_teams@2x.png */; };
 		D9514E4013C54E4E005A652D /* loading_teams.png in Resources */ = {isa = PBXBuildFile; fileRef = D9514E3E13C54E4E005A652D /* loading_teams.png */; };
 		D9514E4113C54E4E005A652D /* loading_teams@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9514E3F13C54E4E005A652D /* loading_teams@2x.png */; };
+		D95F731B142A9BDA00AA6994 /* 512px---high-resolution.png in Resources */ = {isa = PBXBuildFile; fileRef = D95F731A142A9BDA00AA6994 /* 512px---high-resolution.png */; };
 		D97A5BD513B106A100D3FFFA /* campus_request_form.png in Resources */ = {isa = PBXBuildFile; fileRef = D97A5BD313B106A100D3FFFA /* campus_request_form.png */; };
 		D97A5BD613B106A100D3FFFA /* campus_request_form@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D97A5BD413B106A100D3FFFA /* campus_request_form@2x.png */; };
 		D97A5BDD13B107C700D3FFFA /* campus_send_request_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D97A5BDB13B107C700D3FFFA /* campus_send_request_button.png */; };
@@ -261,6 +262,7 @@
 		D9514E3B13C54962005A652D /* no_found_teams@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_found_teams@2x.png"; sourceTree = "<group>"; };
 		D9514E3E13C54E4E005A652D /* loading_teams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_teams.png; sourceTree = "<group>"; };
 		D9514E3F13C54E4E005A652D /* loading_teams@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading_teams@2x.png"; sourceTree = "<group>"; };
+		D95F731A142A9BDA00AA6994 /* 512px---high-resolution.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "512px---high-resolution.png"; path = "finalsizedicons/512px---high-resolution.png"; sourceTree = SOURCE_ROOT; };
 		D97A5BD313B106A100D3FFFA /* campus_request_form.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = campus_request_form.png; sourceTree = "<group>"; };
 		D97A5BD413B106A100D3FFFA /* campus_request_form@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "campus_request_form@2x.png"; sourceTree = "<group>"; };
 		D97A5BDB13B107C700D3FFFA /* campus_send_request_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = campus_send_request_button.png; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 		D9174F5213B15E5B00600189 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D95F731A142A9BDA00AA6994 /* 512px---high-resolution.png */,
 				D9C9405B1406C5390066B752 /* Default@2x.png */,
 				D9C940591406C5280066B752 /* Default.png */,
 				D925BED213BD62B300B515DE /* Dashboard */,
@@ -1187,6 +1190,7 @@
 				D9ACB1191410176100A03A4E /* checkout_button_pressed@2x.png in Resources */,
 				D9ACB11A1410176100A03A4E /* checkout_button.png in Resources */,
 				D9ACB11B1410176100A03A4E /* checkout_button@2x.png in Resources */,
+				D95F731B142A9BDA00AA6994 /* 512px---high-resolution.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1328,7 +1332,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Magliozzi (VYEHVU8675)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1337,7 +1341,8 @@
 				INFOPLIST_FILE = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "21 Tag";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "19641A19-F045-4D0A-9A40-72140EB953AD";
+				VALID_ARCHS = "armv6 armv7 i386";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1350,7 +1355,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Magliozzi (VYEHVU8675)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Prefix.pch";
@@ -1358,8 +1363,9 @@
 				INFOPLIST_FILE = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "21 Tag";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "19641A19-F045-4D0A-9A40-72140EB953AD";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv6 armv7 i386";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

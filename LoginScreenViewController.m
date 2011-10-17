@@ -104,11 +104,9 @@
 
 - (IBAction)loginPressed:(id)sender 
 {
-    TwentyFirstCenturyTagAppDelegate *delegate = (TwentyFirstCenturyTagAppDelegate*)[[UIApplication sharedApplication] delegate];
-
     NSArray* permissions =  [NSArray arrayWithObjects:@"email",@"offline_access",nil];    
-
-    [facebook authorize:permissions delegate:delegate];
+        
+    [facebook authorize:permissions];
 }
 
 - (IBAction)pageChanged:(id)sender {

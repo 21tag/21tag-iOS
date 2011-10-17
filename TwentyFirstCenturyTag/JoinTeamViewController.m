@@ -231,7 +231,7 @@
     }
     else
     {
-        cell.imageView.image = [UIImage imageNamed:@"team_icon_placeholder.png"];
+        cell.imageView.image = [UIImage imageNamed:@"512px---high-resolution.png"];
         cell.textLabel.font = [UIFont boldSystemFontOfSize:17.0f];      
         cell.textLabel.textColor = [UIColor darkTextColor];
     }

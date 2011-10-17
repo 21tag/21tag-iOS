@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.TwentyFirstCenturyTag.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.21tag.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

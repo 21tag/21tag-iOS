@@ -11,7 +11,7 @@
 #import "TeamsResp.h"
 #import "MBProgressHUD.h"
 
-@interface TeamInfoViewController : UIViewController  <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, MBProgressHUDDelegate>  {
+@interface TeamInfoViewController : UIViewController  <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, MBProgressHUDDelegate, UIAlertViewDelegate>  {
     
     UIImageView *teamImage;
     UILabel *teamNameLabel;
@@ -41,6 +41,8 @@
     DashboardViewController *dashboardController;
     
     MBProgressHUD *HUD;
+    
+    BOOL isYourTeam;
 }
 @property (nonatomic, retain) IBOutlet UIImageView *teamImage;
 @property (nonatomic, retain) IBOutlet UILabel *teamNameLabel;
@@ -69,5 +71,11 @@
 - (void)backPressed;
 - (void)joinPressed;
 - (void)leavePressed;
+- (void)deleteFromTeam:(BOOL)switchingTeam;
+-(void)joinTeam;
+
+-(void)leaveTeamPostprocessing;
+
+-(void)switchTeams;
 
 @end

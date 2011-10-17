@@ -176,27 +176,8 @@
     else if(request.tag == 3) // leave team
     {
         NSLog(@"leave team: %@", [request responseString] );
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults removeObjectForKey:@"team_name"];
-        [defaults synchronize];
-        
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *buttonImage = [UIImage imageNamed:@"join_button.png"];
-        UIImage *buttonImagePressed = [UIImage imageNamed:@"join_button_pressed.png"];
-        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
-        CGRect buttonFrame = [button frame];
-        buttonFrame.size.width = buttonImage.size.width;
-        buttonFrame.size.height = buttonImage.size.height;
-        [button setFrame:buttonFrame];
-        [button addTarget:self action:@selector(joinPressed) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIBarButtonItem *joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-        
-        self.navigationItem.rightBarButtonItem = joinButton;
-        
-        [joinButton release];
 
+        [self leaveTeamPostprocessing];
     }
     else if(request.tag == 4) // location info
     {
@@ -216,49 +197,104 @@
         [placeDetailsController release];
         
     }
+    else if(request.tag == 5) // switch team
+    {
+        NSLog(@"switch team: %@", [request responseString] );
+        
+        [self leaveTeamPostprocessing];
+        
+        [self joinTeam];
+    }
+    
     if(HUD)
         [HUD hide:YES];
 }
 
-- (void)leavePressed
+-(void)leaveTeamPostprocessing
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure? You will leave your points behind and teammates will miss you!" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Leave Team" otherButtonTitles:nil];
-    [actionSheet showInView:self.view];
-    [actionSheet release];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"team_name"];
+    [defaults synchronize];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *buttonImage = [UIImage imageNamed:@"join_button.png"];
+    UIImage *buttonImagePressed = [UIImage imageNamed:@"join_button_pressed.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+    CGRect buttonFrame = [button frame];
+    buttonFrame.size.width = buttonImage.size.width;
+    buttonFrame.size.height = buttonImage.size.height;
+    [button setFrame:buttonFrame];
+    [button addTarget:self action:@selector(joinPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    self.navigationItem.rightBarButtonItem = joinButton;
+    
+    [joinButton release];
+
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if(actionSheet.destructiveButtonIndex == buttonIndex)
+    if(actionSheet.tag == 1) //leave
     {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/deletefromteam",[APIUtil host]]];
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        [request setPostValue:teamNameLabel.text forKey:@"team"];
-        [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
-        [request setDelegate:self];
-        [request setTag:3];
-        [request startAsynchronous];    
+        if(actionSheet.destructiveButtonIndex == buttonIndex)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you really sure you want to leave your current team?  All of your teammates will miss you so much." delegate:self cancelButtonTitle:@"Stay" otherButtonTitles:@"Leave", nil];
+            [alert setTag:1];
+            [alert show];
+            [alert release];
+        }
+    }
+    else if(actionSheet.tag == 2) //switch
+    {
+        if(actionSheet.destructiveButtonIndex == buttonIndex)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you really sure you want to leave your current team?  All of your teammates will miss you so much." delegate:self cancelButtonTitle:@"Stay" otherButtonTitles:@"Switch", nil];
+            [alert setTag:1];
+            [alert show];
+            [alert release];
+        }
     }
 }
 
-/*-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if(alertView.tag == 421)
+    if(alertView.tag == 1) //leave
     {
         if(buttonIndex == 1) // Leave team confirmation
         {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/deletefromteam",[APIUtil host]]];
-            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-            [request setPostValue:teamNameLabel.text forKey:@"team"];
-            [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
-            [request setDelegate:self];
-            [request setTag:3];
-            [request startAsynchronous];    
+            [self deleteFromTeam:NO];
+        }
+
+    }
+    else if(alertView.tag == 2) // switch
+    {
+        if(buttonIndex == 1) // switch team confirmation
+        {
+            [self deleteFromTeam:YES];
         }
     }
-}*/
+}
+
+- (void)deleteFromTeam:(BOOL)switchingTeam
+{
+    int tag = 3; // leaving team
+    if(switchingTeam)
+    {
+        tag = 5; //switching team
+    }
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/deletefromteam",[APIUtil host]]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:teamNameLabel.text forKey:@"team"];
+    [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+    [request setDelegate:self];
+    [request setTag:tag];
+    [request startAsynchronous]; 
+}
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
@@ -329,28 +365,74 @@
         
         [backButton release];
         
-        button = [UIButton buttonWithType:UIButtonTypeCustom];
-        buttonImage = [UIImage imageNamed:@"leave_team_button.png"];
-        buttonImagePressed = [UIImage imageNamed:@"leave_team_button_pressed.png"];
-        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-        [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
-        buttonFrame = [button frame];
-        buttonFrame.size.width = buttonImage.size.width;
-        buttonFrame.size.height = buttonImage.size.height;
-        [button setFrame:buttonFrame];
-        [button addTarget:self action:@selector(leavePressed) forControlEvents:UIControlEventTouchUpInside];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *globalTeamName = [defaults objectForKey:@"team_name"];
+        isYourTeam = NO;
         
-        UIBarButtonItem *leaveButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        if(globalTeamName)
+        {
+            if([globalTeamName isEqualToString:teamName])
+                isYourTeam = YES;
+        }
         
-        self.navigationItem.rightBarButtonItem = leaveButton;
-        
-        [leaveButton release];
+        if(isYourTeam)
+        {
+            button = [UIButton buttonWithType:UIButtonTypeCustom];
+            buttonImage = [UIImage imageNamed:@"leave_team_button.png"];
+            buttonImagePressed = [UIImage imageNamed:@"leave_team_button_pressed.png"];
+            [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+            [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+            buttonFrame = [button frame];
+            buttonFrame.size.width = buttonImage.size.width;
+            buttonFrame.size.height = buttonImage.size.height;
+            [button setFrame:buttonFrame];
+            [button addTarget:self action:@selector(leavePressed) forControlEvents:UIControlEventTouchUpInside];
+            
+            UIBarButtonItem *leaveButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+            
+            self.navigationItem.rightBarButtonItem = leaveButton;
+            
+            [leaveButton release];
+
+        }
+        else
+        {
+            button = [UIButton buttonWithType:UIButtonTypeCustom];
+            buttonImage = [UIImage imageNamed:@"join_button.png"];
+            buttonImagePressed = [UIImage imageNamed:@"join_button_pressed.png"];
+            [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+            [button setBackgroundImage:buttonImagePressed forState:UIControlStateHighlighted];
+            buttonFrame = [button frame];
+            buttonFrame.size.width = buttonImage.size.width;
+            buttonFrame.size.height = buttonImage.size.height;
+            [button setFrame:buttonFrame];
+            [button addTarget:self action:@selector(joinPressed) forControlEvents:UIControlEventTouchUpInside];
+            
+            UIBarButtonItem *joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+            
+            self.navigationItem.rightBarButtonItem = joinButton;
+            
+            [joinButton release];
+        }
     }
 }
 
 -(void)joinPressed
 {
     //		return handleResponse(httpGet(HOST+"/addtoteam?user="+TagPreferences.USER+"&team="+team), new Team());
+    if(isJoiningTeam)
+    {
+        [self joinTeam];
+    }
+    else
+    {
+        [self switchTeams];
+    }
+   
+}
+
+-(void)joinTeam
+{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/addtoteam",[APIUtil host]]];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
@@ -358,7 +440,15 @@
     [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
     [request setDelegate:self];
     [request setTag:2];
-    [request startAsynchronous];    
+    [request startAsynchronous]; 
+}
+
+-(void)switchTeams
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you'd like to change teams?  By doing so, you must leave all of your points behind." delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
+    [actionSheet setTag:2];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
 }
 
 /*-(void)leavePressed
@@ -369,6 +459,14 @@
     [alert show];
     [alert release];
 }*/
+
+- (void)leavePressed
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you'd like to change teams?  By doing so, you must leave all of your points behind." delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
+    [actionSheet setTag:1];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
 
 - (void)didReceiveMemoryWarning
 {

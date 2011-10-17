@@ -6,6 +6,7 @@
 //
 
 #import "FacebookController.h"
+#import "TwentyFirstCenturyTagAppDelegate.h"
 
 static FacebookController* sharedFacebook = nil;
 
@@ -18,7 +19,8 @@ static FacebookController* sharedFacebook = nil;
 {
  	self = [super init];
 	if (self != nil) {
-		self.facebook = [[Facebook alloc] initWithAppId:@"226166034068006"];
+        TwentyFirstCenturyTagAppDelegate *appDelegate = (TwentyFirstCenturyTagAppDelegate *)[[UIApplication sharedApplication] delegate];
+		self.facebook = [[Facebook alloc] initWithAppId:@"226166034068006" andDelegate:appDelegate];
 	}
 	return self;
 }
