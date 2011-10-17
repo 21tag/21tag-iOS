@@ -445,7 +445,7 @@
 
 -(void)switchTeams
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you'd like to change teams?  By doing so, you must leave all of your points behind." delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you'd like to change teams?" delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
     [actionSheet setTag:2];
     [actionSheet showInView:self.view];
     [actionSheet release];
@@ -462,7 +462,7 @@
 
 - (void)leavePressed
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you'd like to change teams?  By doing so, you must leave all of your points behind." delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you'd like to change teams?" delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
     [actionSheet setTag:1];
     [actionSheet showInView:self.view];
     [actionSheet release];
