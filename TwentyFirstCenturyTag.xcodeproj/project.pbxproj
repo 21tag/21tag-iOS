@@ -1332,7 +1332,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Magliozzi (VYEHVU8675)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrew Magliozzi";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1341,7 +1341,7 @@
 				INFOPLIST_FILE = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "21 Tag";
-				PROVISIONING_PROFILE = "19641A19-F045-4D0A-9A40-72140EB953AD";
+				PROVISIONING_PROFILE = "2AACCBD4-9EB6-488E-A539-83C1D9AF16AA";
 				VALID_ARCHS = "armv6 armv7 i386";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1355,7 +1355,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Magliozzi (VYEHVU8675)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrew Magliozzi";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Prefix.pch";
@@ -1363,7 +1363,7 @@
 				INFOPLIST_FILE = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "21 Tag";
-				PROVISIONING_PROFILE = "19641A19-F045-4D0A-9A40-72140EB953AD";
+				PROVISIONING_PROFILE = "2AACCBD4-9EB6-488E-A539-83C1D9AF16AA";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv6 armv7 i386";
 				WRAPPER_EXTENSION = app;
