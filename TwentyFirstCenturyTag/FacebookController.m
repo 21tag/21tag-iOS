@@ -20,7 +20,7 @@ static FacebookController* sharedFacebook = nil;
  	self = [super init];
 	if (self != nil) {
         TwentyFirstCenturyTagAppDelegate *appDelegate = (TwentyFirstCenturyTagAppDelegate *)[[UIApplication sharedApplication] delegate];
-		self.facebook = [[Facebook alloc] initWithAppId:@"226166034068006" andDelegate:appDelegate];
+		self.facebook = [[Facebook alloc] initWithAppId:@"179050958788496" andDelegate:appDelegate];
 	}
 	return self;
 }
