@@ -150,10 +150,11 @@
     if(![nameTextField.text isEqualToString:@""])
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/createteam",[APIUtil host]]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team",[APIUtil host]]]; //V1 "/createteam"
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
         [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
         [request setPostValue:nameTextField.text forKey:@"team"];
+        [request setRequestMethod:@"POST"];
         [request setDelegate:self];
         [request startAsynchronous];
     }

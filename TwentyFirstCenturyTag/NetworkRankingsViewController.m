@@ -64,11 +64,12 @@
     self.title = @"Network Rankings";
     
     //just call http://HOST/standings?num=10  (no num defaults to 10)
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/standings",[APIUtil host]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team",[APIUtil host]]]; //V1 "/standings"
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request setDelegate:self];
     [request setTag:1];
+    [request setRequestMethod:@"GET"];
     [request startAsynchronous];
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:HUD];

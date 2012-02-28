@@ -137,7 +137,7 @@
         
         [HUD show:YES];
 
-        NSURL *url = [NSURL URLWithString:@"http://21tag.com:8689/tagsignup"];
+        NSURL *url = [NSURL URLWithString:@"http://21tag.com:8689/poi"]; //V1 "/tagsignup"
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
         
         NSString *campus = [NSString stringWithFormat:@"%@, %@",schoolTextField.text,locationTextField.text];
@@ -145,6 +145,7 @@
         [request setPostValue:@"true" forKey:@"app"];
         [request setPostValue:campus forKey:@"campus"];
         [request setPostValue:emailTextField.text forKey:@"email"];
+        [request setRequestMethod:@"POST"];
         [request setDelegate:self];
         [request startAsynchronous];
     }

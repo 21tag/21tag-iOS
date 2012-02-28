@@ -67,7 +67,7 @@
         
         //HOST+"/getuser?fbauthcode="+TagPreferences.AUTHCODE+"&user="+userid :
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getuser",[APIUtil host]]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],@"fid" ]]; //V1 "/getuser"
         ASIFormDataRequest *userRequest = [ASIFormDataRequest requestWithURL:url];
         [userRequest setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
         [userRequest setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];

@@ -143,13 +143,14 @@
 {
     //		return handleResponse(httpGet(HOST+"/getpois?lat="+lat+"&lon="+lng+"&num="+limit), new VenuesResp());
 
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoisdetails",[APIUtil host]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi",[APIUtil host]]]; //V1 "/getpoisdetails"
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     [request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.latitude] forKey:@"lat"];
     [request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.longitude] forKey:@"lon"];
     [request setPostValue:@"50" forKey:@"num"];
     [request setDelegate:self];
     [request setTag:1];
+    [request setRequestMethod:@"GET"];
     [request startAsynchronous];
     
     retreivedVenues = YES;

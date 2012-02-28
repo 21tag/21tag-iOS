@@ -644,10 +644,11 @@
     else if(locationsOwnedHighlighted)
     {
         Venue *venue = (Venue*)[[locationsList objectAtIndex:indexPath.row] objectForKey:@"venue"];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/%@",[APIUtil host],[venue getId]]]; //V1 "/getpoidetails"
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        [request addPostValue:[venue getId] forKey:@"poi"];
+        //[request addPostValue:[venue getId] forKey:@"poi"];
         [request setDelegate:self];
+        [request setRequestMethod:@"GET"];  
         [request setTag:4];
         [request startAsynchronous];
         

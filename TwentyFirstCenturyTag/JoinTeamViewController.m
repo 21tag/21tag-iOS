@@ -109,9 +109,10 @@
 - (void)searchFriendsList
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getteamsbyfbids",[APIUtil host]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team",[APIUtil host]]]; //V1 "/getteamsbyfbids"
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request setPostValue:[defaults objectForKey:@"friends"] forKey:@"fbids"];
+    [request setRequestMethod:@"GET"];
     [request setDelegate:self];
     [request startAsynchronous];
 }

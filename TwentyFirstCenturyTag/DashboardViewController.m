@@ -20,6 +20,7 @@
 #import "POIDetailResp.h"
 #import "TwentyFirstCenturyTagAppDelegate.h"
 #import "SettingsViewController.h"
+#import "JSONKit.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -97,10 +98,11 @@
             if(fiveMinuteCounter == 5)
             {
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
+                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[user fid]]]; //V1 "/checkin"
                 ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
                 [request setPostValue:[currentVenue getId] forKey:@"poi"];
-                [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+                //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+                [request setRequestMethod:@"PUT"];
                 //[request setDelegate:self];
                 //[request setTag:1];
                 [request startAsynchronous];
@@ -217,10 +219,14 @@
         facebookRequestResults = [(NSDictionary*) result retain];
 
         // try to log in
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/login",[APIUtil host]]];    
-        ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
-        [formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
+        NSLog(@"Try to login");
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[user fid]]];  //V1 "/login"  
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.33:8888/api/v2/user/123/?fbauthcode=%@",[defaults objectForKey:@"FBAccessTokenKey"]]];
+        ASIHTTPRequest *formRequest = [ASIHTTPRequest requestWithURL:url];
+        [formRequest setRequestMethod:@"GET"];
+        //[formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"]; // @"?fbauthcode=" FBaccessTonkenKey
         [formRequest setDelegate:self];
+        
         [formRequest setTag:1];
         [formRequest startAsynchronous];
 
@@ -258,7 +264,7 @@
 
         NSLog(@"%d: %@",statusCode, [request responseString]);
         
-        if(statusCode == 403) // create new acct
+        if(statusCode == 404) // create new acct //V1 403
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSDictionary *result = facebookRequestResults;
@@ -267,17 +273,30 @@
             NSString *first_name = [result objectForKey:@"first_name"];
             NSString *last_name = [result objectForKey:@"last_name"];
             
-            NSLog(@"%@",facebookID);
+            NSLog(@"Facebook ID: %@",facebookID);
             
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/adduser",[APIUtil host]]];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user",[APIUtil host]]]; //V1 "/adduser"
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.33:8888/api/v2/user/"]];
             
-            ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
-            [formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
-            [formRequest addPostValue:@"true" forKey:@"nohtml"];
-            [formRequest addPostValue:email forKey:@"email"];
-            [formRequest addPostValue:first_name forKey:@"firstname"];
-            [formRequest addPostValue:facebookID forKey:@"fid"];
-            [formRequest addPostValue:last_name forKey:@"lastname"];
+            ASIHTTPRequest *formRequest = [ASIHTTPRequest requestWithURL:url];
+            
+            NSMutableDictionary * dictionary = [[NSMutableDictionary alloc] init];
+            [dictionary setObject:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
+            [dictionary setObject:facebookID forKey:@"fid"];
+            [dictionary setObject:email forKey:@"email"];
+            [dictionary setObject:first_name forKey:@"firstname"];
+            [dictionary setObject:last_name forKey:@"lastname"];
+            NSData * JSON = [dictionary JSONData];
+            [formRequest appendPostData:JSON];
+            //[formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
+            //[formRequest addPostValue:@"true" forKey:@"nohtml"]; //should go
+            //NSLog(@"content type: %@")
+            [formRequest addRequestHeader:@"Content-Type" value:@"application/json"];
+            [formRequest setRequestMethod:@"POST"];
+            //[formRequest addPostValue:email forKey:@"email"];
+            //[formRequest addPostValue:first_name forKey:@"firstname"];
+            //[formRequest addPostValue:facebookID forKey:@"fid"];
+            //[formRequest addPostValue:last_name forKey:@"lastname"];
             [formRequest setDelegate:self];
             [formRequest setTag:2];
             [formRequest startAsynchronous];
@@ -341,14 +360,15 @@
          
          NSLog(@"resetting fbauth : %@",facebookID);
          
-         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/resetfbauth",[APIUtil host]]];
+         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[user fid]]]; //V1 "/resetfbauth"
          
          ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
          [formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
-         [formRequest addPostValue:facebookID forKey:@"fbid"];
+         //[formRequest addPostValue:facebookID forKey:@"fbid"];
          //[formRequest addPostValue:user_id forKey:@"uid"];
          [formRequest setDelegate:self];
          [formRequest setTag:4];
+         [formRequest setRequestMethod:@"PUT"];
          [formRequest startAsynchronous];
          }
     }
@@ -708,10 +728,11 @@
         
         [HUD show:YES];
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoidetails",[APIUtil host]]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/%@",[APIUtil host],user.currentVenueId]]; //V1 "/getpoidetails"
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        [request addPostValue:user.currentVenueId forKey:@"poi"];
+        //[request addPostValue:user.currentVenueId forKey:@"poi"];
         [request setDelegate:self];
+        [request setRequestMethod:@"GET"];
         [request setTag:3];
         [request startAsynchronous];
     }

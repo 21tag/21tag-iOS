@@ -179,12 +179,20 @@
 
     self.title = @"Profile";
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getteam",[APIUtil host]]];
+    NSString * team;
+    if(user.teamname)
+        team = user.teamname;
+    else
+        team = user.team;
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@",[APIUtil host]]]; //V1 "/getteam"
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    /*
     if(user.teamname)
         [request setPostValue:user.teamname forKey:@"team"];
     else
         [request setPostValue:user.team forKey:@"team"];
+    */
     [request setPostValue:@"true" forKey:@"details"];
     [request setDelegate:self];
     [request setTag:1];
