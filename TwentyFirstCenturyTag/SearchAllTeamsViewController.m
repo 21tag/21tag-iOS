@@ -93,7 +93,7 @@
     [contentsList retain];
     isLoadingTeams = YES;
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getteam",[APIUtil host]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/?details=true",[APIUtil host]]]; //V1 "/getteam"
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setDelegate:self];
     [request startAsynchronous];

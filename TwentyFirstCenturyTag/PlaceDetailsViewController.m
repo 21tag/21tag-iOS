@@ -9,6 +9,7 @@
 #import "PlaceDetailsViewController.h"
 #import "ASIFormDataRequest.h"
 #import "APIUtil.h"
+#import "JSONKit.h"
 
 #define kCellIdentifier @"Cell"
 
@@ -67,10 +68,11 @@
         
         //HOST+"/getuser?fbauthcode="+TagPreferences.AUTHCODE+"&user="+userid :
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],@"fid" ]]; //V1 "/getuser"
-        ASIFormDataRequest *userRequest = [ASIFormDataRequest requestWithURL:url];
-        [userRequest setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
-        [userRequest setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/?fbauthcode=%@",[APIUtil host],[defaults objectForKey:@"user_id"],[defaults objectForKey:@"FBAccessTokenKey"] ]]; //V1 "/getuser"
+        ASIHTTPRequest *userRequest = [ASIHTTPRequest requestWithURL:url];
+        //[userRequest setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
+        //[userRequest setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+        [userRequest setRequestMethod:@"GET"];
         [userRequest setDelegate:self];
         [userRequest setTag:2];
         [userRequest startAsynchronous];
@@ -344,10 +346,14 @@
             [HUD show:YES];
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkin",[APIUtil host]]];
-            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-            [request setPostValue:[venue getId] forKey:@"poi"];
-            [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 /checkin
+            ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+            //[request setPostValue:[venue getId] forKey:@"poi"];
+            //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+            NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[venue getId],@"poi", nil];
+            [request appendPostData:[dictionary JSONData]];
+            [request addRequestHeader:@"Content-Type" value:@"application/json"];
+            [request setRequestMethod:@"PATCH"];
             [request setDelegate:self];
             [request setTag:1];
             [request startAsynchronous];

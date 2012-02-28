@@ -8,6 +8,7 @@
 
 #import "GameRequestViewController.h"
 #import "ASIFormDataRequest.h"
+#import "JSONKit.h"
 
 @interface GameRequestViewController()
 
@@ -137,14 +138,18 @@
         
         [HUD show:YES];
 
-        NSURL *url = [NSURL URLWithString:@"http://21tag.com:8689/poi"]; //V1 "/tagsignup"
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        NSURL *url = [NSURL URLWithString:@"http://192.168.1.33:8888/api/v2/poi/"]; //V1 "/tagsignup"
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
         
         NSString *campus = [NSString stringWithFormat:@"%@, %@",schoolTextField.text,locationTextField.text];
-        
-        [request setPostValue:@"true" forKey:@"app"];
-        [request setPostValue:campus forKey:@"campus"];
-        [request setPostValue:emailTextField.text forKey:@"email"];
+        NSMutableDictionary * dictionary = [[NSMutableDictionary alloc] init];
+        [dictionary setObject:@"true" forKey:@"app"];
+        [dictionary setObject:campus forKey:@"campus"];
+        [dictionary setObject:emailTextField.text forKey:@"email"];
+        [request appendPostData:[dictionary JSONData]];
+        //[request setPostValue:@"true" forKey:@"app"];
+        //[request setPostValue:campus forKey:@"campus"];
+        //[request setPostValue:emailTextField.text forKey:@"email"];
         [request setRequestMethod:@"POST"];
         [request setDelegate:self];
         [request startAsynchronous];

@@ -110,8 +110,11 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team",[APIUtil host]]]; //V1 "/getteamsbyfbids"
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:[defaults objectForKey:@"friends"] forKey:@"fbids"];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    //[request setPostValue:[defaults objectForKey:@"friends"] forKey:@"fbids"];
+    NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"friends"],@"fbids", nil];
+    [request appendPostData:[dictionary JSONData]];
+    [request addRequestHeader:@"Content-Type" value:@"application/json"];
     [request setRequestMethod:@"GET"];
     [request setDelegate:self];
     [request startAsynchronous];

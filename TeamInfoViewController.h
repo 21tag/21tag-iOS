@@ -27,6 +27,7 @@
     NSArray *contentList;
     UITableView *mainTableView;
     NSString *teamName;
+    NSString *teamId;
     
     TeamsResp *teamsResponse;
     
@@ -58,6 +59,7 @@
 @property (nonatomic, retain) NSArray *contentList;
 @property (nonatomic, retain) IBOutlet UITableView *mainTableView;
 @property (nonatomic, retain) NSString *teamName;
+@property (nonatomic, retain) NSString *teamId;
 @property (nonatomic, retain)     DashboardViewController *dashboardController;
 
 

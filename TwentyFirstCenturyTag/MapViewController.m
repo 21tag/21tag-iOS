@@ -13,6 +13,7 @@
 #import "ASIFormDataRequest.h"
 #import "APIUtil.h"
 #import "VenuesResp.h"
+#import "JSONKit.h"
 
 @implementation MapViewController
 @synthesize currentMapView;
@@ -143,11 +144,11 @@
 {
     //		return handleResponse(httpGet(HOST+"/getpois?lat="+lat+"&lon="+lng+"&num="+limit), new VenuesResp());
 
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi",[APIUtil host]]]; //V1 "/getpoisdetails"
-    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
-    [request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.latitude] forKey:@"lat"];
-    [request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.longitude] forKey:@"lon"];
-    [request setPostValue:@"50" forKey:@"num"];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/?lat=%@&lon=%@&num=%d",[APIUtil host],[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.latitude],[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.longitude],50]]; //V1 "/getpoisdetails"
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    //[request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.latitude] forKey:@"lat"];
+    //[request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.longitude] forKey:@"lon"];
+    //[request setPostValue:@"50" forKey:@"num"];
     [request setDelegate:self];
     [request setTag:1];
     [request setRequestMethod:@"GET"];

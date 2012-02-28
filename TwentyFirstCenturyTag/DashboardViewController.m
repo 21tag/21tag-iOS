@@ -97,12 +97,15 @@
         {
             if(fiveMinuteCounter == 5)
             {
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[user fid]]]; //V1 "/checkin"
-                ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-                [request setPostValue:[currentVenue getId] forKey:@"poi"];
+                ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+                //[request setPostValue:[currentVenue getId] forKey:@"poi"];
+                NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[currentVenue getId],@"poi", nil];
+                [request appendPostData:[dictionary JSONData]];
+                [request addRequestHeader:@"Content-Type" value:@"application/json"];
                 //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
-                [request setRequestMethod:@"PUT"];
+                [request setRequestMethod:@"PATCH"];
                 //[request setDelegate:self];
                 //[request setTag:1];
                 [request startAsynchronous];
@@ -220,15 +223,15 @@
 
         // try to log in
         NSLog(@"Try to login");
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[user fid]]];  //V1 "/login"  
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.33:8888/api/v2/user/123/?fbauthcode=%@",[defaults objectForKey:@"FBAccessTokenKey"]]];
-        ASIHTTPRequest *formRequest = [ASIHTTPRequest requestWithURL:url];
-        [formRequest setRequestMethod:@"GET"];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/?fbauthcode=%@",[APIUtil host],[user fid],[defaults objectForKey:@"FBAccessTokenKey"]]];  //V1 "/login"  
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.33:8888/api/v2/user/123/?fbauthcode=%@",[defaults objectForKey:@"FBAccessTokenKey"]]];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        [request setRequestMethod:@"GET"];
         //[formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"]; // @"?fbauthcode=" FBaccessTonkenKey
-        [formRequest setDelegate:self];
+        [request setDelegate:self];
         
-        [formRequest setTag:1];
-        [formRequest startAsynchronous];
+        [request setTag:1];
+        [request startAsynchronous];
 
         NSArray *name = [NSArray arrayWithObject:[result objectForKey:@"name"]];
         [contentList replaceObjectAtIndex:2 withObject:name];
@@ -290,7 +293,6 @@
             [formRequest appendPostData:JSON];
             //[formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
             //[formRequest addPostValue:@"true" forKey:@"nohtml"]; //should go
-            //NSLog(@"content type: %@")
             [formRequest addRequestHeader:@"Content-Type" value:@"application/json"];
             [formRequest setRequestMethod:@"POST"];
             //[formRequest addPostValue:email forKey:@"email"];
@@ -362,14 +364,17 @@
          
          NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[user fid]]]; //V1 "/resetfbauth"
          
-         ASIFormDataRequest *formRequest = [ASIFormDataRequest requestWithURL:url];
-         [formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
+         ASIHTTPRequest *request = [ASIFormDataRequest requestWithURL:url];
+         //[formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
          //[formRequest addPostValue:facebookID forKey:@"fbid"];
          //[formRequest addPostValue:user_id forKey:@"uid"];
-         [formRequest setDelegate:self];
-         [formRequest setTag:4];
-         [formRequest setRequestMethod:@"PUT"];
-         [formRequest startAsynchronous];
+            NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"FBAccessTokenKey"],@"fbauthcode", nil];
+            NSData * JSON = [dictionary JSONData];
+            [request appendPostData:JSON];
+         [request setDelegate:self];
+         [request setTag:4];
+         [request setRequestMethod:@"PATCH"];
+         [request startAsynchronous];
          }
     }
     else if(request.tag == 3) // request venue data
@@ -393,7 +398,7 @@
     }
     else if(request.tag == 4) // reset auth code
     {
-        if([request responseStatusCode] == 403)
+        if([request responseStatusCode] == 404) //V1 403
         {
             NSLog(@"reset fbauth error: %@", [request responseString]);
 
@@ -729,7 +734,7 @@
         [HUD show:YES];
         
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/%@",[APIUtil host],user.currentVenueId]]; //V1 "/getpoidetails"
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
         //[request addPostValue:user.currentVenueId forKey:@"poi"];
         [request setDelegate:self];
         [request setRequestMethod:@"GET"];

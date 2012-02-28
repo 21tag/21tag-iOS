@@ -11,6 +11,7 @@
 #import "APIUtil.h"
 #import "Team.h"
 #import <QuartzCore/QuartzCore.h>
+#import "JSONKit.h"
 
 @interface NewTeamViewController()
 -(void) setupButtons;
@@ -151,9 +152,13 @@
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team",[APIUtil host]]]; //V1 "/createteam"
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
-        [request setPostValue:nameTextField.text forKey:@"team"];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"user_id"],@"user",nameTextField.text,@"team", nil];
+        [request appendPostData:[dictionary JSONData]];
+        [request addRequestHeader:@"Content-Type" value:@"application/json"];
+        
+        //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+        //[request setPostValue:nameTextField.text forKey:@"team"];
         [request setRequestMethod:@"POST"];
         [request setDelegate:self];
         [request startAsynchronous];

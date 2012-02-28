@@ -38,6 +38,7 @@
 @synthesize contentList;
 @synthesize mainTableView;
 @synthesize teamName;
+@synthesize teamId;
 @synthesize dashboardController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -287,10 +288,14 @@
     }
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/deletefromteam",[APIUtil host]]];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:teamNameLabel.text forKey:@"team"];
-    [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/deletefromteam"
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:@"null",@"teamname",nil];
+    [request appendPostData:[dictionary JSONData]];
+    //[request setPostValue:teamNameLabel.text forKey:@"team"];
+    //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+    [request addRequestHeader:@"Content-Type" value:@"application/json"];
+    [request setRequestMethod:@"PATCH"];
     [request setDelegate:self];
     [request setTag:tag];
     [request startAsynchronous]; 
@@ -434,10 +439,14 @@
 -(void)joinTeam
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/addtoteam",[APIUtil host]]];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:teamNameLabel.text forKey:@"team"];
-    [request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/addtoteam"
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    //[request setPostValue:teamNameLabel.text forKey:@"team"];
+    //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+    NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:teamNameLabel.text,@"teamName", nil];
+    [request appendPostData:[dictionary JSONData]];
+    [request addRequestHeader:@"Content-Type" value:@"application/json"];
+    [request setRequestMethod:@"PATCH"];
     [request setDelegate:self];
     [request setTag:2];
     [request startAsynchronous]; 
@@ -645,7 +654,7 @@
     {
         Venue *venue = (Venue*)[[locationsList objectAtIndex:indexPath.row] objectForKey:@"venue"];
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/%@",[APIUtil host],[venue getId]]]; //V1 "/getpoidetails"
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
         //[request addPostValue:[venue getId] forKey:@"poi"];
         [request setDelegate:self];
         [request setRequestMethod:@"GET"];  

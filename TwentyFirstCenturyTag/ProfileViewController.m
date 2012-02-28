@@ -185,15 +185,16 @@
     else
         team = user.team;
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@",[APIUtil host]]]; //V1 "/getteam"
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],user.team]]; //V1 "/getteam"
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     /*
     if(user.teamname)
         [request setPostValue:user.teamname forKey:@"team"];
     else
         [request setPostValue:user.team forKey:@"team"];
     */
-    [request setPostValue:@"true" forKey:@"details"];
+    //[request setPostValue:@"true" forKey:@"details"];
+    [request setRequestMethod:@"GET"];
     [request setDelegate:self];
     [request setTag:1];
     [request startAsynchronous];
