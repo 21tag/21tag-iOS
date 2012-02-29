@@ -151,7 +151,7 @@
     if(![nameTextField.text isEqualToString:@""])
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team",[APIUtil host]]]; //V1 "/createteam"
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/",[APIUtil host]]]; //V1 "/createteam"
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
         NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"user_id"],@"user",nameTextField.text,@"team", nil];
         [request appendPostData:[dictionary JSONData]];

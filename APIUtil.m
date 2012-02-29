@@ -12,7 +12,8 @@
 
 +(NSString*)host
 {
-    return @"http://192.168.1.33:8888/api/v2";
+    //return @"http://192.168.1.33:8888/api/v2";
+    return @"http://192.168.2.104:8888/api/v2";
     //return @"http://21tag.com:8689";
 }
 

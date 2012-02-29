@@ -109,20 +109,23 @@
 - (void)searchFriendsList
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team",[APIUtil host]]]; //V1 "/getteamsbyfbids"
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getteamsbyfbids/",[APIUtil host]]]; //V1 "/getteamsbyfbids"
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     //[request setPostValue:[defaults objectForKey:@"friends"] forKey:@"fbids"];
-    NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"friends"],@"fbids", nil];
-    [request appendPostData:[dictionary JSONData]];
-    [request addRequestHeader:@"Content-Type" value:@"application/json"];
-    [request setRequestMethod:@"GET"];
+    //NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"friends"],@"fbids", nil];
+    //NSLog(@"Friends: %@",[defaults objectForKey:@"friends"]);
+    //NSLog(@"Class: %@",[[defaults objectForKey:@"friends"] class]);
+    //[request appendPostData:[[defaults objectForKey:@"friends"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setPostValue:[defaults objectForKey:@"friends"] forKey:@"fbids"]; 
+    [request addRequestHeader:@"Content-Type" value:@"application/text"];
+    [request setRequestMethod:@"POST"];
     [request setDelegate:self];
     [request startAsynchronous];
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    NSLog(@"%@",[request responseString]);
+    NSLog(@"SearchFreindList: %@",[request responseString]);
     
     TeamsByFBIDS *teamsByFBIDS = [[TeamsByFBIDS alloc] initWithData:[request responseData]];
     if(teamsByFBIDS.data)

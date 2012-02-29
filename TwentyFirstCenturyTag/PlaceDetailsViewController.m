@@ -346,7 +346,7 @@
             [HUD show:YES];
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 /checkin
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 /checkin
             ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
             //[request setPostValue:[venue getId] forKey:@"poi"];
             //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];

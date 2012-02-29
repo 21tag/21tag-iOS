@@ -11,11 +11,11 @@
 
 @interface Team : APIObj {
   	NSString *NAME;
-    NSString *TEAMID;
 	NSString *LEADER;
 	NSString *USERS;
 	NSString *VENUES;
 	NSString *HISTORY;
+    NSString *MOTTO;
     
     NSString *name;
     NSString *leader;
@@ -26,7 +26,6 @@
 }
 
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *teamId;
 @property (nonatomic, retain) NSString *leader;
 @property (nonatomic, retain) NSSet *users;
 @property (nonatomic, retain) NSSet *venues;

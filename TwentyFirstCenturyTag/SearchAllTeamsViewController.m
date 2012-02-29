@@ -34,7 +34,7 @@
 {
     teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
     
-    NSLog(@"%@",[request responseString]);
+    NSLog(@"Teams: %@",[request responseString]);
     
     NSArray *teams = teamsResponse.teams;
     [contentsList removeAllObjects];
@@ -95,6 +95,7 @@
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/?details=true",[APIUtil host]]]; //V1 "/getteam"
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setRequestMethod:@"GET"];
     [request setDelegate:self];
     [request startAsynchronous];
     

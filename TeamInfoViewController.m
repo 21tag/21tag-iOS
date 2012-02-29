@@ -511,10 +511,11 @@
     
     //http://21tag.com:8689/getteam?team=moo&details=true
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getteam",[APIUtil host]]];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:teamNameLabel.text forKey:@"team"];
-    [request setPostValue:@"true" forKey:@"details"];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],@"6"]]; //V1 "/getteam" //changeback
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    //[request setPostValue:teamNameLabel.text forKey:@"team"];
+    //[request setPostValue:@"true" forKey:@"details"];
+    [request setRequestMethod:@"GET"];
     [request setDelegate:self];
     [request setTag:1];
     [request startAsynchronous];
@@ -653,7 +654,7 @@
     else if(locationsOwnedHighlighted)
     {
         Venue *venue = (Venue*)[[locationsList objectAtIndex:indexPath.row] objectForKey:@"venue"];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/%@",[APIUtil host],[venue getId]]]; //V1 "/getpoidetails"
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/%@/",[APIUtil host],[venue getId]]]; //V1 "/getpoidetails"
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
         //[request addPostValue:[venue getId] forKey:@"poi"];
         [request setDelegate:self];

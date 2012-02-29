@@ -83,6 +83,7 @@
     teamname = [[fields objectForKey:TEAMNAME] retain];
     
     NSArray *rawPointsArray = [fields objectForKey:POINTS];
+    NSLog(@"rawpointsarray: %@",rawPointsArray);
     NSMutableDictionary *pointsDictionary = [[NSMutableDictionary alloc] initWithCapacity:[rawPointsArray count]];
     for(int i = 0; i < [rawPointsArray count]; i++)
     {

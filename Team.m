@@ -16,7 +16,6 @@
 @synthesize users;
 @synthesize venues;
 @synthesize history;
-@synthesize teamId;
 
 -(id)init
 {
@@ -26,10 +25,10 @@
         APITYPE			= @"Team";
         NAME			= @"name";
         LEADER			= @"leader";
-        USERS			= @"users";
+        USERS			= @"members";
         VENUES			= @"venues";
         HISTORY			= @"history";  
-        TEAMID          = @"teaId";
+        MOTTO           = @"moto";
     }
     return self;
 }
@@ -45,7 +44,6 @@
     venues = [NSSet setWithArray:[fields objectForKey:VENUES]];
     
     history = [[fields objectForKey:HISTORY] retain];
-    //add teamID
 }
 
 @end

@@ -22,14 +22,15 @@
     if(self)
     {
         APITYPE			= @"TeamsResp";
-        TEAMS			= @"teams";
-        USERS			= @"users";
+        TEAMS			= @"objects";
+        USERS			= @"members";
         VENUES			= @"venues";
         POINTS			= @"points";
-        TEAM			= @"t";
+        TEAM			= @"name";
         VENUE			= @"v";
         POINT			= @"p";
         MAP				= @"m";
+        MOTTO           = @"motto";
     }
     return self;
 }
@@ -45,6 +46,7 @@
         for(int i = 0; i < [teamFieldsArray count]; i++)
         {
             Team *team = [[Team alloc] initWithDictionary:[teamFieldsArray objectAtIndex:i]];
+            NSLog(@"team dictionary: %@",[teamFieldsArray objectAtIndex:i]);
             [teamsArray addObject:team];
         }
         teams = teamsArray;
@@ -56,6 +58,7 @@
         NSMutableArray *usersArray = [[NSMutableArray alloc] initWithCapacity:[userFieldsArray count]];
         for(int i = 0; i < [userFieldsArray count]; i++)
         {
+            NSLog(@"Users: %@",[userFieldsArray objectAtIndex:i]);
             User *user = [[User alloc] initWithDictionary:[userFieldsArray objectAtIndex:i]];
             [usersArray addObject:user];
         }
