@@ -343,6 +343,7 @@
             [defaults setObject:[user getId] forKey:@"user_id"]; //changeback
             [defaults setObject:@"18" forKey:@"user_id"];
             [defaults removeObjectForKey:@"team_name"];
+            [defaults removeObjectForKey:@"team_id"];
             [defaults synchronize];
             
             NSLog(@"new acct: %@", [user getId]);
@@ -786,6 +787,7 @@
             {
                 TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
                 teamInfoController.teamName = [defaults objectForKey:@"team_name"];
+                NSLog(@"team_name from defaults in dashboard: %@",[defaults objectForKey:@"team_name"]);
                 teamInfoController.isJoiningTeam = NO;
                 teamInfoController.dashboardController = self;
                 [self.navigationController pushViewController:teamInfoController animated:YES];

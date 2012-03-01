@@ -38,8 +38,8 @@
     {
         APITYPE					= @"User";
         USER					= @"user";
-        FIRSTNAME				= @"firstname";
-        LASTNAME				= @"lastname";
+        FIRSTNAME				= @"first_name";
+        LASTNAME				= @"last_name";
         PASSWORD				= @"password";
         PHOTO					= @"photo";
         GENDER					= @"gender";
@@ -82,19 +82,9 @@
     team = [[fields objectForKey:TEAM] retain];
     teamname = [[fields objectForKey:TEAMNAME] retain];
     
-    NSArray *rawPointsArray = [fields objectForKey:POINTS];
-    NSLog(@"rawpointsarray: %@",rawPointsArray);
-    NSMutableDictionary *pointsDictionary = [[NSMutableDictionary alloc] initWithCapacity:[rawPointsArray count]];
-    for(int i = 0; i < [rawPointsArray count]; i++)
-    {
-        NSDictionary *pointInfo = [rawPointsArray objectAtIndex:i];
-        NSString *venueID = [pointInfo objectForKey:VENUE];
-        NSNumber *pointValue = [pointInfo objectForKey:POINT];
-        //NSLog(@"%@ - %d",venueID,[pointValue intValue]);
-        
-        [pointsDictionary setObject:pointValue forKey:venueID];
-    }
-    points = pointsDictionary;
+    NSString *rawPoints = [fields objectForKey:POINTS];
+    NSLog(@"Raw Points: %@",rawPoints);
+    points = rawPoints;
     
     NSArray *rawVenueArray =  [fields objectForKey:VENUEDATA];
     NSMutableDictionary *venueDictionary = [[NSMutableDictionary alloc] initWithCapacity:[rawVenueArray count]]; 

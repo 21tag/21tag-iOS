@@ -11,12 +11,6 @@
 #import "MBProgressHUD.h"
 
 @interface SearchAllTeamsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate, MBProgressHUDDelegate> {
-    UITableView *mainTableView;
-	
-    NSMutableArray *contentsList;
-    NSMutableArray *searchResults;
-    NSString *savedSearchTerm;
-    
     BOOL isLoadingTeams;
     TeamsResp *teamsResponse;
     

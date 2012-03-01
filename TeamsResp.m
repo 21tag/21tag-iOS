@@ -77,7 +77,7 @@
         venues = venuesArray;
     }
     
-    points = [NSSet setWithArray:[fields objectForKey:POINTS]];
+    points = [fields objectForKey:POINTS];
 }
 
 

@@ -26,12 +26,12 @@
     NSArray *teams;
     NSArray *users;
     NSArray *venues;
-    NSSet *points;
+    NSString *points;
 }
 
 @property (nonatomic, retain) NSArray *teams;
 @property (nonatomic, retain) NSArray *users;
 @property (nonatomic, retain) NSArray *venues;
-@property (nonatomic, retain) NSSet *points;
+@property (nonatomic, retain) NSString *points;
 
 @end

@@ -17,6 +17,7 @@
 @synthesize venues;
 @synthesize history;
 
+
 -(id)init
 {
     self = [super init];
@@ -36,14 +37,20 @@
 //iAPI methods
 -(void) parseDictionary:(NSDictionary *)fields
 {
+    
     [super parseDictionary:fields];
-    name = [[fields objectForKey:NAME] retain];
-    leader = [[fields objectForKey:LEADER] retain];
+    self.name = [fields objectForKey:NAME];
+    self.leader = [fields objectForKey:LEADER];
     
-    users = [NSSet setWithArray:[fields objectForKey:USERS]];
-    venues = [NSSet setWithArray:[fields objectForKey:VENUES]];
+    self.users = [NSSet setWithArray:[fields objectForKey:USERS]];
+    self.venues = [NSSet setWithArray:[fields objectForKey:VENUES]];
     
-    history = [[fields objectForKey:HISTORY] retain];
+    self.history = [fields objectForKey:HISTORY];
+}
+
+-(NSString *) description
+{
+    return [NSString stringWithFormat:@"Name: %@ Members: %@ Venues: %@",name,users,venues];
 }
 
 @end

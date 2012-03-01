@@ -22,10 +22,10 @@
 
 - (void)dealloc
 {
-    [mainTableView release], mainTableView = nil;
-    [contentsList release], contentsList = nil;
-    [searchResults release], searchResults = nil;
-    [savedSearchTerm release], savedSearchTerm = nil;
+    self.mainTableView = nil;
+    self.contentsList = nil;
+    self.searchResults = nil;
+    self.savedSearchTerm = nil;
 	
     [super dealloc];
 }
@@ -40,7 +40,7 @@
     [contentsList removeAllObjects];
     for(int i = 0; i < [teams count]; i++)
     {
-        [contentsList addObject:((Team*)[teams objectAtIndex:i]).name];
+        [contentsList addObject:((Team*)[teams objectAtIndex:i])];
     }
     [mainTableView reloadData];
     
@@ -89,8 +89,8 @@
     
     [backButton release];
     
-    contentsList = [NSMutableArray arrayWithObjects:@"Loading...", nil];
-    [contentsList retain];
+    //contentsList = [NSMutableArray arrayWithObjects:@"Loading...", nil];
+    self.contentsList = [NSMutableArray array];
     isLoadingTeams = YES;
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/?details=true",[APIUtil host]]]; //V1 "/getteam"
@@ -136,11 +136,12 @@
 	
     if ([[self savedSearchTerm] length] != 0)
     {
-        for (NSString *currentString in [self contentsList])
+        for (Team *currentTeam in [self contentsList])
         {
+            NSString *currentString = currentTeam.name;
             if ([currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location != NSNotFound)
             {
-                [[self searchResults] addObject:currentString];
+                [[self searchResults] addObject:currentTeam];
             }
         }
     }
@@ -158,6 +159,7 @@
     else
         rows = [[self contentsList] count];
 	
+    NSLog(@"rows: %d",rows);
     return rows;
 }
 
@@ -168,9 +170,15 @@
     NSString *contentForThisRow = nil;
 	
     if (tableView == [[self searchDisplayController] searchResultsTableView])
-        contentForThisRow = [[self searchResults] objectAtIndex:row];
+    {
+        NSLog(@"Team description search: %@",((Team*)[[self searchResults] objectAtIndex:row]).description);
+        contentForThisRow = ((Team*)[[self searchResults] objectAtIndex:row]).name;
+    }
     else
-        contentForThisRow = [[self contentsList] objectAtIndex:row];
+    {  
+        NSLog(@"Team description: %@",((Team*)[[self contentsList] objectAtIndex:row]).description);
+        contentForThisRow = ((Team*)[[self contentsList] objectAtIndex:row]).name;
+    }
 	
     static NSString *CellIdentifier = @"CellIdentifier";
 	
@@ -212,10 +220,17 @@ shouldReloadTableForSearchString:(NSString *)searchString
         TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
         
         if(isSearching)
-            teamInfoController.teamName = [searchResults objectAtIndex:indexPath.row];
+        {
+            teamInfoController.teamName = ((Team*)[searchResults objectAtIndex:indexPath.row]).name;
+            teamInfoController.teamId = ((Team*)[searchResults objectAtIndex:indexPath.row]).getId;
+        }
         else
-            teamInfoController.teamName = [contentsList objectAtIndex:indexPath.row];
-
+        {
+            teamInfoController.teamName = ((Team*)[contentsList objectAtIndex:indexPath.row]).name;
+            teamInfoController.teamId = ((Team*)[contentsList objectAtIndex:indexPath.row]).getId;
+        }
+        
+        
         teamInfoController.isJoiningTeam = YES;
         [self.navigationController pushViewController:teamInfoController animated:YES];
         [teamInfoController release];

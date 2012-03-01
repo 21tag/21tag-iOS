@@ -80,14 +80,7 @@
             User *user = (User*)element;
             NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
             [cellInfo setObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname] forKey:@"textLabel"];
-            int points = 0;
-            NSArray *userPointsArray = [user.points allKeys];
-            int count = [userPointsArray count];
-            for(int i = 0; i < count; i++)
-            {
-                points += [[user.points objectForKey:[userPointsArray objectAtIndex:i]] intValue];
-                //NSLog(@"team points %d",points);
-            }
+            int points = [user.points intValue];
 
             [cellInfo setObject:[NSString stringWithFormat:@"%d points",points] forKey:@"detailTextLabel"];
             [cellInfo setObject:[NSNumber numberWithInt:points] forKey:@"points"];
@@ -140,20 +133,16 @@
         teamMembersLabel.text = [NSString stringWithFormat:@"%d",[teamsResponse.users count]];
         int teamPoints = 0;
         int numVenues = 0;
+        
+        numVenues = [teamsResponse.venues count];
+        NSLog(@"Number of Venues: %d",numVenues);
+        
         for(int i = 0; i < [teamsResponse.users count]; i++)
         {
             User *user = [teamsResponse.users objectAtIndex:i];
-            
-            NSArray *userPointsArray = [user.points allKeys];
-            int count = [userPointsArray count];
-            for(int i = 0; i < count; i++)
-            {
-                int points = [[user.points objectForKey:[userPointsArray objectAtIndex:i]] intValue];
-                teamPoints += points;
-                //NSLog(@"team points %d",points);
-            }
+            int points = [user.points intValue];
+            teamPoints +=points;
         }
-        numVenues = [((Team*)[teamsResponse.teams objectAtIndex:0]).venues count];
         teamPointsLabel.text = [NSString stringWithFormat:@"%d",teamPoints];
         locationsOwnedLabel.text = [NSString stringWithFormat:@"%d",numVenues];
         
@@ -511,7 +500,7 @@
     
     //http://21tag.com:8689/getteam?team=moo&details=true
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],@"6"]]; //V1 "/getteam" //changeback
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],@"8"]]; //V1 "/getteam" //changeback
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     //[request setPostValue:teamNameLabel.text forKey:@"team"];
     //[request setPostValue:@"true" forKey:@"details"];

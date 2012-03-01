@@ -50,7 +50,7 @@
     NSTimeInterval currentVenueTime;
     NSTimeInterval currentVenueLastTime;
     
-    NSDictionary *points;
+    NSString *points;
     NSDictionary *venuedata;
     NSMutableArray *history;
 }
@@ -69,7 +69,7 @@
 @property (nonatomic, retain) NSString *currentVenueName;
 @property NSTimeInterval currentVenueTime;
 @property NSTimeInterval currentVenueLastTime;
-@property (nonatomic, retain) NSDictionary *points;
+@property (nonatomic, retain) NSString *points;
 @property (nonatomic, retain) NSDictionary *venuedata;
 @property (nonatomic, retain) NSMutableArray *history;
 

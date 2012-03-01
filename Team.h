@@ -22,7 +22,6 @@
     NSSet *users;
     NSSet *venues;
     NSArray *history;
-    NSString *teamId;
 }
 
 @property (nonatomic, retain) NSString *name;
