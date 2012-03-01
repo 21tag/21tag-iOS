@@ -303,6 +303,7 @@
         else
             teamName = user.team;
         teamInfoController.teamName = teamName;
+        teamInfoController.teamId = user.team;
         teamInfoController.isJoiningTeam = NO;
         [self.navigationController pushViewController:teamInfoController animated:YES];
         [teamInfoController release];

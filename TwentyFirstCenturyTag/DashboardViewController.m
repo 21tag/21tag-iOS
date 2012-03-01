@@ -785,7 +785,7 @@
             }
             else
             {
-                TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
+                TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init]; //needtofix
                 teamInfoController.teamName = [defaults objectForKey:@"team_name"];
                 NSLog(@"team_name from defaults in dashboard: %@",[defaults objectForKey:@"team_name"]);
                 teamInfoController.isJoiningTeam = NO;

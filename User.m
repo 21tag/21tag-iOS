@@ -46,7 +46,7 @@
         PHONE					= @"phone";
         EMAIL					= @"email";
         FID						= @"fid";
-        TEAM					= @"team";
+        TEAM					= @"team_id";
         TEAMNAME				= @"teamname";
         FBAUTHCODE				= @"fb_authcode";
         CURRENTVENUEID			= @"currentVenueId";

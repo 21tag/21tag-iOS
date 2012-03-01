@@ -170,6 +170,7 @@
     NSDictionary *teamData = [standingsArray objectAtIndex:indexPath.row];
     NSString *teamName = ((Team*)[teamData objectForKey:@"team"]).name;
     
+    teamInfoController.teamId = ((Team*)[teamData objectForKey:@"team"]).getId;
     teamInfoController.teamName = teamName;
     teamInfoController.isJoiningTeam = NO;
     teamInfoController.dashboardController = dashboardController;
