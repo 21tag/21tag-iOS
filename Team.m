@@ -16,6 +16,7 @@
 @synthesize users;
 @synthesize venues;
 @synthesize history;
+@synthesize points;
 
 
 -(id)init
@@ -30,6 +31,7 @@
         VENUES			= @"venues";
         HISTORY			= @"history";  
         MOTTO           = @"moto";
+        POINTS          = @"points";
     }
     return self;
 }
@@ -46,6 +48,7 @@
     self.venues = [NSSet setWithArray:[fields objectForKey:VENUES]];
     
     self.history = [fields objectForKey:HISTORY];
+    self.points = [fields objectForKey:POINTS];
 }
 
 -(NSString *) description

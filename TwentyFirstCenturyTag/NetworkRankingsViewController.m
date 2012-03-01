@@ -92,7 +92,8 @@
 {
     NSLog(@"standings response: %@", [request responseString]);
     NSData *requestData = [request responseData];
-    standingsResponse = [[StandingsResp alloc] initWithData:requestData];
+    //standingsResponse = [[StandingsResp alloc] initWithData:requestData];
+    teamsResponse = [[TeamsResp alloc] initWithData:requestData];
     
     /*NSMutableArray *standingsTempArray = [NSMutableArray arrayWithArray:standingsResponse.teams];
     
@@ -101,7 +102,12 @@
     
     standingsArray = standingsTempArray;*/
     
-    standingsArray = standingsResponse.teams;
+    standingsArray = teamsResponse.teams;
+    if ([standingsArray count] > 10)
+         standingsArray = [standingsArray subarrayWithRange:NSMakeRange(0, 10)];
+    [standingsArray retain];
+    
+    //standingsArray = standingsResponse.teams;
     
     if(HUD)
         [HUD hide:YES];
@@ -150,9 +156,9 @@
         cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"] autorelease];
     }
     
-    NSDictionary *teamData = [standingsArray objectAtIndex:indexPath.row];
-    NSString *teamName = ((Team*)[teamData objectForKey:@"team"]).name;
-    int points = [[teamData objectForKey:@"points"] intValue];
+    //NSDictionary *teamData = [standingsArray objectAtIndex:indexPath.row];
+    NSString *teamName = ((Team*)[standingsArray objectAtIndex:indexPath.row]).name;
+    int points = [((Team*)[standingsArray objectAtIndex:indexPath.row]).points intValue];
     
     NSString *textLabel = [NSString stringWithFormat:@"%d. %@",indexPath.row+1,teamName];
     NSString *detailTextLabel = [NSString stringWithFormat:@"     %d points",points];
@@ -167,10 +173,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
-    NSDictionary *teamData = [standingsArray objectAtIndex:indexPath.row];
-    NSString *teamName = ((Team*)[teamData objectForKey:@"team"]).name;
+    //NSDictionary *teamData = [standingsArray objectAtIndex:indexPath.row];
+    NSString *teamName = ((Team*)[standingsArray objectAtIndex:indexPath.row]).name;
     
-    teamInfoController.teamId = ((Team*)[teamData objectForKey:@"team"]).getId;
+    teamInfoController.teamId = ((Team*)[standingsArray objectAtIndex:indexPath.row]).getId;
     teamInfoController.teamName = teamName;
     teamInfoController.isJoiningTeam = NO;
     teamInfoController.dashboardController = dashboardController;

@@ -16,12 +16,14 @@
 	NSString *VENUES;
 	NSString *HISTORY;
     NSString *MOTTO;
+    NSString *POINTS;
     
     NSString *name;
     NSString *leader;
     NSSet *users;
     NSSet *venues;
     NSArray *history;
+    NSString *points;
 }
 
 @property (nonatomic, retain) NSString *name;
@@ -29,5 +31,6 @@
 @property (nonatomic, retain) NSSet *users;
 @property (nonatomic, retain) NSSet *venues;
 @property (nonatomic, retain) NSArray *history;
+@property (nonatomic, retain) NSString *points;
 
 @end

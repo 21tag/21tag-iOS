@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "StandingsResp.h"
+#import "TeamsResp.h"
 #import "MBProgressHUD.h"
 #import "DashboardViewController.h"
 
 @interface NetworkRankingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate>
 {
+    TeamsResp *teamsResponse;
     StandingsResp *standingsResponse;
     MBProgressHUD *HUD;
     NSArray *standingsArray;
