@@ -141,6 +141,7 @@
             TeamData *teamData = [teamsByFBIDS.data objectAtIndex:i];
             NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
             [cellInfo setObject:teamData.name forKey:@"textLabel"];
+            [cellInfo setObject:teamData.team_id forKey:@"team_id"];
             NSString *friends;
             NSString *members;
             if(teamData.numFriends > 1)
@@ -268,6 +269,7 @@
         TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
         teamInfoController.isJoiningTeam = YES;
         teamInfoController.teamName = [[contentList objectAtIndex:indexPath.row] objectForKey:@"textLabel"];
+        teamInfoController.teamId = [[contentList objectAtIndex:indexPath.row] objectForKey:@"team_id"];
         [self.navigationController pushViewController:teamInfoController animated:YES];
         [teamInfoController release];
     }

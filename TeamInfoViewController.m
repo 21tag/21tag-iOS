@@ -500,7 +500,7 @@
     
     //http://21tag.com:8689/getteam?team=moo&details=true
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],@"8"]]; //V1 "/getteam" //changeback
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],teamId]]; //V1 "/getteam" 
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     //[request setPostValue:teamNameLabel.text forKey:@"team"];
     //[request setPostValue:@"true" forKey:@"details"];
