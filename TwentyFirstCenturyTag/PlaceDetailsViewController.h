@@ -12,6 +12,7 @@
 #import "POIDetailResp.h"
 #import "Events.h"
 #import "MBProgressHUD.h"
+#import "TeamsResp.h"
 
 @interface PlaceDetailsViewController : UIViewController <UITableViewDataSource, MBProgressHUDDelegate, UIActionSheetDelegate> {
     

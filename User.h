@@ -48,8 +48,8 @@
     NSString *teamname;
     NSString *currentVenueId;
     NSString *currentVenueName;
-    NSTimeInterval currentVenueTime;
-    NSTimeInterval currentVenueLastTime;
+    NSString *currentVenueTime;
+    NSString *currentVenueLastTime;
     NSDictionary *poiPoints;
     
     NSString *points;
@@ -69,8 +69,8 @@
 @property (nonatomic, retain) NSString *teamId;
 @property (nonatomic, retain) NSString *currentVenueId;
 @property (nonatomic, retain) NSString *currentVenueName;
-@property NSTimeInterval currentVenueTime;
-@property NSTimeInterval currentVenueLastTime;
+@property (nonatomic, retain) NSString *currentVenueTime;
+@property (nonatomic, retain) NSString *currentVenueLastTime;
 @property (nonatomic, retain) NSString *points;
 @property (nonatomic, retain) NSDictionary *poiPoints;
 @property (nonatomic, retain) NSDictionary *venuedata;

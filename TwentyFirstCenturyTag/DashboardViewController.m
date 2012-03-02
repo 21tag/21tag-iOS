@@ -31,7 +31,7 @@
 @synthesize facebook;
 @synthesize navigationTableView;
 @synthesize contentList;
-@synthesize user;
+@synthesize user,team;
 @synthesize checkinTimer;
 @synthesize currentVenue;
 @synthesize currentLocation;
@@ -530,14 +530,15 @@
     {
         if(checkinTime)
         {
-            NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenNow:[[NSDate date] timeIntervalSince1970] then:[checkinTime timeIntervalSince1970]];
+            
+            NSString * timeString = [APIUtil StringWithTimeSince:checkinTime];
             
             cell.detailTextLabel.text = timeString;
             nameLabel.text = @"Currently Checked In";
         }
         else if(user.currentVenueTime)
         {
-            NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenNow:[[NSDate date] timeIntervalSince1970] then:user.currentVenueTime];
+            NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenThen:user.currentVenueTime];
             
             cell.detailTextLabel.text = [NSString stringWithFormat:@"Last checked in: %@ ago",timeString];
             nameLabel.text = @"Not Checked In";

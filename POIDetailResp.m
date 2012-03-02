@@ -46,13 +46,14 @@
     self.points = [[[fields objectForKey:OWNER] objectForKey:TEAMPOINTS] intValue];
     
     NSArray * rawHistory = [fields objectForKey:HISTORY];
-    
+    NSMutableArray * tempHistory = [[NSMutableArray alloc] initWithCapacity:[rawHistory count]];
     for (int i =0; i<[rawHistory count]; i++)
     {
         Event * event = [[Event alloc] initWithDictionary:[rawHistory objectAtIndex:i]];
-        [history addObject:event];
+        NSLog(@"Event msg: %@",event.msg);
+        [tempHistory addObject:event];
     }
-    [history retain];
+    history = tempHistory;
     
     NSLog(@"Venue: %@",poi);
 }

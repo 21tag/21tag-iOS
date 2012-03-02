@@ -16,8 +16,12 @@
 }
 
 +(NSString*) host;
-+(NSString*)stringWithTimeDifferenceBetweenNow:(NSTimeInterval)now then:(NSTimeInterval)then;
++(NSString*)stringWithTimeDifferenceBetweenThen:(NSString*)then;
++(NSString*)stringwithFormatFrom:(NSTimeInterval)time;
++(NSTimeInterval) timeIntervalFromThen:(NSString *)then;
++(NSString*) StringWithTimeSince:(NSDate *)then;
 +(CLLocationDistance)minDistanceMeters;
+
 +(int)minDistanceFeet;
 
 

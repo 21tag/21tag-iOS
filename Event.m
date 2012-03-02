@@ -43,7 +43,7 @@
     self.teamid = [fields objectForKey:TEAMID];
     self.msg = [fields objectForKey:MSG];
     self.points = [fields objectForKey:POINTS];
-    self.time = [[fields objectForKey:TIME] doubleValue] / 1000;
+    self.time = [fields objectForKey:TIME];
 }
 
 

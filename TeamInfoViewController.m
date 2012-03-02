@@ -98,11 +98,9 @@
                 User *user = (User*)element;
                 NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
                 [cellInfo setObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname] forKey:@"textLabel"];
-                NSTimeInterval currentVenueTime =  user.currentVenueTime;
-                NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
                 
-                NSTimeInterval time = currentTime - currentVenueTime;
-                NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenNow:currentTime then:currentVenueTime];
+                NSTimeInterval time = [APIUtil timeIntervalFromThen:user.currentVenueLastTime];
+                NSString *timeString = [APIUtil stringwithFormatFrom:time];
                 
                 if(user.currentVenueName)
                     [cellInfo setObject:[NSString stringWithFormat:@"%@ %@ ago",user.currentVenueName,timeString] forKey:@"detailTextLabel"];

@@ -131,23 +131,23 @@
         teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
         NSArray *users = teamsResponse.users;
         NSMutableArray *userList = [[NSMutableArray alloc] initWithCapacity:[users count]];
-        for(id element in users)
+        for(id element in user.history)
         {
-            User *teamUser = (User*)element;
+            Event *event = (Event*)element;
             NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
-            [cellInfo setObject:[NSString stringWithFormat:@"%@ %@",teamUser.firstname,teamUser.lastname] forKey:@"textLabel"];
-            NSTimeInterval currentVenueTime =  teamUser.currentVenueTime;
-            NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+            [cellInfo setObject:[NSString stringWithFormat:@"%@",event.msg] forKey:@"textLabel"];
+            //NSTimeInterval currentVenueTime =  teamUser.currentVenueTime;
+            //NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
             
-            NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenNow:currentTime then:currentVenueTime];
+            NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenThen:event.time];
             
-            NSTimeInterval time = currentTime - currentVenueTime;
-            if(teamUser.currentVenueName)
-                [cellInfo setObject:[NSString stringWithFormat:@"%@ %@ ago",teamUser.currentVenueName,timeString] forKey:@"detailTextLabel"];
+            NSTimeInterval time = [APIUtil timeIntervalFromThen:event.time];
+            if(event.time)
+                [cellInfo setObject:[NSString stringWithFormat:@"%@ ago",timeString] forKey:@"detailTextLabel"];
             else
                 [cellInfo setObject:@"Inactive" forKey:@"detailTextLabel"];
             [cellInfo setObject:[NSNumber numberWithDouble:time] forKey:@"time"];
-            [cellInfo setObject:teamUser forKey:@"user"];
+            [cellInfo setObject:event forKey:@"user"];
             [userList addObject:cellInfo];
         }
 

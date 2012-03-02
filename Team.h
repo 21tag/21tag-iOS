@@ -18,6 +18,7 @@
 	NSString *HISTORY;
     NSString *MOTTO;
     NSString *POINTS;
+    NSString *POIPOINTS;
     
     NSString *name;
     NSString *leader;
@@ -25,6 +26,7 @@
     NSSet *venues;
     NSMutableArray *history;
     NSString *points;
+    NSDictionary *poiPoints;
 }
 
 @property (nonatomic, retain) NSString *name;
@@ -33,5 +35,6 @@
 @property (nonatomic, retain) NSSet *venues;
 @property (nonatomic, retain) NSMutableArray *history;
 @property (nonatomic, retain) NSString *points;
+@property (nonatomic, retain) NSDictionary *poiPoints;
 
 @end

@@ -21,7 +21,7 @@
 	NSString *userid;
 	NSString *teamid;
 	NSString *msg;
-	NSTimeInterval time;
+	NSString *time;
 }
 
 @property (nonatomic, retain) NSString *venueid;
@@ -29,6 +29,6 @@
 @property (nonatomic, retain) NSString *teamid;
 @property (nonatomic, retain) NSString *msg;
 @property (nonatomic, retain) NSString *points;
-@property NSTimeInterval time;
+@property (nonatomic, retain) NSString *time;
 
 @end

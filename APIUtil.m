@@ -17,13 +17,16 @@
     //return @"http://21tag.com:8689";
 }
 
-+(NSString*)stringWithTimeDifferenceBetweenNow:(NSTimeInterval)now then:(NSTimeInterval)then
++(NSString*)stringWithTimeDifferenceBetweenThen:(NSString *)then
 {
-    NSTimeInterval currentVenueTime = then;
-    NSTimeInterval currentTime = now;
+    NSTimeInterval time;
+    time = [self timeIntervalFromThen:then];
     
-    NSTimeInterval time = currentTime - currentVenueTime;
-    
+    return [self stringwithFormatFrom:time];
+}
+
++(NSString*)stringwithFormatFrom:(NSTimeInterval)time
+{
     int hour, minute, second, day;
     hour = time / 3600;
     minute = (time - hour * 3600) / 60;
@@ -43,6 +46,27 @@
         timeString = [NSString stringWithFormat:@"%d hours %d minutes", hour, minute];
     
     return timeString;
+    
+}
++(NSTimeInterval) timeIntervalFromThen:(NSString *)then
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    NSLocale *enUS = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormat setLocale:enUS];
+    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss z"];
+    NSDate *date = [dateFormat dateFromString:then];
+    
+    NSTimeInterval time = [date timeIntervalSinceNow];
+    time = time *-1;
+    return time;
+    
+}
+
++(NSString*) StringWithTimeSince:(NSDate *)then
+{
+    NSTimeInterval time = [then timeIntervalSinceNow];
+    return [self stringwithFormatFrom:time];
+    
 }
 
 +(CLLocationDistance)minDistanceMeters

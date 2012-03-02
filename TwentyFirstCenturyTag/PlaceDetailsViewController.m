@@ -115,7 +115,7 @@
         self.navigationItem.rightBarButtonItem = checkoutButton;
 
     }
-    else if(request.tag == 3)
+    /*else if(request.tag == 3)
     {
         NSLog(@"events: %@",[request responseString]);
         
@@ -152,6 +152,19 @@
         }
         contentList = eventsList;
         [detailsTableView reloadData];
+    }
+     */
+    else if(request.tag == 4)
+    {
+        NSLog(@"team info:\n%@",[request responseString]);
+        
+        Team * team = [[Team alloc] initWithData:[request responseData]];
+        
+        if ([team.poiPoints objectForKey:[venue getId]])
+             yourTeamPointsLabel.text = [team.poiPoints objectForKey:[venue getId]];
+        else
+            yourTeamPointsLabel.text = @"0";
+             
     }
             
 }
@@ -298,13 +311,22 @@
     //[activityIndicator startAnimating];
     
     //String user, String team, String venue, long time, int num
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getevents",[APIUtil host]]];
+    /*NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getevents",[APIUtil host]]];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request setPostValue:[venue getId] forKey:@"venue"];
     [request setPostValue:[NSString stringWithFormat:@"%d",1000 * 60 * 60 * 24 * 3] forKey:@"time"];
     [request setPostValue:@"10" forKey:@"num"];
     [request setTag:3];
     [request setDelegate:self];
+    [request startAsynchronous];
+     */
+    User *user = dashboardController.user;
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],user.teamId]]; //V1 "/getteam"
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setRequestMethod:@"GET"];
+    [request setDelegate:self];
+    [request setTag:4];
     [request startAsynchronous];
     
     NSLog(@"get events for venue id: %@",[venue getId]);
@@ -315,16 +337,71 @@
         yourTeamPointsLabel.text = owningTeamPointsLabel.text;
     else
     {
-        
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],user.teamId]]; //V1 "/getteam"
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        [request setRequestMethod:@"GET"];
+        [request setDelegate:self];
+        [request setTag:4];
+        [request startAsynchronous];
         
     }
     
-    User *user = dashboardController.user;
+    
+    //NSLog(@"User's points at venue: %@",[user.poiPoints allKeys]);
     
     if([user.poiPoints objectForKey:[venue getId]])
         yourPointsLabel.text = [user.poiPoints objectForKey:[venue getId]];
     else
         yourPointsLabel.text=@"0";
+    
+    NSLog(@"events list: %@",poiResponse.history);
+    
+    //Load events
+    NSMutableArray *eventsList = [[NSMutableArray alloc] initWithCapacity:[poiResponse.history count]];
+    
+    NSLog(@"History count: %d",[poiResponse.history count]);
+    
+    for(Event *event in poiResponse.history)
+    {
+        NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
+        [cellInfo setObject:event.msg forKey:@"textLabel"];
+        /*
+        //NSTimeInterval currentVenueTime =  event.time;
+        //NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        NSLocale *enUS = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+        [dateFormat setLocale:enUS];
+        [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss z"];
+        NSDate *date = [dateFormat dateFromString:event.time];
+        
+        NSTimeInterval time = [date timeIntervalSinceNow];
+        time = time *-1;
+        
+        int hour, minute, second, day;
+        hour = time / 3600;
+        minute = (time - hour * 3600) / 60;
+        second = (time - hour * 3600 - minute * 60);
+        
+        if(hour >= 24)
+        {
+            day = hour / 24;
+            hour = hour - (day * 24);
+            timeString = [NSString stringWithFormat:@"%d days %d hours", day, hour];
+        }
+        else
+            timeString = [NSString stringWithFormat:@"%d hours %d minutes", hour, minute];
+        */
+        NSString *timeString;
+        timeString = [APIUtil stringWithTimeDifferenceBetweenThen:event.time];
+        
+        [cellInfo setObject:[NSString stringWithFormat:@"%@ ago",timeString] forKey:@"detailTextLabel"];
+        [eventsList addObject:cellInfo];
+        
+    }
+    contentList = eventsList;
+    NSLog(@"Content List: %@",contentList);
+    [detailsTableView reloadData];
+    
 } 
 
 - (IBAction)checkinButtonPressed:(id)sender 

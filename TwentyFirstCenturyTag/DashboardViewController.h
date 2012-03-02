@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Facebook.h"
 #import "User.h"
+#import "Team.h"
 #import "LocationController.h"
 #import "MBProgressHUD.h"
 
@@ -26,6 +27,7 @@
     
     User *user;
     Venue *currentVenue;
+    Team *team;
     
     NSTimer *checkinTimer;
     LocationController *locationController;
@@ -49,6 +51,7 @@
 @property (nonatomic, retain) CLLocation *currentLocation;
 @property (nonatomic, retain) NSDate *checkinTime;
 @property (nonatomic, retain) LocationController *locationController;
+@property (nonatomic, retain) Team *team;
 
 @property (nonatomic, retain) UIBarButtonItem *checkinButton;
 @property (nonatomic, retain) UIBarButtonItem *checkoutButton;

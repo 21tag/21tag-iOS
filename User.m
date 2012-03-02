@@ -78,8 +78,8 @@
     fb_authcode = [[fields objectForKey:FBAUTHCODE] retain];
     currentVenueId = [[fields objectForKey:CURRENTVENUEID] retain];
     currentVenueName = [[fields objectForKey:CURRENTVENUENAME] retain];
-    currentVenueTime = [[fields objectForKey:CURRENTVENUETIME] doubleValue] / 1000;
-    currentVenueLastTime = [[fields objectForKey:CURRENTVENUELASTTIME] doubleValue] / 1000;
+    currentVenueTime = [fields objectForKey:CURRENTVENUETIME];
+    currentVenueLastTime = [fields objectForKey:CURRENTVENUELASTTIME];
     teamName = [[fields objectForKey:TEAMNAME] retain];
     teamId = [[fields objectForKey:TEAM] retain];
     
@@ -91,22 +91,25 @@
     NSMutableDictionary *pointsDictionary = [[NSMutableDictionary alloc] initWithCapacity:[rawPoiPoints count]]; 
     for(int i = 0; i < [rawPoiPoints count]; i++)
     {
-        NSString * tempPoiId = [[rawPoiPoints objectAtIndex:i] objectForKey:@"id"];
-        NSString * tempPoiPoints = [[rawPoiPoints objectAtIndex:i] objectForKey:@"pts"];
+        NSString * tempPoiId = [NSString stringWithFormat:@"%@",[[rawPoiPoints objectAtIndex:i] objectForKey:@"poi"]];
+        NSString * tempPoiPoints = [NSString stringWithFormat:@"%@", [[rawPoiPoints objectAtIndex:i] objectForKey:@"pts"]];
+        NSLog(@"input poi pts: %@",[tempPoiId class]);
         
-        //[pointsDictionary setObject:tempPoiPoints forKey:tempPoiId];
+        if(tempPoiId)
+            [pointsDictionary setObject:tempPoiPoints forKey:tempPoiId];
     }
     poiPoints = pointsDictionary;
     
     NSArray * rawHistory = [fields objectForKey:HISTORY];
+    NSMutableArray * tempHistory = [[NSMutableArray alloc] initWithCapacity:[rawHistory count]];
     
     for (int i =0; i<[rawHistory count]; i++)
     {
         Event * event = [[Event alloc] initWithDictionary:[rawHistory objectAtIndex:i]];
-        [history addObject:event];
+        [tempHistory addObject:event];
     }
     
-    [history retain];
+    history = tempHistory;
 }
 
 -(NSData*) toJSON;
