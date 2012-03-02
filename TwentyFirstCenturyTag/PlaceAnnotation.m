@@ -51,6 +51,7 @@
 - (CLLocationCoordinate2D) coordinate {
 	//CLLocationCoordinate2D coord = {self.latitude, self.longitude};
 	//return coord;
+    //NSLog(@"PoiResponse description: %@", poiResponse.description);
     return [poiResponse.poi getLocation].coordinate;
 }
 - (NSString *) title {
@@ -62,10 +63,10 @@
     //NSLog(@"%@",venue.address);
 
     NSString *subtitle;
-    if(poiResponse.points == 0 && !poiResponse.owner.name)
+    if(!poiResponse.ownerId)
          subtitle = @"Up for grabs!";
     else
-         subtitle = [NSString stringWithFormat:@"%ld pts Team: %@",poiResponse.points, poiResponse.owner.name];
+         subtitle = [NSString stringWithFormat:@"%ld pts Team: %@",poiResponse.points, poiResponse.ownerName];
     return subtitle;
 }
 @end

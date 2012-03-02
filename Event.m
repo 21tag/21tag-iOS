@@ -15,17 +15,19 @@
 @synthesize teamid;
 @synthesize msg;
 @synthesize time;
+@synthesize points;
 
 - (id)init
 {
     self = [super init];
     if (self) {
         APITYPE			= @"Event";
-        VENUEID			= @"vid";
-        USERID			= @"uid";
-        TEAMID			= @"tid";
-        MSG				= @"msg";
-        TIME			= @"time";    
+        VENUEID			= @"poi_id";
+        USERID			= @"user_id";
+        TEAMID			= @"team_id";
+        MSG				= @"message";
+        TIME			= @"time";  
+        POINTS          = @"points";
     }
     
     return self;
@@ -36,11 +38,12 @@
 {
     [super parseDictionary:fields];
         
-    venueid = [[fields objectForKey:VENUEID] retain];
-    userid = [[fields objectForKey:USERID] retain];
-    teamid = [[fields objectForKey:TEAMID] retain];
-    msg = [[fields objectForKey:MSG] retain];
-    time = [[fields objectForKey:TIME] doubleValue] / 1000;
+    self.venueid = [fields objectForKey:VENUEID];
+    self.userid = [fields objectForKey:USERID];
+    self.teamid = [fields objectForKey:TEAMID];
+    self.msg = [fields objectForKey:MSG];
+    self.points = [fields objectForKey:POINTS];
+    self.time = [[fields objectForKey:TIME] doubleValue] / 1000;
 }
 
 

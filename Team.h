@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "APIObj.h"
+#import "Event.h"
 
 @interface Team : APIObj {
   	NSString *NAME;
@@ -22,7 +23,7 @@
     NSString *leader;
     NSSet *users;
     NSSet *venues;
-    NSArray *history;
+    NSMutableArray *history;
     NSString *points;
 }
 
@@ -30,7 +31,7 @@
 @property (nonatomic, retain) NSString *leader;
 @property (nonatomic, retain) NSSet *users;
 @property (nonatomic, retain) NSSet *venues;
-@property (nonatomic, retain) NSArray *history;
+@property (nonatomic, retain) NSMutableArray *history;
 @property (nonatomic, retain) NSString *points;
 
 @end

@@ -29,7 +29,7 @@
         LEADER			= @"leader";
         USERS			= @"members";
         VENUES			= @"venues";
-        HISTORY			= @"history";  
+        HISTORY			= @"events";  
         MOTTO           = @"moto";
         POINTS          = @"points";
     }
@@ -47,7 +47,17 @@
     self.users = [NSSet setWithArray:[fields objectForKey:USERS]];
     self.venues = [NSSet setWithArray:[fields objectForKey:VENUES]];
     
-    self.history = [fields objectForKey:HISTORY];
+    NSArray * rawHistory = [fields objectForKey:HISTORY];
+    
+    for (int i =0; i<[rawHistory count]; i++)
+    {
+        Event * event = [[Event alloc] initWithDictionary:[rawHistory objectAtIndex:i]];
+        [history addObject:event];
+    }
+    
+    [history retain];
+    
+    
     self.points = [fields objectForKey:POINTS];
 }
 

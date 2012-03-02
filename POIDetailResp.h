@@ -17,17 +17,26 @@
 	NSString *OWNER;
 	NSString *POINTS;
 	NSString *USERS;
+    NSString *NAME;
+    NSString *TEAMID;
+    NSString *TEAMPOINTS;
+    NSString *HISTORY;
+    
 	
 	Venue *poi;
-	Team *owner;
-	long points;
+	NSString *ownerId;
+    NSString *ownerName;
+	int points;
 	NSArray *users;
+    NSMutableArray *history;
 }
 
 @property (nonatomic, retain) 	Venue *poi;
-@property (nonatomic, retain) 	Team *owner;
-@property long points;
+@property (nonatomic, retain) 	NSString *ownerId;
+@property (nonatomic, retain)   NSString *ownerName;
+@property int points;
 @property (nonatomic, retain) 	NSArray *users;
+@property (nonatomic, retain)   NSMutableArray *history;
 
 
 @end

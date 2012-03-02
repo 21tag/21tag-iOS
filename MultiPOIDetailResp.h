@@ -12,7 +12,7 @@
 @interface MultiPOIDetailResp  : APIObj {
     NSString* POIS;
     
-    
+    NSArray *pois;
 }
 
 @property (nonatomic, retain) NSArray *pois;

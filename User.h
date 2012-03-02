@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "APIObj.h"
 #import "Venue.h"
+#import "Event.h"
 
 @interface User : APIObj {
 //private
@@ -49,6 +50,7 @@
     NSString *currentVenueName;
     NSTimeInterval currentVenueTime;
     NSTimeInterval currentVenueLastTime;
+    NSDictionary *poiPoints;
     
     NSString *points;
     NSDictionary *venuedata;
@@ -63,13 +65,14 @@
 @property (nonatomic, retain) NSString *email;
 @property (nonatomic, retain) NSString *fid;
 @property (nonatomic, retain) NSString *fb_authcode;
-@property (nonatomic, retain) NSString *team;
-@property (nonatomic, retain) NSString *teamname;
+@property (nonatomic, retain) NSString *teamName;
+@property (nonatomic, retain) NSString *teamId;
 @property (nonatomic, retain) NSString *currentVenueId;
 @property (nonatomic, retain) NSString *currentVenueName;
 @property NSTimeInterval currentVenueTime;
 @property NSTimeInterval currentVenueLastTime;
 @property (nonatomic, retain) NSString *points;
+@property (nonatomic, retain) NSDictionary *poiPoints;
 @property (nonatomic, retain) NSDictionary *venuedata;
 @property (nonatomic, retain) NSMutableArray *history;
 

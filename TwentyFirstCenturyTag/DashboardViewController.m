@@ -307,8 +307,11 @@
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             user = [[User alloc] initWithData:[request responseData]];
-            //[defaults setObject:[user getId] forKey:@"user_id"]; //changeback
-            [defaults setObject:@"18" forKey:@"user_id"];
+            [defaults setObject:[user getId] forKey:@"user_id"];
+            [defaults setObject:user.teamId forKey:@"team_id"];
+            [defaults setObject:user.teamName forKey:@"team_name"];
+            [defaults setObject:user.fid forKey:@"id"];
+            //[defaults setObject:@"18" forKey:@"user_id"];
             [defaults synchronize];
             
             NSLog(@"logged in: %@", [user getId]);
@@ -340,8 +343,8 @@
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             user = [[User alloc] initWithData:[request responseData]];
-            [defaults setObject:[user getId] forKey:@"user_id"]; //changeback
-            [defaults setObject:@"18" forKey:@"user_id"];
+            [defaults setObject:[user getId] forKey:@"user_id"];
+            //[defaults setObject:@"18" forKey:@"user_id"];
             [defaults removeObjectForKey:@"team_name"];
             [defaults removeObjectForKey:@"team_id"];
             [defaults synchronize];
@@ -385,6 +388,7 @@
         NSLog(@"poi resp: %@",[request responseString]);
         
         POIDetailResp *poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
+        //NSLog(@"POI Response: %@",poiResponse.poi.name);
         
         PlaceDetailsViewController *placeDetailsController = [[PlaceDetailsViewController alloc] init];
         placeDetailsController.poiResponse = poiResponse;
@@ -415,7 +419,8 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             user = [[User alloc] initWithData:[request responseData]];
             [defaults setObject:[user getId] forKey:@"user_id"];
-            [defaults setObject:user.team forKey:@"team_name"];
+            [defaults setObject:user.teamName forKey:@"team_name"];
+            [defaults setObject:user.teamId forKey:@"team_id"];
             [defaults synchronize];
             
             NSLog(@"logged in: %@", [user getId]);
@@ -438,6 +443,8 @@
                 [HUD hide:YES];
         }      
     }
+    NSLog(@"user teamName after request: %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"team_name"]);
+    NSLog(@"user teamId after request: %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"team_id"]);
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -589,7 +596,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    if(![defaults objectForKey:@"team_name"])
+    if(![defaults objectForKey:@"team_id"])
     {
         JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
         [self.navigationController pushViewController:joinTeamController animated:NO];
@@ -777,7 +784,7 @@
         else if(indexPath.row == 2) // Your Team
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            if(![defaults objectForKey:@"team_name"])
+            if(![defaults objectForKey:@"team_id"])
             {
                 JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
                 [self.navigationController pushViewController:joinTeamController animated:YES];
@@ -787,6 +794,8 @@
             {
                 TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init]; //needtofix
                 teamInfoController.teamName = [defaults objectForKey:@"team_name"];
+                teamInfoController.teamId = [defaults objectForKey:@"team_id"];
+                
                 NSLog(@"team_name from defaults in dashboard: %@",[defaults objectForKey:@"team_name"]);
                 teamInfoController.isJoiningTeam = NO;
                 teamInfoController.dashboardController = self;

@@ -13,8 +13,10 @@
 
 @synthesize poi;
 @synthesize points;
-@synthesize owner;
+@synthesize ownerId;
+@synthesize ownerName;
 @synthesize users;
+@synthesize history;
 
 -(id)init
 {
@@ -23,9 +25,13 @@
     {
         APITYPE			= @"POIDetailResp";
         POI				= @"poi";
-        OWNER			= @"owner";
+        OWNER			= @"tag_owner";
         POINTS			= @"points";
         USERS			= @"users";
+        NAME            = @"name";
+        TEAMID          = @"id";
+        TEAMPOINTS      = @"points";
+        HISTORY         = @"events";
     }
     return self;
 }
@@ -34,17 +40,26 @@
 {
     [super parseDictionary:fields];
     
-    poi = [[Venue alloc] initWithDictionary:[fields objectForKey:POI]];
-    owner = [[Team alloc] initWithDictionary:[fields objectForKey:OWNER]];
-    points = [[fields objectForKey:POINTS] longValue];
+    self.poi = [[[Venue alloc] initWithDictionary:fields]retain];
+    self.ownerId = [[fields objectForKey:OWNER] objectForKey:TEAMID];
+    self.ownerName = [[fields objectForKey:OWNER] objectForKey:NAME];
+    self.points = [[[fields objectForKey:OWNER] objectForKey:TEAMPOINTS] intValue];
     
-    NSArray *rawUsersArray = [fields objectForKey:USERS];
-    NSMutableArray *usersArray = [[NSMutableArray alloc] initWithCapacity:[rawUsersArray count]];
-    for(int i = 0; i < [rawUsersArray count]; i++)
+    NSArray * rawHistory = [fields objectForKey:HISTORY];
+    
+    for (int i =0; i<[rawHistory count]; i++)
     {
-        [usersArray addObject:[[User alloc] initWithDictionary:[rawUsersArray objectAtIndex:i]]];
+        Event * event = [[Event alloc] initWithDictionary:[rawHistory objectAtIndex:i]];
+        [history addObject:event];
     }
-    users = usersArray;
+    [history retain];
+    
+    NSLog(@"Venue: %@",poi);
+}
+
+-(NSString *)description
+{
+    return self.poi.description;
 }
 
 @end

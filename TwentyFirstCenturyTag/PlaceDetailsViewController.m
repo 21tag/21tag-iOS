@@ -290,7 +290,7 @@
     //[detailsScrollView setContentSize:size];
     
     placeNameLabel.text = venue.name;
-    owningTeamNameLabel.text = poiResponse.owner.name;
+    owningTeamNameLabel.text = poiResponse.ownerName;
     owningTeamPointsLabel.text = [NSString stringWithFormat:@"%ld",poiResponse.points];
     
     //owningTeamNameLabel.text = poiResponse.owner.name;
@@ -311,7 +311,7 @@
     
     yourTeamNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"team_name"];
     
-    if([poiResponse.owner.name isEqualToString:yourTeamNameLabel.text])
+    if([poiResponse.ownerName isEqualToString:yourTeamNameLabel.text])
         yourTeamPointsLabel.text = owningTeamPointsLabel.text;
     else
     {
@@ -320,7 +320,11 @@
     }
     
     User *user = dashboardController.user;
-    yourPointsLabel.text = [[user.points objectForKey:[venue getId]] description];
+    
+    if([user.poiPoints objectForKey:[venue getId]])
+        yourPointsLabel.text = [user.poiPoints objectForKey:[venue getId]];
+    else
+        yourPointsLabel.text=@"0";
 } 
 
 - (IBAction)checkinButtonPressed:(id)sender 

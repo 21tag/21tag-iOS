@@ -21,8 +21,8 @@
 @synthesize email;
 @synthesize fid;
 @synthesize fb_authcode;
-@synthesize team;
-@synthesize teamname;
+@synthesize teamName;
+@synthesize teamId;
 @synthesize currentVenueId;
 @synthesize currentVenueName;
 @synthesize currentVenueTime;
@@ -30,6 +30,7 @@
 @synthesize points;
 @synthesize venuedata;
 @synthesize history;
+@synthesize poiPoints;
 
 -(id)init
 {
@@ -54,10 +55,10 @@
         CURRENTVENUETIME		= @"currentVenueTime";
         CURRENTVENUELASTTIME	= @"currentVenueLastTime";
         POINTS					= @"points";
-        POINT					= @"p";
+        POINT					= @"poi_pts";
         VENUE					= @"v";
         VENUEDATA				= @"venue_data";
-        HISTORY					= @"history";	
+        HISTORY					= @"events";	
     }
     return self;
 }
@@ -79,23 +80,33 @@
     currentVenueName = [[fields objectForKey:CURRENTVENUENAME] retain];
     currentVenueTime = [[fields objectForKey:CURRENTVENUETIME] doubleValue] / 1000;
     currentVenueLastTime = [[fields objectForKey:CURRENTVENUELASTTIME] doubleValue] / 1000;
-    team = [[fields objectForKey:TEAM] retain];
-    teamname = [[fields objectForKey:TEAMNAME] retain];
+    teamName = [[fields objectForKey:TEAMNAME] retain];
+    teamId = [[fields objectForKey:TEAM] retain];
     
     NSString *rawPoints = [fields objectForKey:POINTS];
     NSLog(@"Raw Points: %@",rawPoints);
     points = rawPoints;
     
-    NSArray *rawVenueArray =  [fields objectForKey:VENUEDATA];
-    NSMutableDictionary *venueDictionary = [[NSMutableDictionary alloc] initWithCapacity:[rawVenueArray count]]; 
-    for(int i = 0; i < [rawVenueArray count]; i++)
+    NSArray *rawPoiPoints =  [fields objectForKey:POINT];
+    NSMutableDictionary *pointsDictionary = [[NSMutableDictionary alloc] initWithCapacity:[rawPoiPoints count]]; 
+    for(int i = 0; i < [rawPoiPoints count]; i++)
     {
-        Venue *venue = [[Venue alloc] initWithDictionary:[rawVenueArray objectAtIndex:i]];
-        [venueDictionary setObject:venue forKey:[venue getId]];
+        NSString * tempPoiId = [[rawPoiPoints objectAtIndex:i] objectForKey:@"id"];
+        NSString * tempPoiPoints = [[rawPoiPoints objectAtIndex:i] objectForKey:@"pts"];
+        
+        //[pointsDictionary setObject:tempPoiPoints forKey:tempPoiId];
     }
-    venuedata = venueDictionary;
+    poiPoints = pointsDictionary;
     
-    history = [[fields objectForKey:HISTORY] retain];
+    NSArray * rawHistory = [fields objectForKey:HISTORY];
+    
+    for (int i =0; i<[rawHistory count]; i++)
+    {
+        Event * event = [[Event alloc] initWithDictionary:[rawHistory objectAtIndex:i]];
+        [history addObject:event];
+    }
+    
+    [history retain];
 }
 
 -(NSData*) toJSON;

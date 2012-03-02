@@ -15,6 +15,7 @@
 	NSString *TEAMID;
 	NSString *MSG;
 	NSString *TIME;
+    NSString *POINTS;
 	
 	NSString *venueid;
 	NSString *userid;
@@ -27,6 +28,7 @@
 @property (nonatomic, retain) NSString *userid;
 @property (nonatomic, retain) NSString *teamid;
 @property (nonatomic, retain) NSString *msg;
+@property (nonatomic, retain) NSString *points;
 @property NSTimeInterval time;
 
 @end

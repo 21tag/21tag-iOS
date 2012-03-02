@@ -179,13 +179,14 @@
 
     self.title = @"Profile";
     
-    NSString * team;
-    if(user.teamname)
-        team = user.teamname;
+   /* NSString * team;
+    if(user.teamName)
+        team = user.teamName;
     else
-        team = user.team;
+        team = user.teamId;
+    */
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],user.team]]; //V1 "/getteam"
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],user.teamId]]; //V1 "/getteam"
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     /*
     if(user.teamname)
@@ -269,10 +270,10 @@
 	
     if(indexPath.section == 0)
     {
-        if(user.teamname)
-            cell.textLabel.text = user.teamname;
+        if(user.teamName)
+            cell.textLabel.text = user.teamName;
         else
-            cell.textLabel.text = user.team;
+            cell.textLabel.text = user.teamId;
         
         if(teamsResponse)
         {
@@ -298,12 +299,12 @@
     {
         TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
         NSString *teamName;
-        if(user.teamname)
-            teamName = user.teamname;
+        if(user.teamName)
+            teamName = user.teamName;
         else
-            teamName = user.team;
-        teamInfoController.teamName = teamName;
-        teamInfoController.teamId = user.team;
+            teamName = user.teamId;
+        teamInfoController.teamName = user.teamName;
+        teamInfoController.teamId = user.teamId;
         teamInfoController.isJoiningTeam = NO;
         [self.navigationController pushViewController:teamInfoController animated:YES];
         [teamInfoController release];

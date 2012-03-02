@@ -122,8 +122,8 @@
         NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
         [cellInfo setObject:poiResp.poi.name forKey:@"textLabel"];
         NSString *detailTextLabel;
-        if(poiResp.owner.name)
-            detailTextLabel = [NSString stringWithFormat:@"%d pts %@",poiResp.points,poiResp.owner.name];
+        if(poiResp.ownerId)
+            detailTextLabel = [NSString stringWithFormat:@"%d pts %@",poiResp.points,poiResp.ownerName];
         else
             detailTextLabel = [NSString stringWithFormat:@"%d pts",poiResp.points];
         

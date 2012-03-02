@@ -21,6 +21,7 @@
 @synthesize geolong;
 @synthesize tag_playable;
 @synthesize tag_ownerid;
+@synthesize tag_ownername;
 
 -(id)init
 {
@@ -38,6 +39,7 @@
         GEOLONG			= @"geolong";
         TAGPLAYABLE		= @"tag_playable";
         TAGOWNER		= @"tag_owner";
+        TAGOWNERID      = @"id";
     }
     return self;
 }
@@ -46,16 +48,17 @@
 -(void) parseDictionary:(NSDictionary *)fields
 {
     [super parseDictionary:fields];
-    name = [[fields objectForKey:NAME] retain];
-    address = [[fields objectForKey:ADDRESS] retain];
-    crossstreet = [[fields objectForKey:CROSSSTREET] retain];
-    city = [[fields objectForKey:CITY] retain];
-    state = [[fields objectForKey:STATE] retain];
-    zip = [[fields objectForKey:ZIP] retain];
-    geolat = [[fields objectForKey:GEOLAT] doubleValue];
-    geolong = [[fields objectForKey:GEOLONG] doubleValue];
-    tag_playable = [[fields objectForKey:TAGPLAYABLE] boolValue];
-    tag_ownerid = [[fields objectForKey:TAGOWNER] retain];
+    self.name = [fields objectForKey:NAME];
+    self.address = [fields objectForKey:ADDRESS];
+    self.crossstreet = [fields objectForKey:CROSSSTREET];
+    self.city = [fields objectForKey:CITY];
+    self.state = [fields objectForKey:STATE];
+    self.zip = [fields objectForKey:ZIP];
+    self.geolat = [[fields objectForKey:GEOLAT] doubleValue];
+    self.geolong = [[fields objectForKey:GEOLONG] doubleValue];
+    self.tag_playable = [[fields objectForKey:TAGPLAYABLE] boolValue];
+    self.tag_ownerid = [[fields objectForKey:TAGOWNER] objectForKey:TAGOWNERID];
+    self.tag_ownername= [[fields objectForKey:TAGOWNER] objectForKey:NAME];
 }
 
 
@@ -71,8 +74,8 @@
 
 -(CLLocation*)getLocation
 {
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:geolat longitude:geolong];
-    return location;
+    NSLog(@"Lat: %f Lon: %f",geolat,geolong);
+    return [[CLLocation alloc] initWithLatitude:geolat longitude:geolong];
 }
 
 @end

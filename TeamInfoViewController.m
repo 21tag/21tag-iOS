@@ -277,9 +277,9 @@
     }
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/deletefromteam"
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/deletefromteam"
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:@"null",@"teamname",nil];
+    NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:@"0",@"new_team_id",nil];
     [request appendPostData:[dictionary JSONData]];
     //[request setPostValue:teamNameLabel.text forKey:@"team"];
     //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
@@ -428,11 +428,13 @@
 -(void)joinTeam
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/addtoteam"
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/addtoteam"
+    NSLog(@"url: %@",url);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     //[request setPostValue:teamNameLabel.text forKey:@"team"];
     //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
-    NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:teamNameLabel.text,@"teamName", nil];
+    NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:teamId,@"new_team_id", nil];
+    NSLog(@"add to team: %@",teamId);
     [request appendPostData:[dictionary JSONData]];
     [request addRequestHeader:@"Content-Type" value:@"application/json"];
     [request setRequestMethod:@"PATCH"];

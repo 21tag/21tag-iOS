@@ -19,7 +19,8 @@
     if(self)
     {
         APITYPE = @"MultiPOIDetailResp";
-        POIS = @"pois";
+        POIS = @"objects";
+        
     }
     return self;
 }
@@ -35,9 +36,11 @@
     for(int i = 0; i < [rawVenues count]; i++)
     {
         [poisList addObject:[[POIDetailResp alloc] initWithDictionary:[rawVenues objectAtIndex:i]]];
+        NSLog(@"each pois: %@",pois.description);
     }
     
-    pois = poisList;
+    self.pois = poisList;
+    //NSLog(@"all pois: %d",[pois count]);
 }
 
 @end
