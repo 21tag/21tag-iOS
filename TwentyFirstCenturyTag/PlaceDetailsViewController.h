@@ -27,6 +27,7 @@
     UILabel *owningTeamPointsLabel;
     UITableView *detailsTableView;
     NSMutableArray *contentList;
+    User * user;
     
     Venue *venue;
     POIDetailResp *poiResponse;
@@ -50,6 +51,7 @@
 
 @property (nonatomic, retain)     NSMutableArray *contentList;
 @property (nonatomic, retain) Venue *venue;
+@property (nonatomic, retain) NSString *venueId;
 @property (nonatomic, retain) DashboardViewController *dashboardController;
 @property (nonatomic, retain) MapViewController *mapViewController;
 @property (nonatomic, retain) POIDetailResp *poiResponse;
@@ -62,5 +64,6 @@
 -(void) backPressed;
 - (IBAction)checkinButtonPressed:(id)sender;
 -(void)checkoutButtonPressed;
+-(void)updateData;
 
 @end

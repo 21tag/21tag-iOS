@@ -31,6 +31,7 @@
 @synthesize mapViewController;
 @synthesize checkinButton;
 @synthesize checkoutButton;
+@synthesize venueId;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -154,7 +155,7 @@
         [detailsTableView reloadData];
     }
      */
-    else if(request.tag == 4)
+    else if(request.tag == 4) //team info
     {
         NSLog(@"team info:\n%@",[request responseString]);
         
@@ -166,7 +167,68 @@
             yourTeamPointsLabel.text = @"0";
              
     }
+    else if(request.tag == 5) //poi info
+    {
+        poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
+        venue = poiResponse.poi;
+        [self updateData];
+    }
+    else if(request.tag == 6) //user info
+    {
+        user = [[User alloc] initWithData:[request responseData]];
+        [self updateData];
+    }
             
+}
+
+-(void) updateUser
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],  [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"]]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setRequestMethod:@"GET"];
+    [request setDelegate:self];
+    [request setTag:6];
+    [request startAsynchronous];
+    
+}
+
+-(void) updateData
+{
+    placeNameLabel.text = venue.name;
+    owningTeamNameLabel.text = poiResponse.ownerName;
+    owningTeamPointsLabel.text = [NSString stringWithFormat:@"%ld",poiResponse.points];
+    
+    yourTeamNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"team_name"];
+    
+    if([poiResponse.ownerName isEqualToString:yourTeamNameLabel.text])
+        yourTeamPointsLabel.text = owningTeamPointsLabel.text;
+    
+    NSLog(@"Venue as: %@",user);
+    
+    if([user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]])
+        yourPointsLabel.text = [user.poiPoints objectForKey:[venue getId]];
+    else
+        yourPointsLabel.text=@"0";
+    
+    //Load events
+    NSMutableArray *eventsList = [[NSMutableArray alloc] initWithCapacity:[poiResponse.history count]];
+    
+    NSLog(@"History count: %d",[poiResponse.history count]);
+    
+    for(Event *event in poiResponse.history)
+    {
+        NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
+        [cellInfo setObject:event.msg forKey:@"textLabel"];
+        NSString *timeString;
+        timeString = [APIUtil stringWithTimeDifferenceBetweenThen:event.time];
+        
+        [cellInfo setObject:[NSString stringWithFormat:@"%@ ago",timeString] forKey:@"detailTextLabel"];
+        [eventsList addObject:cellInfo];
+        
+    }
+    contentList = eventsList;
+    [detailsTableView reloadData];
+
 }
 
 -(void)checkoutButtonPressed
@@ -320,14 +382,18 @@
     [request setDelegate:self];
     [request startAsynchronous];
      */
-    User *user = dashboardController.user;
+    user = dashboardController.user;
     
+    if(!user)
+        [self updateUser];
+    /*
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],user.teamId]]; //V1 "/getteam"
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setRequestMethod:@"GET"];
     [request setDelegate:self];
     [request setTag:4];
     [request startAsynchronous];
+     */
     
     NSLog(@"get events for venue id: %@",[venue getId]);
     
@@ -337,7 +403,8 @@
         yourTeamPointsLabel.text = owningTeamPointsLabel.text;
     else
     {
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],user.teamId]]; //V1 "/getteam"
+        NSLog(@"inside else");
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],[[NSUserDefaults standardUserDefaults] objectForKey:@"team_id"]]]; //V1 "/getteam"
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
         [request setRequestMethod:@"GET"];
         [request setDelegate:self];
@@ -346,8 +413,14 @@
         
     }
     
-    
-    //NSLog(@"User's points at venue: %@",[user.poiPoints allKeys]);
+    if (!venue) {
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/%@/",[APIUtil host],venueId]]; //V1 "/getteam"
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        [request setRequestMethod:@"GET"];
+        [request setDelegate:self];
+        [request setTag:5];
+        [request startAsynchronous];
+    }
     
     if([user.poiPoints objectForKey:[venue getId]])
         yourPointsLabel.text = [user.poiPoints objectForKey:[venue getId]];
@@ -365,32 +438,6 @@
     {
         NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
         [cellInfo setObject:event.msg forKey:@"textLabel"];
-        /*
-        //NSTimeInterval currentVenueTime =  event.time;
-        //NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        NSLocale *enUS = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-        [dateFormat setLocale:enUS];
-        [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss z"];
-        NSDate *date = [dateFormat dateFromString:event.time];
-        
-        NSTimeInterval time = [date timeIntervalSinceNow];
-        time = time *-1;
-        
-        int hour, minute, second, day;
-        hour = time / 3600;
-        minute = (time - hour * 3600) / 60;
-        second = (time - hour * 3600 - minute * 60);
-        
-        if(hour >= 24)
-        {
-            day = hour / 24;
-            hour = hour - (day * 24);
-            timeString = [NSString stringWithFormat:@"%d days %d hours", day, hour];
-        }
-        else
-            timeString = [NSString stringWithFormat:@"%d hours %d minutes", hour, minute];
-        */
         NSString *timeString;
         timeString = [APIUtil stringWithTimeDifferenceBetweenThen:event.time];
         

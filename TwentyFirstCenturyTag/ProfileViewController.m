@@ -12,6 +12,7 @@
 #import "TwentyFirstCenturyTagAppDelegate.h"
 #import "FacebookController.h"
 #import "TeamInfoViewController.h"
+#import "PlaceDetailsViewController.h"
 #define kCellIdentifier @"Cell"
 
 
@@ -148,7 +149,7 @@
             else
                 [cellInfo setObject:@"Inactive" forKey:@"detailTextLabel"];
             [cellInfo setObject:[NSNumber numberWithDouble:time] forKey:@"time"];
-            [cellInfo setObject:event forKey:@"user"];
+            [cellInfo setObject:event forKey:@"event"];
             [eventList addObject:cellInfo];
         }
         if([user.history count] == 0)
@@ -311,7 +312,7 @@
 {
     if(indexPath.section == 0)
     {
-        TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
+        /*
         NSString *teamName;
         if(user.teamName)
             teamName = user.teamName;
@@ -322,20 +323,22 @@
         teamInfoController.isJoiningTeam = NO;
         [self.navigationController pushViewController:teamInfoController animated:YES];
         [teamInfoController release];
+         */
     }
     else
     {
         NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
         
-        ProfileViewController *profileController = [[ProfileViewController alloc] init];
-        User *theUser = (User*)[cellInfo objectForKey:@"user"];
-        profileController.user = theUser;
-        [profileController.user retain];
+        Event *theEvent = (Event*)[cellInfo objectForKey:@"event"];
+        PlaceDetailsViewController *placeController = [[PlaceDetailsViewController alloc] init];
+        placeController.venueId = theEvent.venueid;
         
-        [self.navigationController pushViewController:profileController animated:YES];
-        profileController.profileImageView.image = [UIImage imageNamed:@"team_icon_placeholder"];
+    
+        [placeController.venueId retain];
         
-        [profileController release];
+        [self.navigationController pushViewController:placeController animated:YES];
+        
+        [placeController release];
         
     }
     
