@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D902D32C141EA91500AA3479 /* StandingsResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D902D32B141EA91500AA3479 /* StandingsResp.m */; };
-		D91F65E113EB5D0100727188 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D91F65C813EB5D0100727188 /* MBProgressHUD.m */; };
+		D91F65E113EB5D0100727188 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D91F65C813EB5D0100727188 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D9211C5813E0A16F0035F861 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = D9211C5713E0A16F0035F861 /* Event.m */; };
 		D9211C5B13E0A3A80035F861 /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = D9211C5A13E0A3A80035F861 /* Events.m */; };
 		D925BEC513BD59A200B515DE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D925BEC413BD59A200B515DE /* QuartzCore.framework */; };
@@ -75,15 +75,15 @@
 		D987AF4313B3D54A00855AC5 /* map_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D987AF3F13B3D54A00855AC5 /* map_button.png */; };
 		D987AF4413B3D54A00855AC5 /* map_button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D987AF4013B3D54A00855AC5 /* map_button_pressed@2x.png */; };
 		D987AF4513B3D54A00855AC5 /* map_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D987AF4113B3D54A00855AC5 /* map_button@2x.png */; };
-		D987AF5E13B3DAE000855AC5 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF4813B3DAE000855AC5 /* ASIAuthenticationDialog.m */; };
-		D987AF5F13B3DAE000855AC5 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF4B13B3DAE000855AC5 /* ASIDataCompressor.m */; };
-		D987AF6013B3DAE000855AC5 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF4D13B3DAE000855AC5 /* ASIDataDecompressor.m */; };
-		D987AF6113B3DAE000855AC5 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF4F13B3DAE000855AC5 /* ASIDownloadCache.m */; };
-		D987AF6213B3DAE000855AC5 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF5113B3DAE000855AC5 /* ASIFormDataRequest.m */; };
-		D987AF6313B3DAE000855AC5 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF5313B3DAE000855AC5 /* ASIHTTPRequest.m */; };
-		D987AF6413B3DAE000855AC5 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF5713B3DAE000855AC5 /* ASIInputStream.m */; };
-		D987AF6513B3DAE000855AC5 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF5913B3DAE000855AC5 /* ASINetworkQueue.m */; };
-		D987AF6613B3DAE000855AC5 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF5D13B3DAE000855AC5 /* Reachability.m */; };
+		D987AF5E13B3DAE000855AC5 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF4813B3DAE000855AC5 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D987AF5F13B3DAE000855AC5 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF4B13B3DAE000855AC5 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D987AF6013B3DAE000855AC5 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF4D13B3DAE000855AC5 /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D987AF6113B3DAE000855AC5 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF4F13B3DAE000855AC5 /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D987AF6213B3DAE000855AC5 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF5113B3DAE000855AC5 /* ASIFormDataRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D987AF6313B3DAE000855AC5 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF5313B3DAE000855AC5 /* ASIHTTPRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D987AF6413B3DAE000855AC5 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF5713B3DAE000855AC5 /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D987AF6513B3DAE000855AC5 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF5913B3DAE000855AC5 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D987AF6613B3DAE000855AC5 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D987AF5D13B3DAE000855AC5 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D987AF6813B3DB0A00855AC5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D987AF6713B3DB0A00855AC5 /* CFNetwork.framework */; };
 		D987AF6A13B3DB1A00855AC5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D987AF6913B3DB1A00855AC5 /* SystemConfiguration.framework */; };
 		D987AF6C13B3DB2100855AC5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D987AF6B13B3DB2100855AC5 /* MobileCoreServices.framework */; };
@@ -202,18 +202,18 @@
 		D9E56E3B13C6793E00EC6123 /* SearchAllTeamsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9E56E3913C6793E00EC6123 /* SearchAllTeamsViewController.xib */; };
 		D9E56E3E13C6877500EC6123 /* TeamsResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E56E3D13C6877500EC6123 /* TeamsResp.m */; };
 		D9E56E4113C689D000EC6123 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E56E4013C689D000EC6123 /* Team.m */; };
-		D9F5888113C3798000FA88BD /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5886013C3798000FA88BD /* JSONKit.m */; };
-		D9F588A313C379CC00FA88BD /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5888813C379CB00FA88BD /* Facebook.m */; };
+		D9F5888113C3798000FA88BD /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5886013C3798000FA88BD /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D9F588A313C379CC00FA88BD /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5888813C379CB00FA88BD /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D9F588A413C379CC00FA88BD /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D9F5888B13C379CB00FA88BD /* FBDialog.bundle */; };
-		D9F588A513C379CC00FA88BD /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5888D13C379CB00FA88BD /* FBDialog.m */; };
-		D9F588A613C379CC00FA88BD /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5888F13C379CB00FA88BD /* FBLoginDialog.m */; };
-		D9F588A713C379CC00FA88BD /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889113C379CB00FA88BD /* FBRequest.m */; };
-		D9F588A813C379CC00FA88BD /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889513C379CB00FA88BD /* NSObject+SBJSON.m */; };
-		D9F588A913C379CC00FA88BD /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889713C379CB00FA88BD /* NSString+SBJSON.m */; };
-		D9F588AA13C379CC00FA88BD /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889913C379CB00FA88BD /* SBJSON.m */; };
-		D9F588AB13C379CC00FA88BD /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889B13C379CB00FA88BD /* SBJsonBase.m */; };
-		D9F588AC13C379CC00FA88BD /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889D13C379CB00FA88BD /* SBJsonParser.m */; };
-		D9F588AD13C379CC00FA88BD /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889F13C379CB00FA88BD /* SBJsonWriter.m */; };
+		D9F588A513C379CC00FA88BD /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5888D13C379CB00FA88BD /* FBDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D9F588A613C379CC00FA88BD /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5888F13C379CB00FA88BD /* FBLoginDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D9F588A713C379CC00FA88BD /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889113C379CB00FA88BD /* FBRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D9F588A813C379CC00FA88BD /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889513C379CB00FA88BD /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D9F588A913C379CC00FA88BD /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889713C379CB00FA88BD /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D9F588AA13C379CC00FA88BD /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889913C379CB00FA88BD /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D9F588AB13C379CC00FA88BD /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889B13C379CB00FA88BD /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D9F588AC13C379CC00FA88BD /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889D13C379CB00FA88BD /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D9F588AD13C379CC00FA88BD /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F5889F13C379CB00FA88BD /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D9F588B413C37D8900FA88BD /* APIUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F588B313C37D8900FA88BD /* APIUtil.m */; };
 		D9F588B813C380C600FA88BD /* APIObj.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F588B713C380C600FA88BD /* APIObj.m */; };
 		D9F588D013C38FBB00FA88BD /* ErrorResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F588CF13C38FBA00FA88BD /* ErrorResp.m */; };
@@ -1332,6 +1332,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrew Magliozzi";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1355,6 +1356,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrew Magliozzi";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

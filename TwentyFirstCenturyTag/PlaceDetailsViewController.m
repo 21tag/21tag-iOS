@@ -42,23 +42,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [detailsScrollView release];
-    [detailsImageView release];
-    [placeNameLabel release];
-    [yourPointsLabel release];
-    [yourCheckinsLabel release];
-    [yourTeamPointsLabel release];
-    [yourTeamNameLabel release];
-    [owningTeamNameLabel release];
-    [owningTeamPointsLabel release];
-    [detailsTableView release];
-    [contentList release];
-    [checkoutButton release];
-    [checkinButton release];
-    [super dealloc];
-}
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
@@ -87,7 +70,6 @@
         dashboardController.user = [[User alloc] initWithData:[request responseData]];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checked In" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Cool!", nil];
         [alert show];
-        [alert release];
         
         if(mapViewController)
         {
@@ -105,10 +87,10 @@
         if(dashboardController.checkinTimer)
         {
             [dashboardController.checkinTimer invalidate];
-            dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
+            dashboardController.checkinTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES];
         }
         else
-            dashboardController.checkinTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES] retain];
+            dashboardController.checkinTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES];
         dashboardController.currentVenue = poiResponse.poi;
         dashboardController.checkinTime = [NSDate date];
         dashboardController.nameLabel.text = @"Currently Checked In";
@@ -235,7 +217,6 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Check Out" otherButtonTitles:nil];
     [actionSheet showInView:self.view];
-    [actionSheet release];  
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -254,7 +235,6 @@
     NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    [alert release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -284,7 +264,6 @@
         
         self.navigationItem.leftBarButtonItem = mapButton;
         
-        [mapButton release];
     }
     else
     {
@@ -303,7 +282,6 @@
         
         self.navigationItem.leftBarButtonItem = backButton;
         
-        [backButton release];
     }
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -492,14 +470,12 @@
             int distanceInFeet = (int)(distanceToVenue * 3.2808399);
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Too Far" message:[NSString stringWithFormat:@"You are currently %d feet from this location. You must be within %d feet to check in. Try getting closer!",distanceInFeet, [APIUtil minDistanceFeet]] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             [alert show];
-            [alert release];
         }
     }
     else
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Error" message:@"We haven't found an accurate enough location yet. Try connecting to Wifi or moving closer to a window." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
-        [alert release];
     }
     
     
@@ -550,7 +526,7 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
 	if (cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
 	}
 	
 	// get the view controller's info dictionary based on the indexPath's row
@@ -568,7 +544,6 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     // Remove HUD from screen when the HUD was hidded
     [HUD removeFromSuperview];
-    [HUD release];
 	HUD = nil;
 }
 

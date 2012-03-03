@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingsViewController : UIViewController
-@property (retain, nonatomic) IBOutlet UINavigationBar *navBar;
-@property (retain, nonatomic) IBOutlet UINavigationItem *navItem;
-@property (retain, nonatomic) IBOutlet UISwitch *backgroundSwitch;
+@property (strong, nonatomic) IBOutlet UINavigationBar *navBar;
+@property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
+@property (strong, nonatomic) IBOutlet UISwitch *backgroundSwitch;
 - (IBAction)toggleSwitch:(id)sender;
 
 -(void)savePressed;

@@ -50,7 +50,7 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
 	if (cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
 	}
 	
 	// get the view controller's info dictionary based on the indexPath's row
@@ -76,19 +76,12 @@
         //placeDetailsController.mapViewController = mapViewController;
         placeDetailsController.dashboardController = dashboardController;
         [self.navigationController pushViewController:placeDetailsController animated:YES];
-        [placeDetailsController release];
     }
     
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)dealloc
-{
-    [placesTableView release];
-    [contentList release];
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -175,8 +168,6 @@
     
     self.navigationItem.rightBarButtonItem = searchButton;
 
-    [backButton release];
-    [searchButton release];
 }
 
 -(void)searchPressed
@@ -188,7 +179,6 @@
     searchPlacesController.multiPOIresponse = multiPOIresponse;
     searchPlacesController.dashController = dashboardController;
     [self.navigationController pushViewController:searchPlacesController animated:YES];
-    [searchPlacesController release];
 }
 
 - (void)viewDidUnload

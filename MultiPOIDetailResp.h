@@ -15,6 +15,6 @@
     NSArray *pois;
 }
 
-@property (nonatomic, retain) NSArray *pois;
+@property (nonatomic, strong) NSArray *pois;
 
 @end

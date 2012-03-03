@@ -24,11 +24,11 @@
 	NSString *time;
 }
 
-@property (nonatomic, retain) NSString *venueid;
-@property (nonatomic, retain) NSString *userid;
-@property (nonatomic, retain) NSString *teamid;
-@property (nonatomic, retain) NSString *msg;
-@property (nonatomic, retain) NSString *points;
-@property (nonatomic, retain) NSString *time;
+@property (nonatomic, strong) NSString *venueid;
+@property (nonatomic, strong) NSString *userid;
+@property (nonatomic, strong) NSString *teamid;
+@property (nonatomic, strong) NSString *msg;
+@property (nonatomic, strong) NSString *points;
+@property (nonatomic, strong) NSString *time;
 
 @end

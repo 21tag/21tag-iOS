@@ -28,15 +28,15 @@
     NSMutableArray *venuesSearchResults;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *mainTableView;
-@property (nonatomic, retain) NSMutableArray *contentsList;
-@property (nonatomic, retain) NSMutableArray *searchResults;
+@property (nonatomic, strong) IBOutlet UITableView *mainTableView;
+@property (nonatomic, strong) NSMutableArray *contentsList;
+@property (nonatomic, strong) NSMutableArray *searchResults;
 @property (nonatomic, copy) NSString *savedSearchTerm;
 
 - (void)handleSearchForTerm:(NSString *)searchTerm;
 
-@property (nonatomic, retain)     MultiPOIDetailResp *multiPOIresponse;
-@property (nonatomic, retain)     DashboardViewController *dashController;
+@property (nonatomic, strong)     MultiPOIDetailResp *multiPOIresponse;
+@property (nonatomic, strong)     DashboardViewController *dashController;
 
 
 -(void)backPressed;

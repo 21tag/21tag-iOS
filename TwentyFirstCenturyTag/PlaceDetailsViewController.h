@@ -38,26 +38,26 @@
     
     MBProgressHUD *HUD;
 }
-@property (nonatomic, retain) IBOutlet UIScrollView *detailsScrollView;
-@property (nonatomic, retain) IBOutlet UIImageView *detailsImageView;
-@property (nonatomic, retain) IBOutlet UILabel *placeNameLabel;
-@property (nonatomic, retain) IBOutlet UILabel *yourPointsLabel;
-@property (nonatomic, retain) IBOutlet UILabel *yourCheckinsLabel;
-@property (nonatomic, retain) IBOutlet UILabel *yourTeamPointsLabel;
-@property (nonatomic, retain) IBOutlet UILabel *yourTeamNameLabel;
-@property (nonatomic, retain) IBOutlet UILabel *owningTeamNameLabel;
-@property (nonatomic, retain) IBOutlet UILabel *owningTeamPointsLabel;
-@property (nonatomic, retain) IBOutlet UITableView *detailsTableView;
+@property (nonatomic, strong) IBOutlet UIScrollView *detailsScrollView;
+@property (nonatomic, strong) IBOutlet UIImageView *detailsImageView;
+@property (nonatomic, strong) IBOutlet UILabel *placeNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *yourPointsLabel;
+@property (nonatomic, strong) IBOutlet UILabel *yourCheckinsLabel;
+@property (nonatomic, strong) IBOutlet UILabel *yourTeamPointsLabel;
+@property (nonatomic, strong) IBOutlet UILabel *yourTeamNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *owningTeamNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *owningTeamPointsLabel;
+@property (nonatomic, strong) IBOutlet UITableView *detailsTableView;
 
-@property (nonatomic, retain)     NSMutableArray *contentList;
-@property (nonatomic, retain) Venue *venue;
-@property (nonatomic, retain) NSString *venueId;
-@property (nonatomic, retain) DashboardViewController *dashboardController;
-@property (nonatomic, retain) MapViewController *mapViewController;
-@property (nonatomic, retain) POIDetailResp *poiResponse;
+@property (nonatomic, strong)     NSMutableArray *contentList;
+@property (nonatomic, strong) Venue *venue;
+@property (nonatomic, strong) NSString *venueId;
+@property (nonatomic, strong) DashboardViewController *dashboardController;
+@property (nonatomic, strong) MapViewController *mapViewController;
+@property (nonatomic, strong) POIDetailResp *poiResponse;
 
-@property (nonatomic, retain) UIBarButtonItem *checkoutButton;
-@property (nonatomic, retain) UIBarButtonItem *checkinButton;
+@property (nonatomic, strong) UIBarButtonItem *checkoutButton;
+@property (nonatomic, strong) UIBarButtonItem *checkinButton;
 
 
 -(void) setupButtons;

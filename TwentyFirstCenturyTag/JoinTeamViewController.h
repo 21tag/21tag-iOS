@@ -16,10 +16,10 @@
     
     MBProgressHUD *HUD;
 }
-@property (nonatomic, retain) IBOutlet UIImageView *statusImageView;
+@property (nonatomic, strong) IBOutlet UIImageView *statusImageView;
 
-@property (nonatomic, retain)     NSArray *contentList;
-@property (nonatomic, retain) IBOutlet UITableView *navigationTableView;
+@property (nonatomic, strong)     NSArray *contentList;
+@property (nonatomic, strong) IBOutlet UITableView *navigationTableView;
 
 - (void)cancelPressed;
 - (void)searchFriendsList;

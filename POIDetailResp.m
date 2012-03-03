@@ -40,7 +40,7 @@
 {
     [super parseDictionary:fields];
     
-    self.poi = [[[Venue alloc] initWithDictionary:fields]retain];
+    self.poi = [[Venue alloc] initWithDictionary:fields];
     self.ownerId = [[fields objectForKey:OWNER] objectForKey:TEAMID];
     self.ownerName = [[fields objectForKey:OWNER] objectForKey:NAME];
     self.points = [[[fields objectForKey:OWNER] objectForKey:TEAMPOINTS] intValue];

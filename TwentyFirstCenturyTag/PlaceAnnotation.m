@@ -25,7 +25,6 @@
 -(id) initWithPOIDetailResp:(POIDetailResp*)poi;
 {
     poiResponse = poi;
-    [poiResponse retain];
     //latitude = newVenue.geolat;
     //longitude = newVenue.geolong;
     return self;

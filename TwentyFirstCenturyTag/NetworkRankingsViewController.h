@@ -19,8 +19,8 @@
     MBProgressHUD *HUD;
     NSArray *standingsArray;
 }
-@property (retain, nonatomic) IBOutlet UITableView *standingsTableView;
-@property (nonatomic, retain) DashboardViewController *dashboardController;
+@property (strong, nonatomic) IBOutlet UITableView *standingsTableView;
+@property (nonatomic, strong) DashboardViewController *dashboardController;
 
 -(void)backButtonPressed;
 @end

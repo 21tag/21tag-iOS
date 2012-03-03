@@ -37,17 +37,17 @@
     NSString *tag_ownername;
 }
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *address;
-@property (nonatomic, retain) NSString *crossstreet;
-@property (nonatomic, retain) NSString *city;
-@property (nonatomic, retain) NSString *state;
-@property (nonatomic, retain) NSString *zip;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *address;
+@property (nonatomic, strong) NSString *crossstreet;
+@property (nonatomic, strong) NSString *city;
+@property (nonatomic, strong) NSString *state;
+@property (nonatomic, strong) NSString *zip;
 @property (nonatomic) double geolat;
 @property (nonatomic) double geolong;
 @property BOOL tag_playable;
-@property (nonatomic, retain) NSString *tag_ownerid;
-@property (nonatomic, retain) NSString *tag_ownername;
+@property (nonatomic, strong) NSString *tag_ownerid;
+@property (nonatomic, strong) NSString *tag_ownername;
 
 -(CLLocation*) getLocation;
 

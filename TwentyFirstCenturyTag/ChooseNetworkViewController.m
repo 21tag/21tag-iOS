@@ -27,10 +27,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -69,7 +65,6 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:nil];
     [actionSheet showInView:self.view];
-    [actionSheet release];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -95,7 +90,6 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController setViewControllers:controllerArray animated:YES];
     //[joinTeamController release];
-    [dashboardController release];
 }
 
 - (void)locationError:(NSError *)error
@@ -104,7 +98,6 @@
     [locationController.locationManager stopUpdatingLocation];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.navigationController pushViewController:locationErrorController animated:YES];
-    [locationErrorController release];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -151,7 +144,6 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     // Remove HUD from screen when the HUD was hidded
     [HUD removeFromSuperview];
-    [HUD release];
 	HUD = nil;
 }
 @end

@@ -31,12 +31,12 @@
     NSMutableArray *history;
 }
 
-@property (nonatomic, retain) 	Venue *poi;
-@property (nonatomic, retain) 	NSString *ownerId;
-@property (nonatomic, retain)   NSString *ownerName;
+@property (nonatomic, strong) 	Venue *poi;
+@property (nonatomic, strong) 	NSString *ownerId;
+@property (nonatomic, strong)   NSString *ownerName;
 @property int points;
-@property (nonatomic, retain) 	NSArray *users;
-@property (nonatomic, retain)   NSMutableArray *history;
+@property (nonatomic, strong) 	NSArray *users;
+@property (nonatomic, strong)   NSMutableArray *history;
 
 
 @end

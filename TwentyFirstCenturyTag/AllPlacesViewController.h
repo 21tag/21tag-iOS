@@ -21,10 +21,10 @@
     DashboardViewController *dashboardController;
     CLLocation *currentLocation;
 }
-@property (nonatomic, retain) IBOutlet UITableView *placesTableView;
-@property (nonatomic, retain) MultiPOIDetailResp *multiPOIresponse;
-@property (nonatomic, retain) DashboardViewController *dashboardController;
-@property (nonatomic, retain) CLLocation *currentLocation;
+@property (nonatomic, strong) IBOutlet UITableView *placesTableView;
+@property (nonatomic, strong) MultiPOIDetailResp *multiPOIresponse;
+@property (nonatomic, strong) DashboardViewController *dashboardController;
+@property (nonatomic, strong) CLLocation *currentLocation;
 
 
 -(void)backPressed;

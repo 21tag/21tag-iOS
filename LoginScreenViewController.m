@@ -25,12 +25,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [scrollView release];
-    [pageControl release];
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -58,7 +52,6 @@
     scrollView.contentSize = CGSizeMake(960, 379);
     
     [scrollView addSubview:backgroundView];  
-    [backgroundView release];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
     

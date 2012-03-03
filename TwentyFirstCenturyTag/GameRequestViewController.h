@@ -23,15 +23,15 @@
     UINavigationItem *navigationItem;
     MBProgressHUD *HUD;
 }
-@property (nonatomic, retain) IBOutlet UINavigationItem *navigationItem;
+@property (nonatomic, strong) IBOutlet UINavigationItem *navigationItem;
 
-@property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
+@property (nonatomic, strong) IBOutlet UINavigationBar *navigationBar;
 - (IBAction)leftButtonPressed:(id)sender;
-@property (nonatomic, retain) IBOutlet UITextField *schoolTextField;
-@property (nonatomic, retain) IBOutlet UITextField *locationTextField;
-@property (nonatomic, retain) IBOutlet UITextField *emailTextField;
+@property (nonatomic, strong) IBOutlet UITextField *schoolTextField;
+@property (nonatomic, strong) IBOutlet UITextField *locationTextField;
+@property (nonatomic, strong) IBOutlet UITextField *emailTextField;
 - (IBAction)sendRequestPressed:(id)sender;
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 
 
 @end

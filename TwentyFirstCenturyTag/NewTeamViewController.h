@@ -19,13 +19,13 @@
     UIBarButtonItem *cancelButton;
     UIBarButtonItem *saveButton;
 }
-@property (nonatomic, retain) IBOutlet UIImageView *teamImageView;
-@property (nonatomic, retain) IBOutlet UITextField *nameTextField;
-@property (nonatomic, retain) IBOutlet UITextField *mottoTextField;
-@property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
-@property (nonatomic, retain) IBOutlet UINavigationItem *navigationItem;
-@property (nonatomic, retain) UIBarButtonItem *cancelButton;
-@property (nonatomic, retain) UIBarButtonItem *saveButton;
+@property (nonatomic, strong) IBOutlet UIImageView *teamImageView;
+@property (nonatomic, strong) IBOutlet UITextField *nameTextField;
+@property (nonatomic, strong) IBOutlet UITextField *mottoTextField;
+@property (nonatomic, strong) IBOutlet UINavigationBar *navigationBar;
+@property (nonatomic, strong) IBOutlet UINavigationItem *navigationItem;
+@property (nonatomic, strong) UIBarButtonItem *cancelButton;
+@property (nonatomic, strong) UIBarButtonItem *saveButton;
 
 -(void)cancelPressed;
 -(void)savePressed;

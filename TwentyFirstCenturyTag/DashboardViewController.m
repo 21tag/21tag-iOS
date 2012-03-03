@@ -57,9 +57,7 @@
         {
             //NSLog(@"location update: %f, %f %f",location.coordinate.latitude,location.coordinate.longitude, location.horizontalAccuracy);
             
-            [currentLocation release];
             currentLocation = location;
-            [currentLocation retain];
             
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"LocationUpdateNotification"
@@ -209,7 +207,6 @@
         }
         [defaults setObject:friendIDs forKey:@"friends"];
         [defaults synchronize];
-        [friendIDs release];
         isRequestingFriendsList = NO;
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"FriendsUpdatedNotification"
@@ -219,7 +216,7 @@
     {
         
         NSString *facebookID = [result objectForKey:@"id"];
-        facebookRequestResults = [(NSDictionary*) result retain];
+        facebookRequestResults = (NSDictionary*) result;
 
         // try to log in
         NSLog(@"Try to login");
@@ -253,7 +250,7 @@
 {
     if(request.tag == 0)
     {
-        avatarImage = [[UIImage imageWithData:[request responseData]] retain];
+        avatarImage = [UIImage imageWithData:[request responseData]];
         [navigationTableView reloadData];
         
         profileFinishedLoading = YES;
@@ -401,7 +398,6 @@
         [HUD hide:YES];
         
         [self.navigationController pushViewController:placeDetailsController animated:YES];
-        [placeDetailsController release];        
     }
     else if(request.tag == 4) // reset auth code
     {
@@ -411,7 +407,6 @@
 
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"Couldn't log in because resetfbauth doesn't work properly yet. Things will probably crash if you use the app beyond this point." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Bummer", nil];
             [alert show];
-            [alert release];
         }
         else
         {
@@ -453,7 +448,6 @@
     NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    [alert release];
     
     if(HUD)
         [HUD hide:YES];
@@ -466,7 +460,6 @@
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    [alert release];
 };
 
 #pragma mark - Table view data source
@@ -489,9 +482,9 @@
 	if (cell == nil)
 	{
         if(indexPath.section == 0)
-            cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
         else
-            cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
 	}
 	
 	// get the view controller's info dictionary based on the indexPath's row
@@ -548,14 +541,6 @@
 	return cell;
 }
 
-- (void)dealloc
-{
-    [contentList release];
-    [nameLabel release];
-    [navigationTableView release];
-    [avatarImage release];
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -601,7 +586,6 @@
     {
         JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
         [self.navigationController pushViewController:joinTeamController animated:NO];
-        [joinTeamController release];
     }
 
     locationController = [LocationController sharedInstance];
@@ -610,7 +594,7 @@
     
     fiveMinuteCounter = 0;
     
-    dashboardTimer = [[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateDashboard:) userInfo:nil repeats:YES] retain];
+    dashboardTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateDashboard:) userInfo:nil repeats:YES];
     
     profileFinishedLoading = NO;
     locationFinishedLoading = NO;
@@ -684,7 +668,6 @@
     [button addTarget:self action:@selector(settingsPressed) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:button];    
     self.navigationItem.leftBarButtonItem = settingsButton;
-    [settingsButton release];
 }
 
 - (void)checkinPressed
@@ -693,7 +676,6 @@
     //mapController.user = user;
     mapController.dashboardController = self;
     [self.navigationController pushViewController:mapController animated:YES];
-    [mapController release];
 }
 
 -(void)checkout
@@ -712,7 +694,6 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Check Out" otherButtonTitles:nil];
     [actionSheet showInView:self.view];
     
-    [actionSheet release];  
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -727,7 +708,6 @@
 {
     SettingsViewController *settingsController = [[SettingsViewController alloc] init];
     [self presentModalViewController:settingsController animated:YES];
-    [settingsController release];
 }
 
 - (void) viewCurrentVenue
@@ -756,7 +736,6 @@
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Checked In" message:@"You must be checked in first." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
-        [alert release];
     }
 }
 
@@ -780,7 +759,6 @@
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Coming Soon" message:@"This feature is still under development. Check back later!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             [alert show];
-            [alert release];
         }
         else if(indexPath.row == 2) // Your Team
         {
@@ -789,7 +767,6 @@
             {
                 JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
                 [self.navigationController pushViewController:joinTeamController animated:YES];
-                [joinTeamController release];
             }
             else
             {
@@ -801,7 +778,6 @@
                 teamInfoController.isJoiningTeam = NO;
                 teamInfoController.dashboardController = self;
                 [self.navigationController pushViewController:teamInfoController animated:YES];
-                [teamInfoController release];
             }
         }
         else    // Game Standings
@@ -809,14 +785,13 @@
             NetworkRankingsViewController *networkRankingsController = [[NetworkRankingsViewController alloc] init];
             networkRankingsController.dashboardController = self;
             [self.navigationController pushViewController:networkRankingsController animated:YES];
-            [networkRankingsController release];
         }
     }
     else    // Your Profile
     {
         ProfileViewController *profileController = [[ProfileViewController alloc] init];
         profileController.user = user;
-        [profileController.user retain];
+        profileController.user;
         //NSLog(@"profile: %@",user.teamname);
 
         profileController.isYourProfile = YES;
@@ -825,7 +800,6 @@
         //profileController.nameLabel.text = [[contentList objectAtIndex:2] objectAtIndex:0];
         
 
-        [profileController release];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -845,7 +819,6 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     // Remove HUD from screen when the HUD was hidded
     [HUD removeFromSuperview];
-    [HUD release];
 	HUD = nil;
 }
 

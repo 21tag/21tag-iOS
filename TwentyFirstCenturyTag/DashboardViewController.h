@@ -41,20 +41,20 @@
     BOOL profileFinishedLoading;
     BOOL locationFinishedLoading;
 }
-@property (nonatomic, retain) IBOutlet UITableView *navigationTableView;
-@property (nonatomic, retain) NSMutableArray *contentList;
-@property (nonatomic, retain) IBOutlet UILabel *nameLabel;
-@property (nonatomic, retain) Facebook *facebook;
-@property (nonatomic, retain) User *user;
-@property (nonatomic, retain) Venue *currentVenue;
-@property (nonatomic, retain) NSTimer *checkinTimer;
-@property (nonatomic, retain) CLLocation *currentLocation;
-@property (nonatomic, retain) NSDate *checkinTime;
-@property (nonatomic, retain) LocationController *locationController;
-@property (nonatomic, retain) Team *team;
+@property (nonatomic, strong) IBOutlet UITableView *navigationTableView;
+@property (nonatomic, strong) NSMutableArray *contentList;
+@property (nonatomic, strong) IBOutlet UILabel *nameLabel;
+@property (nonatomic, strong) Facebook *facebook;
+@property (nonatomic, strong) User *user;
+@property (nonatomic, strong) Venue *currentVenue;
+@property (nonatomic, strong) NSTimer *checkinTimer;
+@property (nonatomic, strong) CLLocation *currentLocation;
+@property (nonatomic, strong) NSDate *checkinTime;
+@property (nonatomic, strong) LocationController *locationController;
+@property (nonatomic, strong) Team *team;
 
-@property (nonatomic, retain) UIBarButtonItem *checkinButton;
-@property (nonatomic, retain) UIBarButtonItem *checkoutButton;
+@property (nonatomic, strong) UIBarButtonItem *checkinButton;
+@property (nonatomic, strong) UIBarButtonItem *checkoutButton;
 
 
 

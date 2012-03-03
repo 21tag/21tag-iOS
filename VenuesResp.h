@@ -17,6 +17,6 @@
     NSMutableArray *venues;
 }
 
-@property (nonatomic, retain) NSMutableArray *venues;
+@property (nonatomic, strong) NSMutableArray *venues;
 
 @end

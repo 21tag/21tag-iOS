@@ -34,13 +34,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [profileImageView release];
-    [nameLabel release];
-    [profileTableView release];
-    [super dealloc];
-}
 
 -(void)setupButtons
 {
@@ -76,7 +69,6 @@
         
         self.navigationItem.rightBarButtonItem = accountButton;
         
-        [accountButton release];
     }
     else
     {
@@ -95,7 +87,6 @@
         
         self.navigationItem.leftBarButtonItem = backButton;
         
-        [backButton release];
     }
 }
 
@@ -103,7 +94,6 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:nil];
     [actionSheet showInView:self.view];
-    [actionSheet release];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -159,7 +149,7 @@
             [eventList addObject:cellInfo];
         }
 
-        NSSortDescriptor *timeDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES] autorelease];
+        NSSortDescriptor *timeDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
         [eventList sortUsingDescriptors:[NSArray arrayWithObjects:timeDescriptor,nil]];
         contentList = eventList;
         [profileTableView reloadData];
@@ -179,7 +169,6 @@
     NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    [alert release];
 }
 
 #pragma mark - View lifecycle
@@ -280,7 +269,7 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
 	if (cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
 	}
 	
     if(indexPath.section == 0)
@@ -334,11 +323,10 @@
         placeController.venueId = theEvent.venueid;
         
     
-        [placeController.venueId retain];
+        placeController.venueId;
         
         [self.navigationController pushViewController:placeController animated:YES];
         
-        [placeController release];
         
     }
     

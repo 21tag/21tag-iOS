@@ -33,16 +33,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [navigationBar release];
-    [schoolTextField release];
-    [locationTextField release];
-    [emailTextField release];
-    [scrollView release];
-    [navigationItem release];
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -126,7 +116,6 @@
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"More Information" message:@"Please fill in the school and location fields and try again." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
-        [alert release];
     }
     else
     {
@@ -197,7 +186,6 @@
     NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alert show];
-    [alert release];
 }
 
 #pragma mark -
@@ -206,7 +194,6 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     // Remove HUD from screen when the HUD was hidded
     [HUD removeFromSuperview];
-    [HUD release];
 	HUD = nil;
 }
 

@@ -79,7 +79,6 @@
     navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.015686274509804f green:0.615686274509804f blue:0.749019607843137 alpha:1.0];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
-    [rootController release];
 
     return YES;
 }
@@ -104,7 +103,6 @@
         ChooseNetworkViewController *chooseNetworkController = [[ChooseNetworkViewController alloc] init];
         NSArray *viewControllerList = [NSArray arrayWithObject:chooseNetworkController];
         [self.navigationController setViewControllers:viewControllerList animated:YES];
-        [chooseNetworkController release];
     }
     else
     {
@@ -113,7 +111,6 @@
         NSArray *viewControllerList = [NSArray arrayWithObject:dashController];
         [self.navigationController setViewControllers:viewControllerList animated:YES];
         [self.navigationController setNavigationBarHidden:NO animated:YES];
-        [dashController release];
 
     }
 }
@@ -124,7 +121,6 @@
     
     NSArray *viewControllerList = [NSArray arrayWithObject:loginController];
     [self.navigationController setViewControllers:viewControllerList animated:YES];
-    [loginController release];
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled
@@ -206,15 +202,7 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You're It!" message:notification.alertBody delegate:dashboardController cancelButtonTitle:@"Check-out" otherButtonTitles:@"Check-in", nil];
     [alert setTag:420];
     [alert show];
-    [alert release];
 }
 
-- (void)dealloc
-{
-    [_window release];
-    [_viewController release];
-    [facebook release];
-    [super dealloc];
-}
 
 @end

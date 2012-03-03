@@ -12,9 +12,10 @@
 
 +(NSString*)host
 {
-    return @"http://192.168.1.33:8888/api/v2";
+    //return @"http://192.168.1.33:8888/api/v2";
     //return @"http://192.168.2.104:8888/api/v2";
     //return @"http://21tag.com:8689";
+    return @"http://96.126.124.169:8420/api/v2";
 }
 
 +(NSString*)stringWithTimeDifferenceBetweenThen:(NSString *)then

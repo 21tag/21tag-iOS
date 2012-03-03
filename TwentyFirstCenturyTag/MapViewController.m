@@ -31,11 +31,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [currentMapView release];
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -178,7 +173,7 @@
     annotations = [[NSMutableArray alloc] initWithCapacity:[venues count]];
     for(int i = 0; i < [venues count]; i++)
     {
-        PlaceAnnotation *annotation = [[[PlaceAnnotation alloc] initWithPOIDetailResp:[venues objectAtIndex:i]] autorelease];
+        PlaceAnnotation *annotation = [[PlaceAnnotation alloc] initWithPOIDetailResp:[venues objectAtIndex:i]];
         annotation.tag = i;
         [currentMapView addAnnotation:annotation];
         [annotations addObject:annotation];
@@ -198,7 +193,6 @@
     NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    [alert release];
 }
 
 - (void)locationError:(NSError *)error
@@ -223,7 +217,6 @@
     allPlacesController.dashboardController = dashboardController;
     allPlacesController.currentLocation = dashboardController.currentLocation;
     [self.navigationController pushViewController:allPlacesController animated:YES];
-    [allPlacesController release];
 }
 
 - (void)viewDidUnload
@@ -257,7 +250,7 @@
     } 
 
     
-	MKPinAnnotationView *customAnnotationView=[[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil] autorelease];
+	MKPinAnnotationView *customAnnotationView=[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil];
 	//UIImage *pinImage = [UIImage imageNamed:@"ReplacementPinImage.png"];
 	//[customAnnotationView setImage:pinImage];
     PlaceAnnotation *currentPlaceAnnotation = (PlaceAnnotation*)annotation;
@@ -291,7 +284,6 @@
     placeDetailsController.mapViewController = self;
     placeDetailsController.dashboardController = dashboardController;
     [self.navigationController pushViewController:placeDetailsController animated:YES];
-    [placeDetailsController release];
 }
 
 #pragma mark -
@@ -300,7 +292,6 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     // Remove HUD from screen when the HUD was hidded
     [HUD removeFromSuperview];
-    [HUD release];
 	HUD = nil;
 }
 

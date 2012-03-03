@@ -50,21 +50,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [teamImage release];
-    [teamNameLabel release];
-    [teamSloganLabel release];
-    [teamMembersButton release];
-    [locationsOwnedButton release];
-    [teamPointsButton release];
-    [tableHeaderLabel release];
-    [teamMembersLabel release];
-    [locationsOwnedLabel release];
-    [teamPointsLabel release];
-    [mainTableView release];
-    [super dealloc];
-}
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
@@ -144,9 +129,9 @@
         teamPointsLabel.text = [NSString stringWithFormat:@"%d",teamPoints];
         locationsOwnedLabel.text = [NSString stringWithFormat:@"%d",numVenues];
         
-        NSSortDescriptor *timeDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES] autorelease];
+        NSSortDescriptor *timeDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
         [userList sortUsingDescriptors:[NSArray arrayWithObjects:timeDescriptor,nil]];
-        NSSortDescriptor *pointsDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"points" ascending:NO] autorelease];
+        NSSortDescriptor *pointsDescriptor = [[NSSortDescriptor alloc] initWithKey:@"points" ascending:NO];
         [pointsList sortUsingDescriptors:[NSArray arrayWithObjects:pointsDescriptor,nil]];
 
         [self teamMembersPressed:nil];
@@ -182,7 +167,6 @@
         placeDetailsController.dashboardController = dashboardController;
         
         [self.navigationController pushViewController:placeDetailsController animated:YES];
-        [placeDetailsController release];
         
     }
     else if(request.tag == 5) // switch team
@@ -219,7 +203,6 @@
     
     self.navigationItem.rightBarButtonItem = joinButton;
     
-    [joinButton release];
 
 }
 
@@ -232,7 +215,6 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you really sure you want to leave your current team?  All of your teammates will miss you so much." delegate:self cancelButtonTitle:@"Stay" otherButtonTitles:@"Leave", nil];
             [alert setTag:1];
             [alert show];
-            [alert release];
         }
     }
     else if(actionSheet.tag == 2) //switch
@@ -242,7 +224,6 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you really sure you want to leave your current team?  All of your teammates will miss you so much." delegate:self cancelButtonTitle:@"Stay" otherButtonTitles:@"Switch", nil];
             [alert setTag:1];
             [alert show];
-            [alert release];
         }
     }
 }
@@ -294,7 +275,6 @@
     NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    [alert release];
     
     if(HUD)
         [HUD hide:YES];
@@ -319,7 +299,6 @@
         
         self.navigationItem.leftBarButtonItem = backButton;
         
-        [backButton release];
         
         button = [UIButton buttonWithType:UIButtonTypeCustom];
         buttonImage = [UIImage imageNamed:@"join_button.png"];
@@ -336,7 +315,6 @@
         
         self.navigationItem.rightBarButtonItem = joinButton;
         
-        [joinButton release];
     }
     else
     {
@@ -355,7 +333,6 @@
         
         self.navigationItem.leftBarButtonItem = backButton;
         
-        [backButton release];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *globalTeamName = [defaults objectForKey:@"team_name"];
@@ -384,7 +361,6 @@
             
             self.navigationItem.rightBarButtonItem = leaveButton;
             
-            [leaveButton release];
 
         }
         else
@@ -404,7 +380,6 @@
             
             self.navigationItem.rightBarButtonItem = joinButton;
             
-            [joinButton release];
         }
     }
 }
@@ -446,7 +421,6 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you'd like to change teams?" delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
     [actionSheet setTag:2];
     [actionSheet showInView:self.view];
-    [actionSheet release];
 }
 
 /*-(void)leavePressed
@@ -463,7 +437,6 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you'd like to change teams?" delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
     [actionSheet setTag:1];
     [actionSheet showInView:self.view];
-    [actionSheet release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -614,7 +587,7 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
 	if (cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
 	}
 	
 	// get the view controller's info dictionary based on the indexPath's row
@@ -634,12 +607,11 @@
         User *user = (User*)[[usersList objectAtIndex:indexPath.row] objectForKey:@"user"];
         NSLog(@"Selected users id: %@",user.getId);
         profileController.user = user;
-        [profileController.user retain];
+        profileController.user;
         
         [self.navigationController pushViewController:profileController animated:YES];
         profileController.profileImageView.image = [UIImage imageNamed:@"team_icon_placeholder"];
         
-        [profileController release];
     }
     else if(locationsOwnedHighlighted)
     {
@@ -665,12 +637,11 @@
         ProfileViewController *profileController = [[ProfileViewController alloc] init];
         User *user = (User*)[[rankingsList objectAtIndex:indexPath.row] objectForKey:@"user"];
         profileController.user = user;
-        [profileController.user retain];
+        profileController.user;
         
         [self.navigationController pushViewController:profileController animated:YES];
         profileController.profileImageView.image = [UIImage imageNamed:@"team_icon_placeholder"];
         
-        [profileController release];
     }
     
     [mainTableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -682,7 +653,6 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     // Remove HUD from screen when the HUD was hidded
     [HUD removeFromSuperview];
-    [HUD release];
 	HUD = nil;
 }
 

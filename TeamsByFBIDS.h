@@ -20,7 +20,7 @@
     NSArray *data;
 }
 
-@property (nonatomic, retain) NSArray *data;
+@property (nonatomic, strong) NSArray *data;
 
 
 @end

@@ -19,12 +19,12 @@
     DashboardViewController *dashboardController;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
+@property (nonatomic, strong) IBOutlet UIWindow *window;
 
-@property (nonatomic, retain) IBOutlet TwentyFirstCenturyTagViewController *viewController;
-@property (nonatomic, retain) UINavigationController *navigationController;
-@property (nonatomic, retain) Facebook *facebook;
-@property (nonatomic, retain) DashboardViewController *dashboardController;
+@property (nonatomic, strong) IBOutlet TwentyFirstCenturyTagViewController *viewController;
+@property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic, strong) Facebook *facebook;
+@property (nonatomic, strong) DashboardViewController *dashboardController;
 
 -(void)didUpdateToLocation:(CLLocation*)location;
 

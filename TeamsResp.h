@@ -29,9 +29,9 @@
     NSString *points;
 }
 
-@property (nonatomic, retain) NSArray *teams;
-@property (nonatomic, retain) NSArray *users;
-@property (nonatomic, retain) NSArray *venues;
-@property (nonatomic, retain) NSString *points;
+@property (nonatomic, strong) NSArray *teams;
+@property (nonatomic, strong) NSArray *users;
+@property (nonatomic, strong) NSArray *venues;
+@property (nonatomic, strong) NSString *points;
 
 @end

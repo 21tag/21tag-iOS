@@ -25,11 +25,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [standingsTableView release];
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -105,7 +100,6 @@
     standingsArray = teamsResponse.teams;
     if ([standingsArray count] > 10)
          standingsArray = [standingsArray subarrayWithRange:NSMakeRange(0, 10)];
-    [standingsArray retain];
     
     //standingsArray = standingsResponse.teams;
     
@@ -121,7 +115,6 @@
     NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    [alert release];
     
     if(HUD)
         [HUD hide:YES];
@@ -153,7 +146,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 	if (cell == nil)
 	{
-        cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
     }
     
     //NSDictionary *teamData = [standingsArray objectAtIndex:indexPath.row];
@@ -181,7 +174,6 @@
     teamInfoController.isJoiningTeam = NO;
     teamInfoController.dashboardController = dashboardController;
     [self.navigationController pushViewController:teamInfoController animated:YES];
-    [teamInfoController release];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -192,7 +184,6 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     // Remove HUD from screen when the HUD was hidded
     [HUD removeFromSuperview];
-    [HUD release];
 	HUD = nil;
 }
 

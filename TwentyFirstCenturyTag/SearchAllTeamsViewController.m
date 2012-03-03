@@ -20,15 +20,6 @@
 @synthesize searchResults;
 @synthesize savedSearchTerm;
 
-- (void)dealloc
-{
-    self.mainTableView = nil;
-    self.contentsList = nil;
-    self.searchResults = nil;
-    self.savedSearchTerm = nil;
-	
-    [super dealloc];
-}
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
@@ -54,7 +45,6 @@
     NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    [alert release];
 }
 
 - (void)viewDidUnload
@@ -87,7 +77,6 @@
     
     self.navigationItem.leftBarButtonItem = backButton;
     
-    [backButton release];
     
     //contentsList = [NSMutableArray arrayWithObjects:@"Loading...", nil];
     self.contentsList = [NSMutableArray array];
@@ -129,7 +118,7 @@
     {
         NSMutableArray *array = [[NSMutableArray alloc] init];
         [self setSearchResults:array];
-        [array release], array = nil;
+        array = nil;
     }
 	
     [[self searchResults] removeAllObjects];
@@ -185,7 +174,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 	
     [[cell textLabel] setText:contentForThisRow];
@@ -233,7 +222,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
         
         teamInfoController.isJoiningTeam = YES;
         [self.navigationController pushViewController:teamInfoController animated:YES];
-        [teamInfoController release];
     }
        
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -245,7 +233,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     // Remove HUD from screen when the HUD was hidded
     [HUD removeFromSuperview];
-    [HUD release];
 	HUD = nil;
 }
 

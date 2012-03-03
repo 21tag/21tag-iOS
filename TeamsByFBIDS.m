@@ -41,8 +41,8 @@
         {
             NSDictionary *rawTeamData = [rawTeamDataArray objectAtIndex:i];
             TeamData *teamData = [[TeamData alloc] init];
-            teamData.team_id = [[rawTeamData objectForKey:TEAMID] retain];
-            teamData.name = [[rawTeamData objectForKey:NAME] retain];
+            teamData.team_id = [rawTeamData objectForKey:TEAMID];
+            teamData.name = [rawTeamData objectForKey:NAME];
             teamData.numFriends = [[rawTeamData objectForKey:NUMFRI] intValue];
             teamData.numMembers = [[rawTeamData objectForKey:NUMMEM] intValue];
             [teamDataArray addObject:teamData];

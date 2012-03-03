@@ -15,6 +15,6 @@
     NSString *_id;
 }
 
-@property (nonatomic, retain) NSString *APITYPE;
+@property (nonatomic, strong) NSString *APITYPE;
 
 @end

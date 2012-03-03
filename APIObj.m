@@ -21,7 +21,7 @@
         CFUUIDRef theUUID = CFUUIDCreate(NULL);
         CFStringRef string = CFUUIDCreateString(NULL, theUUID);
         CFRelease(theUUID);
-        myId = (NSString *)string;
+        myId = (__bridge NSString *)string;
     }
     return self;
 }
@@ -47,8 +47,8 @@
 -(void)parseDictionary:(NSDictionary *)fields
 {
     NSLog(@"myId: %@",[NSString stringWithFormat:@"%@",[[fields objectForKey:ID] class]]);
-    myId = [[fields objectForKey:ID] retain];
-    _id = [[fields objectForKey:_ID] retain];
+    myId = [fields objectForKey:ID];
+    _id = [fields objectForKey:_ID];
 }
 
 // iAPI methods

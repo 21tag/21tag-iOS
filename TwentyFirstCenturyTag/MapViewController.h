@@ -34,11 +34,11 @@
     MBProgressHUD *HUD;
 }
 - (IBAction)locationButtonPressed:(id)sender;
-@property (nonatomic, retain) IBOutlet MKMapView *currentMapView;
-@property (nonatomic, retain)
+@property (nonatomic, strong) IBOutlet MKMapView *currentMapView;
+@property (nonatomic, strong)
 LocationController *locationController;
 //@property (nonatomic, retain) User *user;
-@property (nonatomic, retain) DashboardViewController *dashboardController;
+@property (nonatomic, strong) DashboardViewController *dashboardController;
 //@property (nonatomic, retain) CLLocation *currentLocation;
 
 -(void)dashPressed;

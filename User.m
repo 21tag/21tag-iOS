@@ -67,21 +67,21 @@
 -(void) parseDictionary:(NSDictionary *)fields
 {
     [super parseDictionary:fields];
-    firstname = [[fields objectForKey:FIRSTNAME] retain];
-    lastname = [[fields objectForKey:LASTNAME] retain];
-    photo = [[fields objectForKey:PHOTO] retain];
-    gender = [[fields objectForKey:GENDER] retain];
-    phone = [[fields objectForKey:PHONE] retain];
-    email = [[fields objectForKey:EMAIL] retain];
-    fid = [[fields objectForKey:FID] retain];
-    password = [[fields objectForKey:PASSWORD] retain];
-    fb_authcode = [[fields objectForKey:FBAUTHCODE] retain];
-    currentVenueId = [[fields objectForKey:CURRENTVENUEID] retain];
-    currentVenueName = [[fields objectForKey:CURRENTVENUENAME] retain];
+    firstname = [fields objectForKey:FIRSTNAME];
+    lastname = [fields objectForKey:LASTNAME];
+    photo = [fields objectForKey:PHOTO];
+    gender = [fields objectForKey:GENDER];
+    phone = [fields objectForKey:PHONE];
+    email = [fields objectForKey:EMAIL];
+    fid = [fields objectForKey:FID];
+    password = [fields objectForKey:PASSWORD];
+    fb_authcode = [fields objectForKey:FBAUTHCODE];
+    currentVenueId = [fields objectForKey:CURRENTVENUEID];
+    currentVenueName = [fields objectForKey:CURRENTVENUENAME];
     currentVenueTime = [fields objectForKey:CURRENTVENUETIME];
     currentVenueLastTime = [fields objectForKey:CURRENTVENUELASTTIME];
-    teamName = [[fields objectForKey:TEAMNAME] retain];
-    teamId = [[fields objectForKey:TEAM] retain];
+    teamName = [fields objectForKey:TEAMNAME];
+    teamId = [fields objectForKey:TEAM];
     
     NSString *rawPoints = [fields objectForKey:POINTS];
     NSLog(@"Raw Points: %@",rawPoints);

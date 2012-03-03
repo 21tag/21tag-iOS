@@ -23,14 +23,13 @@
 
 - (void)dealloc
 {
-    [mainTableView release], mainTableView = nil;
-    [contentsList release], contentsList = nil;
-    [searchResults release], searchResults = nil;
-    [savedSearchTerm release], savedSearchTerm = nil;
+    mainTableView = nil;
+    contentsList = nil;
+    searchResults = nil;
+    savedSearchTerm = nil;
 	
 //    [navBar release];
 //    [navItem release];
-    [super dealloc];
 }
 
 - (void)viewDidUnload
@@ -65,7 +64,6 @@
     
     self.navigationItem.leftBarButtonItem = backButton;
     
-    [backButton release];
     
 
     contentsList = [[NSMutableArray alloc] initWithCapacity:[multiPOIresponse.pois count]];
@@ -76,7 +74,6 @@
         [contentsList addObject:poiResp.poi.name];
     }
     
-    [contentsList retain];
     
     // Restore search term
     if ([self savedSearchTerm])
@@ -100,7 +97,7 @@
     {
         NSMutableArray *array = [[NSMutableArray alloc] init];
         [self setSearchResults:array];
-        [array release], array = nil;
+        array = nil;
     }
 	
     [[self searchResults] removeAllObjects];
@@ -155,7 +152,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 	
     [[cell textLabel] setText:contentForThisRow];
@@ -198,7 +195,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
     placeDetailsController.poiResponse = poiResp;
     placeDetailsController.dashboardController = dashController;
     [self.navigationController pushViewController:placeDetailsController animated:YES];
-    [placeDetailsController release];
     
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

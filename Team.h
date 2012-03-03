@@ -29,12 +29,12 @@
     NSDictionary *poiPoints;
 }
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *leader;
-@property (nonatomic, retain) NSSet *users;
-@property (nonatomic, retain) NSSet *venues;
-@property (nonatomic, retain) NSMutableArray *history;
-@property (nonatomic, retain) NSString *points;
-@property (nonatomic, retain) NSDictionary *poiPoints;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *leader;
+@property (nonatomic, strong) NSSet *users;
+@property (nonatomic, strong) NSSet *venues;
+@property (nonatomic, strong) NSMutableArray *history;
+@property (nonatomic, strong) NSString *points;
+@property (nonatomic, strong) NSDictionary *poiPoints;
 
 @end

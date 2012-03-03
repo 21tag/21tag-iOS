@@ -17,8 +17,8 @@
 }
 
 @property int code;
-@property (nonatomic, retain) NSString *error;
-@property (nonatomic, retain) NSString *ratelimited;
-@property (nonatomic, retain) NSString *unauthorized;
+@property (nonatomic, strong) NSString *error;
+@property (nonatomic, strong) NSString *ratelimited;
+@property (nonatomic, strong) NSString *unauthorized;
 
 @end

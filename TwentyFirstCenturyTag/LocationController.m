@@ -17,7 +17,7 @@ static LocationController* sharedCLDelegate = nil;
 {
  	self = [super init];
 	if (self != nil) {
-		self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+		self.locationManager = [[CLLocationManager alloc] init];
 		self.locationManager.delegate = self;
 		self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
 	}
@@ -77,20 +77,5 @@ static LocationController* sharedCLDelegate = nil;
     return self;
 }
 
-- (id)retain {
-    return self;
-}
-
-- (unsigned)retainCount {
-    return UINT_MAX;  // denotes an object that cannot be released
-}
-
-/*- (void)release {
-    //do nothing
-}*/
-
-- (id)autorelease {
-    return self;
-}
 
 @end

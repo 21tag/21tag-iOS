@@ -22,12 +22,12 @@
     
     BOOL isYourProfile;
 }
-@property (nonatomic, retain) IBOutlet UIImageView *profileImageView;
-@property (nonatomic, retain) IBOutlet UILabel *nameLabel;
-@property (nonatomic, retain) IBOutlet UITableView *profileTableView;
-@property (nonatomic, retain) User *user;
-@property (nonatomic, retain) DashboardViewController *dashboardController;
-@property (nonatomic, retain) NSString * numberMembers;
+@property (nonatomic, strong) IBOutlet UIImageView *profileImageView;
+@property (nonatomic, strong) IBOutlet UILabel *nameLabel;
+@property (nonatomic, strong) IBOutlet UITableView *profileTableView;
+@property (nonatomic, strong) User *user;
+@property (nonatomic, strong) DashboardViewController *dashboardController;
+@property (nonatomic, strong) NSString * numberMembers;
 @property BOOL isYourProfile;
 
 

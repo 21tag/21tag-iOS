@@ -33,12 +33,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [navigationTableView release];
-    [statusImageView release];
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -83,7 +77,6 @@
 
     contentList = [NSMutableArray arrayWithObjects:createTeam, searchTeams, nil];
     
-    [contentList retain];
     
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -157,7 +150,6 @@
         }
                 
         contentList = [teamsArray arrayByAddingObjectsFromArray:contentList];
-        [contentList retain];
         
         statusImageView.image = [UIImage imageNamed:@"found_teams"];
         [statusImageView setNeedsDisplay];
@@ -175,7 +167,6 @@
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    [alert release];
     [HUD hide:YES];
 }
 
@@ -213,9 +204,9 @@
 	if (cell == nil)
 	{
         if(!isActualListContent)
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
         else
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
 	}
 	
 	// get the view controller's info dictionary based on the indexPath's row
@@ -256,13 +247,11 @@
     {
         NewTeamViewController *newTeamController = [[NewTeamViewController alloc] init];
         [self presentModalViewController:newTeamController animated:YES];
-        [newTeamController release];
     }
     else if(indexPath.row == [contentList count] - 1) // Search
     {
         SearchAllTeamsViewController *searchTeamsController = [[SearchAllTeamsViewController alloc] init];
         [self.navigationController pushViewController:searchTeamsController animated:YES];
-        [searchTeamsController release];
     }
     else
     {
@@ -271,7 +260,6 @@
         teamInfoController.teamName = [[contentList objectAtIndex:indexPath.row] objectForKey:@"textLabel"];
         teamInfoController.teamId = [[contentList objectAtIndex:indexPath.row] objectForKey:@"team_id"];
         [self.navigationController pushViewController:teamInfoController animated:YES];
-        [teamInfoController release];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -293,7 +281,6 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     // Remove HUD from screen when the HUD was hidded
     [HUD removeFromSuperview];
-    [HUD release];
 	HUD = nil;
 }
 

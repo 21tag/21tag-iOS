@@ -10,10 +10,6 @@
 
 @implementation TwentyFirstCenturyTagViewController
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {

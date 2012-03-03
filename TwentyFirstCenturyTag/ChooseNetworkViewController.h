@@ -18,7 +18,7 @@
     MBProgressHUD *HUD;
 }
 
-@property (nonatomic, retain) Facebook *facebook;
+@property (nonatomic, strong) Facebook *facebook;
 
 - (IBAction)harvardPressed:(id)sender;
 - (IBAction)campusRequestPressed:(id)sender;

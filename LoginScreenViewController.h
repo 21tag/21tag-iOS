@@ -17,10 +17,10 @@
     
     Facebook *facebook;
 }
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 - (IBAction)loginPressed:(id)sender;
-@property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
+@property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 - (IBAction)pageChanged:(id)sender;
-@property (nonatomic, retain) Facebook *facebook;
+@property (nonatomic, strong) Facebook *facebook;
 
 @end

@@ -19,12 +19,12 @@
     
 	CLLocationManager* locationManager;
 	CLLocation* location;
-	id delegate;
+	id __unsafe_unretained delegate;
 }
 
-@property (nonatomic, retain) CLLocationManager* locationManager;
-@property (nonatomic, retain) CLLocation* location;
-@property (nonatomic, assign) id <LocationControllerDelegate> delegate;
+@property (nonatomic, strong) CLLocationManager* locationManager;
+@property (nonatomic, strong) CLLocation* location;
+@property (nonatomic, unsafe_unretained) id <LocationControllerDelegate> delegate;
 
 + (LocationController*)sharedInstance; // Singleton method
 

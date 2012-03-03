@@ -35,17 +35,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [teamImageView release];
-    [nameTextField release];
-    [mottoTextField release];
-    [navigationBar release];
-    [navigationItem release];
-    [cancelButton release];
-    [saveButton release];
-    [super dealloc];
-}
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
@@ -66,7 +55,6 @@
     NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    [alert release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -167,7 +155,6 @@
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Team Name Required" message:@"Please enter a team name and try again." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
-        [alert release];
     }
 }
 
@@ -175,7 +162,6 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Image from Camera",@"Image from Library",nil];
     [actionSheet showInView:self.view];
-    [actionSheet release];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -206,7 +192,6 @@
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Camera Required" message:@"This device doesn't have a camera." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
-            [alert release];
         }
         else
         {
@@ -219,7 +204,6 @@
     }
     
     [self presentModalViewController:picker animated:YES];
-    [picker release];
 }
 
 @end

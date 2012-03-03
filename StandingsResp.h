@@ -15,6 +15,6 @@
 	NSString* POINT;
 }
 
-@property (nonatomic, retain) NSArray *teams;
+@property (nonatomic, strong) NSArray *teams;
 
 @end

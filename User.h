@@ -57,24 +57,24 @@
     NSMutableArray *history;
 }
 
-@property (nonatomic, retain) NSString *firstname;
-@property (nonatomic, retain) NSString *lastname;
-@property (nonatomic, retain) NSString *photo;
-@property (nonatomic, retain) NSString *gender;
-@property (nonatomic, retain) NSString *phone;
-@property (nonatomic, retain) NSString *email;
-@property (nonatomic, retain) NSString *fid;
-@property (nonatomic, retain) NSString *fb_authcode;
-@property (nonatomic, retain) NSString *teamName;
-@property (nonatomic, retain) NSString *teamId;
-@property (nonatomic, retain) NSString *currentVenueId;
-@property (nonatomic, retain) NSString *currentVenueName;
-@property (nonatomic, retain) NSString *currentVenueTime;
-@property (nonatomic, retain) NSString *currentVenueLastTime;
-@property (nonatomic, retain) NSString *points;
-@property (nonatomic, retain) NSDictionary *poiPoints;
-@property (nonatomic, retain) NSDictionary *venuedata;
-@property (nonatomic, retain) NSMutableArray *history;
+@property (nonatomic, strong) NSString *firstname;
+@property (nonatomic, strong) NSString *lastname;
+@property (nonatomic, strong) NSString *photo;
+@property (nonatomic, strong) NSString *gender;
+@property (nonatomic, strong) NSString *phone;
+@property (nonatomic, strong) NSString *email;
+@property (nonatomic, strong) NSString *fid;
+@property (nonatomic, strong) NSString *fb_authcode;
+@property (nonatomic, strong) NSString *teamName;
+@property (nonatomic, strong) NSString *teamId;
+@property (nonatomic, strong) NSString *currentVenueId;
+@property (nonatomic, strong) NSString *currentVenueName;
+@property (nonatomic, strong) NSString *currentVenueTime;
+@property (nonatomic, strong) NSString *currentVenueLastTime;
+@property (nonatomic, strong) NSString *points;
+@property (nonatomic, strong) NSDictionary *poiPoints;
+@property (nonatomic, strong) NSDictionary *venuedata;
+@property (nonatomic, strong) NSMutableArray *history;
 
 /*-(void)addHistory:(NSString*) hist;
 

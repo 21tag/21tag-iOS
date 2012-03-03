@@ -23,7 +23,7 @@
 @property CLLocationDegrees latitude;
 @property CLLocationDegrees longitude;
 //@property (nonatomic, retain)     Venue *venue;
-@property (nonatomic, retain) POIDetailResp *poiResponse;
+@property (nonatomic, strong) POIDetailResp *poiResponse;
 
 @property int tag;
 

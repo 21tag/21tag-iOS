@@ -45,22 +45,22 @@
     
     BOOL isYourTeam;
 }
-@property (nonatomic, retain) IBOutlet UIImageView *teamImage;
-@property (nonatomic, retain) IBOutlet UILabel *teamNameLabel;
-@property (nonatomic, retain) IBOutlet UILabel *teamSloganLabel;
-@property (nonatomic, retain) IBOutlet UIButton *teamMembersButton;
-@property (nonatomic, retain) IBOutlet UIButton *locationsOwnedButton;
-@property (nonatomic, retain) IBOutlet UIButton *teamPointsButton;
-@property (nonatomic, retain) IBOutlet UILabel *tableHeaderLabel;
-@property (nonatomic, retain) IBOutlet UILabel *teamMembersLabel;
-@property (nonatomic, retain) IBOutlet UILabel *locationsOwnedLabel;
-@property (nonatomic, retain) IBOutlet UILabel *teamPointsLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *teamImage;
+@property (nonatomic, strong) IBOutlet UILabel *teamNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *teamSloganLabel;
+@property (nonatomic, strong) IBOutlet UIButton *teamMembersButton;
+@property (nonatomic, strong) IBOutlet UIButton *locationsOwnedButton;
+@property (nonatomic, strong) IBOutlet UIButton *teamPointsButton;
+@property (nonatomic, strong) IBOutlet UILabel *tableHeaderLabel;
+@property (nonatomic, strong) IBOutlet UILabel *teamMembersLabel;
+@property (nonatomic, strong) IBOutlet UILabel *locationsOwnedLabel;
+@property (nonatomic, strong) IBOutlet UILabel *teamPointsLabel;
 
-@property (nonatomic, retain) NSArray *contentList;
-@property (nonatomic, retain) IBOutlet UITableView *mainTableView;
-@property (nonatomic, retain) NSString *teamName;
-@property (nonatomic, retain) NSString *teamId;
-@property (nonatomic, retain)     DashboardViewController *dashboardController;
+@property (nonatomic, strong) NSArray *contentList;
+@property (nonatomic, strong) IBOutlet UITableView *mainTableView;
+@property (nonatomic, strong) NSString *teamName;
+@property (nonatomic, strong) NSString *teamId;
+@property (nonatomic, strong)     DashboardViewController *dashboardController;
 
 
 

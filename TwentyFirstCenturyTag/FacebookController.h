@@ -13,7 +13,7 @@
 	Facebook *facebook;
 }
 
-@property (nonatomic, retain) Facebook *facebook;
+@property (nonatomic, strong) Facebook *facebook;
 
 + (FacebookController*)sharedInstance; // Singleton method
 

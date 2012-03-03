@@ -48,7 +48,6 @@
     [button addTarget:self action:@selector(savePressed) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithCustomView:button];    
     navItem.rightBarButtonItem = saveButton;
-    [saveButton release];
     
     navBar.tintColor = [UIColor colorWithRed:0.015686274509804f green:0.615686274509804f blue:0.749019607843137 alpha:1.0];
     
@@ -85,12 +84,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [backgroundSwitch release];
-    [navBar release];
-    [navItem release];
-    [super dealloc];
-}
 
 - (IBAction)toggleSwitch:(id)sender 
 {

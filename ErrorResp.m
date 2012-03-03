@@ -34,8 +34,8 @@
 // iAPI methods
 -(id)initWithData: (NSData*) jsonData
 {    
-    [super initWithData:jsonData];
-    [self init];
+    self = [super initWithData:jsonData];
+    self = [self init];
     [self parseJSON:jsonData];
     
     return self;

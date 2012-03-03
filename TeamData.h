@@ -16,8 +16,8 @@
     int numFriends;
 }
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *team_id;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *team_id;
 @property int numMembers;
 @property int numFriends;
 

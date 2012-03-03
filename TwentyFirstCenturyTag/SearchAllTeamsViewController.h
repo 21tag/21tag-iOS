@@ -19,9 +19,9 @@
     MBProgressHUD *HUD;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *mainTableView;
-@property (nonatomic, retain) NSMutableArray *contentsList;
-@property (nonatomic, retain) NSMutableArray *searchResults;
+@property (nonatomic, strong) IBOutlet UITableView *mainTableView;
+@property (nonatomic, strong) NSMutableArray *contentsList;
+@property (nonatomic, strong) NSMutableArray *searchResults;
 @property (nonatomic, copy) NSString *savedSearchTerm;
 
 - (void)handleSearchForTerm:(NSString *)searchTerm;
