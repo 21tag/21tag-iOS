@@ -632,6 +632,7 @@
     {
         ProfileViewController *profileController = [[ProfileViewController alloc] init];
         User *user = (User*)[[usersList objectAtIndex:indexPath.row] objectForKey:@"user"];
+        NSLog(@"Selected users id: %@",user.getId);
         profileController.user = user;
         [profileController.user retain];
         

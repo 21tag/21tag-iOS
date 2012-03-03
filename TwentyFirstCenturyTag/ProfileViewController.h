@@ -18,7 +18,7 @@
     UITableView *profileTableView;
     
     NSArray *contentList;
-    TeamsResp *teamsResponse;
+    Team *team;
     
     BOOL isYourProfile;
 }
@@ -27,6 +27,7 @@
 @property (nonatomic, retain) IBOutlet UITableView *profileTableView;
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) DashboardViewController *dashboardController;
+@property (nonatomic, retain) NSString * numberMembers;
 @property BOOL isYourProfile;
 
 

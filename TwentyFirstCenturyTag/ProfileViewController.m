@@ -22,6 +22,7 @@
 @synthesize user;
 @synthesize isYourProfile;
 @synthesize dashboardController;
+@synthesize numberMembers;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -124,13 +125,13 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    if(request.tag == 1) // team info
+    if(request.tag == 1) // user info
     {
-        NSLog(@"team info:\n%@",[request responseString]);
+        NSLog(@"User info:\n%@",[request responseString]);
         
-        teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
-        NSArray *users = teamsResponse.users;
-        NSMutableArray *userList = [[NSMutableArray alloc] initWithCapacity:[users count]];
+        user = [[User alloc] initWithData:[request responseData]];
+        //NSArray *users = teamsResponse.users;
+        NSMutableArray *eventList = [[NSMutableArray alloc] initWithCapacity:[user.history count]];
         for(id element in user.history)
         {
             Event *event = (Event*)element;
@@ -148,14 +149,26 @@
                 [cellInfo setObject:@"Inactive" forKey:@"detailTextLabel"];
             [cellInfo setObject:[NSNumber numberWithDouble:time] forKey:@"time"];
             [cellInfo setObject:event forKey:@"user"];
-            [userList addObject:cellInfo];
+            [eventList addObject:cellInfo];
+        }
+        if([user.history count] == 0)
+        {
+            NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
+            [cellInfo setObject:[NSString stringWithFormat:@"No Recent Activity"] forKey:@"textLabel"];
+            [eventList addObject:cellInfo];
         }
 
         NSSortDescriptor *timeDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES] autorelease];
-        [userList sortUsingDescriptors:[NSArray arrayWithObjects:timeDescriptor,nil]];
-        contentList = userList;
+        [eventList sortUsingDescriptors:[NSArray arrayWithObjects:timeDescriptor,nil]];
+        contentList = eventList;
         [profileTableView reloadData];
 
+    }
+    if(request.tag == 2) //team info
+    {
+        team = [[Team alloc] initWithData:[request responseData]];
+        NSLog(@"team download: %@",team);
+        [profileTableView reloadData];
     }
 }
 
@@ -186,19 +199,20 @@
         team = user.teamId;
     */
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],user.teamId]]; //V1 "/getteam"
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[user getId]]]; //V1 "/getteam"
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    /*
-    if(user.teamname)
-        [request setPostValue:user.teamname forKey:@"team"];
-    else
-        [request setPostValue:user.team forKey:@"team"];
-    */
-    //[request setPostValue:@"true" forKey:@"details"];
     [request setRequestMethod:@"GET"];
     [request setDelegate:self];
     [request setTag:1];
     [request startAsynchronous];
+    
+    NSURL * Teamurl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],[user teamId]]]; //V1 "/getteam"
+    NSLog(@"team id sent: %@",[user teamId]);
+    ASIHTTPRequest *Teamrequest = [ASIHTTPRequest requestWithURL:Teamurl];
+    [Teamrequest setRequestMethod:@"GET"];
+    [Teamrequest setDelegate:self];
+    [Teamrequest setTag:2];
+    [Teamrequest startAsynchronous];
     
 
     
@@ -275,10 +289,10 @@
         else
             cell.textLabel.text = user.teamId;
         
-        if(teamsResponse)
+        if(team)
         {
             //Team *team = [teamsResponse.teams objectAtIndex:0];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d members",[teamsResponse.users count]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d members",[team.users count]];
         }
     }
     else
