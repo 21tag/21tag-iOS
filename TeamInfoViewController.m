@@ -607,7 +607,6 @@
         User *user = (User*)[[usersList objectAtIndex:indexPath.row] objectForKey:@"user"];
         NSLog(@"Selected users id: %@",user.getId);
         profileController.user = user;
-        profileController.user;
         
         [self.navigationController pushViewController:profileController animated:YES];
         profileController.profileImageView.image = [UIImage imageNamed:@"team_icon_placeholder"];
@@ -637,8 +636,6 @@
         ProfileViewController *profileController = [[ProfileViewController alloc] init];
         User *user = (User*)[[rankingsList objectAtIndex:indexPath.row] objectForKey:@"user"];
         profileController.user = user;
-        profileController.user;
-        
         [self.navigationController pushViewController:profileController animated:YES];
         profileController.profileImageView.image = [UIImage imageNamed:@"team_icon_placeholder"];
         

@@ -791,7 +791,6 @@
     {
         ProfileViewController *profileController = [[ProfileViewController alloc] init];
         profileController.user = user;
-        profileController.user;
         //NSLog(@"profile: %@",user.teamname);
 
         profileController.isYourProfile = YES;

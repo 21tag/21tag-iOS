@@ -1334,6 +1334,7 @@
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrew Magliozzi";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Magliozzi (VYEHVU8675)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1343,6 +1344,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "21 Tag";
 				PROVISIONING_PROFILE = "17226247-0954-4689-B3A5-8D721024AAE0";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7A3E142B-AFAA-4CB9-B006-24D0D4959BDC";
 				VALID_ARCHS = "armv6 armv7 i386";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1358,6 +1360,7 @@
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrew Magliozzi";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrew Magliozzi";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwentyFirstCenturyTag/TwentyFirstCenturyTag-Prefix.pch";
@@ -1366,6 +1369,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "21 Tag";
 				PROVISIONING_PROFILE = "17226247-0954-4689-B3A5-8D721024AAE0";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F4D9BA41-1FEA-4418-BC69-1234F2050CFE";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv6 armv7 i386";
 				WRAPPER_EXTENSION = app;

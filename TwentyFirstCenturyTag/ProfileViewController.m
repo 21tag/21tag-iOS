@@ -322,9 +322,6 @@
         PlaceDetailsViewController *placeController = [[PlaceDetailsViewController alloc] init];
         placeController.venueId = theEvent.venueid;
         
-    
-        placeController.venueId;
-        
         [self.navigationController pushViewController:placeController animated:YES];
         
         
