@@ -220,7 +220,7 @@
 
         // try to log in
         NSLog(@"Try to login");
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/?fbauthcode=%@",[APIUtil host],@"18",[defaults objectForKey:@"FBAccessTokenKey"]]];  //V1 "/login"  //changeback [defaults objectForKey:@"user_id"]
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/?fbauthcode=%@",[APIUtil host],[defaults objectForKey:@"user_id"],[defaults objectForKey:@"FBAccessTokenKey"]]];  //V1 "/login"
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.33:8888/api/v2/user/123/?fbauthcode=%@",[defaults objectForKey:@"FBAccessTokenKey"]]];
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
         [request setRequestMethod:@"GET"];

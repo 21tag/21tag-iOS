@@ -143,6 +143,7 @@
         
         NSLog(@"joined team: %@", [request responseString]);
         [defaults setObject:team.name forKey:@"team_name"];
+        [defaults setObject:team.getId forKey:@"team_id"];
         [defaults synchronize];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
@@ -186,6 +187,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:@"team_name"];
+    [defaults removeObjectForKey:@"team_id"];
     [defaults synchronize];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
