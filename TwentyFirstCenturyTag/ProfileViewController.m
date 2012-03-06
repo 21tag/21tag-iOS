@@ -286,13 +286,18 @@
             //Team *team = [teamsResponse.teams objectAtIndex:0];
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%d members",[team.users count]];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     else
     {
         NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
         cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
         cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if ([cell.textLabel.text isEqualToString:@"No Recent Activity"] ) {
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        else
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     
@@ -321,11 +326,19 @@
     {
         NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
         
-        Event *theEvent = (Event*)[cellInfo objectForKey:@"event"];
-        PlaceDetailsViewController *placeController = [[PlaceDetailsViewController alloc] init];
-        placeController.venueId = theEvent.venueid;
+        if([tableView cellForRowAtIndexPath:indexPath].selectionStyle == UITableViewCellSelectionStyleNone)
+        {
+            
+        }
+        else 
+        {
+            Event *theEvent = (Event*)[cellInfo objectForKey:@"event"];
+            PlaceDetailsViewController *placeController = [[PlaceDetailsViewController alloc] init];
+            placeController.venueId = theEvent.venueid;
+            
+            [self.navigationController pushViewController:placeController animated:YES]; 
+        }
         
-        [self.navigationController pushViewController:placeController animated:YES];
         
         
     }
