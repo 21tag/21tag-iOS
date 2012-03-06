@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "APIObj.h"
 #import "Event.h"
+#import "User.h"
+#import "Venue.h"
 
 @interface Team : APIObj {
   	NSString *NAME;
@@ -27,6 +29,7 @@
     NSMutableArray *history;
     NSString *points;
     NSDictionary *poiPoints;
+    NSString * motto;
 }
 
 @property (nonatomic, strong) NSString *name;
@@ -36,5 +39,6 @@
 @property (nonatomic, strong) NSMutableArray *history;
 @property (nonatomic, strong) NSString *points;
 @property (nonatomic, strong) NSDictionary *poiPoints;
+@property (nonatomic, strong) NSString * motto;
 
 @end

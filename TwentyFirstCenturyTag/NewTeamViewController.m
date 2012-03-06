@@ -44,6 +44,7 @@
     Team *team = [[Team alloc] initWithData:[request responseData]];
     
     [defaults setObject:team.name forKey:@"team_name"];
+    [defaults setObject:team.getId forKey:@"team_id"];
     [defaults synchronize];
     
     [self dismissModalViewControllerAnimated:YES];
@@ -141,7 +142,11 @@
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/",[APIUtil host]]]; //V1 "/createteam"
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"user_id"],@"user",nameTextField.text,@"team", nil];
+        NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"user_id"],@"user",nameTextField.text,@"name",mottoTextField.text, @"motto", nil];
+        NSLog(@"User: %@",[defaults objectForKey:@"user_id"]);
+        NSLog(@"Team name: %@",nameTextField.text);
+        NSLog(@"Team motto: %@",mottoTextField.text);
+        NSLog(@"new team dict: %@",dictionary);
         [request appendPostData:[dictionary JSONData]];
         [request addRequestHeader:@"Content-Type" value:@"application/json"];
         

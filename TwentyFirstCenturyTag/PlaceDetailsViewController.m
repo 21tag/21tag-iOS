@@ -45,7 +45,7 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    if(request.tag == 1)
+    if(request.tag == 1) //Checkin
     {
         NSLog(@"checkin:\n%@",[request responseString]);
         
@@ -158,6 +158,7 @@
     else if(request.tag == 6) //user info
     {
         user = [[User alloc] initWithData:[request responseData]];
+        dashboardController.user = user;
         [self updateData];
     }
             
@@ -361,9 +362,8 @@
     [request startAsynchronous];
      */
     user = dashboardController.user;
+    [self updateUser];
     
-    if(!user)
-        [self updateUser];
     /*
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/%@/?details=true",[APIUtil host],user.teamId]]; //V1 "/getteam"
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];

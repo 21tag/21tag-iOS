@@ -30,7 +30,7 @@
         VENUE			= @"v";
         POINT			= @"p";
         MAP				= @"m";
-        MOTTO           = @"motto";
+        
     }
     return self;
 }

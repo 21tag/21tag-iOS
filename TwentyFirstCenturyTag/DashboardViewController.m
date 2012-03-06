@@ -217,6 +217,8 @@
         
         NSString *facebookID = [result objectForKey:@"id"];
         facebookRequestResults = (NSDictionary*) result;
+        NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
+        [defaults setObject:facebookID forKey:@"id"];
 
         // try to log in
         NSLog(@"Try to login");
@@ -288,14 +290,8 @@
             [dictionary setObject:last_name forKey:@"lastname"];
             NSData * JSON = [dictionary JSONData];
             [formRequest appendPostData:JSON];
-            //[formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
-            //[formRequest addPostValue:@"true" forKey:@"nohtml"]; //should go
             [formRequest addRequestHeader:@"Content-Type" value:@"application/json"];
             [formRequest setRequestMethod:@"POST"];
-            //[formRequest addPostValue:email forKey:@"email"];
-            //[formRequest addPostValue:first_name forKey:@"firstname"];
-            //[formRequest addPostValue:facebookID forKey:@"fid"];
-            //[formRequest addPostValue:last_name forKey:@"lastname"];
             [formRequest setDelegate:self];
             [formRequest setTag:2];
             [formRequest startAsynchronous];
@@ -308,7 +304,6 @@
             [defaults setObject:user.teamId forKey:@"team_id"];
             [defaults setObject:user.teamName forKey:@"team_name"];
             [defaults setObject:user.fid forKey:@"id"];
-            //[defaults setObject:@"18" forKey:@"user_id"];
             [defaults synchronize];
             
             NSLog(@"logged in: %@", [user getId]);
@@ -341,7 +336,6 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             user = [[User alloc] initWithData:[request responseData]];
             [defaults setObject:[user getId] forKey:@"user_id"];
-            //[defaults setObject:@"18" forKey:@"user_id"];
             [defaults removeObjectForKey:@"team_name"];
             [defaults removeObjectForKey:@"team_id"];
             [defaults synchronize];
@@ -535,6 +529,11 @@
             
             cell.detailTextLabel.text = [NSString stringWithFormat:@"Last checked in: %@ ago",timeString];
             nameLabel.text = @"Not Checked In";
+        }
+        else 
+        {
+            cell.detailTextLabel.text = @"Problem";
+            nameLabel.text = @"don't know where you checked in last";
         }
     }
     
@@ -761,16 +760,18 @@
             [alert show];
         }
         else if(indexPath.row == 2) // Your Team
-        {
+        {            
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            if(![defaults objectForKey:@"team_id"])
+            NSLog(@"Team id from defaults: %@",[defaults objectForKey:@"team_id"]);
+            
+            if([defaults objectForKey:@"team_id"] == @"" || ![defaults objectForKey:@"team_id"])
             {
                 JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
                 [self.navigationController pushViewController:joinTeamController animated:YES];
             }
             else
             {
-                TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init]; //needtofix
+                TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
                 teamInfoController.teamName = [defaults objectForKey:@"team_name"];
                 teamInfoController.teamId = [defaults objectForKey:@"team_id"];
                 

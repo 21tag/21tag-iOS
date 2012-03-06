@@ -30,6 +30,7 @@
     NSString *teamId;
     
     TeamsResp *teamsResponse;
+    Team * team;
     
     NSArray *usersList;
     NSArray *locationsList;
@@ -61,6 +62,7 @@
 @property (nonatomic, strong) NSString *teamName;
 @property (nonatomic, strong) NSString *teamId;
 @property (nonatomic, strong)     DashboardViewController *dashboardController;
+@property (nonatomic, strong) Team * team;
 
 
 
@@ -74,7 +76,8 @@
 - (void)joinPressed;
 - (void)leavePressed;
 - (void)deleteFromTeam:(BOOL)switchingTeam;
--(void)joinTeam;
+- (void)joinTeam;
+- (void)refreshData;
 
 -(void)leaveTeamPostprocessing;
 

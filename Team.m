@@ -8,7 +8,6 @@
 
 #import "Team.h"
 
-
 @implementation Team
 
 @synthesize name;
@@ -18,6 +17,7 @@
 @synthesize history;
 @synthesize points;
 @synthesize poiPoints;
+@synthesize motto;
 
 
 -(id)init
@@ -34,6 +34,8 @@
         MOTTO           = @"moto";
         POINTS          = @"points";
         POIPOINTS       = @"poi_pts";
+        MOTTO           = @"motto";
+        
     }
     return self;
 }
@@ -46,8 +48,10 @@
     self.name = [fields objectForKey:NAME];
     self.leader = [fields objectForKey:LEADER];
     
-    self.users = [NSSet setWithArray:[fields objectForKey:USERS]];
-    self.venues = [NSSet setWithArray:[fields objectForKey:VENUES]];
+    //self.users = [NSSet setWithArray:[fields objectForKey:USERS]];
+    //self.venues = [NSSet setWithArray:[fields objectForKey:VENUES]];
+    
+    self.motto = [fields objectForKey:MOTTO];
     
     NSArray * rawHistory = [fields objectForKey:HISTORY];
     NSMutableArray * tempHistory = [[NSMutableArray alloc] initWithCapacity:[rawHistory count]];
@@ -73,6 +77,33 @@
     
     
     self.points = [fields objectForKey:POINTS];
+    
+    NSArray *userFieldsArray = [fields objectForKey:USERS];
+    if(userFieldsArray)
+    {
+        NSMutableSet *usersSet = [[NSMutableSet alloc] initWithCapacity:[userFieldsArray count]];
+        for(int i = 0; i < [userFieldsArray count]; i++)
+        {
+            NSLog(@"Users: %@",[userFieldsArray objectAtIndex:i]);
+            User *user = [[User alloc] initWithDictionary:[userFieldsArray objectAtIndex:i]];
+            [usersSet addObject:user];
+        }
+        users = usersSet;
+    }
+    
+    NSArray *venueFieldsArray = [fields objectForKey:VENUES];
+    if(venueFieldsArray)
+    {
+        NSMutableSet *venuesSet = [[NSMutableSet alloc] initWithCapacity:[venueFieldsArray count]];
+        for(int i = 0; i < [venueFieldsArray count]; i++)
+        {
+            Venue *venue = [[Venue alloc] initWithDictionary:[venueFieldsArray objectAtIndex:i]];
+            [venuesSet addObject:venue];
+        }
+        venues = venuesSet;
+    }
+    
+    
 }
 
 -(NSString *) description

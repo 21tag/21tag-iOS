@@ -40,6 +40,7 @@
 @synthesize teamName;
 @synthesize teamId;
 @synthesize dashboardController;
+@synthesize team;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,12 +58,13 @@
     {
        NSLog(@"team info:\n%@",[request responseString]);
     
-        teamsResponse = [[TeamsResp alloc] initWithData:[request responseData]];
-        NSArray *users = teamsResponse.users;
+        team = [[Team alloc] initWithData:[request responseData]];
+        //NSArray *teams = teamsResponse.teams;
+        //team = [teams objectAtIndex:0];
+        NSSet *users = team.users;
         NSMutableArray *pointsList = [[NSMutableArray alloc] initWithCapacity:[users count]];
-        for(id element in users)
+        for(User * user in users)
         {
-            User *user = (User*)element;
             NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
             [cellInfo setObject:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname] forKey:@"textLabel"];
             int points = [user.points intValue];
@@ -102,8 +104,8 @@
             usersList = pointsList;
         }
         
-        NSMutableArray *venueList = [[NSMutableArray alloc] initWithCapacity:[teamsResponse.venues count]];
-        for(Venue *venue in teamsResponse.venues)
+        NSMutableArray *venueList = [[NSMutableArray alloc] initWithCapacity:[team.venues count]];
+        for(Venue *venue in team.venues)
         {
             NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
             [cellInfo setObject:venue.name forKey:@"textLabel"];
@@ -113,16 +115,15 @@
         }
         locationsList = venueList;
         
-        teamMembersLabel.text = [NSString stringWithFormat:@"%d",[teamsResponse.users count]];
+        teamMembersLabel.text = [NSString stringWithFormat:@"%d",[team.users count]];
         int teamPoints = 0;
         int numVenues = 0;
         
-        numVenues = [teamsResponse.venues count];
+        numVenues = [team.venues count];
         NSLog(@"Number of Venues: %d",numVenues);
         
-        for(int i = 0; i < [teamsResponse.users count]; i++)
+        for(User * user in team.users)
         {
-            User *user = [teamsResponse.users objectAtIndex:i];
             int points = [user.points intValue];
             teamPoints +=points;
         }
@@ -135,15 +136,18 @@
         [pointsList sortUsingDescriptors:[NSArray arrayWithObjects:pointsDescriptor,nil]];
 
         [self teamMembersPressed:nil];
+        [self refreshData];
     }
     else if(request.tag == 2) // join team
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        Team *team = [[Team alloc] initWithData:[request responseData]];
+        //team = [[Team alloc] initWithData:[request responseData]];
         
         NSLog(@"joined team: %@", [request responseString]);
         [defaults setObject:team.name forKey:@"team_name"];
         [defaults setObject:team.getId forKey:@"team_id"];
+        dashboardController.user.teamId = team.getId;
+        dashboardController.user.teamName = team.name;
         [defaults synchronize];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
@@ -189,6 +193,9 @@
     [defaults removeObjectForKey:@"team_name"];
     [defaults removeObjectForKey:@"team_id"];
     [defaults synchronize];
+    
+    dashboardController.user.teamId = @"";
+    dashboardController.user.teamName = @"";
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *buttonImage = [UIImage imageNamed:@"join_button.png"];
@@ -441,6 +448,14 @@
     [actionSheet showInView:self.view];
 }
 
+- (void) refreshData
+{
+    NSLog(@"Team Name from team: %@",team.name);
+    NSLog(@"Team Motto from team: %@",team.motto);
+    self.teamNameLabel.text = team.name;
+    self.teamSloganLabel.text = team.motto;
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -448,6 +463,7 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
+
 
 #pragma mark - View lifecycle
 
@@ -466,7 +482,7 @@
         self.title = @"Your Team";
         tableHeaderLabel.text = @"Recent Activity";
     }
-    teamNameLabel.text = teamName;
+    [self refreshData];
 
     [self setupButtons];
     

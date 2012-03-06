@@ -21,7 +21,6 @@
 	NSString *VENUE;
 	NSString *POINT;
 	NSString *MAP;
-    NSString *MOTTO;
     
     NSArray *teams;
     NSArray *users;

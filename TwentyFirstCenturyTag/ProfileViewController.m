@@ -103,6 +103,8 @@
         TwentyFirstCenturyTagAppDelegate *delegate = (TwentyFirstCenturyTagAppDelegate*)[[UIApplication sharedApplication] delegate];
         Facebook *facebook = [FacebookController sharedInstance].facebook;
         [facebook logout:delegate];
+        
+        
     }
 }
 
@@ -290,9 +292,10 @@
         NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
         cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
         cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     
 	return cell;
 }
