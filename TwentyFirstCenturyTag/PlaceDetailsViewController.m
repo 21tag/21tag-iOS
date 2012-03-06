@@ -84,18 +84,20 @@
         [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"send_distance_notification"];
         [defaults setObject:[NSDate date] forKey:@"checkin_time"];
         
-        if(dashboardController.checkinTimer)
-        {
-            [dashboardController.checkinTimer invalidate];
-            dashboardController.checkinTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES];
-        }
-        else
-            dashboardController.checkinTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES];
         dashboardController.currentVenue = poiResponse.poi;
         dashboardController.checkinTime = [NSDate date];
         dashboardController.nameLabel.text = @"Currently Checked In";
         dashboardController.navigationItem.rightBarButtonItem = dashboardController.checkoutButton;
         self.navigationItem.rightBarButtonItem = checkoutButton;
+        
+        NSLog(@"checkin timer from place: %@",dashboardController.checkinTimer);
+        if(dashboardController.checkinTimer)
+        {
+            [dashboardController.checkinTimer invalidate];
+            dashboardController.checkinTimer = [NSTimer scheduledTimerWithTimeInterval:30.0f target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES];
+        }
+        else
+            dashboardController.checkinTimer = [NSTimer scheduledTimerWithTimeInterval:30.0f target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES];
 
     }
     /*else if(request.tag == 3)

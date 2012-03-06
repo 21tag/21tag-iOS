@@ -183,7 +183,7 @@
         }
     }
     
-    if([dashboardController.nameLabel.text isEqualToString:@"Not Checked In"])
+    if(dashboardController.checkinTimer)
     {
         LocationController *locController = [LocationController sharedInstance];
         [locController.locationManager stopUpdatingLocation];
@@ -192,8 +192,12 @@
 
 -(void)didUpdateToLocation:(CLLocation*)location
 {
-    [dashboardController locationUpdate:location];
-    [dashboardController checkinUpdate:nil];
+    NSLog(@"didUpdateToLocation");
+    if(dashboardController.checkinTimer)
+    {
+        [dashboardController locationUpdate:location];
+        [dashboardController checkinUpdate:nil];
+    }
     //NSLog(@"Background location update");
 }
 

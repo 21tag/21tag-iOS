@@ -89,7 +89,8 @@
                 NSTimeInterval time = [APIUtil timeIntervalFromThen:user.currentVenueLastTime];
                 NSString *timeString = [APIUtil stringwithFormatFrom:time];
                 
-                if(user.currentVenueName)
+                NSLog(@"Current Venue Name: %d",user.currentVenueName.length);
+                if(user.currentVenueName.length != 0)
                     [cellInfo setObject:[NSString stringWithFormat:@"%@ %@ ago",user.currentVenueName,timeString] forKey:@"detailTextLabel"];
                 else
                     [cellInfo setObject:@"Inactive" forKey:@"detailTextLabel"];

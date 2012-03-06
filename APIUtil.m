@@ -28,6 +28,7 @@
 
 +(NSString*)stringwithFormatFrom:(NSTimeInterval)time
 {
+    //NSLog(@"Time interval from util: %f",time);
     int hour, minute, second, day;
     hour = time / 3600;
     minute = (time - hour * 3600) / 60;
@@ -58,7 +59,7 @@
     NSDate *date = [dateFormat dateFromString:then];
     
     NSTimeInterval time = [date timeIntervalSinceNow];
-    time = time *-1;
+    time = ABS(time);
     return time;
     
 }

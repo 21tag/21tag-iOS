@@ -63,11 +63,7 @@
              postNotificationName:@"LocationUpdateNotification"
              object:nil];
         }
-        
-
-        
         //NSLog(@"%f, %f, %f", kCLLocationAccuracyBest, kCLLocationAccuracyNearestTenMeters, kCLLocationAccuracyHundredMeters);
-
     }
 
 }
@@ -88,12 +84,12 @@
     CLLocationDistance distanceToVenue = [currentLocation distanceFromLocation:venueLocation];
     //200 feet = 60.96 meters
     //distanceToVenue = 0; // DEBUG value
-    //NSLog(@"checkinUpdate");
+    NSLog(@"checkinUpdate");
     if(currentLocation)
     {
         if(distanceToVenue <= [APIUtil minDistanceMeters])
         {
-            if(fiveMinuteCounter == 5)
+            if(fiveMinuteCounter == 1) //needtofix
             {
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/checkin"
@@ -107,14 +103,12 @@
                 //[request setDelegate:self];
                 //[request setTag:1];
                 [request startAsynchronous];
-                //NSLog(@"dashboard checkin");
+                NSLog(@"dashboard checkin");
             }
         }
         else
         {
             //1 meter = 3.2808399 feet
-            
-            
             
             if(currentVenue.name)
             {
@@ -159,7 +153,7 @@
     }
     
     
-    if(fiveMinuteCounter == 5)
+    if(fiveMinuteCounter == 1)
         fiveMinuteCounter = 0;
     else
         fiveMinuteCounter++;
@@ -347,6 +341,18 @@
             if(locationFinishedLoading && profileFinishedLoading)
                 [HUD hide:YES];
         }
+        if ([[request responseString] isEqualToString:@"That username already exists"])
+        {
+            NSLog(@"get user_id");
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/userfromfid/?fid=%@",[APIUtil host],[defaults objectForKey:@"id"]]];
+            ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+            [request setRequestMethod:@"GET"];
+            [request setDelegate:self];
+            [request setTag:5];
+            [request startAsynchronous];
+            
+        }
         else // reset fb auth code
         {    
         
@@ -430,8 +436,27 @@
             
             if(locationFinishedLoading && profileFinishedLoading)
                 [HUD hide:YES];
-        }      
+        } 
     }
+    else if(request.tag == 5)
+    {
+        NSLog(@"User id from fid: %@",[request responseData]);
+        user = [[User alloc] initWithData:[request responseData]];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        user = [[User alloc] initWithData:[request responseData]];
+        [defaults setObject:[user getId] forKey:@"user_id"];
+        
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/?fbauthcode=%@",[APIUtil host],user.getId,[defaults objectForKey:@"FBAccessTokenKey"]]];  //V1 "/login"
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        [request setRequestMethod:@"GET"];
+        [request setDelegate:self];
+        
+        [request setTag:1];
+        [request startAsynchronous];
+        
+        
+    }
+    
     NSLog(@"user teamName after request: %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"team_name"]);
     NSLog(@"user teamId after request: %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"team_id"]);
 }
@@ -593,7 +618,7 @@
     
     fiveMinuteCounter = 0;
     
-    dashboardTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateDashboard:) userInfo:nil repeats:YES];
+    dashboardTimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(updateDashboard:) userInfo:nil repeats:YES];
     
     profileFinishedLoading = NO;
     locationFinishedLoading = NO;
@@ -679,9 +704,14 @@
 
 -(void)checkout
 {
+    NSLog(@"Check in Timer before: %@",checkinTimer);
+    NSLog(@"Checkin Time before: %@",checkinTime);
     [checkinTimer invalidate];
+    checkinTimer = nil;
     checkinTime = nil;
     [navigationTableView reloadData];
+    NSLog(@"Check in Timer after: %@",checkinTimer);
+    NSLog(@"Checkin Time after: %@",checkinTime);
     
     self.navigationItem.rightBarButtonItem = checkinButton;
   
