@@ -407,8 +407,8 @@
         [request startAsynchronous];
     }
     
-    if([user.poiPoints objectForKey:[venue getId]])
-        yourPointsLabel.text = [user.poiPoints objectForKey:[venue getId]];
+    if([user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]])
+        yourPointsLabel.text = [user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]];
     else
         yourPointsLabel.text=@"0";
     
