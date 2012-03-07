@@ -12,6 +12,7 @@
 @synthesize navBar;
 @synthesize navItem;
 @synthesize backgroundSwitch;
+@synthesize tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -88,7 +89,7 @@
 - (IBAction)toggleSwitch:(id)sender 
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if(backgroundSwitch.on)
+    if([(UISwitch *)sender isOn])
     {
         [defaults setObject:[NSNumber numberWithBool:YES ] forKey:@"use_background_location"];
     }
@@ -103,4 +104,59 @@
 {
     [self dismissModalViewControllerAnimated:YES];
 }
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return 1;
+}
+/*
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"Background Task";
+}
+*/
+- (UITableViewCell *)tableView:(UITableView *)tabview cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell *cell = [tabview dequeueReusableCellWithIdentifier:@"Cell"];
+	if (cell == nil)
+	{
+        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+    }
+    UISwitch *switchObj = [[UISwitch alloc] initWithFrame:CGRectMake(1.0, 1.0, 20.0, 20.0)];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *background = [defaults objectForKey:@"use_background_location"];
+    NSLog(@"Background: %@",background);
+    if(background)
+    {
+        if([background boolValue])
+        {
+            [switchObj setOn:YES];
+        }
+        else
+        {
+            [switchObj setOn:NO];
+        }
+    }
+    
+    [switchObj addTarget:self action:@selector(toggleSwitch:) forControlEvents:(UIControlEventValueChanged | UIControlEventTouchDragInside)];
+    cell.accessoryView = switchObj;
+    cell.textLabel.text = @"Background Check-in";
+    
+    return cell;
+}
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    return @"Automatically updates your location while using other applications (may affect battery life)";
+}
+
+
 @end
+
+
+
+

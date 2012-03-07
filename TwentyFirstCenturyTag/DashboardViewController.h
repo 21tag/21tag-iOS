@@ -35,6 +35,7 @@
     int fiveMinuteCounter;
     NSDate *checkinTime;
     NSTimer *dashboardTimer;
+    NSDate *lastCheckinTime;
     
     MBProgressHUD *HUD;
     
@@ -48,6 +49,7 @@
 @property (nonatomic, strong) User *user;
 @property (nonatomic, strong) Venue *currentVenue;
 @property (nonatomic, strong) NSTimer *checkinTimer;
+@property (nonatomic, strong) NSDate *lastCheckinTime;
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, strong) NSDate *checkinTime;
 @property (nonatomic, strong) LocationController *locationController;

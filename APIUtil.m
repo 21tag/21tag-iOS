@@ -38,11 +38,18 @@
     {
         day = hour / 24;
         hour = hour - (day * 24);
-        timeString = [NSString stringWithFormat:@"%d days %d hours", day, hour];
+        if (day == 1) {
+            timeString = [NSString stringWithFormat:@"%d day %d hours", day, hour];
+        }
+        else
+            timeString = [NSString stringWithFormat:@"%d days %d hours", day, hour];
     }
     else if(hour == 0)
     {
-        timeString = [NSString stringWithFormat:@"%d minutes", minute];
+        if (minute <= 1)
+            timeString = [NSString stringWithFormat:@"%d minute", minute];
+        else
+            timeString = [NSString stringWithFormat:@"%d minutes", minute];
     }
     else
         timeString = [NSString stringWithFormat:@"%d hours %d minutes", hour, minute];

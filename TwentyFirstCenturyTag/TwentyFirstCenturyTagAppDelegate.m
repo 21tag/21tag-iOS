@@ -183,7 +183,7 @@
         }
     }
     
-    if(dashboardController.checkinTimer)
+    if(!dashboardController.lastCheckinTime)
     {
         LocationController *locController = [LocationController sharedInstance];
         [locController.locationManager stopUpdatingLocation];
@@ -193,7 +193,7 @@
 -(void)didUpdateToLocation:(CLLocation*)location
 {
     NSLog(@"didUpdateToLocation");
-    if(dashboardController.checkinTimer)
+    if(dashboardController.lastCheckinTime)
     {
         [dashboardController locationUpdate:location];
         [dashboardController checkinUpdate:nil];

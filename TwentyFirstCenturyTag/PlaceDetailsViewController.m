@@ -76,8 +76,8 @@
             [mapViewController centerMapOnLocation:dashboardController.currentLocation];
             [mapViewController refreshAnnotations];
         }
-        
-        [dashboardController.contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:dashboardController.user.currentVenueName]];
+        dashboardController.currentVenue = venue;
+        [dashboardController.contentList replaceObjectAtIndex:0 withObject:[NSArray arrayWithObject:venue.name]];
         [dashboardController.navigationTableView reloadData];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -86,6 +86,7 @@
         
         dashboardController.currentVenue = poiResponse.poi;
         dashboardController.checkinTime = [NSDate date];
+        dashboardController.lastCheckinTime = [NSDate date];
         dashboardController.nameLabel.text = @"Currently Checked In";
         dashboardController.navigationItem.rightBarButtonItem = dashboardController.checkoutButton;
         self.navigationItem.rightBarButtonItem = checkoutButton;
@@ -145,8 +146,10 @@
         
         Team * team = [[Team alloc] initWithData:[request responseData]];
         
-        if ([team.poiPoints objectForKey:[venue getId]])
-             yourTeamPointsLabel.text = [team.poiPoints objectForKey:[venue getId]];
+        NSLog(@"Team points at venue: %@",[team.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]]);
+        //NSNumber *vid = [NSNumber numberWithInt:[[venue getId] intValue]];
+        if ([team.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]])
+             yourTeamPointsLabel.text = [team.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]];
         else
             yourTeamPointsLabel.text = @"0";
              
@@ -190,8 +193,8 @@
     
     NSLog(@"Venue as: %@",user);
     
-    if([user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]])
-        yourPointsLabel.text = [user.poiPoints objectForKey:[venue getId]];
+    if([user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]] || [user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]] != @"")
+        yourPointsLabel.text = [user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]];
     else
         yourPointsLabel.text=@"0";
     
@@ -476,7 +479,6 @@
             HUD.labelText = @"Checking In...";
             
             [HUD show:YES];
-            
             
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 /checkin
             ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];

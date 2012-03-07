@@ -35,7 +35,7 @@
 @synthesize checkinTimer;
 @synthesize currentVenue;
 @synthesize currentLocation;
-@synthesize checkinTime;
+@synthesize checkinTime, lastCheckinTime;
 @synthesize locationController;
 @synthesize checkinButton;
 @synthesize checkoutButton;
@@ -80,16 +80,19 @@
 
 - (void) checkinUpdate:(NSTimer *) timer
 {
-    CLLocation *venueLocation = [[CLLocation alloc] initWithLatitude:currentVenue.geolat longitude:currentVenue.geolong];
-    CLLocationDistance distanceToVenue = [currentLocation distanceFromLocation:venueLocation];
+    
     //200 feet = 60.96 meters
     //distanceToVenue = 0; // DEBUG value
     NSLog(@"checkinUpdate");
     if(currentLocation)
     {
+        CLLocation *venueLocation = [[CLLocation alloc] initWithLatitude:currentVenue.geolat longitude:currentVenue.geolong];
+        CLLocationDistance distanceToVenue = [currentLocation distanceFromLocation:venueLocation];
         if(distanceToVenue <= [APIUtil minDistanceMeters])
         {
-            if(fiveMinuteCounter == 1) //needtofix
+            NSTimeInterval deltaTime = ABS([[NSDate date] timeIntervalSinceDate:lastCheckinTime]); 
+            NSLog(@"Delta time: %f",deltaTime);
+            if(deltaTime >= 300) //Should be 5mins (300)
             {
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/checkin"
@@ -103,7 +106,8 @@
                 //[request setDelegate:self];
                 //[request setTag:1];
                 [request startAsynchronous];
-                NSLog(@"dashboard checkin");
+                lastCheckinTime = [NSDate date];
+                NSLog(@"dashboard checkin request sent");
             }
         }
         else
@@ -121,13 +125,13 @@
                 {
                     UILocalNotification * theNotification = [[UILocalNotification alloc] init];
                     NSDate *currentTime = [NSDate date];
-                    NSDate *lastCheckinTime = [defaults objectForKey:@"checkin_time"];
+                    NSDate *templastCheckinTime = [defaults objectForKey:@"checkin_time"];
 
                     int points = 0;
 
-                    if(lastCheckinTime)
+                    if(templastCheckinTime)
                     {
-                        NSTimeInterval deltaTime = [currentTime timeIntervalSinceDate:lastCheckinTime];
+                        NSTimeInterval deltaTime = [currentTime timeIntervalSinceDate:templastCheckinTime];
                         
                         
                         
@@ -136,8 +140,7 @@
                         points = (int) (deltaTime / 60);
                     }
                     
-                    
-                    theNotification.alertBody = [NSString stringWithFormat:@"Congratulations, you have earned %d points. Now that you are %d feet from %@ you will be checked out if you do not get back within %d feet and check in this minute.",points,distanceInFeet,currentVenue.name, [APIUtil minDistanceFeet]];
+                    theNotification.alertBody = [NSString stringWithFormat:@"You've earned %d points. Now that you are %d feet from %@ you will be checked out if you do not get back within %d feet and check in this minute.",points,distanceInFeet,currentVenue.name, [APIUtil minDistanceFeet]];
                     theNotification.alertAction = @"Check-In";
                     
                     theNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
@@ -151,13 +154,6 @@
             }
         }
     }
-    
-    
-    if(fiveMinuteCounter == 1)
-        fiveMinuteCounter = 0;
-    else
-        fiveMinuteCounter++;
-
     //[navigationTableView reloadData];
 
 }
@@ -708,6 +704,7 @@
     [checkinTimer invalidate];
     checkinTimer = nil;
     checkinTime = nil;
+    lastCheckinTime = nil;
     [navigationTableView reloadData];
     NSLog(@"Check in Timer after: %@",checkinTimer);
     NSLog(@"Checkin Time after: %@",checkinTime);
@@ -740,7 +737,7 @@
 
 - (void) viewCurrentVenue
 {
-    if(user.currentVenueName)
+    if(self.currentVenue)
     {
         //placeDetailsController
         //		return handleResponse(httpGet(HOST+"/getpoidetails?"+(poi != null ? "poi="+poi : "") +(ses != null ? (poi != null ? "&" : "") + "ses="+ses : "")), new POIDetailResp());
@@ -752,13 +749,32 @@
         
         [HUD show:YES];
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/%@/",[APIUtil host],user.currentVenueId]]; //V1 "/getpoidetails"
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/%@/",[APIUtil host],self.currentVenue.getId]]; //V1 "/getpoidetails"
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
         //[request addPostValue:user.currentVenueId forKey:@"poi"];
         [request setDelegate:self];
         [request setRequestMethod:@"GET"];
         [request setTag:3];
         [request startAsynchronous];
+    }
+    else if(self.user.currentVenueId)
+    {
+        HUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:HUD];
+        
+        HUD.delegate = self;
+        HUD.labelText = @"Loading";
+        
+        [HUD show:YES];
+        
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/%@/",[APIUtil host],self.user.currentVenueId]]; //V1 "/getpoidetails"
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        //[request addPostValue:user.currentVenueId forKey:@"poi"];
+        [request setDelegate:self];
+        [request setRequestMethod:@"GET"];
+        [request setTag:3];
+        [request startAsynchronous];
+        
     }
     else
     {
