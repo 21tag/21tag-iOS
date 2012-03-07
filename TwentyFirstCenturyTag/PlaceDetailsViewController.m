@@ -203,7 +203,7 @@
     for(Event *event in poiResponse.history)
     {
         NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
-        [cellInfo setObject:event.msg forKey:@"textLabel"];
+        [cellInfo setObject:[self modifyMessage:event.msg] forKey:@"textLabel"];
         NSString *timeString;
         timeString = [APIUtil stringWithTimeDifferenceBetweenThen:event.time];
         
@@ -378,6 +378,8 @@
     NSLog(@"get events for venue id: %@",[venue getId]);
     
     yourTeamNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"team_name"];
+    yourTeamNameLabel.adjustsFontSizeToFitWidth = YES;
+    owningTeamNameLabel.adjustsFontSizeToFitWidth = YES;
     
     if([poiResponse.ownerName isEqualToString:yourTeamNameLabel.text])
         yourTeamPointsLabel.text = owningTeamPointsLabel.text;
@@ -417,7 +419,7 @@
     for(Event *event in poiResponse.history)
     {
         NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
-        [cellInfo setObject:event.msg forKey:@"textLabel"];
+        [cellInfo setObject:[self modifyMessage:event.msg] forKey:@"textLabel"];
         NSString *timeString;
         timeString = [APIUtil stringWithTimeDifferenceBetweenThen:event.time];
         
@@ -431,11 +433,33 @@
     
 } 
 
+- (NSString *) modifyMessage:(NSString *)message
+{
+    NSString * msg = [message stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@ %@",@"at",venue.name] withString:@""];
+    msg = [msg stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@" %@",venue.name] withString:@""];
+    msg = [msg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    //msg = [msg stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[msg substringToIndex:1] uppercaseString]];
+    return msg;
+}
+
 - (IBAction)checkinButtonPressed:(id)sender 
 {
     //params.add(new BasicNameValuePair("poi",venueid));
     //params.add(new BasicNameValuePair("user",TagPreferences.USER));
     //return handleResponse(httpPost(HOST+"/checkin", params), new SimpleResp());
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"Team id from place: %@",[defaults objectForKey:@"team_id"]);
+    if ([defaults objectForKey:@"team_id"]==@"" || ![defaults objectForKey:@"team_id"]) 
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Team Error" message:@"You need to join a team to check in" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
+    else 
+    {
+        
+    
+    
     
     CLLocation *venueLocation = [[CLLocation alloc] initWithLatitude:venue.geolat longitude:venue.geolong];
     CLLocationDistance distanceToVenue = [dashboardController.currentLocation distanceFromLocation:venueLocation];
@@ -453,7 +477,7 @@
             
             [HUD show:YES];
             
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 /checkin
             ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
             //[request setPostValue:[venue getId] forKey:@"poi"];
@@ -478,6 +502,7 @@
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Error" message:@"We haven't found an accurate enough location yet. Try connecting to Wifi or moving closer to a window." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
+    }
     }
     
     

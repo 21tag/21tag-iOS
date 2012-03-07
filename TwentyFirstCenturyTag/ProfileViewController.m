@@ -136,7 +136,11 @@
         {
             Event *event = (Event*)element;
             NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:3];
-            [cellInfo setObject:[NSString stringWithFormat:@"%@",event.msg] forKey:@"textLabel"];
+            NSString * message = [event.msg stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname] withString:@""];
+            message = [message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            message = [message stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[message substringToIndex:1] uppercaseString]];
+            
+            [cellInfo setObject:[NSString stringWithFormat:@"%@",message] forKey:@"textLabel"];
             //NSTimeInterval currentVenueTime =  teamUser.currentVenueTime;
             //NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
             

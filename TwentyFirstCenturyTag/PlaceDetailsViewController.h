@@ -60,10 +60,11 @@
 @property (nonatomic, strong) UIBarButtonItem *checkinButton;
 
 
--(void) setupButtons;
--(void) backPressed;
+- (void) setupButtons;
+- (void) backPressed;
 - (IBAction)checkinButtonPressed:(id)sender;
--(void)checkoutButtonPressed;
--(void)updateData;
+- (void)checkoutButtonPressed;
+- (void)updateData;
+- (NSString *) modifyMessage:(NSString *)message;
 
 @end
