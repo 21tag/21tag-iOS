@@ -456,7 +456,7 @@
         
         
     }
-    
+    [self updateDashboard:nil];
     NSLog(@"user teamName after request: %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"team_name"]);
     NSLog(@"user teamId after request: %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"team_id"]);
 }
@@ -517,7 +517,7 @@
         {
             cell.imageView.image = [UIImage imageNamed:@"map_icon.png"];
             cell.imageView.layer.masksToBounds = YES;
-            cell.imageView.layer.cornerRadius = 5.0;
+            cell.imageView.layer.cornerRadius = 7.0;
         }
         else if(indexPath.row == 1) // Your vault
         {
@@ -536,7 +536,7 @@
     {
         cell.imageView.image = avatarImage;
         cell.imageView.layer.masksToBounds = YES;
-        cell.imageView.layer.cornerRadius = 5.0;
+        cell.imageView.layer.cornerRadius = 7.0;
     }
     else    // check in location
     {
@@ -548,10 +548,9 @@
             cell.detailTextLabel.text = timeString;
             nameLabel.text = @"Currently Checked In";
         }
-        else if(user.currentVenueTime)
+        else if(user.currentVenueLastTime)
         {
-            NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenThen:user.currentVenueTime];
-            
+            NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenThen:user.currentVenueLastTime];
             cell.detailTextLabel.text = [NSString stringWithFormat:@"Last checked in: %@ ago",timeString];
             nameLabel.text = @"Not Checked In";
         }

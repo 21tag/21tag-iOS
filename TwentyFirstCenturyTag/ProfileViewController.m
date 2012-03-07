@@ -13,6 +13,7 @@
 #import "FacebookController.h"
 #import "TeamInfoViewController.h"
 #import "PlaceDetailsViewController.h"
+#import <QuartzCore/QuartzCore.h>
 #define kCellIdentifier @"Cell"
 
 
@@ -103,6 +104,12 @@
         TwentyFirstCenturyTagAppDelegate *delegate = (TwentyFirstCenturyTagAppDelegate*)[[UIApplication sharedApplication] delegate];
         Facebook *facebook = [FacebookController sharedInstance].facebook;
         [facebook logout:delegate];
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        [defaults removeObjectForKey:@"id"];
+        [defaults removeObjectForKey:@"FBAccessTokenKey"];
+        [defaults synchronize];
+        //[defaults removeObjectForKey:@"id"];
+        //[defaults removeObjectForKey:@"id"];
         
         
     }
@@ -183,6 +190,9 @@
     [self setupButtons];
 
     self.title = @"Profile";
+    
+    profileImageView.layer.masksToBounds = YES;
+    profileImageView.layer.cornerRadius = 7.0;
     
    /* NSString * team;
     if(user.teamName)
@@ -276,24 +286,35 @@
 	
     if(indexPath.section == 0)
     {
-        if(user.teamName)
-            cell.textLabel.text = user.teamName;
-        else
-            cell.textLabel.text = user.teamId;
-        
-        if(team)
+        NSLog(@"teamName from profileView: %@",user.teamName);
+        if(user.teamName == @"")
         {
-            //Team *team = [teamsResponse.teams objectAtIndex:0];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d members",[team.users count]];
+            cell.textLabel.text=@"You need to join a team to play";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        else 
+        {
+            if(user.teamName)
+                cell.textLabel.text = user.teamName;
+            else
+                cell.textLabel.text = user.teamId;
+            
+            if(team)
+            {
+                //Team *team = [teamsResponse.teams objectAtIndex:0];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%d members",[team.users count]];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
     }
     else
     {
         NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
         cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
         cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
-        if ([cell.textLabel.text isEqualToString:@"No Recent Activity"] ) {
+        Event *theEvent = (Event*)[cellInfo objectForKey:@"event"];
+        NSLog(@"Venue Id: %@",theEvent.venueid);
+        if ([cell.textLabel.text isEqualToString:@"No Recent Activity"] || theEvent.venueid == @"") {
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         else
@@ -321,6 +342,11 @@
         [self.navigationController pushViewController:teamInfoController animated:YES];
         [teamInfoController release];
          */
+        if([tableView cellForRowAtIndexPath:indexPath].accessoryType == UITableViewCellAccessoryDisclosureIndicator)
+        {
+            JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
+            [self.navigationController pushViewController:joinTeamController animated:YES];
+        }
     }
     else
     {

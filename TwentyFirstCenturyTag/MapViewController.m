@@ -139,7 +139,7 @@
 {
     //		return handleResponse(httpGet(HOST+"/getpois?lat="+lat+"&lon="+lng+"&num="+limit), new VenuesResp());
 
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/poi/?lat=%@&lon=%@&num=%d",[APIUtil host],[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.latitude],[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.longitude],50]]; //V1 "/getpoisdetails"
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getpoisdetails/?lat=%@&lon=%@&num=%d",[APIUtil host],[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.latitude],[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.longitude],50]]; //V1 "/getpoisdetails"
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
     //[request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.latitude] forKey:@"lat"];
     //[request setPostValue:[NSString stringWithFormat:@"%f",dashboardController.currentLocation.coordinate.longitude] forKey:@"lon"];

@@ -94,10 +94,10 @@
         if(dashboardController.checkinTimer)
         {
             [dashboardController.checkinTimer invalidate];
-            dashboardController.checkinTimer = [NSTimer scheduledTimerWithTimeInterval:30.0f target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES];
+            dashboardController.checkinTimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES];
         }
         else
-            dashboardController.checkinTimer = [NSTimer scheduledTimerWithTimeInterval:30.0f target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES];
+            dashboardController.checkinTimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:dashboardController selector:@selector(checkinUpdate:) userInfo:nil repeats:YES];
 
     }
     /*else if(request.tag == 3)

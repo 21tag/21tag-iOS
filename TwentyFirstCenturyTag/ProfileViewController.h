@@ -10,6 +10,7 @@
 #import "DashboardViewController.h"
 #import "User.h"
 #import "TeamsResp.h"
+#import "JoinTeamViewController.h"
 
 @interface ProfileViewController : UIViewController <UITableViewDataSource, UIActionSheetDelegate, UITableViewDelegate> {
     
