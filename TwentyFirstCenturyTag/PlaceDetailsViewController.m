@@ -148,8 +148,8 @@
         
         NSLog(@"Team points at venue: %@",[team.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]]);
         //NSNumber *vid = [NSNumber numberWithInt:[[venue getId] intValue]];
-        if ([team.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]])
-             yourTeamPointsLabel.text = [team.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]];
+        if ([team.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]] || dashboardController.localPoints)
+            yourTeamPointsLabel.text = [NSString stringWithFormat:@"%d",(dashboardController.localPoints + [[team.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]]intValue])];
         else
             yourTeamPointsLabel.text = @"0";
              
@@ -189,12 +189,18 @@
     yourTeamNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"team_name"];
     
     if([poiResponse.ownerName isEqualToString:yourTeamNameLabel.text])
+    {
+        if (dashboardController.localPoints)
+            owningTeamPointsLabel.text = [NSString stringWithFormat:@"%d", dashboardController.localPoints + [owningTeamPointsLabel.text intValue]];
         yourTeamPointsLabel.text = owningTeamPointsLabel.text;
-    
+    }
     NSLog(@"Venue as: %@",user);
     
-    if([user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]] || [user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]] != @"")
-        yourPointsLabel.text = [user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]];
+    if([user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]] || [user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]] != @"" || dashboardController.localPoints)
+    {
+        
+        yourPointsLabel.text = [NSString stringWithFormat:@"%d",(dashboardController.localPoints + [[user.poiPoints objectForKey:[NSString stringWithFormat:@"%@", venue.getId]] intValue ])];
+    }
     else
         yourPointsLabel.text=@"0";
     
@@ -484,7 +490,7 @@
             ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
             //[request setPostValue:[venue getId] forKey:@"poi"];
             //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
-            NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[venue getId],@"poi", nil];
+            NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[venue getId],@"poi",[NSNumber numberWithInt:0],@"points" , nil];
             [request appendPostData:[dictionary JSONData]];
             [request addRequestHeader:@"Content-Type" value:@"application/json"];
             [request setRequestMethod:@"PATCH"];

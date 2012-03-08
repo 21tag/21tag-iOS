@@ -128,7 +128,7 @@
             int points = [user.points intValue];
             teamPoints +=points;
         }
-        teamPointsLabel.text = [NSString stringWithFormat:@"%d",teamPoints];
+        teamPointsLabel.text = [NSString stringWithFormat:@"%d",(teamPoints+dashboardController.localPoints)];
         locationsOwnedLabel.text = [NSString stringWithFormat:@"%d",numVenues];
         
         NSSortDescriptor *timeDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];

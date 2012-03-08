@@ -39,6 +39,7 @@
 @synthesize locationController;
 @synthesize checkinButton;
 @synthesize checkoutButton;
+@synthesize localPoints;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -91,14 +92,24 @@
         if(distanceToVenue <= [APIUtil minDistanceMeters])
         {
             NSTimeInterval deltaTime = ABS([[NSDate date] timeIntervalSinceDate:lastCheckinTime]); 
-            NSLog(@"Delta time: %f",deltaTime);
-            if(deltaTime >= 300) //Should be 5mins (300)
+            
+            if(timer)
             {
+                NSLog(@"Timer: %@",timer);
+                if (localPoints)
+                    localPoints ++;
+                else
+                    localPoints = 1;
+                
+            }
+            if(deltaTime >= 120) //Should be 5mins (300)
+            {
+                NSLog(@"Points sent: %d",localPoints);
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/checkin"
                 ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
                 //[request setPostValue:[currentVenue getId] forKey:@"poi"];
-                NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[currentVenue getId],@"poi", nil];
+                NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[currentVenue getId],@"poi",[NSNumber numberWithInt:localPoints],@"points", nil];
                 [request appendPostData:[dictionary JSONData]];
                 [request addRequestHeader:@"Content-Type" value:@"application/json"];
                 //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
@@ -106,9 +117,12 @@
                 //[request setDelegate:self];
                 //[request setTag:1];
                 [request startAsynchronous];
+                
                 lastCheckinTime = [NSDate date];
+                localPoints = 0;
                 NSLog(@"dashboard checkin request sent");
             }
+            
         }
         else
         {
@@ -704,12 +718,32 @@
 
 -(void)checkout
 {
+    NSLog(@"Points sent: %d",localPoints);
+    if( localPoints >0 )
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/checkin"
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        //[request setPostValue:[currentVenue getId] forKey:@"poi"];
+        NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[currentVenue getId],@"poi",[NSNumber numberWithInt:localPoints],@"points", nil];
+        [request appendPostData:[dictionary JSONData]];
+        [request addRequestHeader:@"Content-Type" value:@"application/json"];
+        //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
+        [request setRequestMethod:@"PATCH"];
+        //[request setDelegate:self];
+        //[request setTag:1];
+        [request startAsynchronous];
+    }
+    
+    NSLog(@"dashboard checkout request sent");
+    
     NSLog(@"Check in Timer before: %@",checkinTimer);
     NSLog(@"Checkin Time before: %@",checkinTime);
     [checkinTimer invalidate];
     checkinTimer = nil;
     checkinTime = nil;
     lastCheckinTime = nil;
+    localPoints = 0;
     [navigationTableView reloadData];
     NSLog(@"Check in Timer after: %@",checkinTimer);
     NSLog(@"Checkin Time after: %@",checkinTime);

@@ -36,6 +36,7 @@
     NSDate *checkinTime;
     NSTimer *dashboardTimer;
     NSDate *lastCheckinTime;
+    int localPoints;
     
     MBProgressHUD *HUD;
     
@@ -54,6 +55,7 @@
 @property (nonatomic, strong) NSDate *checkinTime;
 @property (nonatomic, strong) LocationController *locationController;
 @property (nonatomic, strong) Team *team;
+@property (nonatomic)         int localPoints;
 
 @property (nonatomic, strong) UIBarButtonItem *checkinButton;
 @property (nonatomic, strong) UIBarButtonItem *checkoutButton;
