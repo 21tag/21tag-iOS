@@ -536,6 +536,7 @@
     }
     else    // check in location
     {
+        NSLog(@"Current Venue Last Time: %@",user.currentVenueLastTime);
         if(checkinTime)
         {
             
@@ -544,16 +545,20 @@
             cell.detailTextLabel.text = timeString;
             nameLabel.text = @"Currently Checked In";
         }
-        else if(user.currentVenueLastTime)
+        else if(user.currentVenueLastTime != @"" && user.currentVenueLastTime )
         {
+            NSLog(@"should not be here yet %@",user.currentVenueLastTime);
             NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenThen:user.currentVenueLastTime];
             cell.detailTextLabel.text = [NSString stringWithFormat:@"Last checked in: %@ ago",timeString];
             nameLabel.text = @"Not Checked In";
         }
         else 
         {
-            cell.detailTextLabel.text = @"Problem";
+            //cell.detailTextLabel.text = @"Problem";
             nameLabel.text = @"don't know where you checked in last";
+            cell.textLabel.text = @"No Checkins";
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
     }
     
@@ -737,7 +742,11 @@
 
 - (void) viewCurrentVenue
 {
-    if(self.currentVenue)
+    if ([nameLabel.text isEqualToString:@"don't know where you checked in last"]) 
+    {
+        
+    }
+    else if(self.currentVenue)
     {
         //placeDetailsController
         //		return handleResponse(httpGet(HOST+"/getpoidetails?"+(poi != null ? "poi="+poi : "") +(ses != null ? (poi != null ? "&" : "") + "ses="+ses : "")), new POIDetailResp());
@@ -778,8 +787,8 @@
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Checked In" message:@"You must be checked in first." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        [alert show];
+        //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Checked In" message:@"You must be checked in first." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        //[alert show];
     }
 }
 

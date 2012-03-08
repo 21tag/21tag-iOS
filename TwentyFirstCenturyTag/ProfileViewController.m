@@ -107,7 +107,19 @@
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         [defaults removeObjectForKey:@"id"];
         [defaults removeObjectForKey:@"FBAccessTokenKey"];
+        [defaults removeObjectForKey:@"network"];
+        [defaults removeObjectForKey:@"checkin_time"];
+        [defaults removeObjectForKey:@"freinds"];
+        [defaults removeObjectForKey:@"user_id"];
+        [defaults removeObjectForKey:@"team_id"];
+        [defaults removeObjectForKey:@"team_name"];
         [defaults synchronize];
+        dashboardController.team = nil;
+        dashboardController.user = nil;
+        dashboardController.currentVenue = nil;
+        dashboardController.checkinTime = nil;
+        dashboardController.lastCheckinTime = nil;
+        dashboardController.checkinTimer = nil;
         //[defaults removeObjectForKey:@"id"];
         //[defaults removeObjectForKey:@"id"];
         
