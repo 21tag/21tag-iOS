@@ -46,7 +46,9 @@
     }
     else if(hour == 0)
     {
-        if (minute <= 1)
+        if (minute <1)
+            timeString = @"Less than a minute";
+        else if (minute == 1)
             timeString = [NSString stringWithFormat:@"%d minute", minute];
         else
             timeString = [NSString stringWithFormat:@"%d minutes", minute];
@@ -73,7 +75,7 @@
 
 +(NSString*) StringWithTimeSince:(NSDate *)then
 {
-    NSTimeInterval time = [then timeIntervalSinceNow];
+    NSTimeInterval time = ABS([then timeIntervalSinceNow]);
     return [self stringwithFormatFrom:time];
     
 }

@@ -62,7 +62,7 @@
     //NSLog(@"%@",venue.address);
 
     NSString *subtitle;
-    if(!poiResponse.ownerId)
+    if(!poiResponse.ownerId || poiResponse.ownerId ==@"")
          subtitle = @"Up for grabs!";
     else
          subtitle = [NSString stringWithFormat:@"%ld pts Team: %@",poiResponse.points, poiResponse.ownerName];

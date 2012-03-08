@@ -29,7 +29,7 @@
 @synthesize dashboardController;
 @synthesize poiResponse;
 @synthesize mapViewController;
-@synthesize checkinButton;
+@synthesize checkinButton,largeCheckinButton;
 @synthesize checkoutButton;
 @synthesize venueId;
 
@@ -70,6 +70,7 @@
         dashboardController.user = [[User alloc] initWithData:[request responseData]];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checked In" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Cool!", nil];
         [alert show];
+        largeCheckinButton.enabled = NO;
         
         if(mapViewController)
         {
@@ -236,6 +237,7 @@
     if(actionSheet.destructiveButtonIndex == buttonIndex)
     {
         [dashboardController checkout];
+        largeCheckinButton.enabled = YES;
         
         self.navigationItem.rightBarButtonItem = checkinButton;
     }
@@ -357,6 +359,14 @@
     placeNameLabel.text = venue.name;
     owningTeamNameLabel.text = poiResponse.ownerName;
     owningTeamPointsLabel.text = [NSString stringWithFormat:@"%ld",poiResponse.points];
+    
+    if(dashboardController.checkinTime)
+    {
+        largeCheckinButton.enabled = NO;
+    }
+    else {
+        largeCheckinButton.enabled = YES;
+    }
     
     //owningTeamNameLabel.text = poiResponse.owner.name;
 
@@ -517,6 +527,18 @@
     
 }
 
+-(void) viewDidAppear:(BOOL)animated    
+{
+    [super viewDidAppear:animated];
+    if(dashboardController.checkinTime)
+    {
+        largeCheckinButton.enabled = NO;
+    }
+    else {
+        largeCheckinButton.enabled = YES;
+    }
+}
+
 -(void)backPressed
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -539,6 +561,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
+
 
 #pragma mark - Table view data source
 

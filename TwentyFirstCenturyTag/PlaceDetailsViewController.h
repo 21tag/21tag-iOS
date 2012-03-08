@@ -26,6 +26,7 @@
     UILabel *owningTeamNameLabel;
     UILabel *owningTeamPointsLabel;
     UITableView *detailsTableView;
+    UIButton *largeCheckinButton;
     NSMutableArray *contentList;
     User * user;
     
@@ -47,6 +48,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *yourTeamNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *owningTeamNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *owningTeamPointsLabel;
+@property (nonatomic, strong) IBOutlet UIButton *largeCheckinButton;
 @property (nonatomic, strong) IBOutlet UITableView *detailsTableView;
 
 @property (nonatomic, strong)     NSMutableArray *contentList;

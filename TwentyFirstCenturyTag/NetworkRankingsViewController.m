@@ -171,7 +171,15 @@
     
     teamInfoController.teamId = ((Team*)[standingsArray objectAtIndex:indexPath.row]).getId;
     teamInfoController.teamName = teamName;
-    teamInfoController.isJoiningTeam = NO;
+    NSLog(@"Team info Controller id: %@",teamInfoController.teamId);
+    NSLog(@"user team id: %@",dashboardController.user.teamId);
+    if ([teamInfoController.teamId intValue] == [dashboardController.user.teamId intValue]) {
+        teamInfoController.isJoiningTeam = NO;
+        NSLog(@"NO");
+    }
+    else {
+        teamInfoController.isJoiningTeam = YES;
+    }
     teamInfoController.dashboardController = dashboardController;
     [self.navigationController pushViewController:teamInfoController animated:YES];
     

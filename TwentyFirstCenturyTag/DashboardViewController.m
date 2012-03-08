@@ -101,8 +101,9 @@
                 else
                     localPoints = 1;
                 
+                
             }
-            if(deltaTime >= 120) //Should be 5mins (300)
+            if(deltaTime >= 180) //Should be 5mins (300)
             {
                 NSLog(@"Points sent: %d",localPoints);
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -561,7 +562,6 @@
         }
         else if(user.currentVenueLastTime != @"" && user.currentVenueLastTime )
         {
-            NSLog(@"should not be here yet %@",user.currentVenueLastTime);
             NSString *timeString = [APIUtil stringWithTimeDifferenceBetweenThen:user.currentVenueLastTime];
             cell.detailTextLabel.text = [NSString stringWithFormat:@"Last checked in: %@ ago",timeString];
             nameLabel.text = @"Not Checked In";
