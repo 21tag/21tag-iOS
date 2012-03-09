@@ -15,6 +15,7 @@
 #import "ProfileViewController.h"
 #import "POIDetailResp.h"
 #import "PlaceDetailsViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define kCellIdentifier @"Cell"
 
@@ -57,8 +58,10 @@
     if(request.tag == 1) // team info
     {
        NSLog(@"team info:\n%@",[request responseString]);
-    
+        
         team = [[Team alloc] initWithData:[request responseData]];
+        if(team.getTeamImage)
+            teamImage.image = team.getTeamImage;
         //NSArray *teams = teamsResponse.teams;
         //team = [teams objectAtIndex:0];
         NSSet *users = team.users;
@@ -75,6 +78,7 @@
             [pointsList addObject:cellInfo];
         }
         rankingsList = pointsList;
+        
         
         NSMutableArray *userList = [[NSMutableArray alloc] initWithCapacity:[users count]];
 
@@ -489,6 +493,11 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
     
+    teamImage.layer.masksToBounds = YES;
+    teamImage.layer.cornerRadius = 7.0;
+    
+    if(team.getTeamImage)
+        teamImage.image = team.getTeamImage;
     
     //http://21tag.com:8689/getteam?team=moo&details=true
     

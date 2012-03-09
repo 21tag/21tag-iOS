@@ -61,7 +61,7 @@
 @property (nonatomic, strong) IBOutlet UITableView *mainTableView;
 @property (nonatomic, strong) NSString *teamName;
 @property (nonatomic, strong) NSString *teamId;
-@property (nonatomic, strong)     DashboardViewController *dashboardController;
+@property (nonatomic, strong) DashboardViewController *dashboardController;
 @property (nonatomic, strong) Team * team;
 
 

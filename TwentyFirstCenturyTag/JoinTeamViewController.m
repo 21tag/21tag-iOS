@@ -10,6 +10,7 @@
 #import "NewTeamViewController.h"
 #import "TeamInfoViewController.h"
 #import "SearchAllTeamsViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 #import "ASIFormDataRequest.h"
 #import "JSONKit.h"
@@ -135,6 +136,7 @@
             NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
             [cellInfo setObject:teamData.name forKey:@"textLabel"];
             [cellInfo setObject:teamData.team_id forKey:@"team_id"];
+            
             NSString *friends;
             NSString *members;
             if(teamData.numFriends > 1)
@@ -230,8 +232,15 @@
     }
     else
     {
-        UIImage *icon = [UIImage imageNamed:@"team_icon_placeholder.png"];
+        UIImage *teamImage = [Team getTeamImageWithId:[cellInfo objectForKey:@"team_id"]];
+        UIImage *icon;
+        if (teamImage)
+            icon = teamImage;
+        else
+            icon = [UIImage imageNamed:@"team_icon_placeholder.png"];
         cell.imageView.image = icon;
+        cell.imageView.layer.cornerRadius = 7.0;
+        cell.imageView.layer.masksToBounds = YES;
         cell.textLabel.font = [UIFont boldSystemFontOfSize:17.0f];      
         cell.textLabel.textColor = [UIColor darkTextColor];
     }

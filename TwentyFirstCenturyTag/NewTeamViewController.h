@@ -30,5 +30,6 @@
 -(void)cancelPressed;
 -(void)savePressed;
 - (IBAction)pickTeamImagePressed:(id)sender;
++(UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize Image: (UIImage *) image;
 
 @end

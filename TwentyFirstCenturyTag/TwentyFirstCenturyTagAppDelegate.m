@@ -192,7 +192,7 @@
 
 -(void)didUpdateToLocation:(CLLocation*)location
 {
-    NSLog(@"didUpdateToLocation");
+    //NSLog(@"didUpdateToLocation");
     if(dashboardController.lastCheckinTime)
     {
         [dashboardController locationUpdate:location];

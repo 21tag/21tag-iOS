@@ -7,6 +7,8 @@
 //
 
 #import "Team.h"
+#import "ASIHTTPRequest.h"
+#import "APIUtil.h"
 
 @implementation Team
 
@@ -35,6 +37,7 @@
         POINTS          = @"points";
         POIPOINTS       = @"poi_pts";
         MOTTO           = @"motto";
+        IMAGE           = @"avatar";
         
     }
     return self;
@@ -52,6 +55,7 @@
     //self.venues = [NSSet setWithArray:[fields objectForKey:VENUES]];
     
     self.motto = [fields objectForKey:MOTTO];
+    //self.image = [fields objectForKey:IMAGE];
     
     NSArray * rawHistory = [fields objectForKey:HISTORY];
     NSMutableArray * tempHistory = [[NSMutableArray alloc] initWithCapacity:[rawHistory count]];
@@ -102,7 +106,52 @@
         }
         venues = venuesSet;
     }
+}
     
+    
+
+-(UIImage *)getTeamImage
+{
+    if(self.image == @"")
+    {
+        UIImage *teamImage = nil;
+        return teamImage;
+    }
+    return [Team getTeamImageWithId:[self getId]];
+}
+
++ (UIImage *)getTeamImageWithId: (NSString *)teamId
+{
+    NSString* documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* filePath = [NSString stringWithFormat:@"%@/%@.jpeg",documentsDirectory,teamId];
+    
+    if([[NSFileManager defaultManager] fileExistsAtPath:filePath]) //get local image
+    {
+        NSLog(@"get local image");
+        NSData * imageData = [[NSFileManager defaultManager] contentsAtPath:filePath];
+        UIImage *teamImage=[UIImage imageWithData:imageData];
+        return teamImage;
+    }
+    else //fetch from server
+    {
+        NSLog(@"get server image");
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://21tag.com/media/team_avatars/%@.jpg",teamId ]]; //V1 "/createteam"
+        NSData * urlData = [NSData dataWithContentsOfURL:url];
+        
+        if(urlData)
+        {
+            NSLog(@"There is data");
+            UIImage *teamImage = [[UIImage alloc] initWithData:urlData];
+            NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString *jpegFilePath = [NSString stringWithFormat:@"%@/%@.jpeg",docDir,teamId];
+            NSData *data = [NSData dataWithData:UIImageJPEGRepresentation(teamImage, 1.0f)];//1.0f = 100% quality
+            [data writeToFile:jpegFilePath atomically:YES];
+            return teamImage;
+        }
+        
+    }
+    UIImage * teamImage = nil;
+    return teamImage;
     
 }
 

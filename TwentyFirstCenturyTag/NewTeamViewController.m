@@ -36,18 +36,49 @@
 }
 
 
+
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    NSLog(@"new team:\n%@",[request responseString]);
+    if (request.tag == 1) {
+        
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    Team *team = [[Team alloc] initWithData:[request responseData]];
+        NSLog(@"new team:\n%@",[request responseString]);
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        Team *team = [[Team alloc] initWithData:[request responseData]];
+        
+        [defaults setObject:team.name forKey:@"team_name"];
+        [defaults setObject:team.getId forKey:@"team_id"];
+        [defaults synchronize];
+        
+        if(teamImageView.image)
+        {
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/uploadavatar/",[APIUtil host]]]; //V1 "/createteam"
+            ASIFormDataRequest *imageRequest = [ASIFormDataRequest requestWithURL:url];
+            NSLog(@"Send Image with New Team");
+            //[request setData:UIImageJPEGRepresentation(teamImageView.image, .7) forKey:@"image"];
+            UIImage *tempTeamImage = [NewTeamViewController imageByScalingAndCroppingForSize:CGSizeMake(100.0f, 100.0f) Image:teamImageView.image];
+
+            [imageRequest setData:UIImageJPEGRepresentation(tempTeamImage, 1) withFileName:[NSString stringWithFormat:@"%@.jpg",team.getId] andContentType:@"image/jpeg" forKey:@"image"];
+            [imageRequest setPostValue:[NSString stringWithFormat:@"%@",team.getId] forKey:@"team_id"];
+            [imageRequest setDelegate:self];
+            [imageRequest setPostFormat:ASIMultipartFormDataPostFormat];
+            [imageRequest addRequestHeader:@"Content-Type" value:@"multipart/form-data"];
+            [imageRequest setTag:2];
+            [imageRequest startAsynchronous];
+        }
+        else {
+            [self dismissModalViewControllerAnimated:YES];
+            
+        }
+    }
+    else
+    {
+        NSLog(@"Image response: %@",[request responseString]);
+        [self dismissModalViewControllerAnimated:YES];
+    }
     
-    [defaults setObject:team.name forKey:@"team_name"];
-    [defaults setObject:team.getId forKey:@"team_id"];
-    [defaults synchronize];
     
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -64,6 +95,62 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
++(UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize Image: (UIImage *) image
+{
+    UIImage *sourceImage = image;
+    UIImage *newImage = nil;        
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    CGFloat targetWidth = targetSize.width;
+    CGFloat targetHeight = targetSize.height;
+    CGFloat scaleFactor = 0.0;
+    CGFloat scaledWidth = targetWidth;
+    CGFloat scaledHeight = targetHeight;
+    CGPoint thumbnailPoint = CGPointMake(0.0,0.0);
+    
+    if (CGSizeEqualToSize(imageSize, targetSize) == NO) 
+    {
+        CGFloat widthFactor = targetWidth / width;
+        CGFloat heightFactor = targetHeight / height;
+        
+        if (widthFactor > heightFactor) 
+            scaleFactor = widthFactor; // scale to fit height
+        else
+            scaleFactor = heightFactor; // scale to fit width
+        scaledWidth  = width * scaleFactor;
+        scaledHeight = height * scaleFactor;
+        
+        // center the image
+        if (widthFactor > heightFactor)
+        {
+            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5; 
+        }
+        else 
+            if (widthFactor < heightFactor)
+            {
+                thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
+            }
+    }       
+    
+    UIGraphicsBeginImageContext(targetSize); // this will crop
+    
+    CGRect thumbnailRect = CGRectZero;
+    thumbnailRect.origin = thumbnailPoint;
+    thumbnailRect.size.width  = scaledWidth;
+    thumbnailRect.size.height = scaledHeight;
+    
+    [sourceImage drawInRect:thumbnailRect];
+    
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    if(newImage == nil) 
+        NSLog(@"could not scale image");
+    
+    //pop the context to get back to the default
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 #pragma mark - View lifecycle
@@ -137,22 +224,32 @@
 -(void)savePressed
 {
     //return handleResponse(httpGet(HOST+"/createteam?user="+TagPreferences.USER+"&team="+team), new Team());
+    nameTextField.text = [nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if(![nameTextField.text isEqualToString:@""])
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/",[APIUtil host]]]; //V1 "/createteam"
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"user_id"],@"user",nameTextField.text,@"name",mottoTextField.text, @"motto", nil];
+        NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"user_id"],@"user_id",nameTextField.text,@"name",mottoTextField.text, @"motto", nil];
         NSLog(@"User: %@",[defaults objectForKey:@"user_id"]);
         NSLog(@"Team name: %@",nameTextField.text);
         NSLog(@"Team motto: %@",mottoTextField.text);
         NSLog(@"new team dict: %@",dictionary);
         [request appendPostData:[dictionary JSONData]];
+        //[request setData:[dictionary JSONData] forKey:@"JSON"];
+        if(teamImageView.image)
+        {
+            
+            //[request setData:UIImageJPEGRepresentation(teamImageView.image, .7) forKey:@"image"];
+            //[request setData:UIImageJPEGRepresentation(teamImageView.image, .7) withFileName:@"file" andContentType:@"image/jpeg" forKey:@"image"];
+        }
         [request addRequestHeader:@"Content-Type" value:@"application/json"];
         
         //[request setPostValue:[defaults objectForKey:@"user_id"] forKey:@"user"];
         //[request setPostValue:nameTextField.text forKey:@"team"];
         [request setRequestMethod:@"POST"];
+        
+        [request setTag:1];
         [request setDelegate:self];
         [request startAsynchronous];
     }
@@ -161,6 +258,8 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Team Name Required" message:@"Please enter a team name and try again." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
     }
+    
+
 }
 
 - (IBAction)pickTeamImagePressed:(id)sender 
@@ -178,10 +277,14 @@
 {
     UIImage *image;
     
-    image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    if ([info objectForKey:@"UIImagePickerControllerEditedImage"]) //gets editedimage
+        image =[info objectForKey:@"UIImagePickerControllerEditedImage"];
+    else
+        image = [info objectForKey:@"UIImagePickerControllerOriginalImage"]; //gets original image
+    image = [NewTeamViewController imageByScalingAndCroppingForSize:CGSizeMake(100.0f, 100.0f) Image:image];
     teamImageView.image = image;
     teamImageView.layer.masksToBounds = YES;
-    teamImageView.layer.cornerRadius = 4.0;
+    teamImageView.layer.cornerRadius = 7.0;
     [teamImageView setNeedsDisplay];
     [self dismissModalViewControllerAnimated:YES];
 }
