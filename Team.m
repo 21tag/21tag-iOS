@@ -20,6 +20,7 @@
 @synthesize points;
 @synthesize poiPoints;
 @synthesize motto;
+@synthesize avatar;
 
 
 -(id)init
@@ -37,7 +38,7 @@
         POINTS          = @"points";
         POIPOINTS       = @"poi_pts";
         MOTTO           = @"motto";
-        IMAGE           = @"avatar";
+        AVATAR           = @"avatar";
         
     }
     return self;
@@ -55,7 +56,9 @@
     //self.venues = [NSSet setWithArray:[fields objectForKey:VENUES]];
     
     self.motto = [fields objectForKey:MOTTO];
-    //self.image = [fields objectForKey:IMAGE];
+    NSLog(@"fields: %@",[fields objectForKey:AVATAR]);
+    self.avatar = [fields objectForKey:AVATAR];
+    
     
     NSArray * rawHistory = [fields objectForKey:HISTORY];
     NSMutableArray * tempHistory = [[NSMutableArray alloc] initWithCapacity:[rawHistory count]];
@@ -112,7 +115,7 @@
 
 -(UIImage *)getTeamImage
 {
-    if(self.image == @"")
+    if(self.avatar == @"")
     {
         UIImage *teamImage = nil;
         return teamImage;

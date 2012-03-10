@@ -21,7 +21,7 @@
     NSString *MOTTO;
     NSString *POINTS;
     NSString *POIPOINTS;
-    NSString *IMAGE;
+    NSString *AVATAR;
     
     NSString *name;
     NSString *leader;
@@ -31,7 +31,7 @@
     NSString *points;
     NSDictionary *poiPoints;
     NSString * motto;
-    NSString * image;
+    NSString * avatar;
 }
 
 @property (nonatomic, strong) NSString *name;
@@ -42,7 +42,7 @@
 @property (nonatomic, strong) NSString *points;
 @property (nonatomic, strong) NSDictionary *poiPoints;
 @property (nonatomic, strong) NSString * motto;
-@property (nonatomic, strong) NSString * image;
+@property (nonatomic, strong) NSString * avatar;
 
 -(UIImage *)getTeamImage;
 + (UIImage *)getTeamImageWithId: (NSString *)teamId;

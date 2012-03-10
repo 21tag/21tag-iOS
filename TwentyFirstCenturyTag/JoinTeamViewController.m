@@ -235,9 +235,17 @@
         UIImage *teamImage = [Team getTeamImageWithId:[cellInfo objectForKey:@"team_id"]];
         UIImage *icon;
         if (teamImage)
+        {
+            UIGraphicsBeginImageContext(CGSizeMake(50.0, 50.0));
+            [teamImage drawInRect:CGRectMake(0, 0, 50.0, 50.0)];
+            teamImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
             icon = teamImage;
+        }
         else
             icon = [UIImage imageNamed:@"team_icon_placeholder.png"];
+        
         cell.imageView.image = icon;
         cell.imageView.layer.cornerRadius = 7.0;
         cell.imageView.layer.masksToBounds = YES;
