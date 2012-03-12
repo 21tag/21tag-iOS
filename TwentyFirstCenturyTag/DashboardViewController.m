@@ -856,6 +856,7 @@
             {
                 JoinTeamViewController *joinTeamController = [[JoinTeamViewController alloc] init];
                 [self.navigationController pushViewController:joinTeamController animated:YES];
+                
             }
             else
             {
@@ -865,6 +866,7 @@
                 
                 NSLog(@"team_name from defaults in dashboard: %@",[defaults objectForKey:@"team_name"]);
                 teamInfoController.isJoiningTeam = NO;
+                teamInfoController.isOnTeam = YES;
                 teamInfoController.dashboardController = self;
                 [self.navigationController pushViewController:teamInfoController animated:YES];
             }

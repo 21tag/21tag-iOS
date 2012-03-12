@@ -66,7 +66,9 @@
 
 
 
+
 @property BOOL isJoiningTeam;
+@property BOOL isOnTeam;
 
 - (IBAction)teamMembersPressed:(id)sender;
 - (IBAction)locationsOwnedPressed:(id)sender;

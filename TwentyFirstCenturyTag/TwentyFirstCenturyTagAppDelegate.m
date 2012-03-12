@@ -176,8 +176,10 @@
     
     if(background)
     {
+        NSLog(@"Background: %@",background);
         if(![background boolValue]) // don't update location in background
         {
+            NSLog(@"don't update");
             LocationController *locController = [LocationController sharedInstance];
             [locController.locationManager stopUpdatingLocation];
         }

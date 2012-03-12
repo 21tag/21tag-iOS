@@ -274,6 +274,7 @@
     {
         TeamInfoViewController *teamInfoController = [[TeamInfoViewController alloc] init];
         teamInfoController.isJoiningTeam = YES;
+        teamInfoController.isOnTeam = NO;
         teamInfoController.teamName = [[contentList objectAtIndex:indexPath.row] objectForKey:@"textLabel"];
         teamInfoController.teamId = [[contentList objectAtIndex:indexPath.row] objectForKey:@"team_id"];
         [self.navigationController pushViewController:teamInfoController animated:YES];

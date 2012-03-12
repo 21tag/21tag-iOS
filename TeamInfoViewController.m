@@ -35,7 +35,7 @@
 @synthesize teamMembersLabel;
 @synthesize locationsOwnedLabel;
 @synthesize teamPointsLabel;
-@synthesize isJoiningTeam;
+@synthesize isJoiningTeam,isOnTeam;
 @synthesize contentList;
 @synthesize mainTableView;
 @synthesize teamName;
@@ -113,8 +113,9 @@
         for(Venue *venue in team.venues)
         {
             NSMutableDictionary *cellInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
+            NSString * detailText = [NSString stringWithFormat:@"%@ points",[team.poiPoints objectForKey:venue.getId]];
             [cellInfo setObject:venue.name forKey:@"textLabel"];
-            [cellInfo setObject:venue.address forKey:@"detailTextLabel"];
+            [cellInfo setObject:detailText forKey:@"detailTextLabel"];
             [cellInfo setObject:venue forKey:@"venue"];
             [venueList addObject:cellInfo];
         }
@@ -222,11 +223,12 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    NSString * alertString = [NSString stringWithFormat:@"Are you sure you want to leave %@?  All of your points and places will be left behind.",dashboardController.user.teamName];
     if(actionSheet.tag == 1) //leave
     {
         if(actionSheet.destructiveButtonIndex == buttonIndex)
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you really sure you want to leave your current team?  All of your teammates will miss you so much." delegate:self cancelButtonTitle:@"Stay" otherButtonTitles:@"Leave", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message: alertString delegate:self cancelButtonTitle:@"Stay" otherButtonTitles:@"Leave", nil];
             [alert setTag:1];
             [alert show];
         }
@@ -235,8 +237,9 @@
     {
         if(actionSheet.destructiveButtonIndex == buttonIndex)
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you really sure you want to leave your current team?  All of your teammates will miss you so much." delegate:self cancelButtonTitle:@"Stay" otherButtonTitles:@"Switch", nil];
-            [alert setTag:1];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:alertString delegate:self cancelButtonTitle:@"Stay" otherButtonTitles:@"Switch", nil];
+            [alert setTag:2];
             [alert show];
         }
     }
@@ -401,12 +404,14 @@
 -(void)joinPressed
 {
     //		return handleResponse(httpGet(HOST+"/addtoteam?user="+TagPreferences.USER+"&team="+team), new Team());
-    if(isJoiningTeam)
+    NSLog(@"isjoiningteam: %d",isJoiningTeam);
+    if(isJoiningTeam && !isOnTeam)
     {
         [self joinTeam];
     }
     else
     {
+        NSLog(@"switch");
         [self switchTeams];
     }
    
@@ -432,7 +437,8 @@
 
 -(void)switchTeams
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you'd like to change teams?" delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
+    NSString * alertString = [NSString stringWithFormat:@"Are you really sure you want to leave your current team?  if you leave %@, all of your teammates will miss you so much.",dashboardController.user.teamName];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:alertString delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
     [actionSheet setTag:2];
     [actionSheet showInView:self.view];
 }
@@ -448,7 +454,8 @@
 
 - (void)leavePressed
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you'd like to change teams?" delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
+    NSString * alertString = [NSString stringWithFormat:@"Are you really sure you want to leave your current team?  if you leave %@, all of your teammates will miss you so much.",dashboardController.user.teamName];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:alertString delegate:self cancelButtonTitle:@"Stay" destructiveButtonTitle:@"Leave" otherButtonTitles:nil];
     [actionSheet setTag:1];
     [actionSheet showInView:self.view];
 }

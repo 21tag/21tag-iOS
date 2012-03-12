@@ -221,6 +221,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
         
         
         teamInfoController.isJoiningTeam = YES;
+        teamInfoController.isOnTeam = NO;
         [self.navigationController pushViewController:teamInfoController animated:YES];
     }
        

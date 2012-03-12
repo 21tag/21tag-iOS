@@ -175,10 +175,19 @@
     NSLog(@"user team id: %@",dashboardController.user.teamId);
     if ([teamInfoController.teamId intValue] == [dashboardController.user.teamId intValue]) {
         teamInfoController.isJoiningTeam = NO;
+        teamInfoController.isOnTeam = YES;
         NSLog(@"NO");
     }
     else {
+        if (dashboardController.user.teamId != @"") {
+            //NSLog(@"intvalue: %@",dashboardController.user.teamId);
+            teamInfoController.isOnTeam = YES;
+        }
+        else {
+            teamInfoController.isOnTeam = NO;
+        }
         teamInfoController.isJoiningTeam = YES;
+        
     }
     teamInfoController.dashboardController = dashboardController;
     [self.navigationController pushViewController:teamInfoController animated:YES];
