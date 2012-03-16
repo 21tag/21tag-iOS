@@ -59,7 +59,8 @@
             NSLog(@"Send Image with New Team");
             //[request setData:UIImageJPEGRepresentation(teamImageView.image, .7) forKey:@"image"];
             UIImage *tempTeamImage = [NewTeamViewController imageByScalingAndCroppingForSize:CGSizeMake(100.0f, 100.0f) Image:teamImageView.image];
-
+            NSLog(@"upload image data %f",tempTeamImage.size.height);
+            
             [imageRequest setData:UIImageJPEGRepresentation(tempTeamImage, 1) withFileName:[NSString stringWithFormat:@"%@.jpg",team.getId] andContentType:@"image/jpeg" forKey:@"image"];
             [imageRequest setPostValue:[NSString stringWithFormat:@"%@",team.getId] forKey:@"team_id"];
             [imageRequest setDelegate:self];
@@ -69,7 +70,6 @@
             [imageRequest startAsynchronous];
         }
         else {
-            //[self dismissModalViewControllerAnimated:YES];
             [self.delegate newTeamViewFinished];
             
         }
@@ -77,7 +77,6 @@
     else
     {
         NSLog(@"Image response: %@",[request responseString]);
-        //[self dismissModalViewControllerAnimated:YES];
         [self.delegate newTeamViewFinished];
     }
     
@@ -163,7 +162,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_background.png"]];
-
+    self.navigationBar.tintColor = [UIColor colorWithRed:0.015686274509804f green:0.615686274509804f blue:0.749019607843137 alpha:1.0];
     [self setupButtons];
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.rightBarButtonItem = saveButton;
