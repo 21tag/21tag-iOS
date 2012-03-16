@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "JoinTeamViewController.h"
+#import "NewTeamViewController.h"
+#import "TeamInfoViewController.h"
+#import "SearchAllTeamsViewController.h"
 
-@interface JoinTeamViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, MBProgressHUDDelegate> {
+@interface JoinTeamViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, MBProgressHUDDelegate,NewTeamViewControllerDelegate> {
     NSArray *contentList;
     UITableView *navigationTableView;
     UIImageView *statusImageView;

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol NewTeamViewControllerDelegate <NSObject>
+@required
+- (void) newTeamViewFinished;
+@end
 
 @interface NewTeamViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
     
@@ -26,6 +29,7 @@
 @property (nonatomic, strong) IBOutlet UINavigationItem *navigationItem;
 @property (nonatomic, strong) UIBarButtonItem *cancelButton;
 @property (nonatomic, strong) UIBarButtonItem *saveButton;
+@property (retain) id delegate;
 
 -(void)cancelPressed;
 -(void)savePressed;

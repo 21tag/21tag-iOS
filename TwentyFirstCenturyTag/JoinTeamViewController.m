@@ -6,11 +6,12 @@
 //  Copyright 2011. All rights reserved.
 //
 
+
+#import <QuartzCore/QuartzCore.h>
 #import "JoinTeamViewController.h"
 #import "NewTeamViewController.h"
 #import "TeamInfoViewController.h"
 #import "SearchAllTeamsViewController.h"
-#import <QuartzCore/QuartzCore.h>
 
 #import "ASIFormDataRequest.h"
 #import "JSONKit.h"
@@ -263,6 +264,7 @@
     if(indexPath.row == [contentList count] - 2) // New Team
     {
         NewTeamViewController *newTeamController = [[NewTeamViewController alloc] init];
+        newTeamController.delegate = self;
         [self presentModalViewController:newTeamController animated:YES];
     }
     else if(indexPath.row == [contentList count] - 1) // Search
@@ -300,6 +302,13 @@
     // Remove HUD from screen when the HUD was hidded
     [HUD removeFromSuperview];
 	HUD = nil;
+}
+
+-(void) newTeamViewFinished
+{
+    NSLog(@"delegate method");
+    [self dismissModalViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

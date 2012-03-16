@@ -25,6 +25,7 @@
 @synthesize navigationItem;
 @synthesize cancelButton;
 @synthesize saveButton;
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,14 +69,16 @@
             [imageRequest startAsynchronous];
         }
         else {
-            [self dismissModalViewControllerAnimated:YES];
+            //[self dismissModalViewControllerAnimated:YES];
+            [self.delegate newTeamViewFinished];
             
         }
     }
     else
     {
         NSLog(@"Image response: %@",[request responseString]);
-        [self dismissModalViewControllerAnimated:YES];
+        //[self dismissModalViewControllerAnimated:YES];
+        [self.delegate newTeamViewFinished];
     }
     
     
