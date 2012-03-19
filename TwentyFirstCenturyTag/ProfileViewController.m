@@ -294,14 +294,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
-	if (cell == nil)
-	{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
-	}
+    static NSString *CellIdentifier1 = @"Cell1";
+    static NSString *CellIdentifier2 = @"Cell2";
+	
 	
     if(indexPath.section == 0)
     {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier1];
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier1];
+        }
         NSLog(@"teamName from profileView: %@",user.teamName);
         if(user.teamName == @"")
         {
@@ -322,24 +325,48 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        return cell;
     }
     else
     {
-        NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
-        cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
-        cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
-        Event *theEvent = (Event*)[cellInfo objectForKey:@"event"];
-        NSLog(@"Venue Id: %@",theEvent.venueid);
-        if ([cell.textLabel.text isEqualToString:@"No Recent Activity"] || theEvent.venueid == @"") {
+        if ([[[contentList objectAtIndex:indexPath.row] objectForKey:@"textLabel"] isEqualToString:@"No Recent Activity"] || ((Event*)[[contentList objectAtIndex:indexPath.row] objectForKey:@"event"]).venueid == @"") 
+        {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2];
+            if (cell == nil)
+            {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier2];
+            }
+            NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
+            cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
+            cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
+            Event *theEvent = (Event*)[cellInfo objectForKey:@"event"];
+            NSLog(@"Venue Id: %@",theEvent.venueid);
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return cell;
         }
-        else
+        else{
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier1];
+            if (cell == nil)
+            {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier1];
+            }
+            NSDictionary *cellInfo = [contentList objectAtIndex:indexPath.row];
+            cell.textLabel.text = [cellInfo objectForKey:@"textLabel"];
+            cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
+            Event *theEvent = (Event*)[cellInfo objectForKey:@"event"];
+            NSLog(@"Venue Id: %@",theEvent.venueid);
+            //cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            return cell;
+        }
+        
     }
     
     
     
-	return cell;
+	return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
