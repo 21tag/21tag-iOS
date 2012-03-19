@@ -215,7 +215,8 @@
     [button addTarget:self action:@selector(joinPressed) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
+    isOnTeam = NO;
+    isJoiningTeam = YES;
     self.navigationItem.rightBarButtonItem = joinButton;
     
 

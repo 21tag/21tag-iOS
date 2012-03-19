@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6317B6B215179A6000BC57C7 /* on_harvard_campus_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 6317B6B015179A6000BC57C7 /* on_harvard_campus_button.png */; };
+		6317B6B315179A6000BC57C7 /* on_harvard_campus_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6317B6B115179A6000BC57C7 /* on_harvard_campus_button@2x.png */; };
 		D902D32C141EA91500AA3479 /* StandingsResp.m in Sources */ = {isa = PBXBuildFile; fileRef = D902D32B141EA91500AA3479 /* StandingsResp.m */; };
 		D91F65E113EB5D0100727188 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D91F65C813EB5D0100727188 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D9211C5813E0A16F0035F861 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = D9211C5713E0A16F0035F861 /* Event.m */; };
@@ -167,8 +169,6 @@
 		D9C9405C1406C5390066B752 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9405B1406C5390066B752 /* Default@2x.png */; };
 		D9C9BB4013B02354008A7B90 /* campus_request_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3C13B02354008A7B90 /* campus_request_button.png */; };
 		D9C9BB4113B02354008A7B90 /* campus_request_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */; };
-		D9C9BB4213B02354008A7B90 /* on_harvard_campus_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */; };
-		D9C9BB4313B02354008A7B90 /* on_harvard_campus_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB3F13B02354008A7B90 /* on_harvard_campus_button@2x.png */; };
 		D9C9BB7113B02D1C008A7B90 /* harvard_campus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB6D13B02D1C008A7B90 /* harvard_campus@2x.png */; };
 		D9C9BB7213B02D1C008A7B90 /* harvard_campus.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB6E13B02D1C008A7B90 /* harvard_campus.png */; };
 		D9C9BB7313B02D1C008A7B90 /* grey_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C9BB6F13B02D1C008A7B90 /* grey_background@2x.png */; };
@@ -237,6 +237,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6317B6B015179A6000BC57C7 /* on_harvard_campus_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on_harvard_campus_button.png; sourceTree = "<group>"; };
+		6317B6B115179A6000BC57C7 /* on_harvard_campus_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "on_harvard_campus_button@2x.png"; sourceTree = "<group>"; };
 		D902D32A141EA91500AA3479 /* StandingsResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandingsResp.h; sourceTree = "<group>"; };
 		D902D32B141EA91500AA3479 /* StandingsResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StandingsResp.m; sourceTree = "<group>"; };
 		D91F65C713EB5D0100727188 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -432,8 +434,6 @@
 		D9C9405B1406C5390066B752 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		D9C9BB3C13B02354008A7B90 /* campus_request_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = campus_request_button.png; sourceTree = "<group>"; };
 		D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "campus_request_button@2x.png"; sourceTree = "<group>"; };
-		D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on_harvard_campus_button.png; sourceTree = "<group>"; };
-		D9C9BB3F13B02354008A7B90 /* on_harvard_campus_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "on_harvard_campus_button@2x.png"; sourceTree = "<group>"; };
 		D9C9BB6D13B02D1C008A7B90 /* harvard_campus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "harvard_campus@2x.png"; sourceTree = "<group>"; };
 		D9C9BB6E13B02D1C008A7B90 /* harvard_campus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = harvard_campus.png; sourceTree = "<group>"; };
 		D9C9BB6F13B02D1C008A7B90 /* grey_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey_background@2x.png"; sourceTree = "<group>"; };
@@ -675,6 +675,8 @@
 		D9C9BB4413B0235E008A7B90 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				6317B6B015179A6000BC57C7 /* on_harvard_campus_button.png */,
+				6317B6B115179A6000BC57C7 /* on_harvard_campus_button@2x.png */,
 				D9ACB1141410176100A03A4E /* checkout_button_pressed.png */,
 				D9ACB1151410176100A03A4E /* checkout_button_pressed@2x.png */,
 				D9ACB1161410176100A03A4E /* checkout_button.png */,
@@ -738,8 +740,6 @@
 				D97A5BDC13B107C700D3FFFA /* campus_send_request_button@2x.png */,
 				D9C9BB3C13B02354008A7B90 /* campus_request_button.png */,
 				D9C9BB3D13B02354008A7B90 /* campus_request_button@2x.png */,
-				D9C9BB3E13B02354008A7B90 /* on_harvard_campus_button.png */,
-				D9C9BB3F13B02354008A7B90 /* on_harvard_campus_button@2x.png */,
 				D9BB8BB913AFFCC6001A7A28 /* check_location_button.png */,
 				D9BB8BBA13AFFCC6001A7A28 /* check_location_button@2x.png */,
 				D9D2FA3213AECEF400048670 /* facebook_login_button@2x.png */,
@@ -1059,8 +1059,6 @@
 				D9BB8BC313B00729001A7A28 /* ChooseNetworkViewController.xib in Resources */,
 				D9C9BB4013B02354008A7B90 /* campus_request_button.png in Resources */,
 				D9C9BB4113B02354008A7B90 /* campus_request_button@2x.png in Resources */,
-				D9C9BB4213B02354008A7B90 /* on_harvard_campus_button.png in Resources */,
-				D9C9BB4313B02354008A7B90 /* on_harvard_campus_button@2x.png in Resources */,
 				D9C9BB7113B02D1C008A7B90 /* harvard_campus@2x.png in Resources */,
 				D9C9BB7213B02D1C008A7B90 /* harvard_campus.png in Resources */,
 				D9C9BB7313B02D1C008A7B90 /* grey_background@2x.png in Resources */,
@@ -1191,6 +1189,8 @@
 				D9ACB11A1410176100A03A4E /* checkout_button.png in Resources */,
 				D9ACB11B1410176100A03A4E /* checkout_button@2x.png in Resources */,
 				D95F731B142A9BDA00AA6994 /* 512px---high-resolution.png in Resources */,
+				6317B6B215179A6000BC57C7 /* on_harvard_campus_button.png in Resources */,
+				6317B6B315179A6000BC57C7 /* on_harvard_campus_button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,7 @@
 
 @implementation ChooseNetworkViewController
 
-@synthesize facebook;
+@synthesize facebook,harvardButton,campusesButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,6 +59,24 @@
 
     FacebookController *facebookController = [FacebookController sharedInstance];
     facebook = facebookController.facebook;
+    UILabel * harvardLabel = [[UILabel alloc] initWithFrame:CGRectMake(3,0,240,56)];
+    harvardLabel.textAlignment = UIControlContentHorizontalAlignmentLeft;
+    harvardLabel.textColor = [UIColor darkGrayColor];
+	harvardLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    harvardLabel.text = @"I'm on Harvard or MIT campuses";
+    harvardLabel.backgroundColor = [UIColor clearColor];
+    
+    UILabel * campusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,215,47)];
+    campusLabel.textAlignment = UIControlContentHorizontalAlignmentLeft;
+    campusLabel.textColor = [UIColor darkGrayColor];
+	campusLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    campusLabel.text = @"I want to play on my campus!";
+    campusLabel.backgroundColor = [UIColor clearColor];
+    
+    [harvardButton addSubview:harvardLabel];
+    [campusesButton addSubview:campusLabel];
+    //[self.harvardButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    //[self.campusesButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
 }
 
 - (void)facebookPressed
