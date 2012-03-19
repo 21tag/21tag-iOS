@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
+
 @protocol NewTeamViewControllerDelegate <NSObject>
 @required
 - (void) newTeamViewFinished;
 @end
 
-@interface NewTeamViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
+@interface NewTeamViewController : UIViewController <MBProgressHUDDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
     
     UIImageView *teamImageView;
     UITextField *nameTextField;
@@ -29,6 +31,7 @@
 @property (nonatomic, strong) IBOutlet UINavigationItem *navigationItem;
 @property (nonatomic, strong) UIBarButtonItem *cancelButton;
 @property (nonatomic, strong) UIBarButtonItem *saveButton;
+@property (nonatomic, strong) MBProgressHUD * HUD;
 @property (retain) id delegate;
 
 -(void)cancelPressed;

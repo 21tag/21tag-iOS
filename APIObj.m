@@ -46,7 +46,7 @@
 
 -(void)parseDictionary:(NSDictionary *)fields
 {
-    NSLog(@"myId: %@",[NSString stringWithFormat:@"%@",[[fields objectForKey:ID] class]]);
+    //NSLog(@"myId: %@",[NSString stringWithFormat:@"%@",[[fields objectForKey:ID] class]]);
     myId = [fields objectForKey:ID];
     _id = [fields objectForKey:_ID];
 }

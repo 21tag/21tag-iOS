@@ -84,7 +84,7 @@
     
     //200 feet = 60.96 meters
     //distanceToVenue = 0; // DEBUG value
-    NSLog(@"checkinUpdate");
+    //NSLog(@"checkinUpdate");
     if(currentLocation)
     {
         CLLocation *venueLocation = [[CLLocation alloc] initWithLatitude:currentVenue.geolat longitude:currentVenue.geolong];
@@ -95,7 +95,7 @@
             
             if(timer)
             {
-                NSLog(@"Timer: %@",timer);
+                //NSLog(@"Timer: %@",timer);
                 if (localPoints)
                     localPoints ++;
                 else
@@ -105,7 +105,7 @@
             }
             if(deltaTime >= 180) //Should be 5mins (300)
             {
-                NSLog(@"Points sent: %d",localPoints);
+                //NSLog(@"Points sent: %d",localPoints);
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[defaults objectForKey:@"user_id"]]]; //V1 "/checkin"
                 ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -121,7 +121,7 @@
                 
                 lastCheckinTime = [NSDate date];
                 localPoints = 0;
-                NSLog(@"dashboard checkin request sent");
+                //NSLog(@"dashboard checkin request sent");
             }
             
         }
@@ -150,7 +150,7 @@
                         
                         
                         
-                        NSLog(@"checkinTime: %f", deltaTime);
+                        //NSLog(@"checkinTime: %f", deltaTime);
                         
                         points = (int) (deltaTime / 60);
                     }
@@ -226,7 +226,7 @@
         [defaults setObject:facebookID forKey:@"id"];
 
         // try to log in
-        NSLog(@"Try to login");
+        //NSLog(@"Try to login");
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/?fbauthcode=%@",[APIUtil host],[defaults objectForKey:@"user_id"],[defaults objectForKey:@"FBAccessTokenKey"]]];  //V1 "/login"
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.33:8888/api/v2/user/123/?fbauthcode=%@",[defaults objectForKey:@"FBAccessTokenKey"]]];
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -269,7 +269,7 @@
     {
         int statusCode = [request responseStatusCode];
 
-        NSLog(@"%d: %@",statusCode, [request responseString]);
+        //NSLog(@"%d: %@",statusCode, [request responseString]);
         
         if(statusCode == 404) // create new acct //V1 403
         {
@@ -280,7 +280,7 @@
             NSString *first_name = [result objectForKey:@"first_name"];
             NSString *last_name = [result objectForKey:@"last_name"];
             
-            NSLog(@"Facebook ID: %@",facebookID);
+            //NSLog(@"Facebook ID: %@",facebookID);
             
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/",[APIUtil host]]]; //V1 "/adduser"
             //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.33:8888/api/v2/user/"]];
@@ -311,7 +311,7 @@
             [defaults setObject:user.fid forKey:@"id"];
             [defaults synchronize];
             
-            NSLog(@"logged in: %@", [user getId]);
+            //NSLog(@"logged in: %@", [user getId]);
             
             if(user.currentVenueName)
             {
@@ -335,7 +335,7 @@
     }
     else if(request.tag == 2) // create new account response
     {
-        NSLog(@"new account: %@",[request responseString]);
+        //NSLog(@"new account: %@",[request responseString]);
         if(![[request responseString] isEqualToString:@""]) // create new acct
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -345,7 +345,7 @@
             [defaults removeObjectForKey:@"team_id"];
             [defaults synchronize];
             
-            NSLog(@"new acct: %@", [user getId]);
+            //NSLog(@"new acct: %@", [user getId]);
             
             locationFinishedLoading = YES;
             
@@ -354,7 +354,7 @@
         }
         if ([[request responseString] isEqualToString:@"That username already exists"])
         {
-            NSLog(@"get user_id");
+            //NSLog(@"get user_id");
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/userfromfid/?fid=%@",[APIUtil host],[defaults objectForKey:@"id"]]];
             ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -393,7 +393,7 @@
     }
     else if(request.tag == 3) // request venue data
     {
-        NSLog(@"poi resp: %@",[request responseString]);
+        //NSLog(@"poi resp: %@",[request responseString]);
         
         POIDetailResp *poiResponse = [[POIDetailResp alloc] initWithData:[request responseData]];
         //NSLog(@"POI Response: %@",poiResponse.poi.name);
@@ -414,14 +414,14 @@
     {
         if([request responseStatusCode] == 404) //V1 403
         {
-            NSLog(@"reset fbauth error: %@", [request responseString]);
+            //NSLog(@"reset fbauth error: %@", [request responseString]);
 
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"Couldn't log in because resetfbauth doesn't work properly yet. Things will probably crash if you use the app beyond this point." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Bummer", nil];
             [alert show];
         }
         else
         {
-            NSLog(@"reset fbauth complete: %@", [request responseString]);
+            //NSLog(@"reset fbauth complete: %@", [request responseString]);
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             user = [[User alloc] initWithData:[request responseData]];
             [defaults setObject:[user getId] forKey:@"user_id"];
@@ -468,8 +468,8 @@
         
     }
     [self updateDashboard:nil];
-    NSLog(@"user teamName after request: %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"team_name"]);
-    NSLog(@"user teamId after request: %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"team_id"]);
+    //NSLog(@"user teamName after request: %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"team_name"]);
+    //NSLog(@"user teamId after request: %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"team_id"]);
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -551,7 +551,7 @@
     }
     else    // check in location
     {
-        NSLog(@"Current Venue Last Time: %@",user.currentVenueLastTime);
+        //NSLog(@"Current Venue Last Time: %@",user.currentVenueLastTime);
         if(checkinTime)
         {
             

@@ -356,7 +356,7 @@
             cell.detailTextLabel.text = [cellInfo objectForKey:@"detailTextLabel"];
             Event *theEvent = (Event*)[cellInfo objectForKey:@"event"];
             NSLog(@"Venue Id: %@",theEvent.venueid);
-            //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            //nslcell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
             return cell;

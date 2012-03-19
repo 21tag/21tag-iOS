@@ -85,7 +85,7 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    NSLog(@"standings response: %@", [request responseString]);
+    //NSLog(@"standings response: %@", [request responseString]);
     NSData *requestData = [request responseData];
     //standingsResponse = [[StandingsResp alloc] initWithData:requestData];
     teamsResponse = [[TeamsResp alloc] initWithData:requestData];
@@ -112,7 +112,7 @@
 -(void)requestFailed:(ASIHTTPRequest *)request
 {
     NSError *error = [request error];
-    NSLog(@"%@",error);
+    //NSLog(@"%@",error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"A network error has occurred. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
     
@@ -172,7 +172,7 @@
     teamInfoController.teamId = ((Team*)[standingsArray objectAtIndex:indexPath.row]).getId;
     teamInfoController.teamName = teamName;
     NSLog(@"Team info Controller id: %@",teamInfoController.teamId);
-    NSLog(@"user team id: %@",dashboardController.user.teamId);
+    //NSLog(@"user team id: %@",dashboardController.user.teamId);
     if ([teamInfoController.teamId intValue] == [dashboardController.user.teamId intValue]) {
         teamInfoController.isJoiningTeam = NO;
         teamInfoController.isOnTeam = YES;

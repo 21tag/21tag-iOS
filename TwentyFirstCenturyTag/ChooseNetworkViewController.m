@@ -145,7 +145,7 @@
     [self.view addSubview:HUD];
     
     HUD.delegate = self;
-    HUD.labelText = @"Loading";
+    HUD.labelText = @"Loading...";
     
     [HUD show:YES];
 }

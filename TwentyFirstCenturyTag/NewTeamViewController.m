@@ -26,6 +26,7 @@
 @synthesize cancelButton;
 @synthesize saveButton;
 @synthesize delegate;
+@synthesize HUD;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,7 +60,7 @@
             NSLog(@"Send Image with New Team");
             //[request setData:UIImageJPEGRepresentation(teamImageView.image, .7) forKey:@"image"];
             UIImage *tempTeamImage = [NewTeamViewController imageByScalingAndCroppingForSize:CGSizeMake(100.0f, 100.0f) Image:teamImageView.image];
-            NSLog(@"upload image data %f",tempTeamImage.size.height);
+            //NSLog(@"upload image data %f",tempTeamImage.size.height);
             
             [imageRequest setData:UIImageJPEGRepresentation(tempTeamImage, 1) withFileName:[NSString stringWithFormat:@"%@.jpg",team.getId] andContentType:@"image/jpeg" forKey:@"image"];
             [imageRequest setPostValue:[NSString stringWithFormat:@"%@",team.getId] forKey:@"team_id"];
@@ -70,12 +71,14 @@
             [imageRequest startAsynchronous];
         }
         else {
+            [self.HUD hide:YES];
             [self.delegate newTeamViewFinished];
             
         }
     }
     else
     {
+        [self.HUD hide:YES];
         NSLog(@"Image response: %@",[request responseString]);
         [self.delegate newTeamViewFinished];
     }
@@ -229,6 +232,15 @@
     nameTextField.text = [nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if(![nameTextField.text isEqualToString:@""])
     {
+        [self.view endEditing:YES];
+        HUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:HUD];
+        
+        HUD.delegate = self;
+        HUD.labelText = @"Saving";
+        
+        [HUD show:YES];
+        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/team/",[APIUtil host]]]; //V1 "/createteam"
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -241,6 +253,7 @@
         //[request setData:[dictionary JSONData] forKey:@"JSON"];
         if(teamImageView.image)
         {
+            
             
             //[request setData:UIImageJPEGRepresentation(teamImageView.image, .7) forKey:@"image"];
             //[request setData:UIImageJPEGRepresentation(teamImageView.image, .7) withFileName:@"file" andContentType:@"image/jpeg" forKey:@"image"];

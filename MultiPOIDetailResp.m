@@ -36,7 +36,7 @@
     for(int i = 0; i < [rawVenues count]; i++)
     {
         [poisList addObject:[[POIDetailResp alloc] initWithDictionary:[rawVenues objectAtIndex:i]]];
-        NSLog(@"each pois: %@",pois.description);
+        //NSLog(@"each pois: %@",pois.description);
     }
     
     self.pois = poisList;

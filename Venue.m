@@ -74,7 +74,7 @@
 
 -(CLLocation*)getLocation
 {
-    NSLog(@"Lat: %f Lon: %f",geolat,geolong);
+    //NSLog(@"Lat: %f Lon: %f",geolat,geolong);
     return [[CLLocation alloc] initWithLatitude:geolat longitude:geolong];
 }
 
