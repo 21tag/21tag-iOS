@@ -154,12 +154,14 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
+    NSLog(@"Venues data: %@",[request responseString]);
     if(request.tag == 1) // venues response
     {
         NSLog(@"venues:\n%@",[request responseString]);
         
         //venuesResponse = [[VenuesResp alloc] initWithData:[request responseData]];
         multiPOIResponse = [[MultiPOIDetailResp alloc] initWithData:[request responseData]];
+        NSLog(@"POIS: %d",[multiPOIResponse.pois count]);
         
         //[self addAnnotations];
         [self refreshAnnotations];

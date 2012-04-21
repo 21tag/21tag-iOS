@@ -218,6 +218,7 @@
     */
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[user getId]]]; //V1 "/getteam"
+    NSLog(@"User Request from Profile: %@",[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],[user getId]]);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setRequestMethod:@"GET"];
     [request setDelegate:self];

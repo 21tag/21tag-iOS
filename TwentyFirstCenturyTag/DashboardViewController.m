@@ -269,7 +269,7 @@
     {
         int statusCode = [request responseStatusCode];
 
-        //NSLog(@"%d: %@",statusCode, [request responseString]);
+        NSLog(@"%d: %@",statusCode, [request responseString]);
         
         if(statusCode == 404) // create new acct //V1 403
         {
@@ -293,6 +293,7 @@
             [dictionary setObject:email forKey:@"email"];
             [dictionary setObject:first_name forKey:@"firstname"];
             [dictionary setObject:last_name forKey:@"lastname"];
+            NSLog(@"new user send: %@",dictionary);
             NSData * JSON = [dictionary JSONData];
             [formRequest appendPostData:JSON];
             [formRequest addRequestHeader:@"Content-Type" value:@"application/json"];
@@ -335,7 +336,7 @@
     }
     else if(request.tag == 2) // create new account response
     {
-        //NSLog(@"new account: %@",[request responseString]);
+        NSLog(@"new account:%d %@",[request responseStatusCode],[request responseString]);
         if(![[request responseString] isEqualToString:@""]) // create new acct
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -345,7 +346,7 @@
             [defaults removeObjectForKey:@"team_id"];
             [defaults synchronize];
             
-            //NSLog(@"new acct: %@", [user getId]);
+            NSLog(@"new acct ID: %@", [user getId]);
             
             locationFinishedLoading = YES;
             
@@ -372,11 +373,17 @@
          NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
          NSDictionary *result = facebookRequestResults;
          NSString *facebookID = [result objectForKey:@"id"];
+            
          NSString *user_id = [defaults objectForKey:@"user_id"];
+        if(user_id == nil)
+        {
+            user_id = [user getId];
+        }
          
          NSLog(@"resetting fbauth : %@",facebookID);
          
          NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],user_id]]; //V1 "/resetfbauth"
+            NSLog(@"Reseting fbauth url: %@",[NSString stringWithFormat:@"%@/user/%@/",[APIUtil host],user_id]);
          
          ASIHTTPRequest *request = [ASIFormDataRequest requestWithURL:url];
          //[formRequest addPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"fbauthcode"];
@@ -385,9 +392,11 @@
             NSDictionary * dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[defaults objectForKey:@"FBAccessTokenKey"],@"fbauthcode", nil];
             NSData * JSON = [dictionary JSONData];
             [request appendPostData:JSON];
+            [request addRequestHeader:@"Content-Type" value:@"application/json"];
+            
          [request setDelegate:self];
          [request setTag:4];
-         [request setRequestMethod:@"PATCH"];
+         [request setRequestMethod:@"PUT"]; //Used to PATCH
          [request startAsynchronous];
          }
     }
@@ -421,7 +430,7 @@
         }
         else
         {
-            //NSLog(@"reset fbauth complete: %@", [request responseString]);
+            NSLog(@"reset fbauth complete: %d %@ \n%@",[request responseStatusCode] ,[request responseString],[[NSString alloc] initWithData:[request responseData] encoding:NSUTF8StringEncoding]);
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             user = [[User alloc] initWithData:[request responseData]];
             [defaults setObject:[user getId] forKey:@"user_id"];
@@ -449,10 +458,9 @@
                 [HUD hide:YES];
         } 
     }
-    else if(request.tag == 5)
+    else if(request.tag == 5) //user from fid 
     {
         NSLog(@"User id from fid: %@",[request responseData]);
-        user = [[User alloc] initWithData:[request responseData]];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         user = [[User alloc] initWithData:[request responseData]];
         [defaults setObject:[user getId] forKey:@"user_id"];
